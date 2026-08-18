@@ -1,0 +1,6 @@
+{ "views": [
+  { "photo": "fit/refs/gjzdsp.jpg",
+    "mirror": false, "top": 272, "lid_width": 245, "axis": 508, "crop": [225, 255, 800, 535],
+    "chroma": 46, "rg": 6, "rmin": 0, "hole_px": 30000,
+    "camera": { "elev": 9, "az": 0, "dist": 8, "fov": 18, "ty": 0.5 }, "tune_camera": ["elev", "az"] }
+] }

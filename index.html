@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>陶 · 器</title>
+  <link rel="stylesheet" href="/src/style.css" />
+</head>
+<body>
+  <div id="app"></div>
+
+  <header class="masthead">
+    <h1>陶 · 器</h1>
+    <p class="sub">form &amp; function · pottery studio</p>
+    <p class="hint">轻触画布 · 隐藏 / 显示控制</p>
+  </header>
+
+  <aside class="panel">
+    <section class="group">
+      <h2>器形</h2>
+      <div id="shape-list" class="shapes"></div>
+    </section>
+
+    <section class="group">
+      <h2>材质</h2>
+      <div id="material-swatches" class="swatches"></div>
+    </section>
+
+    <section class="group">
+      <h2 id="param-title">形制</h2>
+      <div id="sliders"></div>
+    </section>
+
+    <section class="group">
+      <h2>解剖</h2>
+      <div id="anatomy" class="metrics"></div>
+    </section>
+
+    <section class="group">
+      <h2>用</h2>
+      <div id="metrics" class="metrics"></div>
+    </section>
+
+    <section class="group actions">
+      <button id="photo">拍照</button>
+      <button id="reset">复位</button>
+      <button id="export" title="导出 spec JSON">导出</button>
+    </section>
+  </aside>
+
+
+  <div id="render-status" hidden></div>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>

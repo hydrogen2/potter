@@ -1,0 +1,11 @@
+{ "views": [
+  { "photo": "fit/refs/gjzdsp.jpg", "top": 272, "lid_width": 245, "axis": 508, "crop": [225,255,800,535],
+    "chroma": 46, "rg": 6, "rmin": 0, "hole_px": 30000,
+    "camera": { "elev": 10, "az": -8, "dist": 8, "fov": 18, "ty": 0.5 }, "tune_camera": ["elev","az"] },
+  { "photo": "fit/refs/gjzsp01.jpg", "mask": "fit/refs/masks/gjzsp01_mask.png", "top": 125, "lid_width": 368, "axis": 557,
+    "camera": { "elev": 8, "az": 0, "dist": 8, "fov": 18, "ty": 0.5 }, "tune_camera": ["elev","az"] },
+  { "photo": "fit/refs/gjzsp11.jpg", "mask": "fit/refs/masks/gjzsp11_mask.png", "top": 62, "lid_width": 409, "axis": 432,
+    "camera": { "elev": 20, "az": 30, "dist": 8, "fov": 18, "ty": 0.5 }, "tune_camera": ["elev","az"] },
+  { "photo": "fit/refs/gjzsp10.jpg", "mask": "fit/refs/masks/gjzsp10_mask.png", "top": 90, "lid_width": 466, "axis": 548,
+    "camera": { "elev": 20, "az": -30, "dist": 8, "fov": 18, "ty": 0.5 }, "tune_camera": ["elev","az"] }
+] }

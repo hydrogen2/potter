@@ -1,0 +1,5 @@
+dist/
+fit/refs/*.img
+node_modules/
+.server.log
+shots/

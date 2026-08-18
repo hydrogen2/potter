@@ -1,0 +1,11 @@
+{ "views": [
+  { "photo": "fit/refs/cand5.img",
+    "mirror": true, "top": 126, "lid_width": 216, "axis": 314, "chroma": 8, "rg": 3, "rmin": 18, "hole_px": 6000,
+    "camera": { "elev": 3, "az": 0, "dist": 8, "fov": 18, "ty": 0.5 }, "tune_camera": ["elev", "az"] },
+  { "photo": "fit/refs/cand4.img",
+    "mirror": true, "top": 402, "lid_width": 568, "axis": 931, "chroma": 8, "rg": 3, "rmin": 18, "hole_px": 6000,
+    "camera": { "elev": 10, "az": 10, "dist": 8, "fov": 18, "ty": 0.5 }, "tune_camera": ["elev", "az"] },
+  { "photo": "fit/refs/cand6.img",
+    "mirror": false, "top": 242, "lid_width": 467, "axis": 762, "chroma": 8, "rg": 3, "rmin": 18, "hole_px": 6000,
+    "camera": { "elev": 22, "az": -25, "dist": 8, "fov": 18, "ty": 0.5 }, "tune_camera": ["elev", "az"] }
+] }

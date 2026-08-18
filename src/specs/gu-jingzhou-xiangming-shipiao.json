@@ -1,0 +1,82 @@
+{
+  "id": "gu-jingzhou-xiangming-shipiao",
+  "label": "相明石瓢 · 顾景舟",
+  "category": "zisha",
+  "categoryLabel": "紫砂 · Yixing",
+  "notes": "顾景舟1948年为戴相明所制石瓢，吴湖帆书画（风动疏竹）。五把大石瓢之一。2025年拍出1535万。参数由三张拍卖照片（正侧、微俯、俯视四分之三）以多视角轮廓IoU拟合（三视角均值 IoU 0.909（正侧 0.94）；相机仰角/方位角先网格搜索再同时求解）；壁厚为估计值。",
+  "sources": [
+    "https://taohuren.com/article/200592.html",
+    "https://zhuanlan.zhihu.com/p/47069193"
+  ],
+  "material": "zini",
+  "scaleCm": 8,
+  "wall": {
+    "base": 0.045,
+    "belly": 0.036,
+    "top": 0.034
+  },
+  "body": {
+    "type": "spline",
+    "height": 0.705,
+    "baseR": 0.8936,
+    "bellyR": 0.9593,
+    "bellyY": 0.1944,
+    "shoulder": 1.6079,
+    "mouthR": 0.5,
+    "underDome": 0.025,
+    "cornerR": 0.065
+  },
+  "lid": {
+    "type": "flatDisc",
+    "overhang": 0.0837,
+    "thickness": 0.078,
+    "crown": 0.025,
+    "vent": 0.013
+  },
+  "knob": {
+    "type": "bridgeMound",
+    "span": 0.7827,
+    "rise": 0.1237,
+    "holeW": 0.16,
+    "holeH": 0.08,
+    "depth": 0.2859
+  },
+  "spout": {
+    "type": "straightCone",
+    "length": 0.4001,
+    "angle": 45.9472,
+    "attachY": 0.72,
+    "rootR": 0.16,
+    "tipR": 0.08,
+    "wall": 0.014
+  },
+  "handle": {
+    "type": "rearLoop",
+    "tube": 0.084,
+    "topX": 1.1938,
+    "outerX": 1.1575,
+    "topY": 0.893,
+    "botY": 0.2769,
+    "lift": 0.9864,
+    "outerY": 0.4984
+  },
+  "base": {
+    "type": "studs",
+    "count": 3,
+    "radius": 0.0749,
+    "spread": 0.484
+  },
+  "expose": [
+    "body.height",
+    "body.baseR",
+    "body.bellyR",
+    "body.shoulder",
+    "body.mouthR",
+    "body.underDome",
+    "spout.length",
+    "spout.angle",
+    "knob.span",
+    "knob.rise",
+    "handle.outerX"
+  ]
+}

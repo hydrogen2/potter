@@ -1,0 +1,17 @@
+{
+  "id": "chawan",
+  "label": "茶碗",
+  "category": "wamono",
+  "categoryLabel": "和物 · Japan",
+  "notes": "高台茶碗。纯身无附件：证明另一传统的器形只是同一生成器的另一条轮廓线。",
+  "material": "tenmoku",
+  "scaleCm": 11,
+  "wall": { "base": 0.05, "belly": 0.045, "top": 0.04 },
+  "body": { "type": "bowl", "height": 0.6, "mouthR": 0.58, "footR": 0.21, "fullness": 0.07 },
+  "lid": { "type": "none" },
+  "knob": { "type": "none" },
+  "spout": { "type": "none" },
+  "handle": { "type": "none" },
+  "base": { "type": "flat" },
+  "expose": ["body.height", "body.mouthR", "body.footR", "body.fullness"]
+}
