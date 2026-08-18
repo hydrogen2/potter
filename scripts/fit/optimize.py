@@ -137,7 +137,7 @@ def _is_int_param(key):
     s_, k_ = key.split('.'); b_ = BOUNDS.get(f"{s_}.{spec0[s_]['type']}.{k_}")
     return bool(b_) and len(b_) > 2 and b_[2] is not None and b_[2] >= 1
 KEYS = [k for k in KEYS if k.startswith('view') or not _is_int_param(k)]
-CAM_BOUNDS = {'elev': [-5, 40], 'az': [-60, 60], 'dist': [3, 20], 'fov': [8, 40], 'ty': [0, 1.5]}
+CAM_BOUNDS = {'elev': [-5, 45], 'az': [-70, 70], 'dist': [3, 30], 'fov': [8, 40], 'ty': [0, 1.5]}
 
 class State:
     def __init__(self, spec, cams): self.spec, self.cams = spec, cams
@@ -198,6 +198,19 @@ if a.cam_grid:
         s_best, n_best, st_best = scored[0]
         best.cams[vi] = dict(st_best.cams[vi])
         print(f'view {vi} camera grid: best {n_best} IoU {s_best:.4f}', flush=True)
+        if 'dist' in tune:  # perspective sweep at the found elev/az
+            cands = []
+            for d_ in (3.5, 5, 6.5, 8, 10, 13, 17, 22, 28):
+                st = best.copy(); st.cams[vi]['dist'] = float(d_); cands.append((f'd{vi}_{d_}', st))
+            jobs = [{'name': n, 'hash': st.hash(vi)} for n, st in cands]
+            jf = OUT / f'dist{vi}.json'; jf.write_text(json.dumps({'out': str(OUT / f'dist{vi}'), 'camera': '', 'jobs': jobs}))
+            r = subprocess.run([a.node, str(HERE / 'render-many.mjs'), str(jf)], cwd=ROOT, capture_output=True, text=True)
+            if r.returncode != 0: print(r.stdout, r.stderr); sys.exit(1)
+            scored = [(iou_view(str(OUT / f'dist{vi}' / f'{n}.png'), v, st.spec, st.cams[vi]), n, st) for n, st in cands]
+            scored.sort(key=lambda t: -t[0])
+            s_best, n_best, st_best = scored[0]
+            best.cams[vi]['dist'] = st_best.cams[vi]['dist']
+            print(f'view {vi} dist sweep: best {n_best} IoU {s_best:.4f}', flush=True)
         json.dump(best.cams, open(OUT / 'best-cameras.json', 'w'), indent=1)
 
 # ---- coordinate descent ------------------------------------------------------
@@ -209,7 +222,7 @@ for rnd in range(1, a.rounds + 1):
     cands = []
     for key in KEYS:
         v = best.get(key); lo, hi = best.bound(key)[:2]
-        d = max(abs(v) * step, 0.5 if key.startswith('view') else 0.005)
+        d = max(abs(v) * step, 0.5 if (key.startswith('view') and not key.endswith('.dist')) else 0.005)
         for sgn, tag in ((+1, 'p'), (-1, 'm')):
             nv = min(hi, max(lo, v + sgn * d))
             if abs(nv - v) < 1e-6: continue

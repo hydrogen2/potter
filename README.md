@@ -91,8 +91,9 @@ scripts/
 Fitting results so far: 相明石瓢 (three photos: level / near-level / steep
 3-4) mean IoU 0.909, level view 0.952 — cameras solved to 5.5°/6.5°, 1.5°/0°,
 35°/23°. 大石瓢 (four photos: auction side + three exhibition angles, GrabCut masks
-in fit/refs/masks) mean IoU 0.882 — 0.917 / 0.867 / 0.932 / 0.813; cameras
-10°/−8°, 10°/−24°, 30°/32°, 7.5°/−42°. Light backdrops with engraving need
+in fit/refs/masks) mean IoU 0.896 — 0.951 / 0.885 / 0.932 / 0.816; cameras
+(elev/az/dist) 10.6°/−8°/10, 10°/−20°/5, 30°/32°/8, 7°/−45°/6.6. Solving
+camera distance (perspective) lifted the auction view 0.917 → 0.951. Light backdrops with engraving need
 generous `hole_px`; cluttered backdrops → precomputed masks (`"mask"` field).
 
 URL grammar: `#id=<archive-id>&mat=<material>&<slot>.<param>=<value>...&cam=side&ui=hide`
@@ -120,7 +121,7 @@ node scripts/screenshot.mjs   # headless render check → shots/
 - **印章**: user seal on the base — connects to calligraphy
 - **Component vocabulary**: fill the "planned" column above; rim and strainer
   slots; 花器 mesh import
-- **Photo→spec v2**: tune per-view `dist` (perspective) too; shading-based
+- **Photo→spec v2**: shading-based
   terms for features silhouettes can't see; use the base photo (feet, seal)
   as a fourth constraint
 - **Fillets (润接)**: spout and handle roots on real pots blend into the body

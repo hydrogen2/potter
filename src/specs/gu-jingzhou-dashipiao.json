@@ -3,7 +3,7 @@
   "label": "大石瓢 · 顾景舟",
   "category": "zisha",
   "categoryLabel": "紫砂 · Yixing",
-  "notes": "顾景舟《大石瓢》，吴湖帆书、江寒汀画。北京东正2015春拍，成交2817.5万。高8cm 宽18cm。参数由四张照片（东正拍卖侧视 + 陈壶展柜三视角）多视角轮廓IoU拟合（均值0.88；相机仰角/方位角先网格再求解；展柜照片用GrabCut分割）；壁厚为估计值。",
+  "notes": "顾景舟《大石瓢》，吴湖帆书、江寒汀画。北京东正2015春拍，成交2817.5万。高8cm 宽18cm。参数由四张照片（东正拍卖侧视 + 陈壶展柜三视角）多视角轮廓IoU拟合（均值0.90；相机仰角/方位角/距离先网格再求解；展柜照片用GrabCut分割）；壁厚为估计值。",
   "sources": [
     "https://chenpot.com/jzsp-pai-mai.html",
     "https://auction.artron.net/paimai-art5033807259/"
@@ -39,7 +39,7 @@
     "rise": 0.1093,
     "holeW": 0.16,
     "holeH": 0.08,
-    "depth": 0.32
+    "depth": 0.3392
   },
   "spout": {
     "type": "straightCone",
@@ -52,11 +52,11 @@
   },
   "handle": {
     "type": "rearLoop",
-    "tube": 0.084,
+    "tube": 0.079,
     "topX": 1.1938,
     "outerX": 1.1575,
     "topY": 0.9466,
-    "botY": 0.2447,
+    "botY": 0.3275,
     "lift": 0.9568,
     "outerY": 0.4984
   },
@@ -64,7 +64,7 @@
     "type": "studs",
     "count": 3,
     "radius": 0.0799,
-    "spread": 0.513
+    "spread": 0.5438
   },
   "expose": [
     "body.height",
