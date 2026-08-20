@@ -29,8 +29,10 @@ for (let i = 0; i < jobs.length; i++) {
   const j = jobs[i]
   if (i > 0) {
     const before = await page.evaluate(() => window.__potReady)
-    await page.evaluate((h) => { location.hash = h }, `${j.hash}&${camera}&ui=hide&fit=1`)
-    await page.waitForFunction((b) => window.__potReady > b, before)
+    // `_` is ignored by the app and guarantees a hashchange even when two
+    // consecutive candidates resolve to identical parameters
+    await page.evaluate((h) => { location.hash = h }, `${j.hash}&${camera}&ui=hide&fit=1&_=${i}`)
+    await page.waitForFunction((b) => window.__potReady > b, before, { timeout: 30000 })
   }
   const dataUrl = await page.evaluate(() => window.__snap())
   fs.writeFileSync(path.join(out, `${j.name}.png`), Buffer.from(dataUrl.split(',')[1], 'base64'))

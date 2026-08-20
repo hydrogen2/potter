@@ -38,81 +38,21 @@ a = ap.parse_args()
 OUT = Path(a.out); OUT.mkdir(parents=True, exist_ok=True)
 VIEWS = json.load(open(a.views))['views']
 
-# ---- masks ---------------------------------------------------------------------
-def fill_small_holes(m, max_px):
-    holes = ndimage.binary_fill_holes(m) & ~m
-    lab, n = ndimage.label(holes)
-    if n == 0: return m
-    sizes = ndimage.sum(holes, lab, range(1, n + 1))
-    return m | np.isin(lab, [i + 1 for i, s_ in enumerate(sizes) if s_ <= max_px])
-
-def render_mask(path):
-    r = np.asarray(Image.open(path).convert('RGB')).astype(int)
-    m = (r[:, :, 0] - r[:, :, 1] > 25) & (r[:, :, 0] > 90)
-    return fill_small_holes(ndimage.binary_closing(m, iterations=2), 3000)
-
-def photo_mask(v):
-    if v.get('mask'):  # precomputed mask PNG (e.g. GrabCut), white = pot
-        m = np.asarray(Image.open(v['mask']).convert('L')) > 127
-        if v.get('mirror'): m = m[:, ::-1]
-        return m
-    img = Image.open(v['photo']).convert('RGB')
-    if v.get('mirror'): img = ImageOps.mirror(img)
-    p = np.asarray(img).astype(int)
-    m = (((p[:, :, 0] - p[:, :, 2]) > v.get('chroma', 46)) & ((p[:, :, 0] - p[:, :, 1]) > v.get('rg', 6))
-         & (p[:, :, 0] > v.get('rmin', 0)))
-    if v.get('crop'):
-        box = np.zeros_like(m); x0, y0, x1, y1 = v['crop']; box[y0:y1, x0:x1] = True; m &= box
-    m = ndimage.binary_opening(m, iterations=v.get('open', 2))
-    m = fill_small_holes(ndimage.binary_closing(m, iterations=v.get('close', 3)), v.get('hole_px', 1500))
-    lab, n = ndimage.label(m)
-    if n > 1:
-        sizes = ndimage.sum(m, lab, range(1, n + 1)); m = lab == (int(np.argmax(sizes)) + 1)
-    return m
+# ---- masks / registration / scoring -------------------------------------------
+sys.path.insert(0, str(HERE))
+from common import photo_mask, render_mask, register, iou  # noqa: E402
 
 for v in VIEWS:
     v['_pm'] = photo_mask(v)
     v['camera'] = dict(v.get('camera', {}))
-    v['camera'].setdefault('elev', 8); v['camera'].setdefault('az', 0)
-    v['camera'].setdefault('dist', 8); v['camera'].setdefault('fov', 18); v['camera'].setdefault('ty', 0.5)
+    for k, d in (('elev', 8), ('az', 0), ('dist', 8), ('fov', 18), ('ty', 0.5)):
+        v['camera'].setdefault(k, d)
 
-def lid_radius(spec):
-    lid = spec.get('lid', {}); body = spec.get('body', {})
-    return body.get('mouthR', 0.4) + lid.get('overhang', 0.045)
 
-def lid_center_y(spec):
-    b = spec['body']; lid = spec.get('lid', {})
-    return b.get('underDome', 0) + b['height'] + 0.5 * lid.get('thickness', 0.05)
+def iou_view(png, v, spec=None, cam=None):
+    R, *_ = register(render_mask(png), v['_pm'])
+    return iou(R, v['_pm'])
 
-def register(rm, v, spec, cam, W, Hpx):
-    """Analytic registration: the render's camera and spec are known, so the
-    lid plate's projected diameter and the axis column are computed exactly;
-    only the knob-top row is taken from the mask."""
-    import math
-    PM = v['_pm']
-    ys, xs = np.nonzero(rm)
-    if len(ys) == 0: return np.zeros_like(PM)
-    top_row = ys.min()
-    e = math.radians(cam['elev']); depth = cam['dist'] - (lid_center_y(spec) - cam['ty']) * math.sin(e)
-    ppu = (Hpx / 2) / (depth * math.tan(math.radians(cam['fov']) / 2))   # px per unit at the lid
-    r_lidw = 2 * lid_radius(spec) * ppu
-    r_axis = W / 2
-    scale = v['lid_width'] / r_lidw
-    size = (int(rm.shape[1] * scale), int(rm.shape[0] * scale))
-    rms = np.asarray(Image.fromarray((rm * 255).astype('uint8')).resize(size, Image.BILINEAR)) > 127
-    ox = int(round(v['axis'] - r_axis * scale)); oy = int(round(v['top'] - top_row * scale))
-    R = np.zeros_like(PM)
-    yy0, xx0 = max(0, oy), max(0, ox)
-    yy1, xx1 = min(PM.shape[0], oy + rms.shape[0]), min(PM.shape[1], ox + rms.shape[1])
-    if yy1 > yy0 and xx1 > xx0:
-        R[yy0:yy1, xx0:xx1] = rms[yy0 - oy:yy1 - oy, xx0 - ox:xx1 - ox]
-    return R
-
-def iou_view(png, v, spec, cam):
-    rm = render_mask(png)
-    R = register(rm, v, spec, cam, rm.shape[1], rm.shape[0]); PM = v['_pm']
-    u = np.count_nonzero(PM | R)
-    return np.count_nonzero(PM & R) / u if u else 0.0
 
 # ---- state: spec params + per-view camera params -----------------------------
 spec0 = json.load(open(a.spec))
@@ -170,7 +110,7 @@ def render_batch(cands, tag):
     return {n: [str(OUT / tag / f'{n}__v{vi}.png') for vi in range(len(VIEWS))] for n, _ in cands}
 
 def score(pngs, st):
-    per = [iou_view(p, v, st.spec, st.cams[i]) for i, (p, v) in enumerate(zip(pngs, VIEWS))]
+    per = [iou_view(p, v) for p, v in zip(pngs, VIEWS)]
     return float(np.mean(per)), per
 
 # ---- optional camera grid pre-search per view --------------------------------

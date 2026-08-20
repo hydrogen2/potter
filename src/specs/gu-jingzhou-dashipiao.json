@@ -3,7 +3,7 @@
   "label": "大石瓢 · 顾景舟",
   "category": "zisha",
   "categoryLabel": "紫砂 · Yixing",
-  "notes": "顾景舟《大石瓢》，吴湖帆书、江寒汀画。北京东正2015春拍，成交2817.5万。高8cm 宽18cm。参数由四张照片（东正拍卖侧视 + 陈壶展柜三视角）多视角轮廓IoU拟合（均值0.90；相机仰角/方位角/距离先网格再求解；展柜照片用GrabCut分割）；壁厚为估计值。",
+  "notes": "顾景舟《大石瓢》，吴湖帆书、江寒汀画。北京东正2015春拍，成交2817.5万。高8cm 宽18cm。参数由四张照片（东正拍卖侧视 + 陈壶展柜三视角）多视角轮廓 IoU 拟合，均值0.94；照片分割用 scripts/fit/mask.py 明确剔除投影（旧版把壶底投影误认作壶身，导致底部偏筒形）；配准不依赖人工标记，由面积/质心初始化后按 IoU 最优对齐；相机仰角/方位/距离同时求解。壁厚为估计值。",
   "sources": [
     "https://chenpot.com/jzsp-pai-mai.html",
     "https://auction.artron.net/paimai-art5033807259/"
@@ -20,32 +20,32 @@
     "height": 0.705,
     "baseR": 0.8936,
     "bellyR": 0.8746,
-    "bellyY": 0.1827,
-    "shoulder": 1.7044,
+    "bellyY": 0.2053,
+    "shoulder": 1.6021,
     "mouthR": 0.5,
     "underDome": 0.025,
-    "cornerR": 0.07
+    "cornerR": 0.075
   },
   "lid": {
     "type": "flatDisc",
-    "overhang": 0.0887,
-    "thickness": 0.083,
+    "overhang": 0.0996,
+    "thickness": 0.088,
     "crown": 0.025,
     "vent": 0.013
   },
   "knob": {
     "type": "bridgeMound",
     "span": 0.9,
-    "rise": 0.1093,
+    "rise": 0.1027,
     "holeW": 0.16,
     "holeH": 0.08,
-    "depth": 0.3392
+    "depth": 0.3188
   },
   "spout": {
     "type": "straightCone",
-    "length": 0.3761,
+    "length": 0.3987,
     "angle": 45.9472,
-    "attachY": 0.72,
+    "attachY": 0.7632,
     "rootR": 0.16,
     "tipR": 0.08,
     "wall": 0.014
@@ -56,9 +56,9 @@
     "topX": 1.1938,
     "outerX": 1.1575,
     "topY": 0.9466,
-    "botY": 0.3275,
+    "botY": 0.3079,
     "lift": 0.9568,
-    "outerY": 0.4984
+    "outerY": 0.56
   },
   "base": {
     "type": "studs",

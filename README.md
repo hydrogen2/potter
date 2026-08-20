@@ -90,10 +90,18 @@ scripts/
 
 Fitting results so far: 相明石瓢 (three photos: level / near-level / steep
 3-4) mean IoU 0.909, level view 0.952 — cameras solved to 5.5°/6.5°, 1.5°/0°,
-35°/23°. 大石瓢 (four photos: auction side + three exhibition angles, GrabCut masks
-in fit/refs/masks) mean IoU 0.896 — 0.951 / 0.885 / 0.932 / 0.816; cameras
-(elev/az/dist) 10.6°/−8°/10, 10°/−20°/5, 30°/32°/8, 7°/−45°/6.6. Solving
-camera distance (perspective) lifted the auction view 0.917 → 0.951. Light backdrops with engraving need
+35°/23°. 大石瓢 (four photos: auction side + three exhibition angles) mean IoU 0.936 —
+0.929 / 0.917 / 0.940 / 0.959, body 0.96-0.99 in every view; cameras
+(elev/az/dist) 10°/−7.5°/10, 12°/−6°/10, 20°/38°/7, 25°/−32°/8.
+
+Two measurement bugs found while fitting it, both worth knowing about:
+a photo mask built on colour alone **swallows the pot's cast shadow**, which
+widens the base and pulls the fitted body toward a barrel (`scripts/fit/mask.py`
+now rejects shadow by saturation: clay holds R-G at 20-35% of its brightness at
+any exposure, shadow and dark wood do not); and hand-measured landmarks put the
+measurer's error into every score, so registration is now landmark-free —
+scale/offset are seeded from area and centroid, then chosen to maximise IoU
+(`scripts/fit/common.py`). Light backdrops with engraving need
 generous `hole_px`; cluttered backdrops → precomputed masks (`"mask"` field).
 
 URL grammar: `#id=<archive-id>&mat=<material>&<slot>.<param>=<value>...&cam=side&ui=hide`
