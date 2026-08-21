@@ -14,10 +14,10 @@
   },
   "body": {
     "type": "superellipse",
-    "maxR": 0.86,
-    "bellyY": 0.4,
-    "lowerAxis": 0.6,
-    "upperAxis": 0.66,
+    "maxR": 0.84,
+    "bellyY": 0.48,
+    "lowerAxis": 0.74,
+    "upperAxis": 0.82,
     "lowerFull": 2.5,
     "upperFull": 2.2,
     "mouthR": 0.58
@@ -25,32 +25,31 @@
   "lid": {
     "type": "flush",
     "thickness": 0.04,
-    "rise": 0.115,
+    "rise": 0.94,
     "vent": 0.012
   },
   "knob": {
     "type": "bead",
-    "radius": 0.072,
-    "squash": 0.85
+    "radius": 0.105,
+    "squash": 0.92
   },
   "spout": {
     "type": "straightCone",
-    "length": 0.34,
-    "angle": 38,
-    "attachY": 0.5,
-    "rootR": 0.15,
-    "tipR": 0.062,
-    "wall": 0.012
+    "length": 0.24,
+    "angle": 30,
+    "attachY": 0.58,
+    "rootR": 0.19,
+    "tipR": 0.085,
+    "wall": 0.014
   },
   "handle": {
-    "type": "rearLoop",
-    "tube": 0.052,
-    "topX": 1.12,
-    "outerX": 1.2,
-    "topY": 0.74,
-    "botY": 0.28,
-    "lift": 0.8,
-    "outerY": 0.5
+    "type": "invertedEar",
+    "tube": 0.075,
+    "taper": 0.6,
+    "outerX": 1.3,
+    "topY": 0.78,
+    "botY": 0.3,
+    "loopY": 0.52
   },
   "base": {
     "type": "flat"
@@ -61,7 +60,9 @@
     "body.lowerFull",
     "body.upperFull",
     "body.mouthR",
+    "lid.rise",
     "spout.length",
+    "handle.outerX",
     "knob.radius"
   ]
 }

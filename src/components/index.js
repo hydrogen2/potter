@@ -78,7 +78,7 @@ export function buildVessel(spec, material) {
     raised.add(lidMesh)
     const knobMesh = knob.def.build(knob.p, material)
     if (knobMesh) {
-      knobMesh.position.y += prof.height + lid.def.top(lid.p) - 0.006
+      knobMesh.position.y += prof.height + lid.def.top(lid.p, prof) - 0.006
       raised.add(knobMesh)
     }
   }

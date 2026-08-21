@@ -46,14 +46,17 @@ export const LIDS = {
     // well proportioned, reads as the wrong family.
     params: {
       thickness: { label: '盖厚', min: 0.02, max: 0.09, step: 0.002, default: 0.04 },
-      rise: { label: '盖高', min: 0.03, max: 0.4, step: 0.005, default: 0.16 },
+      rise: { label: '盖高', min: 0.3, max: 1.0, step: 0.01, default: 0.94 },  // fraction of the cap to the pole
       vent: { label: '气孔', min: 0, max: 0.03, step: 0.001, default: 0.012 },
     },
-    top: (p) => p.rise,
+    top: (p, prof) => (prof?.capLimit ?? 0.18) * p.rise,
     build(p, mouthR, material, prof) {
       const v = Math.max(p.vent, 0.004)
       const T = p.thickness
-      const rise = prof?.capLimit ? Math.min(p.rise, prof.capLimit * 0.92) : p.rise
+      // `rise` is how far up the body's own curve the lid runs: near 1 the ball
+      // is completed and the dome converges to a neck for the knob — a flat top
+      // would read as the wrong family
+      const rise = (prof?.capLimit ?? 0.18) * p.rise
       const cap = []
       const N = 26
       for (let i = 0; i <= N; i++) {

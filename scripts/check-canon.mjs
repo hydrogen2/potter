@@ -97,7 +97,7 @@ CANON.xishi = {
     lid: (t) => [t === 'flush', 'lid is 截盖 (cut from the body curve)'],
     knob: (t) => [t === 'bead', 'knob is a bead (珠钮)'],
     spout: (t) => [t === 'straightCone', 'spout is short and straight'],
-    handle: (t) => [t === 'rearLoop', 'handle is a rear loop (倒把)'],
+    handle: (t) => [t === 'invertedEar', 'handle is an inverted ear (倒耳把)'],
     base: (t) => [t === 'flat', 'flat base, no feet'],
   },
 }

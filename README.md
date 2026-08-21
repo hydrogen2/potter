@@ -167,7 +167,7 @@ Families so far:
 | family | primitive | what makes it that family |
 |---|---|---|
 | 石瓢 | `cone` | a cone with the tip cut off: widest at the foot, flank never widening upward, straight within 3%; flat lid, bridge knob, straight spout, three feet |
-| 西施 | `superellipse` | fuller than an ellipse and asymmetric top to bottom; widest near mid-height, wider than tall, no straight run anywhere in the flank; a wide mouth closed by a **截盖** lid cut from the body's own curve — so the silhouette never breaks — bead knob, flat footless base |
+| 西施 | `superellipse` | fuller than an ellipse and asymmetric top to bottom; widest near mid-height, wider than tall, no straight run anywhere in the flank; a wide mouth closed by a **截盖** lid that runs up the body's own curve until the ball is complete (a flat-topped lid reads as the wrong family), a bead knob on the neck it converges to, a **短流略粗** spout, a fully-round **倒耳把** thick at the shoulder and tapering to the belly, flat footless base |
 
 The 西施 case is the interesting one: you cannot name its shape (it is not a
 sphere, and an ellipse reads as cheap), but you *can* name its relations, and
