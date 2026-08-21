@@ -104,3 +104,52 @@ def register(rm, pm, coarse=4, window=0.10, steps=7, shift=14):
                         best = (sc, s, ox + ddx, oy + ddy)
     _, s, dx, dy = best
     return _place(rm, pm.shape, s, dx, dy), s, dx, dy
+
+
+def profile_curve(m, nrows=64):
+    """Body half-width per row, sampled from base to top.
+
+    Handles and spouts only ever widen *one* side, so the narrower side is the
+    body — that makes the curve usable without segmenting the attachments.
+    """
+    ys, xs = np.nonzero(m)
+    if len(ys) == 0:
+        return np.full(nrows, np.nan), 0, 1
+    top, bot = int(ys.min()), int(ys.max())
+    band = m[top:top + max(2, int(0.2 * (bot - top)))]
+    ax = int(np.median(np.nonzero(band)[1])) if band.any() else int(np.median(xs))
+    out = []
+    for i in range(nrows):
+        y = int(top + (bot - top) * (i + 0.5) / nrows)
+        row = m[y]
+        if not row[ax]:
+            out.append(np.nan)
+            continue
+        l = ax
+        while l > 0 and row[l - 1]:
+            l -= 1
+        r = ax
+        while r < row.size - 1 and row[r + 1]:
+            r += 1
+        out.append(min(ax - l, r - ax))
+    return np.asarray(out, float), top, bot
+
+
+def profile_rmse(a_mask, b_mask, nrows=64):
+    """RMS difference of the two silhouette profiles, as a fraction of height.
+
+    IoU is area-based and barely moves when a straight flank should be convex —
+    the very thing that separates a 石瓢 from a lampshade. This does move.
+    """
+    a, ta, ba = profile_curve(a_mask, nrows)
+    b, tb, bb = profile_curve(b_mask, nrows)
+    ok = ~np.isnan(a) & ~np.isnan(b)
+    if ok.sum() < nrows // 4:
+        return 1.0
+    d = np.abs(a[ok] - b[ok])
+    # where the handle and spout merge into the silhouette on both sides the
+    # min-side rule breaks down; trim the worst fifth so those rows cannot
+    # dominate the score
+    keep = d <= np.quantile(d, 0.8)
+    h = max(ba - ta, 1)
+    return float(np.sqrt(np.mean(d[keep] ** 2)) / h)

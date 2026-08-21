@@ -33,6 +33,8 @@ ap.add_argument('--params', nargs='*', help='slot.param list to tune (default: a
 ap.add_argument('--step', type=float, default=0.06, help='initial relative step')
 ap.add_argument('--cam-grid', action='store_true', help='coarse elev/az grid search per view before descent')
 ap.add_argument('--cameras', help='seed per-view cameras from a best-cameras.json')
+ap.add_argument('--profile-weight', type=float, default=0.0,
+                help='penalise silhouette profile mismatch (RMS radius / height); 3 is a strong prior')
 ap.add_argument('--node', default=os.path.expanduser('~/.local/opt/node-v22.17.0-linux-x64/bin/node'))
 a = ap.parse_args()
 OUT = Path(a.out); OUT.mkdir(parents=True, exist_ok=True)
@@ -40,7 +42,7 @@ VIEWS = json.load(open(a.views))['views']
 
 # ---- masks / registration / scoring -------------------------------------------
 sys.path.insert(0, str(HERE))
-from common import photo_mask, render_mask, register, iou  # noqa: E402
+from common import photo_mask, render_mask, register, iou, profile_rmse  # noqa: E402
 
 for v in VIEWS:
     v['_pm'] = photo_mask(v)
@@ -50,8 +52,13 @@ for v in VIEWS:
 
 
 def iou_view(png, v, spec=None, cam=None):
+    if not os.path.exists(png):
+        return -1.0          # a render that never arrived cannot win
     R, *_ = register(render_mask(png), v['_pm'])
-    return iou(R, v['_pm'])
+    score = iou(R, v['_pm'])
+    if a.profile_weight and v.get('profile', True):
+        score -= a.profile_weight * profile_rmse(R, v['_pm'])
+    return score
 
 
 # ---- state: spec params + per-view camera params -----------------------------
@@ -116,7 +123,9 @@ def score(pngs, st):
 # ---- optional camera grid pre-search per view --------------------------------
 best = State(copy.deepcopy(spec0), [dict(v['camera']) for v in VIEWS])
 if a.cameras:
-    for vi, c in enumerate(json.load(open(a.cameras))): best.cams[vi].update(c)
+    seeded = json.load(open(a.cameras))
+    for vi in range(min(len(seeded), len(best.cams))):   # a views file may use a subset
+        best.cams[vi].update(seeded[vi])
 if a.cam_grid:
     for vi, v in enumerate(VIEWS):
         tune = v.get('tune_camera', [])

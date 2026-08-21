@@ -1,0 +1,46 @@
+{
+  "id": "comfy_cafe",
+  "label": "咖啡馆 · 木桌",
+  "credit": "HDRI + backplate: Poly Haven (CC0) — comfy_cafe",
+  "plate": "plate.jpg",
+  "hdri": "env.hdr",
+  "envRotation": 0.0,
+  "exposure": 0.78,
+  "shadow": {
+    "opacity": 0.55,
+    "softness": 3
+  },
+  "sun": {
+    "elev": 34,
+    "az": 62,
+    "intensity": 2.1,
+    "color": "#fff2df"
+  },
+  "camera": {
+    "frame": [
+      3712,
+      5568
+    ],
+    "crop": [
+      0,
+      3560,
+      3100,
+      1740
+    ],
+    "sensor": [
+      24,
+      36
+    ],
+    "focal": 24,
+    "height": 0.62,
+    "dist": 2.0,
+    "yaw": 0,
+    "tilt": 0
+  },
+  "potPos": [
+    -0.1,
+    0,
+    0.62
+  ],
+  "note": "Camera solved from the plate: verticals are parallel, so a level camera; crop of the original frame handled with setViewOffset. potPos places the pot on the table top (y=0) in metres."
+}

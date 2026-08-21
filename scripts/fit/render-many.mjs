@@ -27,14 +27,29 @@ await page.waitForTimeout(800)
 let t0 = Date.now()
 for (let i = 0; i < jobs.length; i++) {
   const j = jobs[i]
-  if (i > 0) {
-    const before = await page.evaluate(() => window.__potReady)
-    // `_` is ignored by the app and guarantees a hashchange even when two
-    // consecutive candidates resolve to identical parameters
-    await page.evaluate((h) => { location.hash = h }, `${j.hash}&${camera}&ui=hide&fit=1&_=${i}`)
-    await page.waitForFunction((b) => window.__potReady > b, before, { timeout: 30000 })
+  // A long batch can lose its WebGL context (headless SwiftShader); recover by
+  // reloading straight into the candidate's URL rather than dropping the run.
+  const url = `http://localhost:5198/#${j.hash}&${camera}&ui=hide&fit=1&_=${i}`
+  let dataUrl = null
+  for (let attempt = 0; attempt < 2 && dataUrl === null; attempt++) {
+    try {
+      if (i > 0 && attempt === 0) {
+        const before = await page.evaluate(() => window.__potReady)
+        // `_` guarantees a hashchange even when two candidates are identical
+        await page.evaluate((h) => { location.hash = h }, `${j.hash}&${camera}&ui=hide&fit=1&_=${i}`)
+        await page.waitForFunction((b) => window.__potReady > b, before, { timeout: 30000 })
+      } else if (attempt > 0) {
+        await page.goto(url, { waitUntil: 'networkidle' })
+        await page.waitForFunction(() => window.__potReady >= 1)
+        await page.waitForTimeout(500)
+      }
+      dataUrl = await page.evaluate(() => window.__snap())
+    } catch (err) {
+      console.log(`[retry ${j.name}] ${String(err).split('\n')[0]}`)
+      dataUrl = null
+    }
   }
-  const dataUrl = await page.evaluate(() => window.__snap())
+  if (dataUrl === null) throw new Error(`render failed: ${j.name}`)
   fs.writeFileSync(path.join(out, `${j.name}.png`), Buffer.from(dataUrl.split(',')[1], 'base64'))
 }
 console.log(`rendered ${jobs.length} in ${((Date.now() - t0) / 1000).toFixed(1)}s`)

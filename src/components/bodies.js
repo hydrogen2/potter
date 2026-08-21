@@ -35,6 +35,7 @@ export const BODIES = {
       bellyR: { label: '身宽', min: 0.3, max: 1.1, step: 0.005, default: 0.85 },
       bellyY: { label: '腹位', min: 0.15, max: 0.7, step: 0.005, default: 0.42 },
       shoulder: { label: '肩弧', min: -0.5, max: 2, step: 0.01, default: 0.3 },
+      lowerFull: { label: '下腹弧', min: -0.04, max: 0.18, step: 0.002, default: 0.008 },
       mouthR: { label: '口径', min: 0.15, max: 0.9, step: 0.005, default: 0.4 },
       underDome: { label: '底弧', min: 0, max: 0.12, step: 0.002, default: 0 },
       cornerR: { label: '底角', min: 0.01, max: 0.15, step: 0.002, default: 0.03 },
@@ -46,15 +47,22 @@ export const BODIES = {
       const H = p.height
       const d = p.underDome
       const c = p.cornerR
-      const bellyY = d + H * p.bellyY
+      // Every control point must rise in y: if the corner sits above the next
+      // point the spline folds back and extrudes a skirt at the foot, which
+      // reads as a barrel rather than the cone a 石瓢 actually is.
+      const cornerY = d + c * 0.5                       // widest point, just above the foot
+      const bellyY = Math.max(d + H * p.bellyY, cornerY + 0.02)
       const ctrl = [
         new THREE.Vector2(0.03, 0),
-        new THREE.Vector2(p.baseR * 0.55, d * 0.3),
-        new THREE.Vector2(p.baseR - c, d - 0.004),   // toward the corner
-        new THREE.Vector2(p.baseR, d + c),           // rounded corner
+        new THREE.Vector2(p.baseR * 0.6, d * 0.45),
+        new THREE.Vector2(p.baseR - c, d),            // underside meets the corner
+        new THREE.Vector2(p.baseR, cornerY),          // crisp-ish corner: max radius
+        // lowerFull bows the lower flank outward; without it the wall between
+        // the foot and the belly is a straight taper — a cone frustum, which
+        // no hand-thrown 石瓢 has
         new THREE.Vector2(
-          THREE.MathUtils.lerp(p.baseR, p.bellyR, 0.55) + 0.015,
-          bellyY * 0.5,
+          THREE.MathUtils.lerp(p.baseR, p.bellyR, 0.5) + (p.lowerFull ?? 0.008),
+          THREE.MathUtils.lerp(cornerY, bellyY, 0.5),
         ),
         new THREE.Vector2(p.bellyR, bellyY),
         new THREE.Vector2(

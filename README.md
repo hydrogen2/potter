@@ -85,6 +85,8 @@ scripts/
                          grid pre-search; analytic registration (lid width, knob top)
     diff.py              per-view IoU (overall / lid+knob / handle / spout / body)
                          + diff map (grey both, red photo-only, blue render-only)
+    common.py            masks, landmark-free registration, and the profile
+                         metric: silhouette radius compared row by row
     overlay.py           outline overlay of a render on a photo
 ```
 
@@ -134,4 +136,15 @@ node scripts/screenshot.mjs   # headless render check → shots/
   as a fourth constraint
 - **Fillets (润接)**: spout and handle roots on real pots blend into the body
   with wide concave fillets; the vocabulary attaches them crisply. A per-
-  attachment `blend` radius is the next fidelity step
+  attachment `blend` radius is the next fidelity step — and now the *largest*
+  measured error, since the body silhouette is settled
+
+**On metrics.** Silhouette IoU is area-based and nearly blind to the thing
+connoisseurship cares about: a body can be visibly the wrong character and
+still score 0.94. `profile_rmse` in `scripts/fit/common.py` compares the
+silhouette's radius row by row (taking the narrower side, since a handle or
+spout only widens one of them, with a trimmed RMS so attachment rows cannot
+dominate). Pass `--profile-weight 3` to `optimize.py` to use it. It also needs
+a near-level reference: in a view looking down, the lower flank is
+foreshortened and under-constrained, which is how a barrel once passed for a
+cone.

@@ -1,6 +1,7 @@
 import * as THREE from 'three'
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js'
+import { RGBELoader } from 'three/addons/loaders/RGBELoader.js'
 import { WebGLPathTracer, GradientEquirectTexture } from 'three-gpu-pathtracer'
 import { SPECS, SPEC_BY_ID } from './specs/index.js'
 import {
@@ -10,7 +11,7 @@ import { MATERIALS, getMaterial } from './materials/index.js'
 
 // ---- renderer / scene ------------------------------------------------------
 
-const renderer = new THREE.WebGLRenderer({ antialias: true })
+const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true })
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 renderer.setSize(window.innerWidth, window.innerHeight)
 renderer.toneMapping = THREE.ACESFilmicToneMapping
@@ -134,6 +135,9 @@ function applyHash() {
   }
   if (h.get('ui') === 'hide') document.body.classList.add('ui-hidden')
   fitMode = h.get('fit') === '1'
+  pendingScene = h.get('scene') || null
+  // keep scene params: writeHash() rewrites the hash before applyScene reads it
+  sceneParams = Object.fromEntries([...h].filter(([k]) => k.startsWith('sc_')))
 }
 
 // fit mode: flat unlit silhouette, no shadows — for photo→spec fitting tools
@@ -168,6 +172,10 @@ function writeHash() {
       if (k !== 'type' && v !== base[k]) h.set(`${slot}.${k}`, v)
     }
   }
+  if (pendingScene) {
+    h.set('scene', pendingScene)
+    for (const [k, val] of Object.entries(sceneParams)) h.set(k, val)
+  }
   history.replaceState(null, '', '#' + h.toString())
 }
 
@@ -179,6 +187,7 @@ function rebuild() {
   }
   pot = buildVessel(spec, getMaterial(activeMaterialKey))
   scene.add(pot)
+  if (typeof scalePotForScene === 'function') scalePotForScene()
   if (typeof applyFitMode === 'function') applyFitMode()
   renderMetrics()
   if (!fitMode) writeHash()
@@ -321,6 +330,119 @@ document.querySelector('#export').addEventListener('click', () => {
 })
 
 
+// ---- scene mode: the pot composited into a photographed place ---------------
+// A scene is a backplate photo plus the HDRI light probe shot at the same spot,
+// so the pot's lighting and the background agree by construction. The pot is
+// scaled from its spec (units → metres), stands on an invisible shadow
+// catcher, and the canvas is composited over the plate.
+
+const backplate = document.querySelector('#backplate')
+let pendingScene = null
+let sceneParams = {}
+let sceneCfg = null
+let shadowCatcher = null
+let sunLight = null
+
+function scalePotForScene() {
+  if (!pot) return
+  pot.scale.setScalar(sceneCfg ? (spec.scaleCm ?? 8) / 100 : 1)
+  if (!sceneCfg) {
+    pot.position.set(0, 0, 0)
+    return
+  }
+  // the pot stands where we put it on the table, not wherever the camera aims:
+  // the camera is the photograph's camera, the pot is furniture on the plane
+  const at = sceneCfg.potPos ?? [0, 0, 0]
+  const px = 'sc_px' in sceneParams ? parseFloat(sceneParams.sc_px) : at[0]
+  const pz = 'sc_pz' in sceneParams ? parseFloat(sceneParams.sc_pz) : (at[2] ?? 0)
+  pot.position.set(px, at[1] ?? 0, pz)
+}
+
+async function applyScene(id) {
+  const base = `scenes/${id}/`
+  const cfg = await (await fetch(base + 'scene.json')).json()
+  sceneCfg = cfg
+  backplate.src = base + cfg.plate
+  backplate.hidden = false
+
+  const hdr = await new RGBELoader().loadAsync(base + cfg.hdri)
+  hdr.mapping = THREE.EquirectangularReflectionMapping
+  scene.environment = pmrem.fromEquirectangular(hdr).texture
+  scene.environmentRotation = new THREE.Euler(0, cfg.envRotation ?? 0, 0)
+  scene.environmentIntensity = 1
+  hdr.dispose()
+  scene.background = null
+  renderer.setClearAlpha(0)
+  renderer.toneMappingExposure = cfg.exposure ?? 1
+
+  for (const l of [key, fill, rim]) l.visible = false
+  if (!sunLight) {
+    sunLight = new THREE.DirectionalLight(0xffffff, 1)
+    sunLight.castShadow = true
+    sunLight.shadow.mapSize.set(2048, 2048)
+    const c = sunLight.shadow.camera
+    c.left = c.bottom = -0.35
+    c.right = c.top = 0.35
+    c.near = 0.01
+    c.far = 5
+    sunLight.shadow.bias = -0.0004
+    sunLight.shadow.normalBias = 0.004
+    scene.add(sunLight)
+  }
+  const sun = cfg.sun ?? {}
+  const el = THREE.MathUtils.degToRad(sun.elev ?? 35)
+  const az = THREE.MathUtils.degToRad(sun.az ?? 45)
+  sunLight.position
+    .set(Math.cos(el) * Math.sin(az), Math.sin(el), Math.cos(el) * Math.cos(az))
+    .multiplyScalar(2)
+  sunLight.intensity = sun.intensity ?? 2
+  sunLight.color.set(sun.color ?? '#ffffff')
+  sunLight.shadow.radius = cfg.shadow?.softness ?? 4
+
+  ground.visible = false
+  photoGround.visible = false
+  if (!shadowCatcher) {
+    shadowCatcher = new THREE.Mesh(
+      new THREE.PlaneGeometry(3, 3).rotateX(-Math.PI / 2),
+      new THREE.ShadowMaterial({ opacity: 0.4 }),
+    )
+    shadowCatcher.receiveShadow = true
+    scene.add(shadowCatcher)
+  }
+  shadowCatcher.material.opacity = cfg.shadow?.opacity ?? 0.4
+  shadowCatcher.visible = true
+
+  // Match the photograph's camera, not an orbit around the pot. The plate is a
+  // crop of a larger frame, so the optical axis is off-centre: setViewOffset
+  // reproduces exactly that crop. Café/interior plates are shot level (their
+  // verticals stay parallel), so the default pose is a level camera at
+  // `height` above the table surface, `dist` back from the world origin.
+  const num = (k, d) => (k in sceneParams ? parseFloat(sceneParams[k]) : d)
+  const cam = cfg.camera
+  const full = cam.frame ?? [1, 1]
+  const crop = cam.crop ?? [0, 0, full[0], full[1]]
+  const sensorH = cam.sensor?.[1] ?? 36
+  const focal = num('sc_focal', cam.focal ?? 24)
+  camera.fov = 2 * THREE.MathUtils.radToDeg(Math.atan(sensorH / 2 / focal))
+  camera.aspect = full[0] / full[1]
+  camera.setViewOffset(full[0], full[1], crop[0], crop[1], crop[2], crop[3])
+  const height = num('sc_h', cam.height ?? 0.6)     // metres above the table top
+  const dist = num('sc_dist', cam.dist ?? 2.0)      // metres back from the origin
+  const yaw = THREE.MathUtils.degToRad(num('sc_yaw', cam.yaw ?? 0))
+  const tilt = THREE.MathUtils.degToRad(num('sc_tilt', cam.tilt ?? 0))
+  camera.position.set(dist * Math.sin(yaw), height, dist * Math.cos(yaw))
+  controls.target.set(
+    camera.position.x - Math.sin(yaw) * 1,
+    height + Math.tan(-tilt) * 1,
+    camera.position.z - Math.cos(yaw) * 1,
+  )
+  controls.minDistance = 0.05
+  controls.maxDistance = 20
+  renderer.toneMappingExposure = num('sc_exp', cfg.exposure ?? 1)
+  scalePotForScene()
+  window.__sceneReady = true
+}
+
 // ---- 拍照 photo mode: progressive path tracing -----------------------------
 
 const photoBtn = document.querySelector('#photo')
@@ -437,6 +559,7 @@ renderSwatches()
 renderSliders()
 renderAnatomy()
 rebuild()
+if (pendingScene) applyScene(pendingScene)
 
 // fitting tools drive the page by rewriting the hash in one browser session
 window.addEventListener('hashchange', () => {
@@ -485,7 +608,7 @@ window.__potReady = 1
 
 window.addEventListener('resize', () => {
   exitPhoto()
-  camera.aspect = window.innerWidth / window.innerHeight
+  if (!sceneCfg) camera.aspect = window.innerWidth / window.innerHeight
   camera.updateProjectionMatrix()
   renderer.setSize(window.innerWidth, window.innerHeight)
 })

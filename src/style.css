@@ -17,6 +17,14 @@ body {
 
 #app, #app canvas { position: fixed; inset: 0; display: block; }
 
+/* scene mode: the pot is rendered over a photograph of a real place, lit by
+   the light probe captured at that same spot */
+#backplate {
+  position: fixed; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; z-index: -1;
+}
+#backplate[hidden] { display: none; }
+
 .masthead {
   position: fixed; top: 28px; left: 34px; pointer-events: none;
   transition: opacity 0.25s;
