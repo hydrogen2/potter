@@ -139,6 +139,33 @@ node scripts/screenshot.mjs   # headless render check → shots/
   attachment `blend` radius is the next fidelity step — and now the *largest*
   measured error, since the body silhouette is settled
 
+## Canon before pixels
+
+A shape family is recognised by **features, not resemblance**: a face may have
+larger or smaller eyes, but it has exactly two and they are level. 石瓢 is a
+cone with the tip cut off — widest at the foot, flank never widening upward,
+flat lid, bridge knob, straight spout, three feet. Those are assertions about
+the geometry, so they are checked *analytically on the profile curve*, with no
+rendering and no pixels:
+
+```
+node scripts/check-canon.mjs          # exits non-zero on any violation
+```
+
+This is the acceptance test; photo agreement is the tie-breaker within it, not
+the other way round. The lesson that produced it: a body can sit at IoU 0.94
+and profile-RMS 2% against a real photograph and still not be a 石瓢 at all —
+the pixel metrics differed by 0.2% between the right character and the wrong
+one. Nothing could fail, because nothing had been written down.
+
+`src/components/bodies.js` therefore offers a `cone` body type whose character
+is guaranteed by construction (`bow` 0 is dead straight), rather than a general
+spline that *can* be a cone if the optimiser happens to land there.
+
+`scripts/fit/shape_audit.py` is the same idea against a reference photograph:
+it reports whether the body profile agrees within tolerance, widens toward the
+foot, and puts the widest point where the reference does — pass/fail, exit code.
+
 **On metrics.** Silhouette IoU is area-based and nearly blind to the thing
 connoisseurship cares about: a body can be visibly the wrong character and
 still score 0.94. `profile_rmse` in `scripts/fit/common.py` compares the

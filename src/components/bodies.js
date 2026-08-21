@@ -85,6 +85,51 @@ export const BODIES = {
     },
   },
 
+  cone: {
+    label: '锥形',
+    // 石瓢 and its relatives are a cone with the tip cut off. Saying so in the
+    // vocabulary guarantees the character — widest at the foot, flank never
+    // widening upward — instead of hoping a general spline lands on it.
+    params: {
+      height: { label: '身高', min: 0.3, max: 1.4, step: 0.005, default: 0.7 },
+      baseR: { label: '底径', min: 0.3, max: 1.2, step: 0.005, default: 0.93 },
+      mouthR: { label: '口径', min: 0.15, max: 0.9, step: 0.005, default: 0.53 },
+      bow: { label: '腹弧', min: -0.02, max: 0.10, step: 0.002, default: 0.012 },
+      shoulder: { label: '肩收', min: 0, max: 0.25, step: 0.005, default: 0.05 },
+      underDome: { label: '底弧', min: 0, max: 0.12, step: 0.002, default: 0.015 },
+      cornerR: { label: '底角', min: 0.01, max: 0.16, step: 0.002, default: 0.08 },
+    },
+    profile(p) {
+      const H = p.height
+      const d = p.underDome
+      const c = p.cornerR
+      const cornerY = d + c
+      const outer = [
+        new THREE.Vector2(0.03, 0),
+        new THREE.Vector2(p.baseR * 0.55, d * 0.5),
+      ]
+      const FILLET = 10
+      for (let i = 0; i <= FILLET; i++) {
+        const th = -Math.PI / 2 + (i / FILLET) * (Math.PI / 2)
+        outer.push(new THREE.Vector2(p.baseR - c + c * Math.cos(th), d + c + c * Math.sin(th)))
+      }
+      const topY = d + H
+      const N = 70
+      for (let i = 1; i <= N; i++) {
+        const t = i / N
+        const y = THREE.MathUtils.lerp(cornerY, topY, t)
+        let r = THREE.MathUtils.lerp(p.baseR, p.mouthR, t)
+        r += p.bow * 4 * t * (1 - t) * p.baseR          // gentle belly, 0 = dead straight
+        r -= p.shoulder * Math.pow(Math.max(0, t - 0.7) / 0.3, 2) * p.baseR  // turn in at the shoulder
+        outer.push(new THREE.Vector2(Math.max(r, 0.05), y))
+      }
+      return {
+        outer, radiusAt: radiusFn(outer), height: topY, mouthR: outer[outer.length - 1].x,
+        bottomAt: (r) => d * Math.pow(Math.min(r / p.baseR, 1), 2),
+      }
+    },
+  },
+
   bowl: {
     label: '碗形',
     params: {

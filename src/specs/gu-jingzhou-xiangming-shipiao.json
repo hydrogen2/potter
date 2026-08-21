@@ -16,16 +16,14 @@
     "top": 0.034
   },
   "body": {
-    "type": "spline",
+    "type": "cone",
     "height": 0.705,
-    "baseR": 0.9,
-    "bellyR": 0.92,
-    "bellyY": 0.22,
-    "shoulder": 1.6079,
-    "mouthR": 0.53,
+    "baseR": 0.92,
+    "mouthR": 0.74,
+    "bow": 0.015,
+    "shoulder": 0.08,
     "underDome": 0.015,
-    "cornerR": 0.1,
-    "lowerFull": 0.008
+    "cornerR": 0.1
   },
   "lid": {
     "type": "flatDisc",
@@ -68,16 +66,16 @@
     "spread": 0.484
   },
   "expose": [
-    "body.height",
-    "body.baseR",
-    "body.bellyR",
-    "body.shoulder",
-    "body.mouthR",
-    "body.underDome",
     "spout.length",
     "spout.angle",
     "knob.span",
     "knob.rise",
-    "handle.outerX"
+    "handle.outerX",
+    "body.height",
+    "body.baseR",
+    "body.mouthR",
+    "body.bow",
+    "body.shoulder",
+    "body.cornerR"
   ]
 }
