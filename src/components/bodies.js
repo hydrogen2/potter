@@ -47,21 +47,27 @@ export const BODIES = {
       const H = p.height
       const d = p.underDome
       const c = p.cornerR
-      // Every control point must rise in y: if the corner sits above the next
-      // point the spline folds back and extrudes a skirt at the foot, which
-      // reads as a barrel rather than the cone a 石瓢 actually is.
-      const cornerY = d + c * 0.5                       // widest point, just above the foot
+      // The foot is built as an explicit tangent fillet, not as spline control
+      // points: a Catmull-Rom through an underside point and a corner point
+      // overshoots between them and extrudes a small skirt above the foot —
+      // which reads as a barrel/bell, not as the clean corner a 石瓢 has.
+      const cornerY = d + c
+      const bottom = [
+        new THREE.Vector2(0.03, 0),
+        new THREE.Vector2(p.baseR * 0.55, d * 0.5),
+      ]
+      const FILLET_STEPS = 10
+      for (let i = 0; i <= FILLET_STEPS; i++) {
+        const a = -Math.PI / 2 + (i / FILLET_STEPS) * (Math.PI / 2)
+        bottom.push(
+          new THREE.Vector2(p.baseR - c + c * Math.cos(a), d + c + c * Math.sin(a)),
+        )
+      }
       const bellyY = Math.max(d + H * p.bellyY, cornerY + 0.02)
       const ctrl = [
-        new THREE.Vector2(0.03, 0),
-        new THREE.Vector2(p.baseR * 0.6, d * 0.45),
-        new THREE.Vector2(p.baseR - c, d),            // underside meets the corner
-        new THREE.Vector2(p.baseR, cornerY),          // crisp-ish corner: max radius
-        // lowerFull bows the lower flank outward; without it the wall between
-        // the foot and the belly is a straight taper — a cone frustum, which
-        // no hand-thrown 石瓢 has
+        new THREE.Vector2(p.baseR, cornerY),   // flank starts at the fillet's top
         new THREE.Vector2(
-          THREE.MathUtils.lerp(p.baseR, p.bellyR, 0.5) + (p.lowerFull ?? 0.008),
+          Math.min(THREE.MathUtils.lerp(p.baseR, p.bellyR, 0.5) + (p.lowerFull ?? 0.008), p.baseR),
           THREE.MathUtils.lerp(cornerY, bellyY, 0.5),
         ),
         new THREE.Vector2(p.bellyR, bellyY),
@@ -71,7 +77,7 @@ export const BODIES = {
         ),
         new THREE.Vector2(p.mouthR, d + H),
       ]
-      const outer = new THREE.SplineCurve(ctrl).getSpacedPoints(100)
+      const outer = [...bottom, ...new THREE.SplineCurve(ctrl).getSpacedPoints(90).slice(1)]
       return {
         outer, radiusAt: radiusFn(outer), height: d + H, mouthR: p.mouthR,
         bottomAt: (r) => d * Math.pow(Math.min(r / p.baseR, 1), 2), // underside height

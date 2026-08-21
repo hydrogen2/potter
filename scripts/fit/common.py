@@ -135,7 +135,7 @@ def profile_curve(m, nrows=64):
     return np.asarray(out, float), top, bot
 
 
-def profile_rmse(a_mask, b_mask, nrows=64):
+def profile_rmse(a_mask, b_mask, nrows=64, skip_band=(0.22, 0.62), skip_bottom=0.04):
     """RMS difference of the two silhouette profiles, as a fraction of height.
 
     IoU is area-based and barely moves when a straight flank should be convex —
@@ -146,10 +146,16 @@ def profile_rmse(a_mask, b_mask, nrows=64):
     ok = ~np.isnan(a) & ~np.isnan(b)
     if ok.sum() < nrows // 4:
         return 1.0
-    d = np.abs(a[ok] - b[ok])
-    # where the handle and spout merge into the silhouette on both sides the
-    # min-side rule breaks down; trim the worst fifth so those rows cannot
-    # dominate the score
-    keep = d <= np.quantile(d, 0.8)
+    # Skip the band where the handle and spout merge into the silhouette on
+    # both sides (the min-side rule breaks down there). Do NOT trim by residual
+    # size: the largest residuals are often at the foot, which is exactly the
+    # region that decides a pot's character.
+    frac = (np.arange(nrows) + 0.5) / nrows
+    band = (frac > skip_band[0]) & (frac < skip_band[1])
+    # the very bottom compares feet, which photo masks often miss and which
+    # differ in representation; it is not evidence about the body
+    ok = ok & ~band & (frac < 1 - skip_bottom)
+    if ok.sum() < 8:
+        return 1.0
     h = max(ba - ta, 1)
-    return float(np.sqrt(np.mean(d[keep] ** 2)) / h)
+    return float(np.sqrt(np.mean((a[ok] - b[ok]) ** 2)) / h)

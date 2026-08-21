@@ -1,0 +1,40 @@
+{
+ "views": [
+  {
+   "photo": "/tmp/claude-1000/-home-supper-user-daidun/39ca6d0b-c4aa-4ebc-baaf-275cd9712864/scratchpad/refs/cand5.img",
+   "mask": "/tmp/claude-1000/-home-supper-user-daidun/39ca6d0b-c4aa-4ebc-baaf-275cd9712864/scratchpad/xmmask/cand5_mask.png",
+   "mirror": true,
+   "camera": {
+    "elev": 3,
+    "az": 0,
+    "dist": 10,
+    "fov": 18,
+    "ty": 0.5
+   },
+   "tune_camera": [
+    "elev",
+    "az",
+    "dist"
+   ],
+   "profile": true
+  },
+  {
+   "photo": "/tmp/claude-1000/-home-supper-user-daidun/39ca6d0b-c4aa-4ebc-baaf-275cd9712864/scratchpad/refs/cand4.img",
+   "mask": "/tmp/claude-1000/-home-supper-user-daidun/39ca6d0b-c4aa-4ebc-baaf-275cd9712864/scratchpad/xmmask/cand4_mask.png",
+   "mirror": true,
+   "camera": {
+    "elev": 8,
+    "az": 0,
+    "dist": 10,
+    "fov": 18,
+    "ty": 0.5
+   },
+   "tune_camera": [
+    "elev",
+    "az",
+    "dist"
+   ],
+   "profile": false
+  }
+ ]
+}

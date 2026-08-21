@@ -22,6 +22,8 @@ page.setDefaultTimeout(120000)
 page.on('pageerror', (e) => console.log('[pageerror]', e.message))
 
 await page.goto(`http://localhost:5199/#${hash}`, { waitUntil: 'networkidle' })
+// the app rewrites the hash to record the spec diff, which can drop ui=hide
+await page.evaluate(() => document.body.classList.add('ui-hidden'))
 await page.waitForTimeout(3000)
 await page.screenshot({ path: out })
 console.log('saved', out)
