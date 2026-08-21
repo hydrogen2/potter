@@ -91,6 +91,10 @@ CANON.xishi = {
       ['no straight run in the flank', worstRun < 6, `longest flat run ${worstRun} samples`],
       ['wide mouth (55-80% of body)', p.mouthR / maxR >= 0.55 && p.mouthR / maxR <= 0.80,
        `mouth/body ${(p.mouthR / maxR).toFixed(3)}`],
+      // a Lamé exponent below 2 pinches the curve to a point: the silhouette can
+      // still match a photograph closely while the pot reads as a teardrop
+      ['neither half pinched (fullness >= 2)', (p.lowerFull ?? 2) >= 2 && (p.upperFull ?? 2) >= 2,
+       `lower ${(p.lowerFull ?? 0).toFixed(2)}, upper ${(p.upperFull ?? 0).toFixed(2)}`],
     ]
   },
   slots: {

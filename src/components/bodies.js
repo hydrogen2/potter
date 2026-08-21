@@ -139,12 +139,18 @@ export const BODIES = {
     // bottom gives the foot, the top gives the mouth the 截盖 lid sits into.
     params: {
       maxR: { label: '身宽', min: 0.4, max: 1.2, step: 0.005, default: 0.95 },
-      bellyY: { label: '腹高', min: 0.15, max: 0.9, step: 0.005, default: 0.44 },
+      // bellyY only positions the curve before the foot is normalised to y=0,
+      // so it translates and never changes the form — the belly's *relative*
+      // height comes from lowerAxis vs upperAxis. Kept internal, not tunable.
+      bellyY: { label: '腹高', min: 0.44, max: 0.44, step: 0.005, default: 0.44 },
       lowerAxis: { label: '下半高', min: 0.2, max: 1.2, step: 0.005, default: 0.56 },
       upperAxis: { label: '上半高', min: 0.2, max: 1.2, step: 0.005, default: 0.52 },
-      lowerFull: { label: '下丰满', min: 1.6, max: 4.0, step: 0.02, default: 2.45 },
-      upperFull: { label: '上丰满', min: 1.6, max: 4.0, step: 0.02, default: 2.15 },
+      // exponent 2 is an ellipse; below 2 the curve pinches to a point and the
+      // pot reads as a teardrop, never as 西施. The floor is part of the family.
+      lowerFull: { label: '下丰满', min: 2.0, max: 4.0, step: 0.02, default: 2.45 },
+      upperFull: { label: '上丰满', min: 2.0, max: 4.0, step: 0.02, default: 2.15 },
       mouthR: { label: '口径', min: 0.15, max: 0.9, step: 0.005, default: 0.42 },
+      basePress: { label: '捺底', min: 0, max: 0.12, step: 0.002, default: 0.03 },
     },
     profile(p) {
       // quarter Lamé curve: r = maxR * (1 - u^n)^(1/n), u = distance from the
@@ -169,10 +175,15 @@ export const BODIES = {
       }
       // cut both ends flat: a foot to stand on, a mouth for the lid
       const foot = lower.length ? lower[0] : new THREE.Vector2(p.maxR * 0.4, 0)
+      // 一捺底: the base is pressed in, so the pot rests on a ring at the foot
+      // radius and the centre of the underside sits slightly higher
+      const press = p.basePress ?? 0
       const rim = upper.length ? upper[upper.length - 1] : new THREE.Vector2(p.mouthR, p.bellyY + p.upperAxis * 0.8)
       const outer = [
-        new THREE.Vector2(0.03, foot.y),
-        new THREE.Vector2(foot.x * 0.6, foot.y),
+        new THREE.Vector2(0.03, foot.y + press),
+        new THREE.Vector2(foot.x * 0.45, foot.y + press * 0.82),
+        new THREE.Vector2(foot.x * 0.78, foot.y + press * 0.42),
+        new THREE.Vector2(foot.x, foot.y),
         ...lower,
         new THREE.Vector2(p.maxR, p.bellyY),
         ...upper,
@@ -185,7 +196,7 @@ export const BODIES = {
       for (const v of outer) v.y -= y0            // stand the foot on y = 0
       return {
         outer, radiusAt: radiusFn(outer), height: rim.y, mouthR: p.mouthR,  // rim.y is already relative to the foot
-        bottomAt: () => 0,
+        bottomAt: (r) => press * Math.pow(Math.max(0, 1 - r / Math.max(foot.x, 1e-3)), 1.6),
         // the curve the body *would* follow above the mouth: a 截盖 lid is a
         // cut section of it, so the silhouette runs unbroken to the knob
         capAt: (dyAboveRim) => {

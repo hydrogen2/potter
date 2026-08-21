@@ -53,12 +53,15 @@ def audit(render_png, pm, label):
     widens = float(np.mean(np.diff(C[ok]) >= -0.5))       # widening toward the foot
     widest = ok[int(np.argmax(C[ok]))] / 100
     p_widest = ok[int(np.argmax(P[ok]))] / 100
+    # Photo agreement only. Family identity is check-canon.mjs's job — a rule
+    # like "widens toward the foot" belongs to 石瓢, not to every pot.
     checks = [
         ('body profile within 2.5%', err <= 0.025, f'{err*100:.2f}%'),
-        ('widens toward the foot', widens >= 0.80, f'{widens*100:.0f}% of rows'),
         ('widest point within 8% of reference', abs(widest - p_widest) <= 0.08,
          f'{widest*100:.0f}% vs {p_widest*100:.0f}% down'),
     ]
+    if a.expect_widening:
+        checks.insert(1, ('widens toward the foot', widens >= 0.80, f'{widens*100:.0f}% of rows'))
     print(f'--- {label}')
     for name, passed, detail in checks:
         print(f'  {"PASS" if passed else "FAIL"}  {name:38s} {detail}')
@@ -69,6 +72,7 @@ ap = argparse.ArgumentParser()
 ap.add_argument('--views', required=True); ap.add_argument('--view', type=int, default=0)
 ap.add_argument('--render', action='append', default=[])
 ap.add_argument('--descriptors', action='store_true')
+ap.add_argument('--expect-widening', action='store_true', help='石瓢-style: body must widen toward the foot')
 a = ap.parse_args()
 v = json.load(open(a.views))['views'][a.view]
 pm = photo_mask(v)

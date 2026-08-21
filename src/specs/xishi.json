@@ -4,7 +4,7 @@
   "category": "zisha",
   "categoryLabel": "紫砂 · Yixing",
   "canon": "xishi",
-  "notes": "西施壶：身如乳，截盖与身筒同弧，倒把，短乳头流，珠钮，平底无足。此为按器型特征草拟的样例，尚未依实物照片拟合——各比例为待验证的初值。",
+  "notes": "西施壶（倒把西施）：身如乳，截盖与身筒同弧合为球，短流略粗，倒耳把，珠钮，一捺底。身筒以超椭圆（上下两半各有丰满度）拟合于紫砂之家实物照片：近正侧、长焦，相机同时求解；流、把、钮以侧影 IoU 拟合。侧影 IoU 0.89，身筒轮廓残差约 3.7% 器宽——此残差为族形上限（两段超椭圆），非搜索不足。",
   "material": "zhuni",
   "scaleCm": 9,
   "wall": {
@@ -16,40 +16,41 @@
     "type": "superellipse",
     "maxR": 0.84,
     "bellyY": 0.48,
-    "lowerAxis": 0.74,
-    "upperAxis": 0.82,
-    "lowerFull": 2.5,
-    "upperFull": 2.2,
-    "mouthR": 0.58
+    "lowerAxis": 0.6,
+    "upperAxis": 0.62,
+    "lowerFull": 2.4,
+    "upperFull": 2.65,
+    "mouthR": 0.5125,
+    "basePress": 0.035
   },
   "lid": {
     "type": "flush",
     "thickness": 0.04,
-    "rise": 0.94,
+    "rise": 0.95,
     "vent": 0.012
   },
   "knob": {
     "type": "bead",
-    "radius": 0.105,
+    "radius": 0.1113,
     "squash": 0.92
   },
   "spout": {
     "type": "straightCone",
     "length": 0.24,
     "angle": 30,
-    "attachY": 0.58,
+    "attachY": 0.7761,
     "rootR": 0.19,
-    "tipR": 0.085,
+    "tipR": 0.09,
     "wall": 0.014
   },
   "handle": {
     "type": "invertedEar",
-    "tube": 0.075,
-    "taper": 0.6,
-    "outerX": 1.3,
+    "tube": 0.1012,
+    "taper": 0.8031,
+    "outerX": 1.222,
     "topY": 0.78,
-    "botY": 0.3,
-    "loopY": 0.52
+    "botY": 0.2651,
+    "loopY": 0.5162
   },
   "base": {
     "type": "flat"
@@ -64,5 +65,9 @@
     "spout.length",
     "handle.outerX",
     "knob.radius"
+  ],
+  "sources": [
+    "https://www.zisha.com/huxing/xishi_view.shtml",
+    "https://taohuren.com/huxing/xishihu.html"
   ]
 }
