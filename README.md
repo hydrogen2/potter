@@ -162,6 +162,19 @@ one. Nothing could fail, because nothing had been written down.
 is guaranteed by construction (`bow` 0 is dead straight), rather than a general
 spline that *can* be a cone if the optimiser happens to land there.
 
+Families so far:
+
+| family | primitive | what makes it that family |
+|---|---|---|
+| 石瓢 | `cone` | a cone with the tip cut off: widest at the foot, flank never widening upward, straight within 3%; flat lid, bridge knob, straight spout, three feet |
+| 西施 | `superellipse` | fuller than an ellipse and asymmetric top to bottom; widest near mid-height, wider than tall, no straight run anywhere in the flank; a wide mouth closed by a **截盖** lid cut from the body's own curve — so the silhouette never breaks — bead knob, flat footless base |
+
+The 西施 case is the interesting one: you cannot name its shape (it is not a
+sphere, and an ellipse reads as cheap), but you *can* name its relations, and
+those are what the check enforces. A Lamé curve with exponent ~2.2-2.5, cut
+flat at both ends, gives the form; the lid continuing the body's own curve is
+the feature that most decides whether it reads as 西施 at all.
+
 `scripts/fit/shape_audit.py` is the same idea against a reference photograph:
 it reports whether the body profile agrees within tolerance, widens toward the
 foot, and puts the widest point where the reference does — pass/fail, exit code.

@@ -1,0 +1,67 @@
+{
+  "id": "xishi",
+  "label": "西施",
+  "category": "zisha",
+  "categoryLabel": "紫砂 · Yixing",
+  "canon": "xishi",
+  "notes": "西施壶：身如乳，截盖与身筒同弧，倒把，短乳头流，珠钮，平底无足。此为按器型特征草拟的样例，尚未依实物照片拟合——各比例为待验证的初值。",
+  "material": "zhuni",
+  "scaleCm": 9,
+  "wall": {
+    "base": 0.05,
+    "belly": 0.04,
+    "top": 0.036
+  },
+  "body": {
+    "type": "superellipse",
+    "maxR": 0.86,
+    "bellyY": 0.4,
+    "lowerAxis": 0.6,
+    "upperAxis": 0.66,
+    "lowerFull": 2.5,
+    "upperFull": 2.2,
+    "mouthR": 0.58
+  },
+  "lid": {
+    "type": "flush",
+    "thickness": 0.04,
+    "rise": 0.115,
+    "vent": 0.012
+  },
+  "knob": {
+    "type": "bead",
+    "radius": 0.072,
+    "squash": 0.85
+  },
+  "spout": {
+    "type": "straightCone",
+    "length": 0.34,
+    "angle": 38,
+    "attachY": 0.5,
+    "rootR": 0.15,
+    "tipR": 0.062,
+    "wall": 0.012
+  },
+  "handle": {
+    "type": "rearLoop",
+    "tube": 0.052,
+    "topX": 1.12,
+    "outerX": 1.2,
+    "topY": 0.74,
+    "botY": 0.28,
+    "lift": 0.8,
+    "outerY": 0.5
+  },
+  "base": {
+    "type": "flat"
+  },
+  "expose": [
+    "body.maxR",
+    "body.bellyY",
+    "body.lowerFull",
+    "body.upperFull",
+    "body.mouthR",
+    "spout.length",
+    "knob.radius"
+  ]
+}

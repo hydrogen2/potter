@@ -39,6 +39,40 @@ export const LIDS = {
     },
   },
 
+  flush: {
+    label: '截盖',
+    // 西施 and its relatives take a lid cut from the body's own curve: closed,
+    // the silhouette runs unbroken from foot to knob. An overhanging lid, however
+    // well proportioned, reads as the wrong family.
+    params: {
+      thickness: { label: '盖厚', min: 0.02, max: 0.09, step: 0.002, default: 0.04 },
+      rise: { label: '盖高', min: 0.03, max: 0.4, step: 0.005, default: 0.16 },
+      vent: { label: '气孔', min: 0, max: 0.03, step: 0.001, default: 0.012 },
+    },
+    top: (p) => p.rise,
+    build(p, mouthR, material, prof) {
+      const v = Math.max(p.vent, 0.004)
+      const T = p.thickness
+      const rise = prof?.capLimit ? Math.min(p.rise, prof.capLimit * 0.92) : p.rise
+      const cap = []
+      const N = 26
+      for (let i = 0; i <= N; i++) {
+        const dy = (i / N) * rise
+        const r = prof?.capAt ? prof.capAt(dy) : mouthR * Math.cos((i / N) * Math.PI / 2)
+        cap.push(new THREE.Vector2(Math.max(r, v + 0.012), dy))
+      }
+      const pts = [
+        new THREE.Vector2(v, -0.002),
+        new THREE.Vector2(mouthR - 0.02, -0.002),      // seats into the mouth
+        new THREE.Vector2(mouthR, 0.004),
+        ...cap,
+        new THREE.Vector2(v, rise - T * 0.5),
+        new THREE.Vector2(v, -0.002),
+      ]
+      return new THREE.Mesh(loftGeometry({ profile: pts, capBottom: false }), material)
+    },
+  },
+
   dome: {
     label: '穹盖',
     params: {

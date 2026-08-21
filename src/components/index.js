@@ -72,7 +72,7 @@ export function buildVessel(spec, material) {
 
   raised.add(bodyMesh(prof, wall, material))
 
-  const lidMesh = lid.def.build(lid.p, prof.mouthR, material)
+  const lidMesh = lid.def.build(lid.p, prof.mouthR, material, prof)
   if (lidMesh) {
     lidMesh.position.y = prof.height
     raised.add(lidMesh)

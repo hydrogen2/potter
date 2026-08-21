@@ -130,6 +130,74 @@ export const BODIES = {
     },
   },
 
+  superellipse: {
+    label: '超椭圆',
+    // For the full round wares (西施, 掇球, 仿古). A sphere is wrong and an
+    // ellipse is nearly right — what makes 西施 read as 西施 is that it is
+    // *fuller* than an ellipse (a Lamé curve with exponent > 2) and that its
+    // lower half is fuller than its upper half. Both halves are cut flat: the
+    // bottom gives the foot, the top gives the mouth the 截盖 lid sits into.
+    params: {
+      maxR: { label: '身宽', min: 0.4, max: 1.2, step: 0.005, default: 0.95 },
+      bellyY: { label: '腹高', min: 0.15, max: 0.9, step: 0.005, default: 0.44 },
+      lowerAxis: { label: '下半高', min: 0.2, max: 1.2, step: 0.005, default: 0.56 },
+      upperAxis: { label: '上半高', min: 0.2, max: 1.2, step: 0.005, default: 0.52 },
+      lowerFull: { label: '下丰满', min: 1.6, max: 4.0, step: 0.02, default: 2.45 },
+      upperFull: { label: '上丰满', min: 1.6, max: 4.0, step: 0.02, default: 2.15 },
+      mouthR: { label: '口径', min: 0.15, max: 0.9, step: 0.005, default: 0.42 },
+    },
+    profile(p) {
+      // quarter Lamé curve: r = maxR * (1 - u^n)^(1/n), u = distance from the
+      // belly along the axis, normalised by that half's axis length
+      const at = (dy, axis, n) => {
+        const u = Math.min(Math.abs(dy) / axis, 1)
+        return p.maxR * Math.pow(Math.max(0, 1 - Math.pow(u, n)), 1 / n)
+      }
+      const N = 46
+      const lower = []
+      for (let i = N; i >= 1; i--) {
+        const dy = (i / N) * p.lowerAxis
+        const r = at(dy, p.lowerAxis, p.lowerFull)
+        if (r > 0.06) lower.push(new THREE.Vector2(r, p.bellyY - dy))
+      }
+      const upper = []
+      for (let i = 1; i <= N; i++) {
+        const dy = (i / N) * p.upperAxis
+        const r = at(dy, p.upperAxis, p.upperFull)
+        if (r >= p.mouthR) upper.push(new THREE.Vector2(r, p.bellyY + dy))
+        else break
+      }
+      // cut both ends flat: a foot to stand on, a mouth for the lid
+      const foot = lower.length ? lower[0] : new THREE.Vector2(p.maxR * 0.4, 0)
+      const rim = upper.length ? upper[upper.length - 1] : new THREE.Vector2(p.mouthR, p.bellyY + p.upperAxis * 0.8)
+      const outer = [
+        new THREE.Vector2(0.03, foot.y),
+        new THREE.Vector2(foot.x * 0.6, foot.y),
+        ...lower,
+        new THREE.Vector2(p.maxR, p.bellyY),
+        ...upper,
+        new THREE.Vector2(p.mouthR, rim.y),
+      ]
+      // capture the curve's own coordinates before standing the foot on y = 0,
+      // otherwise capAt() below subtracts the offset a second time
+      const rimAbove = rim.y - p.bellyY           // how far the cut sits above the belly
+      const y0 = outer[0].y
+      for (const v of outer) v.y -= y0            // stand the foot on y = 0
+      return {
+        outer, radiusAt: radiusFn(outer), height: rim.y, mouthR: p.mouthR,  // rim.y is already relative to the foot
+        bottomAt: () => 0,
+        // the curve the body *would* follow above the mouth: a 截盖 lid is a
+        // cut section of it, so the silhouette runs unbroken to the knob
+        capAt: (dyAboveRim) => {
+          const dy = rimAbove + dyAboveRim
+          const u = Math.min(Math.abs(dy) / p.upperAxis, 1)
+          return p.maxR * Math.pow(Math.max(0, 1 - Math.pow(u, p.upperFull)), 1 / p.upperFull)
+        },
+        capLimit: Math.max(0, p.upperAxis - rimAbove),
+      }
+    },
+  },
+
   bowl: {
     label: '碗形',
     params: {
