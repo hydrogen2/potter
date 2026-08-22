@@ -91,11 +91,12 @@ export const LIDS = {
       const T = p.thickness
       const dome = new THREE.SplineCurve([
         new THREE.Vector2(R, T - 0.01),
-        new THREE.Vector2(R * 0.66, T + p.rise * 0.45),
-        new THREE.Vector2(R * 0.34, T + p.rise * 0.82),
+        new THREE.Vector2(R * 0.88, T + p.rise * 0.28),   // stays full near the rim,
+        new THREE.Vector2(R * 0.62, T + p.rise * 0.62),   // then turns over — a dome,
+        new THREE.Vector2(R * 0.3, T + p.rise * 0.9),     // not a cone
         new THREE.Vector2(v + 0.03, T + p.rise),
         new THREE.Vector2(v, T + p.rise - 0.004),
-      ]).getSpacedPoints(28)
+      ]).getSpacedPoints(30)
       const pts = [
         new THREE.Vector2(v, -0.002),
         new THREE.Vector2(R * 0.55, -0.002),

@@ -108,11 +108,52 @@ CANON.xishi = {
   },
 }
 
+CANON.panhu = {
+  label: '潘壶',
+  // 潘仕成's form: 口小肚大, 弯嘴, 环把, 圆珠钮, 平底带底圈. The signature is an
+  // inflection the earlier families cannot make — the wall is convex round the
+  // belly and *concave* as it draws in to the neck.
+  body: (prof, p) => {
+    const pts = prof.outer.filter((v) => v.y > 0.02 && v.y < prof.height - 0.02)
+    const widest = pts.reduce((a, b) => (b.x > a.x ? b : a))
+    const maxR = widest.x
+    const curv = (seg) => {
+      let sum = 0
+      for (let i = 2; i < seg.length; i++) {
+        sum += (seg[i].x - seg[i - 1].x) - (seg[i - 1].x - seg[i - 2].x)
+      }
+      return sum
+    }
+    const below = pts.filter((v) => v.y < widest.y)
+    const above = pts.filter((v) => v.y > widest.y)
+    const cb = curv(below)
+    const ca = curv(above)
+    return [
+      ['small mouth, big belly (口小肚大)', prof.mouthR / maxR <= 0.78,
+       `mouth/belly ${(prof.mouthR / maxR).toFixed(3)}`],
+      ['belly in the middle third', widest.y / prof.height >= 0.30 && widest.y / prof.height <= 0.62,
+       `belly at ${(widest.y / prof.height * 100).toFixed(0)}% of height`],
+      ['profile has an inflection', cb < 0 && ca < 0 === false ? true : Math.sign(cb) !== Math.sign(ca),
+       `curvature below ${cb.toFixed(3)}, above ${ca.toFixed(3)}`],
+      ['foot narrower than belly', (p.footR ?? 0) / maxR <= 0.8,
+       `foot/belly ${((p.footR ?? 0) / maxR).toFixed(3)}`],
+    ]
+  },
+  slots: {
+    lid: (t) => [t === 'dome' || t === 'flatDisc', 'lid is a domed 压盖'],
+    knob: (t) => [t === 'bead', 'knob is a round bead (圆珠钮)'],
+    spout: (t) => [t === 'curved', 'spout is curved (弯嘴)'],
+    handle: (t) => [t === 'invertedEar' || t === 'rearLoop', 'ring handle (环把)'],
+    base: (t) => [t === 'ring', 'flat base with a foot ring (底圈)'],
+  },
+}
+
 const want = process.argv.slice(2)
 let failed = 0
 for (const spec of SPECS) {
   const canonId = spec.canon ?? (spec.label?.includes('石瓢') ? 'shipiao'
-    : spec.label?.includes('西施') ? 'xishi' : null)
+    : spec.label?.includes('西施') ? 'xishi'
+    : spec.label?.includes('潘') ? 'panhu' : null)
   if (!canonId || !CANON[canonId]) continue
   if (want.length && !want.includes(spec.id)) continue
   const canon = CANON[canonId]

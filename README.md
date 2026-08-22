@@ -51,11 +51,11 @@ Component vocabulary (growing):
 
 | slot | types today | planned |
 |---|---|---|
-| body 身 | spline, bowl | lerpBell, polyline (方器), lobed (筋纹), mesh |
+| body 身 | cone, superellipse, pear, spline, bowl | lerpBell, polyline (方器), lobed (筋纹), mesh |
 | rim 口 | — | plain, gallery, neck |
 | lid 盖 | none, flatDisc, dome | douli, inset (kyusu), saucer |
 | knob 钮 | none, bridgeStrap, bead | bridgePlate, loop, figural |
-| spout 流 | none, straightCone | formedLip, curved, 三弯 |
+| spout 流 | none, straightCone, curved (弯嘴) | formedLip, curved, 三弯 |
 | handle 把 | none, rearLoop | sideStick (横手), overheadBail (提梁), rearStick |
 | base 足 | flat, studs, ring | — |
 | strainer 滤 | — | singleHole, 球孔, mesh (sasame), plate |
@@ -167,6 +167,7 @@ Families so far:
 | family | primitive | what makes it that family |
 |---|---|---|
 | 石瓢 | `cone` | a cone with the tip cut off: widest at the foot, flank never widening upward, straight within 3%; flat lid, bridge knob, straight spout, three feet |
+| 潘壶 | `pear` | 口小肚大 with an **inflection** neither other family can make: convex round the belly, concave as it draws in to the neck. Belly in the middle third, foot narrower than the belly, a **弯嘴** curved spout, 环把 ring handle, 圆珠钮, and a flat base standing on a **底圈** foot ring. (The seal belongs on the lid rim — a decoration rule, recorded but not checkable geometrically.) |
 | 西施 | `superellipse` | fuller than an ellipse and asymmetric top to bottom; widest near mid-height, wider than tall, no straight run anywhere in the flank; a wide mouth closed by a **截盖** lid that runs up the body's own curve until the ball is complete (a flat-topped lid reads as the wrong family), a bead knob on the neck it converges to, a **短流略粗** spout, a fully-round **倒耳把** thick at the shoulder and tapering to the belly, flat footless base |
 
 The 西施 case is the interesting one: you cannot name its shape (it is not a

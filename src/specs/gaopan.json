@@ -1,0 +1,80 @@
+{
+  "id": "gaopan",
+  "label": "高潘壶",
+  "category": "zisha",
+  "categoryLabel": "紫砂 · Yixing",
+  "canon": "panhu",
+  "notes": "潘壶（高潘）：清道光潘仕成定制之式，口小肚大、弯嘴、环把、圆珠钮、平底带底圈，印款落于盖沿。三式之中身高近梨形者为高潘。此为按器型特征与陈壶实物照片拟形之初稿。",
+  "sources": [
+    "https://chenpot.com/pan-hu-js.html",
+    "https://www.zisha.com/knowledge/10505.shtml"
+  ],
+  "material": "zhuni",
+  "scaleCm": 9,
+  "wall": {
+    "base": 0.045,
+    "belly": 0.034,
+    "top": 0.032
+  },
+  "body": {
+    "type": "pear",
+    "height": 1.21,
+    "bellyR": 0.86,
+    "bellyY": 0.5,
+    "footR": 0.5,
+    "neckR": 0.576,
+    "neckY": 0.96,
+    "flare": 0.012,
+    "lowerFull": 2.1,
+    "shoulder": 1.0
+  },
+  "lid": {
+    "type": "dome",
+    "overhang": 0.03,
+    "thickness": 0.035,
+    "rise": 0.22,
+    "vent": 0.012
+  },
+  "knob": {
+    "type": "bead",
+    "radius": 0.1,
+    "squash": 1.0
+  },
+  "spout": {
+    "type": "curved",
+    "length": 0.44,
+    "attachY": 0.42,
+    "rise": 0.52,
+    "bend": 0.3,
+    "rootR": 0.14,
+    "tipR": 0.058
+  },
+  "handle": {
+    "type": "invertedEar",
+    "tube": 0.058,
+    "taper": 0.9,
+    "outerX": 1.24,
+    "topY": 0.86,
+    "botY": 0.36,
+    "loopY": 0.6
+  },
+  "base": {
+    "type": "ring",
+    "height": 0.035,
+    "inset": 0.0,
+    "wall": 0.05
+  },
+  "expose": [
+    "body.height",
+    "body.bellyR",
+    "body.bellyY",
+    "body.neckR",
+    "body.footR",
+    "spout.length",
+    "spout.rise",
+    "spout.bend",
+    "handle.outerX",
+    "lid.rise",
+    "body.shoulder"
+  ]
+}

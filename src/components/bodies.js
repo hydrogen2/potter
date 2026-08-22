@@ -216,6 +216,62 @@ export const BODIES = {
     },
   },
 
+  pear: {
+    label: '梨形',
+    // 潘壶 and the other 梨形 wares: 口小肚大. Unlike the cone or the
+    // superellipse this profile has an inflection — convex round the belly,
+    // then *concave* as it draws in to the neck, with a slight flare at the
+    // rim. That change of sign is the family's signature.
+    params: {
+      height: { label: '身高', min: 0.4, max: 1.6, step: 0.005, default: 1.0 },
+      bellyR: { label: '腹径', min: 0.4, max: 1.2, step: 0.005, default: 0.86 },
+      bellyY: { label: '腹位', min: 0.18, max: 0.75, step: 0.005, default: 0.34 },
+      footR: { label: '底径', min: 0.15, max: 0.8, step: 0.005, default: 0.46 },
+      neckR: { label: '颈径', min: 0.15, max: 0.8, step: 0.005, default: 0.5 },
+      neckY: { label: '颈位', min: 0.6, max: 1.0, step: 0.005, default: 0.9 },
+      flare: { label: '口侈', min: 0, max: 0.12, step: 0.002, default: 0.02 },
+      lowerFull: { label: '下丰满', min: 2.0, max: 3.6, step: 0.02, default: 2.4 },
+      shoulder: { label: '肩收', min: 0.3, max: 3.0, step: 0.02, default: 1.4 },
+    },
+    profile(p) {
+      const H = p.height
+      const bellyY = H * p.bellyY
+      const neckY = H * p.neckY
+      const pts = [new THREE.Vector2(p.footR, 0)]
+      // belly: a proper Lamé quarter between foot and widest point, so the wall
+      // *rounds into* the belly instead of snapping to it
+      const NL = 30
+      const n = p.lowerFull
+      for (let i = 1; i <= NL; i++) {
+        const t = i / NL
+        const u = 1 - t                                   // 1 at the foot, 0 at the belly
+        const r = p.footR + (p.bellyR - p.footR) * Math.pow(Math.max(0, 1 - Math.pow(u, n)), 1 / n)
+        pts.push(new THREE.Vector2(r, bellyY * t))
+      }
+      // shoulder: draws in to the neck. Eased at *both* ends — leaving the
+      // belly and arriving at the neck — or the wall meets the lip at an angle
+      // and the pot creases where a thrown pot flows.
+      const NU = 34
+      for (let i = 1; i <= NU; i++) {
+        const t = i / NU
+        const e = (1 - Math.cos(Math.PI * Math.pow(t, p.shoulder))) / 2
+        pts.push(new THREE.Vector2(
+          THREE.MathUtils.lerp(p.bellyR, p.neckR, e),
+          THREE.MathUtils.lerp(bellyY, neckY, t),
+        ))
+      }
+      // a short flared lip above the neck
+      if (H - neckY > 1e-3) {
+        pts.push(new THREE.Vector2(p.neckR + p.flare * 0.6, THREE.MathUtils.lerp(neckY, H, 0.55)))
+        pts.push(new THREE.Vector2(p.neckR + p.flare, H))
+      }
+      return {
+        outer: pts, radiusAt: radiusFn(pts), height: H, mouthR: p.neckR + p.flare,
+        bottomAt: () => 0,
+      }
+    },
+  },
+
   bowl: {
     label: '碗形',
     params: {

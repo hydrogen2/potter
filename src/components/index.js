@@ -83,8 +83,10 @@ export function buildVessel(spec, material) {
     }
   }
 
-  const spoutMesh = spout.def.build(spout.p, material)
-  if (spoutMesh) {
+  const spoutMesh = spout.def.build(spout.p, material, prof)
+  if (spoutMesh && spout.p.type === 'curved') {
+    raised.add(spoutMesh)          // a swept spout is already in body coordinates
+  } else if (spoutMesh) {
     const angle = THREE.MathUtils.degToRad(spout.p.angle)
     const yAttach = prof.height * spout.p.attachY
     const embed = 0.06
