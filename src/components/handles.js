@@ -62,7 +62,9 @@ export const HANDLES = {
     // belly. Built on a true circular arc so no straight segment can appear.
     params: {
       tube: { label: '把粗', min: 0.03, max: 0.12, step: 0.002, default: 0.075 },
-      taper: { label: '把梢', min: 0.35, max: 1.0, step: 0.02, default: 0.6 },
+      // 倒 = inverted: unlike an ordinary ear, the strap is *thin* where it
+      // leaves the shoulder and thickest at the lower root
+      taper: { label: '上梢', min: 0.35, max: 1.0, step: 0.02, default: 0.6 },
       outerX: { label: '外缘', min: 0.8, max: 2.0, step: 0.01, default: 1.30 },
       topY: { label: '上接', min: 0.45, max: 1.0, step: 0.01, default: 0.78 },
       botY: { label: '下接', min: 0.08, max: 0.6, step: 0.01, default: 0.30 },
@@ -95,7 +97,7 @@ export const HANDLES = {
         pts.push(new THREE.Vector3(centre.x + radius * Math.cos(a), centre.y + radius * Math.sin(a), 0))
       }
       const curve = new THREE.CatmullRomCurve3(pts, false, 'centripetal')
-      const geo = sweptTube(curve, (t) => p.tube * (1 - (1 - p.taper) * t * t))
+      const geo = sweptTube(curve, (t) => p.tube * (p.taper + (1 - p.taper) * Math.pow(t, 1.4)))
       return new THREE.Mesh(geo, material)
     },
   },

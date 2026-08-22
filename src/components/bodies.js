@@ -150,6 +150,7 @@ export const BODIES = {
       lowerFull: { label: '下丰满', min: 2.0, max: 4.0, step: 0.02, default: 2.45 },
       upperFull: { label: '上丰满', min: 2.0, max: 4.0, step: 0.02, default: 2.15 },
       mouthR: { label: '口径', min: 0.15, max: 0.9, step: 0.005, default: 0.42 },
+      footR: { label: '底径', min: 0.15, max: 0.9, step: 0.005, default: 0.45 },
       basePress: { label: '捺底', min: 0, max: 0.12, step: 0.002, default: 0.03 },
     },
     profile(p) {
@@ -160,11 +161,17 @@ export const BODIES = {
         return p.maxR * Math.pow(Math.max(0, 1 - Math.pow(u, n)), 1 / n)
       }
       const N = 46
+      // the lower curve is cut at the foot radius, not run to the pole: a 西施
+      // stands on a real flat base (一捺底), it is not a ball resting on a point
+      const footR = Math.min(p.footR ?? 0.45, p.maxR * 0.95)
+      const uFoot = Math.pow(
+        Math.max(0, 1 - Math.pow(footR / p.maxR, p.lowerFull)), 1 / p.lowerFull,
+      )
+      const dyFoot = uFoot * p.lowerAxis
       const lower = []
       for (let i = N; i >= 1; i--) {
-        const dy = (i / N) * p.lowerAxis
-        const r = at(dy, p.lowerAxis, p.lowerFull)
-        if (r > 0.06) lower.push(new THREE.Vector2(r, p.bellyY - dy))
+        const dy = (i / N) * dyFoot
+        lower.push(new THREE.Vector2(at(dy, p.lowerAxis, p.lowerFull), p.bellyY - dy))
       }
       const upper = []
       for (let i = 1; i <= N; i++) {
@@ -174,16 +181,16 @@ export const BODIES = {
         else break
       }
       // cut both ends flat: a foot to stand on, a mouth for the lid
-      const foot = lower.length ? lower[0] : new THREE.Vector2(p.maxR * 0.4, 0)
+      const foot = new THREE.Vector2(footR, p.bellyY - dyFoot)
       // 一捺底: the base is pressed in, so the pot rests on a ring at the foot
       // radius and the centre of the underside sits slightly higher
       const press = p.basePress ?? 0
       const rim = upper.length ? upper[upper.length - 1] : new THREE.Vector2(p.mouthR, p.bellyY + p.upperAxis * 0.8)
       const outer = [
         new THREE.Vector2(0.03, foot.y + press),
-        new THREE.Vector2(foot.x * 0.45, foot.y + press * 0.82),
-        new THREE.Vector2(foot.x * 0.78, foot.y + press * 0.42),
-        new THREE.Vector2(foot.x, foot.y),
+        new THREE.Vector2(footR * 0.5, foot.y + press * 0.78),
+        new THREE.Vector2(footR * 0.85, foot.y + press * 0.28),
+        new THREE.Vector2(footR, foot.y),
         ...lower,
         new THREE.Vector2(p.maxR, p.bellyY),
         ...upper,
