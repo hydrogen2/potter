@@ -34,6 +34,7 @@ export const HANDLES = {
       topY: { label: '上接', min: 0.45, max: 1.0, step: 0.01, default: 0.78 },
       botY: { label: '下接', min: 0.08, max: 0.6, step: 0.01, default: 0.30 },
       loopY: { label: '环心高', min: 0.2, max: 0.9, step: 0.01, default: 0.52 },
+      stretch: { label: '环高扁', min: 0.6, max: 1.8, step: 0.02, default: 1.0 },
     },
     build(p, prof, material) {
       const H = prof.height
@@ -55,12 +56,22 @@ export const HANDLES = {
       if (!(Math.sign(dc) === Math.sign(delta) && Math.abs(dc) < Math.abs(delta))) {
         delta -= Math.sign(delta) * Math.PI * 2
       }
+      // a circle through the three points is the base; `stretch` makes it an
+      // oval, since a real 环把 is taller than it is wide
+      const k = p.stretch ?? 1
       const pts = []
       const N = 64
       for (let i = 0; i <= N; i++) {
         const a = a0 + delta * (i / N)
-        pts.push(new THREE.Vector3(centre.x + radius * Math.cos(a), centre.y + radius * Math.sin(a), 0))
+        pts.push(new THREE.Vector3(
+          centre.x + radius * Math.cos(a),
+          centre.y + radius * Math.sin(a) * k,
+          0,
+        ))
       }
+      // the ends must still meet the body after stretching
+      pts[0].set(A.x, A.y, 0)
+      pts[pts.length - 1].set(B.x, B.y, 0)
       const curve = new THREE.CatmullRomCurve3(pts, false, 'centripetal')
       const geo = sweptTube(curve, (t) => p.tube * (p.taper + (1 - p.taper) * Math.pow(t, 1.4)))
       return new THREE.Mesh(geo, material)

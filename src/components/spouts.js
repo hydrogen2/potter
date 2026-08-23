@@ -23,6 +23,7 @@ export const SPOUTS = {
       bend: { label: '弯度', min: -0.3, max: 0.6, step: 0.01, default: 0.26 },
       rootR: { label: '根径', min: 0.05, max: 0.22, step: 0.002, default: 0.115 },
       tipR: { label: '口径', min: 0.02, max: 0.1, step: 0.002, default: 0.042 },
+      wall: { label: '壁厚', min: 0.005, max: 0.03, step: 0.001, default: 0.012 },
     },
     build(p, material, prof) {
       const H = prof?.height ?? 1
@@ -37,8 +38,9 @@ export const SPOUTS = {
         new THREE.Vector3(x0 + p.length * 0.68, y0 + H * p.rise * (0.42 + p.bend * 0.4), 0),
         new THREE.Vector3(tipX, tipY, 0),
       ], false, 'centripetal')
+      const outerAt = (t) => THREE.MathUtils.lerp(p.rootR, p.tipR, Math.pow(t, 0.8))
       return new THREE.Mesh(
-        sweptTube(curve, (t) => THREE.MathUtils.lerp(p.rootR, p.tipR, Math.pow(t, 0.8))),
+        sweptTube(curve, outerAt, 72, 18, (t) => Math.max(outerAt(t) - p.wall, 0.006)),
         material,
       )
     },

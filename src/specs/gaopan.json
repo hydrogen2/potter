@@ -42,21 +42,23 @@
   },
   "spout": {
     "type": "curved",
-    "length": 0.44,
-    "attachY": 0.42,
-    "rise": 0.52,
-    "bend": 0.3,
-    "rootR": 0.14,
-    "tipR": 0.058
+    "length": 0.4,
+    "attachY": 0.44,
+    "rise": 0.48,
+    "bend": 0.34,
+    "rootR": 0.17,
+    "tipR": 0.062,
+    "wall": 0.013
   },
   "handle": {
     "type": "invertedEar",
-    "tube": 0.058,
-    "taper": 0.9,
-    "outerX": 1.24,
-    "topY": 0.86,
-    "botY": 0.36,
-    "loopY": 0.6
+    "tube": 0.06,
+    "taper": 0.85,
+    "outerX": 1.3,
+    "topY": 0.9,
+    "botY": 0.2,
+    "loopY": 0.55,
+    "stretch": 1.25
   },
   "base": {
     "type": "ring",
