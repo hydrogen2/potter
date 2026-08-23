@@ -93,12 +93,12 @@ export const LIDS = {
     params: {
       overhang: { label: '盖沿', min: 0, max: 0.12, step: 0.002, default: 0.03 },
       thickness: { label: '盖厚', min: 0.02, max: 0.1, step: 0.002, default: 0.038 },
-      rise: { label: '穹高', min: 0.2, max: 1.0, step: 0.01, default: 0.68 },
+      rise: { label: '穹高', min: 0.2, max: 1.2, step: 0.01, default: 0.68 },
       flange: { label: '子口', min: 0, max: 0.12, step: 0.004, default: 0.05 },
       // the lid rim is a flat annulus and the cap springs from *inside* it.
       // Without this the dome starts at the full rim radius and the lid reads
       // tall and hat-like; on the real pots it reads broad and low.
-      brim: { label: '盖沿宽', min: 0, max: 0.12, step: 0.004, default: 0.03 },
+      brim: { label: '盖沿宽', min: 0, max: 0.28, step: 0.004, default: 0.03 },
       // 压盖 means the lid presses down *over* the mouth: the rim continues
       // below the seating plane as a hanging skirt that covers the body's
       // collar. Without it the lid just perches on the ledge.
@@ -110,7 +110,8 @@ export const LIDS = {
     // mouth is resized
     // the cap springs from the top of the brim, not from the seating plane
     top: (p, prof) =>
-      (prof.mouthR + p.overhang - (p.brim ?? 0)) * p.rise + p.thickness * 0.58,
+      (prof.mouthR + p.overhang - (p.brim ?? 0)) * p.rise
+      + p.thickness * 0.58 + (p.brim ?? 0) * 0.55,
     build(p, mouthR, material, prof) {
       const R = mouthR + p.overhang          // the rim, ball 2's widest circle
       const Rd = Math.max(R - (p.brim ?? 0), R * 0.5)   // where the cap springs
@@ -135,7 +136,10 @@ export const LIDS = {
       const Ri = Rs - T
       const rimEdge = Math.max(p.skirt ?? 0, T * 0.6)   // how far the skirt hangs
       const brimTop = T * 0.42
-      const domeBase = brimTop + T * 0.16     // where the cap actually springs
+      // The shelf between rim and dome climbs as it goes in. Held flat, a wide
+      // brim reads as a flying saucer; on the real pots it is a short stepped
+      // bevel hugging the dome.
+      const domeBase = brimTop + T * 0.16 + (p.brim ?? 0) * 0.55
       const thInner = Math.acos(
         Math.min(1, Math.max(-1, (Rs - h - domeBase) / Ri)),
       )

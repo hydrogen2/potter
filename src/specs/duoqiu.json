@@ -28,14 +28,14 @@
   },
   "lid": {
     "type": "ballCap",
-    "overhang": 0.042,
+    "overhang": 0.038,
     "thickness": 0.038,
-    "rise": 0.62,
+    "rise": 0.74,
     "flange": 0.05,
     "vent": 0.013,
     "seam": 0.005,
-    "brim": 0.018,
-    "skirt": 0.05
+    "brim": 0.0,
+    "skirt": 0.058
   },
   "knob": {
     "type": "bead",
@@ -45,26 +45,26 @@
   },
   "spout": {
     "type": "curved",
-    "length": 0.46,
-    "rootR": 0.19,
-    "tipR": 0.08,
+    "length": 0.56,
+    "rootR": 0.2,
+    "tipR": 0.07,
     "attachY": 0.46,
-    "rise": 0.42,
+    "rise": 0.34,
     "wall": 0.016,
-    "blend": 0.09,
-    "bend": 0.24,
+    "blend": 0.1,
+    "bend": 0.34,
     "tipUp": 0.55
   },
   "handle": {
     "type": "invertedEar",
-    "tube": 0.115,
-    "taper": 1.35,
-    "outerX": 1.48,
+    "tube": 0.09,
+    "taper": 1.28,
+    "outerX": 1.44,
     "topY": 0.7,
-    "botY": 0.22,
-    "loopY": 0.47,
-    "stretch": 1.12,
-    "blend": 0.06
+    "botY": 0.16,
+    "loopY": 0.46,
+    "stretch": 1.28,
+    "blend": 0.09
   },
   "base": {
     "type": "ring",
