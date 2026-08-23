@@ -1,6 +1,6 @@
 import * as THREE from 'three'
 import { loftGeometry } from '../geometry/loft.js'
-import { sweptTube } from '../geometry/sweep.js'
+import { sweptTube, filletCollar, surfaceCrossing } from '../geometry/sweep.js'
 
 /**
  * 流 — spouts. Built along +Y from the base (y=0) to the tip; the
@@ -24,6 +24,7 @@ export const SPOUTS = {
       rootR: { label: '根径', min: 0.05, max: 0.22, step: 0.002, default: 0.115 },
       tipR: { label: '口径', min: 0.02, max: 0.1, step: 0.002, default: 0.042 },
       wall: { label: '壁厚', min: 0.005, max: 0.03, step: 0.001, default: 0.012 },
+      blend: { label: '润接', min: 0, max: 0.2, step: 0.005, default: 0.06 },
     },
     build(p, material, prof) {
       const H = prof?.height ?? 1
@@ -39,10 +40,22 @@ export const SPOUTS = {
         new THREE.Vector3(tipX, tipY, 0),
       ], false, 'centripetal')
       const outerAt = (t) => THREE.MathUtils.lerp(p.rootR, p.tipR, Math.pow(t, 0.8))
-      return new THREE.Mesh(
+      const tube = new THREE.Mesh(
         sweptTube(curve, outerAt, 72, 18, (t) => Math.max(outerAt(t) - p.wall, 0.006)),
         material,
       )
+      if (!p.blend) return tube
+      // 润接: the root flows into the belly instead of being butted against it
+      const group = new THREE.Group()
+      const onBody = (P) => {
+        const r = Math.hypot(P.x, P.z) || 1e-6
+        const target = prof.radiusAt(P.y)
+        return new THREE.Vector3(P.x * target / r, P.y, P.z * target / r)
+      }
+      const { point, tangent, t } = surfaceCrossing(curve, prof, true)
+      const rootR = THREE.MathUtils.lerp(p.rootR, p.tipR, Math.pow(t, 0.8))
+      group.add(tube, new THREE.Mesh(filletCollar(point, tangent, rootR, p.blend, 26, 12, onBody), material))
+      return group
     },
   },
 

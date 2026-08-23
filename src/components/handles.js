@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import { sweptTube } from '../geometry/sweep.js'
+import { sweptTube, filletCollar, surfaceCrossing } from '../geometry/sweep.js'
 
 /** the circle through three points, as centre + radius */
 function circleThrough(A, B, C) {
@@ -35,6 +35,7 @@ export const HANDLES = {
       botY: { label: '下接', min: 0.08, max: 0.6, step: 0.01, default: 0.30 },
       loopY: { label: '环心高', min: 0.2, max: 0.9, step: 0.01, default: 0.52 },
       stretch: { label: '环高扁', min: 0.6, max: 1.8, step: 0.02, default: 1.0 },
+      blend: { label: '润接', min: 0, max: 0.16, step: 0.005, default: 0.045 },
     },
     build(p, prof, material) {
       const H = prof.height
@@ -73,8 +74,21 @@ export const HANDLES = {
       pts[0].set(A.x, A.y, 0)
       pts[pts.length - 1].set(B.x, B.y, 0)
       const curve = new THREE.CatmullRomCurve3(pts, false, 'centripetal')
-      const geo = sweptTube(curve, (t) => p.tube * (p.taper + (1 - p.taper) * Math.pow(t, 1.4)))
-      return new THREE.Mesh(geo, material)
+      const rAt = (t) => p.tube * (p.taper + (1 - p.taper) * Math.pow(t, 1.4))
+      const loop = new THREE.Mesh(sweptTube(curve, rAt), material)
+      if (!p.blend) return loop
+      const group = new THREE.Group()
+      group.add(loop)
+      const onBody = (P) => {
+        const r = Math.hypot(P.x, P.z) || 1e-6
+        const target = prof.radiusAt(P.y)
+        return new THREE.Vector3(P.x * target / r, P.y, P.z * target / r)
+      }
+      for (const fromStart of [true, false]) {
+        const { point, tangent, t } = surfaceCrossing(curve, prof, fromStart)
+        group.add(new THREE.Mesh(filletCollar(point, tangent, rAt(t), p.blend, 26, 12, onBody), material))
+      }
+      return group
     },
   },
 

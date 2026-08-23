@@ -48,7 +48,8 @@
     "bend": 0.34,
     "rootR": 0.17,
     "tipR": 0.062,
-    "wall": 0.013
+    "wall": 0.013,
+    "blend": 0.055
   },
   "handle": {
     "type": "invertedEar",
@@ -58,7 +59,8 @@
     "topY": 0.9,
     "botY": 0.2,
     "loopY": 0.55,
-    "stretch": 1.25
+    "stretch": 1.25,
+    "blend": 0.04
   },
   "base": {
     "type": "ring",

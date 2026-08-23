@@ -51,7 +51,8 @@
     "outerX": 1.222,
     "topY": 0.78,
     "botY": 0.2651,
-    "loopY": 0.5162
+    "loopY": 0.5162,
+    "blend": 0.04
   },
   "base": {
     "type": "flat"
