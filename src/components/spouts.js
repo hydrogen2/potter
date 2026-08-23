@@ -25,6 +25,10 @@ export const SPOUTS = {
       tipR: { label: '口径', min: 0.02, max: 0.1, step: 0.002, default: 0.042 },
       wall: { label: '壁厚', min: 0.005, max: 0.03, step: 0.001, default: 0.012 },
       blend: { label: '润接', min: 0, max: 0.2, step: 0.005, default: 0.06 },
+      // How vertical the last run is. On a real 一弯嘴 the final third turns up
+      // and the lip faces the sky; at 0 the spout runs out on the diagonal,
+      // which is what 潘壶 has, so this defaults off.
+      tipUp: { label: '流口上扬', min: 0, max: 1, step: 0.02, default: 0 },
     },
     build(p, material, prof) {
       const H = prof?.height ?? 1
@@ -38,12 +42,26 @@ export const SPOUTS = {
       const tipY = y0 + H * p.rise
       const tipX = x0 + p.length
       // control points: out of the belly, through the bend, up to the lip
-      const curve = new THREE.CatmullRomCurve3([
+      const u = p.tipUp ?? 0
+      const ctrl = [
         new THREE.Vector3(x0 - embed, y0 - 0.02, 0),
         new THREE.Vector3(x0 + p.length * 0.32, y0 + H * p.rise * 0.16, 0),
         new THREE.Vector3(x0 + p.length * 0.68, y0 + H * p.rise * (0.42 + p.bend * 0.4), 0),
-        new THREE.Vector3(tipX, tipY, 0),
-      ], false, 'centripetal')
+      ]
+      if (u > 0) {
+        // stack a knee almost directly under the lip: the curve then has to
+        // climb steeply over very little horizontal distance, and the tube's
+        // end cap — the 流口 — ends up facing upward
+        // set the knee well back from the lip: crowding it under the tip makes
+        // Catmull-Rom turn a corner rather than a curve
+        ctrl.push(new THREE.Vector3(
+          tipX - p.length * 0.30 * u,
+          tipY - H * p.rise * 0.50 * u,
+          0,
+        ))
+      }
+      ctrl.push(new THREE.Vector3(tipX, tipY, 0))
+      const curve = new THREE.CatmullRomCurve3(ctrl, false, 'centripetal')
       const outerAt = (t) => THREE.MathUtils.lerp(p.rootR, p.tipR, Math.pow(t, 0.8))
       const tube = new THREE.Mesh(
         sweptTube(curve, outerAt, 72, 18, (t) => Math.max(outerAt(t) - p.wall, 0.006)),

@@ -4,7 +4,7 @@
   "category": "zisha",
   "categoryLabel": "紫砂 · Yixing",
   "canon": "duoqiu",
-  "notes": "掇球壶（寿珍掇球一路）：身、盖、钮三球相掇，故名。身筒近球而略扁，压盖为真球冠（非样条穹顶），珠钮微扁，一弯流，耳形环把，圈足。两张近平视实物照片实测：盖顶至壶底约等于身筒最大直径（1.03、1.05），盖沿直径为身径的 0.63、0.66（古法称 E/E2=0.618），身筒宽高比 1.21、1.22，盖高约为盖沿直径的 1/3（0.33、0.35）——文献称『明显的半球状』，实测并非半球，从实测。",
+  "notes": "掇球壶（寿珍掇球一路）：身、盖、钮三球相掇，故名。身筒近球而略扁，压盖为真球冠（非样条穹顶）并带盖裙压于身筒唇上，珠钮微扁，一弯流末段上扬、流口朝天，耳形环把（上粗下细，非西施之倒把），圈足。两张近平视实物照片实测：盖顶至壶底约等于身筒最大直径（1.03、1.05），盖沿直径为身径的 0.63、0.66（古法称 E/E2=0.618），身筒宽高比 1.21、1.22，盖高约为盖沿直径的 1/3（0.33、0.35）——文献称『明显的半球状』，实测并非半球，从实测。身筒宽高比在此取 1.31，宽于两张参照（1.21、1.22），是应要求加宽，仍在 canon 范围内。",
   "material": "zini",
   "scaleCm": 9,
   "wall": {
@@ -14,27 +14,28 @@
   },
   "body": {
     "type": "superellipse",
-    "maxR": 0.95,
+    "maxR": 1.02,
     "bellyY": 0.44,
-    "lowerAxis": 0.92,
-    "upperAxis": 0.8,
+    "lowerAxis": 0.9,
+    "upperAxis": 0.76,
     "lowerFull": 2.3,
     "upperFull": 2.45,
-    "mouthR": 0.562,
+    "mouthR": 0.563,
     "basePress": 0.04,
     "footR": 0.5,
-    "collar": 0.065,
+    "collar": 0.06,
     "collarH": 0.095
   },
   "lid": {
     "type": "ballCap",
-    "overhang": 0.012,
+    "overhang": 0.042,
     "thickness": 0.038,
-    "rise": 0.72,
+    "rise": 0.62,
     "flange": 0.05,
     "vent": 0.013,
     "seam": 0.005,
-    "brim": 0.055
+    "brim": 0.018,
+    "skirt": 0.05
   },
   "knob": {
     "type": "bead",
@@ -44,19 +45,20 @@
   },
   "spout": {
     "type": "curved",
-    "length": 0.38,
+    "length": 0.46,
     "rootR": 0.19,
-    "tipR": 0.095,
-    "attachY": 0.5,
-    "rise": 0.3,
+    "tipR": 0.08,
+    "attachY": 0.46,
+    "rise": 0.42,
     "wall": 0.016,
     "blend": 0.09,
-    "bend": 0.18
+    "bend": 0.24,
+    "tipUp": 0.55
   },
   "handle": {
     "type": "invertedEar",
     "tube": 0.115,
-    "taper": 0.93,
+    "taper": 1.35,
     "outerX": 1.48,
     "topY": 0.7,
     "botY": 0.22,
@@ -71,16 +73,19 @@
     "wall": 0.05
   },
   "expose": [
-    "body.maxR",
     "body.lowerFull",
-    "body.upperFull",
+    "body.maxR",
     "body.mouthR",
-    "lid.rise",
-    "lid.overhang",
-    "knob.radius",
-    "spout.length",
+    "body.upperFull",
     "handle.outerX",
-    "lid.brim"
+    "handle.taper",
+    "knob.radius",
+    "lid.brim",
+    "lid.overhang",
+    "lid.rise",
+    "lid.skirt",
+    "spout.length",
+    "spout.tipUp"
   ],
   "sources": [
     "https://www.zisha.com/knowledge/30802.shtml",

@@ -29,9 +29,11 @@ export const HANDLES = {
     // of handle — a D with a corner at the top — and is wrong for both.
     params: {
       tube: { label: '把粗', min: 0.03, max: 0.12, step: 0.002, default: 0.075 },
-      // 倒 = inverted: unlike an ordinary ear, the strap is *thin* where it
-      // leaves the shoulder and thickest at the lower root
-      taper: { label: '上梢', min: 0.35, max: 1.0, step: 0.02, default: 0.6 },
+      // Which end is thick. Below 1 the strap is *thin* where it leaves the
+      // shoulder and thickest at the lower root — that inversion is what 倒把
+      // means and it is 西施's signature. Above 1 it is the ordinary ear that
+      // 掇球 and most other 环把 have: thick at the shoulder, tapering down.
+      taper: { label: '上梢', min: 0.35, max: 1.8, step: 0.02, default: 0.6 },
       outerX: { label: '外缘', min: 0.8, max: 2.0, step: 0.01, default: 1.30 },
       topY: { label: '上接', min: 0.45, max: 1.0, step: 0.01, default: 0.78 },
       botY: { label: '下接', min: 0.08, max: 0.6, step: 0.01, default: 0.30 },

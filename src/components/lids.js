@@ -99,6 +99,10 @@ export const LIDS = {
       // Without this the dome starts at the full rim radius and the lid reads
       // tall and hat-like; on the real pots it reads broad and low.
       brim: { label: '盖沿宽', min: 0, max: 0.12, step: 0.004, default: 0.03 },
+      // 压盖 means the lid presses down *over* the mouth: the rim continues
+      // below the seating plane as a hanging skirt that covers the body's
+      // collar. Without it the lid just perches on the ledge.
+      skirt: { label: '盖裙', min: 0, max: 0.14, step: 0.004, default: 0.03 },
       vent: { label: '气孔', min: 0, max: 0.03, step: 0.001, default: 0.013 },
       seam: { label: '盖缝', min: 0.0, max: 0.02, step: 0.001, default: 0.005 },
     },
@@ -107,7 +111,7 @@ export const LIDS = {
     // the cap springs from the top of the brim, not from the seating plane
     top: (p, prof) =>
       (prof.mouthR + p.overhang - (p.brim ?? 0)) * p.rise + p.thickness * 0.58,
-    build(p, mouthR, material) {
+    build(p, mouthR, material, prof) {
       const R = mouthR + p.overhang          // the rim, ball 2's widest circle
       const Rd = Math.max(R - (p.brim ?? 0), R * 0.5)   // where the cap springs
       const h = Rd * p.rise
@@ -129,7 +133,7 @@ export const LIDS = {
       // the inner surface is the same sphere shrunk by the wall — for a sphere
       // an offset along the normal is exactly a smaller concentric radius
       const Ri = Rs - T
-      const rimEdge = T * 0.6
+      const rimEdge = Math.max(p.skirt ?? 0, T * 0.6)   // how far the skirt hangs
       const brimTop = T * 0.42
       const domeBase = brimTop + T * 0.16     // where the cap actually springs
       const thInner = Math.acos(
@@ -175,7 +179,9 @@ export const LIDS = {
       g.add(new THREE.Mesh(loftGeometry({ profile: pts, capBottom: false }), material))
       // 子口: the flange that drops into the mouth and holds the lid in place
       if (p.flange > 0) {
-        const fr = mouthR - 0.02
+        // the bore, not the seat: with a rim collar those differ, and sizing
+        // the 子口 off the seat put it outside the opening and through the collar
+        const fr = (prof?.boreR ?? mouthR) - 0.02
         const f = p.flange
         const ring = [
           new THREE.Vector2(fr, -rimEdge),

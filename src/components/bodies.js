@@ -235,6 +235,7 @@ export const BODIES = {
         // foot; with a collar the body's top is the ledge, not the mouth cut
         outer, radiusAt: radiusFn(outer), height: rim.y + (collar > 0 ? cH : 0),
         mouthR: p.mouthR + collar,   // what the lid seats on
+        boreR: p.mouthR,             // the actual opening, which the 子口 drops into
         bottomAt: (r) => press * Math.pow(Math.max(0, 1 - r / Math.max(foot.x, 1e-3)), 1.6),
         // the curve the body *would* follow above the mouth: a 截盖 lid is a
         // cut section of it, so the silhouette runs unbroken to the knob
