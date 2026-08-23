@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import { sweptTube } from '../geometry/sweep.js'
+import { sweptTube, filletCollar } from '../geometry/sweep.js'
 
 /**
  * 钮 — knobs. Positioned by the assembler at the lid's top surface;
@@ -38,6 +38,7 @@ export const KNOBS = {
       rise: { label: '拱高', min: 0.05, max: 0.3, step: 0.005, default: 0.15 },
       tube: { label: '条粗', min: 0.02, max: 0.12, step: 0.002, default: 0.055 },
       width: { label: '条宽', min: 0.8, max: 3.0, step: 0.05, default: 1.7 },
+      blend: { label: '润接', min: 0, max: 0.1, step: 0.005, default: 0.03 },
     },
     build(p, material) {
       const arc = new THREE.EllipseCurve(
@@ -46,9 +47,23 @@ export const KNOBS = {
       const curve = new THREE.CatmullRomCurve3(
         arc.getSpacedPoints(36).map((v) => new THREE.Vector3(v.x, v.y, 0)),
       )
-      const mesh = new THREE.Mesh(sweptTube(curve, () => p.tube, 56, 18), material)
-      mesh.scale.z = p.width          // a strap is wider than it is thick
-      return mesh
+      const group = new THREE.Group()
+      group.add(new THREE.Mesh(sweptTube(curve, () => p.tube, 56, 18), material))
+      if (p.blend) {
+        // 润接 where the strap's feet meet the lid: the collar's far edge is
+        // pulled onto the lid plane, so the foot spreads instead of butting
+        const onLid = (P) => new THREE.Vector3(P.x, 0, P.z)
+        for (const [t, sign] of [[0, 1], [1, -1]]) {
+          const end = curve.getPointAt(t)
+          const dir = curve.getTangentAt(t).multiplyScalar(sign)
+          const anchor = new THREE.Vector3(end.x, 0, end.z)
+          group.add(new THREE.Mesh(
+            filletCollar(anchor, dir, p.tube, p.blend, 24, 12, onLid), material,
+          ))
+        }
+      }
+      group.scale.z = p.width          // a strap is wider than it is thick
+      return group
     },
   },
 
@@ -57,12 +72,23 @@ export const KNOBS = {
     params: {
       radius: { label: '珠径', min: 0.04, max: 0.16, step: 0.002, default: 0.09 },
       squash: { label: '扁度', min: 0.5, max: 1.2, step: 0.02, default: 0.85 },
+      blend: { label: '润接', min: 0, max: 0.1, step: 0.005, default: 0.025 },
     },
     build(p, material) {
       const m = new THREE.Mesh(new THREE.SphereGeometry(p.radius, 28, 20), material)
       m.scale.y = p.squash
       m.position.y = p.radius * p.squash * 0.7
-      return m
+      if (!p.blend) return m
+      const group = new THREE.Group()
+      group.add(m)
+      // the bead is luted on, so clay gathers where it meets the lid
+      const onLid = (P) => new THREE.Vector3(P.x, 0, P.z)
+      group.add(new THREE.Mesh(
+        filletCollar(new THREE.Vector3(0, 0, 0), new THREE.Vector3(0, 1, 0),
+                     p.radius * 0.62, p.blend, 24, 12, onLid),
+        material,
+      ))
+      return group
     },
   },
 }

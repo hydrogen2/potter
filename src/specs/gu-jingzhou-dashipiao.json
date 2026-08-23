@@ -37,7 +37,8 @@
     "span": 0.9,
     "rise": 0.14,
     "tube": 0.055,
-    "width": 1.8
+    "width": 1.8,
+    "blend": 0.03
   },
   "spout": {
     "type": "straightCone",

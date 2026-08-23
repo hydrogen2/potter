@@ -33,7 +33,8 @@
   "knob": {
     "type": "bead",
     "radius": 0.1113,
-    "squash": 0.92
+    "squash": 0.92,
+    "blend": 0.022
   },
   "spout": {
     "type": "straightCone",
