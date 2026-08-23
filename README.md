@@ -76,6 +76,12 @@ src/
   main.js              scene, lighting, UI generated from spec.expose,
                        URL = archive id + diff, 拍照 path-traced photo mode
 scripts/
+  qc.mjs               render one entry from eight angles — side, both
+                       three-quarters, spout-on, handle-on, from above, from
+                       below, close. Faults hide in a side view: an attachment
+                       colliding with the lid, a gap where the foot ring meets
+                       the body, a fillet folded through a wall. Run it before
+                       calling a shape done.
   screenshot.mjs       headless render check of every archive entry
   spec-shot.mjs        render one URL spec headlessly
   fit/                 photo→spec: analysis-by-synthesis constrained to the DSL
