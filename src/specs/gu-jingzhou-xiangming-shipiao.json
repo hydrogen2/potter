@@ -54,10 +54,10 @@
     "tube": 0.084,
     "topX": 1.1938,
     "outerX": 1.1401,
-    "topY": 0.893,
+    "topY": 0.78,
     "botY": 0.2769,
-    "lift": 0.9864,
-    "outerY": 0.4984
+    "lift": 0.82,
+    "outerY": 0.52
   },
   "base": {
     "type": "studs",

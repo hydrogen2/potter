@@ -10,6 +10,7 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
+import * as THREE from 'three'
 import { resolveSlot } from '../src/components/index.js'
 
 // read the archive as data (Vite resolves JSON imports; plain node needs this)
@@ -148,6 +149,35 @@ CANON.panhu = {
   },
 }
 
+// A universal rule, family-independent: nothing may occupy the lid's own space.
+// A handle whose loop rises into the brim reads as a collision from every angle
+// but is easy to miss in a single render, so it is asserted rather than eyeballed:
+// sample the attachment's vertices against a cylinder bounding the lid.
+function clearsLid(spec, prof) {
+  const lid = resolveSlot(spec, 'lid')
+  const att = resolveSlot(spec, 'handle')
+  if (lid.p.type === 'none' || att.p.type === 'none') return null
+  const bottom = prof.height + (lid.p.seam ?? 0.005)
+  const top = bottom + lid.def.top(lid.p, prof)
+  const lidR = prof.mouthR + (lid.p.overhang ?? 0)
+  // the handle is the one attachment built in body coordinates — the spout and
+  // knob are positioned afterwards by buildVessel, so their raw vertices say nothing
+  const mesh = att.def.build(att.p, prof, new THREE.MeshBasicMaterial())
+  if (!mesh) return null
+  let worst = 0
+  mesh.traverse((o) => {
+    if (!o.isMesh) return
+    const a = o.geometry.getAttribute('position')
+    for (let i = 0; i < a.count; i++) {
+      const y = a.getY(i)
+      if (y <= bottom || y >= top) continue
+      worst = Math.max(worst, lidR - Math.hypot(a.getX(i), a.getZ(i)))
+    }
+  })
+  return ['handle clears the lid', worst < 1e-4,
+    worst < 1e-4 ? 'clear' : `intrudes ${(worst * 100).toFixed(1)}%`]
+}
+
 const want = process.argv.slice(2)
 let failed = 0
 for (const spec of SPECS) {
@@ -166,6 +196,8 @@ for (const spec of SPECS) {
     const [ok, name] = test(type)
     checks.push([name, ok, type])
   }
+  const clearance = clearsLid(spec, prof)
+  if (clearance) checks.push(clearance)
   for (const [name, ok, detail] of checks) {
     if (!ok) failed++
     console.log(`  ${ok ? 'PASS' : 'FAIL'}  ${name.padEnd(34)} ${detail}`)

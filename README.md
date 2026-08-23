@@ -158,6 +158,12 @@ rendering and no pixels:
 node scripts/check-canon.mjs          # exits non-zero on any violation
 ```
 
+It also carries one rule that belongs to no family: **the handle must clear the
+lid**. A loop whose arc rises into the brim is a collision from every angle, but
+it hides well in a single three-quarter render — so it is asserted, by sampling
+the handle's vertices against a cylinder bounding the lid, rather than eyeballed.
+Both 顾景舟 石瓢 failed it at 10.7% and 5.0% intrusion before the check existed.
+
 This is the acceptance test; photo agreement is the tie-breaker within it, not
 the other way round. The lesson that produced it: a body can sit at IoU 0.94
 and profile-RMS 2% against a real photograph and still not be a 石瓢 at all —
