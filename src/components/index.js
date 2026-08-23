@@ -88,8 +88,13 @@ export function buildVessel(spec, material) {
   }
 
   const spoutMesh = spout.def.build(spout.p, material, prof)
-  if (spoutMesh && spout.p.type === 'curved') {
-    raised.add(spoutMesh)          // a swept spout is already in body coordinates
+  // Swept spouts come back already in body coordinates; cone spouts are built
+  // at the origin and placed here. The component says which it is — keying this
+  // off the type name meant a new swept type fell into the placement branch,
+  // read an `angle` it does not have, and was positioned at NaN. It vanished
+  // from the render without any error.
+  if (spoutMesh && spout.def.bodySpace) {
+    raised.add(spoutMesh)
   } else if (spoutMesh) {
     const angle = THREE.MathUtils.degToRad(spout.p.angle)
     const yAttach = prof.height * spout.p.attachY

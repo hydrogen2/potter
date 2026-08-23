@@ -195,9 +195,14 @@ CANON.duoqiu = {
     const pts = prof.outer.filter((v) => v.y > 0.02 && v.y < prof.height - 0.02)
     const maxR = Math.max(...pts.map((v) => v.x))
     const widest = pts.reduce((a, b) => (b.x > a.x ? b : a))
+    // The flank test must stop below the rim assembly: the neck is deliberately
+    // upright and the collar deliberately steps, so running this over them fails
+    // the pot for having exactly the features it is supposed to have.
+    const rimTop = prof.height - ((p.neck ?? 0) + (p.collar > 0 ? p.collarH ?? 0.05 : 0))
+    const flank = pts.filter((v) => v.y < rimTop - 0.01)
     let straightRun = 0, worstRun = 0
-    for (let i = 2; i < pts.length; i++) {
-      const d2 = (pts[i].x - pts[i - 1].x) - (pts[i - 1].x - pts[i - 2].x)
+    for (let i = 2; i < flank.length; i++) {
+      const d2 = (flank[i].x - flank[i - 1].x) - (flank[i - 1].x - flank[i - 2].x)
       if (Math.abs(d2) < 1e-4) worstRun = Math.max(worstRun, ++straightRun)
       else straightRun = 0
     }
@@ -233,7 +238,7 @@ CANON.duoqiu = {
   slots: {
     lid: (t) => [t === 'ballCap', 'lid is a 压盖 spherical cap (第二球)'],
     knob: (t) => [t === 'bead', 'knob is a ball (第三球)'],
-    spout: (t) => [t === 'curved', 'spout is 一弯嘴'],
+    spout: (t) => [t === 'oneBend' || t === 'curved', 'spout is 一弯嘴'],
     handle: (t) => [t === 'invertedEar', 'handle is an ear-shaped ring (耳形环把)'],
     base: (t) => [t === 'ring', 'stands on a foot ring (圈足)'],
   },

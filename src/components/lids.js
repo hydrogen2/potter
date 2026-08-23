@@ -103,6 +103,12 @@ export const LIDS = {
       // below the seating plane as a hanging skirt that covers the body's
       // collar. Without it the lid just perches on the ledge.
       skirt: { label: '盖裙', min: 0, max: 0.14, step: 0.004, default: 0.03 },
+      // 盖唇 — the lid's own ring, standing proud at the foot of the dome. On
+      // the real pots this ring and the body's collar read as a stacked pair,
+      // each with its own shadow line; a lid that simply meets the body in a
+      // flat flange gives that away immediately.
+      bead: { label: '盖唇', min: 0, max: 0.10, step: 0.002, default: 0 },
+      beadH: { label: '盖唇高', min: 0.01, max: 0.10, step: 0.002, default: 0.035 },
       vent: { label: '气孔', min: 0, max: 0.03, step: 0.001, default: 0.013 },
       seam: { label: '盖缝', min: 0.0, max: 0.02, step: 0.001, default: 0.005 },
     },
@@ -111,7 +117,8 @@ export const LIDS = {
     // the cap springs from the top of the brim, not from the seating plane
     top: (p, prof) =>
       (prof.mouthR + p.overhang - (p.brim ?? 0)) * p.rise
-      + p.thickness * 0.58 + (p.brim ?? 0) * 0.55,
+      + p.thickness * 0.58 + (p.brim ?? 0) * 0.55
+      + (p.bead ? p.beadH ?? 0.035 : 0),
     build(p, mouthR, material, prof) {
       const R = mouthR + p.overhang          // the rim, ball 2's widest circle
       const Rd = Math.max(R - (p.brim ?? 0), R * 0.5)   // where the cap springs
@@ -139,7 +146,7 @@ export const LIDS = {
       // The shelf between rim and dome climbs as it goes in. Held flat, a wide
       // brim reads as a flying saucer; on the real pots it is a short stepped
       // bevel hugging the dome.
-      const domeBase = brimTop + T * 0.16 + (p.brim ?? 0) * 0.55
+      const domeBase = brimTop + T * 0.16 + (p.brim ?? 0) * 0.55 + (p.bead ? p.beadH ?? 0.035 : 0)
       const thInner = Math.acos(
         Math.min(1, Math.max(-1, (Rs - h - domeBase) / Ri)),
       )
@@ -157,6 +164,22 @@ export const LIDS = {
         }
         return out
       }
+      // out and all the way back, so the ring has an undercut and therefore a
+      // shadow line — the thing that makes it read as extruded rather than flat
+      const beadRing = (n = 18) => {
+        const b = p.bead ?? 0
+        if (b <= 0) return []
+        const hB = p.beadH ?? 0.035
+        const out = []
+        for (let i = 0; i <= n; i++) {
+          const t = i / n
+          out.push(new THREE.Vector2(
+            R - rr + b * Math.pow(Math.sin(Math.PI * t), 0.7),
+            brimTop + hB * t,
+          ))
+        }
+        return out
+      }
       const ease = (n = 8) => {
         const out = []
         for (let i = 1; i <= n; i++) {
@@ -164,7 +187,7 @@ export const LIDS = {
           const k = t * t * (3 - 2 * t)
           out.push(new THREE.Vector2(
             THREE.MathUtils.lerp(R - rr, Rd, k),
-            THREE.MathUtils.lerp(brimTop, domeBase, k),
+            THREE.MathUtils.lerp(brimTop + (p.bead ? p.beadH ?? 0.035 : 0), domeBase, k),
           ))
         }
         return out
@@ -173,6 +196,7 @@ export const LIDS = {
         new THREE.Vector2(R - T, -rimEdge),
         ...quarter(R - rr, -rimEdge + rr, -Math.PI / 2, 0),   // round under the rim
         ...quarter(R - rr, brimTop - rr, 0, Math.PI / 2),     // round over the rim
+        ...beadRing(),                                        // the lid's own proud ring
         ...ease(),                                            // ramp in to the cap
         ...arc(Rs, thOuter, thVent, 34, domeBase),            // over the dome
         new THREE.Vector2(v, h - T + domeBase),               // the bore of the 气孔

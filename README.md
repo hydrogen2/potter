@@ -78,10 +78,12 @@ src/
 scripts/
   qc.mjs               render one entry from eight angles — side, both
                        three-quarters, spout-on, handle-on, from above, from
-                       below, close. Faults hide in a side view: an attachment
-                       colliding with the lid, a gap where the foot ring meets
-                       the body, a fillet folded through a wall. Run it before
-                       calling a shape done.
+                       below, close — *and* four close-ups on the junctions
+                       (lid, spout root, both handle roots), aimed as fractions
+                       of the pot's own height. The whole-pot views are far too
+                       small to show junction faults, which are exactly the
+                       ones the eye catches. Run it before calling a shape done.
+  check-details.mjs    the workmanship assertions — see "Details give it away"
   screenshot.mjs       headless render check of every archive entry
   spec-shot.mjs        render one URL spec headlessly
   fit/                 photo→spec: analysis-by-synthesis constrained to the DSL
@@ -155,8 +157,37 @@ the geometry, so they are checked *analytically on the profile curve*, with no
 rendering and no pixels:
 
 ```
-node scripts/check-canon.mjs          # exits non-zero on any violation
+node scripts/check-canon.mjs          # family identity — exits non-zero
+node scripts/check-details.mjs        # workmanship — exits non-zero
 ```
+
+## Details give it away
+
+Canon is about *identity*; it is deliberately blind to workmanship, and
+workmanship is what the eye actually catches. Nobody minds a belly a few
+percent fatter than the original — that reads as another potter's hand. What
+nobody misses is a handle that kinks back on itself, a spout that sags into a U
+instead of turning up, a mouth collar that is a flat flange rather than a
+standing ring, or an attachment that has silently fallen off the pot. Those are
+dead giveaways, so they get their own assertions on the curves themselves:
+
+| assertion | catches |
+|---|---|
+| every non-`none` slot has real geometry | a spout positioned at NaN — invisible in the render, silent in every other check |
+| handle never reverses (0 curvature sign changes) | the wiggle where a strap curls in and kicks back out |
+| spout is an S, not a U (≥1 inflection) | a 一弯嘴 that merely arcs |
+| spout leaves the body rising | a spout that sags before it climbs |
+| mouth collar stands proud (rise *and* fall in r(y)) | a collar that swells and stays wide — a flange |
+
+Attachments record the curve they were built from in `userData.centreline`, so
+the checks read the actual geometry rather than re-deriving it.
+
+The handle reversal check found its own cause on the first run: 西施 scored 0
+and 掇球 and 潘壶 scored exactly 2, one per root. `invertedEar` was fitting its
+circle and *then* applying `stretch`, which moves the curve off its own
+endpoints, and the code patched that by pinning the first and last sample back
+onto the body. The pin is a discontinuity. Fitting in the unstretched frame and
+stretching the samples afterwards lands on the endpoints by construction.
 
 It also carries one rule that belongs to no family: **the handle must clear the
 lid**. A loop whose arc rises into the brim is a collision from every angle, but
@@ -180,7 +211,7 @@ Families so far:
 |---|---|---|
 | 石瓢 | `cone` | a cone with the tip cut off: widest at the foot, flank never widening upward, straight within 3%; flat lid, bridge knob, straight spout, three feet |
 | 潘壶 | `pear` | 口小肚大 with an **inflection** neither other family can make: convex round the belly, concave as it draws in to the neck. Belly in the middle third, foot narrower than the belly, a **弯嘴** curved spout, 环把 ring handle, 圆珠钮, and a flat base standing on a **底圈** foot ring. (The seal belongs on the lid rim — a decoration rule, recorded but not checkable geometrically.) |
-| 掇球 | `superellipse` + `ballCap` | 掇 means *to stack*: body, lid and knob are three balls piled on one axis, each smaller than the one below. The identity is the proportions between them — the whole pot fits a circle (盖顶至底 ≈ 身径), the mouth is the golden part of the body (E/E2 = 0.618), the lid is a true spherical cap springing from inside a narrow brim, hanging a **skirt** down over the body's projecting rim collar (唇) — 压盖 means the lid presses over the mouth, and that collar-and-skirt pair is what separates ball 1 from ball 2. A **一弯嘴** whose last third turns up so the lip faces the sky, an ordinary **耳形环把** — a *teardrop*, thick at the shoulder, tapering down — *not* 西施's 倒把, and a 圈足 |
+| 掇球 | `superellipse` + `ballCap` | 掇 means *to stack*: body, lid and knob are three balls piled on one axis, each smaller than the one below. The identity is the proportions between them — the whole pot fits a circle (盖顶至底 ≈ 身径), the mouth is the golden part of the body (E/E2 = 0.618), the lid is a true spherical cap springing from inside a narrow brim, hanging a **skirt** down over the body's projecting rim collar (唇) — 压盖 means the lid presses over the mouth, and that collar-and-skirt pair is what separates ball 1 from ball 2. A **一弯嘴** whose last third turns up so the lip faces the sky, a short **neck** carrying a **collar that stands proud**, with the lid's own ring stacked on it — two rings, each with its own shadow line. A **一弯嘴** built from its tangent angle so the S is guaranteed, an ordinary **耳形环把** — a *teardrop*, thick at the shoulder, tapering down — *not* 西施's 倒把, and a 圈足 |
 | 西施 | `superellipse` | fuller than an ellipse and asymmetric top to bottom; widest near mid-height, wider than tall, no straight run anywhere in the flank; a wide mouth closed by a **截盖** lid that runs up the body's own curve until the ball is complete (a flat-topped lid reads as the wrong family), a bead knob on the neck it converges to, a **短流略粗** spout, a fully-round **倒耳把** thick at the shoulder and tapering to the belly, flat footless base |
 
 **Teardrops by modulation, not by control points.** A loop through two roots

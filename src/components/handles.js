@@ -56,8 +56,16 @@ export const HANDLES = {
       const A = new THREE.Vector2(-(prof.radiusAt(H * p.topY) - embed), H * p.topY)
       const B = new THREE.Vector2(-(prof.radiusAt(H * p.botY) - embed), H * p.botY)
       const C = new THREE.Vector2(-p.outerX, H * p.loopY)
-      const { centre, radius } = circleThrough(A, B, C)
-      const ang = (v) => Math.atan2(v.y - centre.y, v.x - centre.x)
+      // Fit the circle in the *unstretched* frame — y divided by the stretch —
+      // and stretch the sampled points back afterwards. Fitting first and
+      // stretching after moves the curve off its own endpoints, which the old
+      // code patched by pinning the first and last sample back onto the body.
+      // That pin is a discontinuity: the strap curled in and kicked back out at
+      // each root. Exactly the two curvature reversals check-details reports.
+      const k = p.stretch ?? 1
+      const un = (v) => new THREE.Vector2(v.x, v.y / k)
+      const { centre, radius } = circleThrough(un(A), un(B), un(C))
+      const ang = (v) => Math.atan2(un(v).y - centre.y, un(v).x - centre.x)
       const a0 = ang(A)
       const wrap = (x) => {
         while (x <= -Math.PI) x += Math.PI * 2
@@ -73,7 +81,6 @@ export const HANDLES = {
       }
       // a circle through the three points is the base; `stretch` makes it an
       // oval, since a real 环把 is taller than it is wide
-      const k = p.stretch ?? 1
       // Teardrop by *radius modulation* rather than by adding control points.
       // Threading a spline through a peak and a tuck gives a curve with
       // near-straight runs between the anchors and abrupt turns at them — an
@@ -81,31 +88,38 @@ export const HANDLES = {
       // function instead keeps curvature continuous by construction, so no
       // corner is possible at any parameter value.
       //
-      // sin(2*pi*t) is the right function: it is exactly zero at both roots
-      // (so the ends still meet the body), positive across the upper half
-      // (the strap swells and rises as it leaves the shoulder) and negative
-      // across the lower (it draws in as it tucks under the belly).
+      // The modulation must be *non-negative*. sin(2*pi*t) was the obvious
+      // choice — swell above, draw in below — but its negative lobe has to
+      // climb back to zero at the lower root, and that climb-back is a
+      // reversal: the strap curls inward and then kicks out again to meet the
+      // body. A visible wiggle, and arithmetic, not bad luck.
+      //
+      // sin(pi * t^0.6) instead: zero at both roots, never negative, and peaked
+      // early (t ~ 0.32) so the swell sits where the strap leaves the shoulder
+      // and decays monotonically into the belly. Monotone decay cannot reverse.
       const drop = p.teardrop ?? 0
       const pts = []
       const N = 96
       for (let i = 0; i <= N; i++) {
         const t = i / N
         const a = a0 + delta * t
-        const r = radius * (1 + drop * Math.sin(2 * Math.PI * t))
+        const r = radius * (1 + drop * Math.sin(Math.PI * Math.pow(t, 0.6)))
         pts.push(new THREE.Vector3(
           centre.x + r * Math.cos(a),
-          centre.y + r * Math.sin(a) * k,
+          (centre.y + r * Math.sin(a)) * k,
           0,
         ))
       }
-      // the ends must still meet the body after stretching
-      pts[0].set(A.x, A.y, 0)
-      pts[pts.length - 1].set(B.x, B.y, 0)
+      // no end pinning: fitted unstretched, the arc already lands on A and B
       const curve = new THREE.CatmullRomCurve3(pts, false, 'centripetal')
       const rAt = (t) => p.tube * (p.taper + (1 - p.taper) * Math.pow(t, 1.4))
       const loop = new THREE.Mesh(sweptTube(curve, rAt), material)
+      // keep the curve the strap was built from: the detail checks read it to
+      // assert the loop never reverses, which no rendering can tell them
+      loop.userData.centreline = curve.getPoints(160)
       if (!p.blend) return loop
       const group = new THREE.Group()
+      group.userData.centreline = loop.userData.centreline
       group.add(loop)
       const onBody = (P) => {
         const r = Math.hypot(P.x, P.z) || 1e-6

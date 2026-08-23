@@ -158,6 +158,10 @@ export const BODIES = {
       // default) leaves the mouth cut flat, as 西施 wants it.
       collar: { label: '唇宽', min: 0, max: 0.16, step: 0.004, default: 0 },
       collarH: { label: '唇高', min: 0.01, max: 0.14, step: 0.004, default: 0.05 },
+      // 颈 — a short upright run lifting the mouth clear of the shoulder. The
+      // collar needs something to stand on; grown straight out of the shoulder
+      // curve it reads as a flange rather than a ring.
+      neck: { label: '颈高', min: 0, max: 0.18, step: 0.004, default: 0 },
     },
     profile(p) {
       // quarter Lamé curve: r = maxR * (1 - u^n)^(1/n), u = distance from the
@@ -200,21 +204,35 @@ export const BODIES = {
       // square corners here stack with the lid's rim and read as a staircase.
       // It swells past the ledge radius in the middle and rounds back to it at
       // the top, which is the seat the lid sits on.
+      const neck = p.neck ?? 0
       const top = []
       if (collar > 0) {
-        const N2 = 18
-        for (let i = 0; i <= N2; i++) {
-          const t = i / N2
-          const flare = t * t * (3 - 2 * t)               // smoothstep out to the ledge
-          const swell = Math.sin(Math.PI * t) * 0.22      // …bulging on the way
+        // the neck: upright, drawing in very slightly
+        const NN = 8
+        for (let i = 0; i <= NN; i++) {
+          const t = i / NN
+          top.push(new THREE.Vector2(p.mouthR * (1 - 0.03 * t), rim.y + neck * t))
+        }
+        // the collar: a ring that stands *proud*. sin(pi t) takes the radius
+        // out and all the way back, which is what puts a shadow line under the
+        // ring; the smoothstep term leaves it finishing wider than the neck, at
+        // the seat the lid rests on. A profile that only swells and stays wide
+        // is a flange, and reads as one.
+        const y1 = rim.y + neck
+        const NB = 22
+        for (let i = 1; i <= NB; i++) {
+          const t = i / NB
+          const proud = Math.pow(Math.sin(Math.PI * t), 0.7)
+          const seat = 0.45 * t * t * (3 - 2 * t)
           top.push(new THREE.Vector2(
-            p.mouthR + collar * (flare + swell),
-            rim.y + cH * t,
+            p.mouthR * 0.97 + collar * (proud * 0.75 + seat),
+            y1 + cH * t,
           ))
         }
       } else {
         top.push(new THREE.Vector2(p.mouthR, rim.y))
       }
+      const seatR = collar > 0 ? p.mouthR * 0.97 + collar * 0.45 : p.mouthR
       const outer = [
         new THREE.Vector2(0.03, foot.y + press),
         new THREE.Vector2(footR * 0.5, foot.y + press * 0.78),
@@ -233,8 +251,9 @@ export const BODIES = {
       return {
         // rim.y is a reference into `outer`, so it is already relative to the
         // foot; with a collar the body's top is the ledge, not the mouth cut
-        outer, radiusAt: radiusFn(outer), height: rim.y + (collar > 0 ? cH : 0),
-        mouthR: p.mouthR + collar,   // what the lid seats on
+        outer, radiusAt: radiusFn(outer),
+        height: rim.y + (collar > 0 ? neck + cH : 0),
+        mouthR: seatR,               // what the lid seats on
         boreR: p.mouthR,             // the actual opening, which the 子口 drops into
         bottomAt: (r) => press * Math.pow(Math.max(0, 1 - r / Math.max(foot.x, 1e-3)), 1.6),
         // the curve the body *would* follow above the mouth: a 截盖 lid is a

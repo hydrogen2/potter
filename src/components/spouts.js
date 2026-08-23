@@ -11,8 +11,80 @@ import { sweptTube, filletCollar, surfaceCrossing } from '../geometry/sweep.js'
 export const SPOUTS = {
   none: { label: '无', params: {}, build: () => null },
 
+  // 一弯嘴 proper. `curved` places control points and hopes for a shape; that
+  // gives a U — the spout leaves the body pointing *down*, sags, and swings up,
+  // with no inflection anywhere. A real one is an inverse S: it leaves the belly
+  // already rising, the middle flattens, and the lip turns up again.
+  //
+  // So this builds the centreline from its *tangent angle* instead of from
+  // control points. theta(t) runs from the root angle to the lip angle with a
+  // sine dip subtracted, and the centreline is the integral of (cos, sin) of it:
+  //
+  //   theta(t) = rootAngle + (tipAngle - rootAngle) t - sBend sin(pi t)
+  //
+  // theta'(t) = (tipAngle - rootAngle) - sBend pi cos(pi t) changes sign exactly
+  // once whenever sBend*pi exceeds the angle span — and a single sign change of
+  // theta' *is* a single inflection. The S is therefore guaranteed by
+  // construction rather than tuned for, and no corner is possible because theta
+  // is smooth.
+  oneBend: {
+    label: '一弯嘴',
+    // built along the body's own axes, so the assembler must not re-place it
+    bodySpace: true,
+    params: {
+      attachY: { label: '接身', min: 0.1, max: 0.8, step: 0.01, default: 0.46 },
+      length: { label: '流长', min: 0.2, max: 1.2, step: 0.01, default: 0.62 },
+      rootAngle: { label: '起角', min: -10, max: 60, step: 1, default: 26 },
+      tipAngle: { label: '口角', min: 10, max: 85, step: 1, default: 58 },
+      sBend: { label: '弯度', min: 0, max: 1.2, step: 0.02, default: 0.62 },
+      rootR: { label: '根径', min: 0.05, max: 0.26, step: 0.002, default: 0.155 },
+      tipR: { label: '口径', min: 0.02, max: 0.12, step: 0.002, default: 0.058 },
+      wall: { label: '壁厚', min: 0.005, max: 0.03, step: 0.001, default: 0.014 },
+      blend: { label: '润接', min: 0, max: 0.2, step: 0.005, default: 0.08 },
+    },
+    build(p, material, prof) {
+      const H = prof?.height ?? 1
+      const y0 = H * p.attachY
+      const embed = Math.max(0.13, p.rootR + 0.02)
+      const x0 = (prof?.radiusAt ? prof.radiusAt(y0) : 0.8) - embed
+      const rad = (d) => (d * Math.PI) / 180
+      const a0 = rad(p.rootAngle), a1 = rad(p.tipAngle)
+      const theta = (t) => a0 + (a1 - a0) * t - p.sBend * Math.sin(Math.PI * t)
+      const N = 88
+      const pts = [new THREE.Vector3(x0, y0, 0)]
+      let x = x0, y = y0
+      for (let i = 1; i <= N; i++) {
+        const th = theta((i - 0.5) / N)
+        x += (p.length / N) * Math.cos(th)
+        y += (p.length / N) * Math.sin(th)
+        pts.push(new THREE.Vector3(x, y, 0))
+      }
+      const curve = new THREE.CatmullRomCurve3(pts, false, 'centripetal')
+      const outerAt = (t) => THREE.MathUtils.lerp(p.rootR, p.tipR, Math.pow(t, 0.75))
+      const tube = new THREE.Mesh(
+        sweptTube(curve, outerAt, 84, 20, (t) => Math.max(outerAt(t) - p.wall, 0.005)),
+        material,
+      )
+      tube.userData.centreline = curve.getPoints(160)
+      if (!p.blend) return tube
+      const group = new THREE.Group()
+      group.userData.centreline = tube.userData.centreline
+      const onBody = (P) => {
+        const r = Math.hypot(P.x, P.z) || 1e-6
+        const target = prof.radiusAt(P.y)
+        return new THREE.Vector3((P.x * target) / r, P.y, (P.z * target) / r)
+      }
+      const { point, tangent, t } = surfaceCrossing(curve, prof, true)
+      group.add(tube, new THREE.Mesh(
+        filletCollar(point, tangent, outerAt(t), p.blend, 28, 12, onBody), material,
+      ))
+      return group
+    },
+  },
+
   curved: {
     label: '弯流',
+    bodySpace: true,
     // 潘壶's 弯嘴: leaves the belly low, sweeps out and up in an S and finishes
     // slender. Built as a swept tube of falling radius, so the taper is part of
     // the curve rather than a cone stuck on the side.
@@ -67,9 +139,11 @@ export const SPOUTS = {
         sweptTube(curve, outerAt, 72, 18, (t) => Math.max(outerAt(t) - p.wall, 0.006)),
         material,
       )
+      tube.userData.centreline = curve.getPoints(160)
       if (!p.blend) return tube
       // 润接: the root flows into the belly instead of being butted against it
       const group = new THREE.Group()
+      group.userData.centreline = tube.userData.centreline
       const onBody = (P) => {
         const r = Math.hypot(P.x, P.z) || 1e-6
         const target = prof.radiusAt(P.y)

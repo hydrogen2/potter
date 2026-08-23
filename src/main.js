@@ -187,6 +187,10 @@ function rebuild() {
   }
   pot = buildVessel(spec, getMaterial(activeMaterialKey))
   scene.add(pot)
+  // how tall the finished pot stands, so QC can aim its close-ups at the lid,
+  // the spout root and the handle roots as fractions of the pot rather than at
+  // hard-coded world heights that only frame one shape correctly
+  window.__potTop = new THREE.Box3().setFromObject(pot).max.y
   if (typeof scalePotForScene === 'function') scalePotForScene()
   if (typeof applyFitMode === 'function') applyFitMode()
   renderMetrics()
