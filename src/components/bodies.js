@@ -152,6 +152,12 @@ export const BODIES = {
       mouthR: { label: '口径', min: 0.15, max: 0.9, step: 0.005, default: 0.42 },
       footR: { label: '底径', min: 0.15, max: 0.9, step: 0.005, default: 0.45 },
       basePress: { label: '捺底', min: 0, max: 0.12, step: 0.002, default: 0.03 },
+      // 唇 — a rim collar projecting beyond the mouth, with a short neck under
+      // it. 掇球 needs it: the ledge is what separates the body ball from the
+      // lid ball, and without it the two read as one continuous egg. 0 (the
+      // default) leaves the mouth cut flat, as 西施 wants it.
+      collar: { label: '唇宽', min: 0, max: 0.16, step: 0.004, default: 0 },
+      collarH: { label: '唇高', min: 0.01, max: 0.14, step: 0.004, default: 0.05 },
     },
     profile(p) {
       // quarter Lamé curve: r = maxR * (1 - u^n)^(1/n), u = distance from the
@@ -186,6 +192,18 @@ export const BODIES = {
       // radius and the centre of the underside sits slightly higher
       const press = p.basePress ?? 0
       const rim = upper.length ? upper[upper.length - 1] : new THREE.Vector2(p.mouthR, p.bellyY + p.upperAxis * 0.8)
+      // the rim: either cut flat at the mouth, or drawn in to a neck and flared
+      // back out into a projecting collar (唇) for the lid to sit on
+      const collar = p.collar ?? 0
+      const cH = p.collarH ?? 0.05
+      const top = collar > 0
+        ? [
+            new THREE.Vector2(p.mouthR, rim.y),
+            new THREE.Vector2(p.mouthR, rim.y + cH * 0.25),        // the neck
+            new THREE.Vector2(p.mouthR + collar, rim.y + cH * 0.62), // flaring out
+            new THREE.Vector2(p.mouthR + collar, rim.y + cH),        // the ledge
+          ]
+        : [new THREE.Vector2(p.mouthR, rim.y)]
       const outer = [
         new THREE.Vector2(0.03, foot.y + press),
         new THREE.Vector2(footR * 0.5, foot.y + press * 0.78),
@@ -194,7 +212,7 @@ export const BODIES = {
         ...lower,
         new THREE.Vector2(p.maxR, p.bellyY),
         ...upper,
-        new THREE.Vector2(p.mouthR, rim.y),
+        ...top,
       ]
       // capture the curve's own coordinates before standing the foot on y = 0,
       // otherwise capAt() below subtracts the offset a second time
@@ -202,7 +220,10 @@ export const BODIES = {
       const y0 = outer[0].y
       for (const v of outer) v.y -= y0            // stand the foot on y = 0
       return {
-        outer, radiusAt: radiusFn(outer), height: rim.y, mouthR: p.mouthR,  // rim.y is already relative to the foot
+        // rim.y is a reference into `outer`, so it is already relative to the
+        // foot; with a collar the body's top is the ledge, not the mouth cut
+        outer, radiusAt: radiusFn(outer), height: rim.y + (collar > 0 ? cH : 0),
+        mouthR: p.mouthR + collar,   // what the lid seats on
         bottomAt: (r) => press * Math.pow(Math.max(0, 1 - r / Math.max(foot.x, 1e-3)), 1.6),
         // the curve the body *would* follow above the mouth: a 截盖 lid is a
         // cut section of it, so the silhouette runs unbroken to the knob

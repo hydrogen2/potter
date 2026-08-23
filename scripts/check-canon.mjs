@@ -178,19 +178,81 @@ function clearsLid(spec, prof) {
     worst < 1e-4 ? 'clear' : `intrudes ${(worst * 100).toFixed(1)}%`]
 }
 
+CANON.duoqiu = {
+  label: '掇球',
+  // 掇 means to stack. The name is the geometry: body, lid and knob are three
+  // spheres piled on one axis, each smaller than the one under it. So the
+  // checkable identity is a set of *proportions between the three balls*,
+  // not the shape of any one of them.
+  //
+  // The numbers come from measuring two near-level photographs of 寿珍掇球
+  // (zisha.com), not from the literature — the literature says the lid is
+  // 明显的半球状, "a clear hemisphere", and both photographs put it at a third
+  // of its rim diameter. Ranges are set wide enough to admit both, and the
+  // measured values are recorded in the spec's notes so a later correction has
+  // something to argue with.
+  body: (prof, p, spec) => {
+    const pts = prof.outer.filter((v) => v.y > 0.02 && v.y < prof.height - 0.02)
+    const maxR = Math.max(...pts.map((v) => v.x))
+    const widest = pts.reduce((a, b) => (b.x > a.x ? b : a))
+    let straightRun = 0, worstRun = 0
+    for (let i = 2; i < pts.length; i++) {
+      const d2 = (pts[i].x - pts[i - 1].x) - (pts[i - 1].x - pts[i - 2].x)
+      if (Math.abs(d2) < 1e-4) worstRun = Math.max(worstRun, ++straightRun)
+      else straightRun = 0
+    }
+    const lid = resolveSlot(spec, 'lid')
+    const base = resolveSlot(spec, 'base')
+    const rimR = prof.mouthR + (lid.p.overhang ?? 0)          // ball 2, at its equator
+    const capRise = lid.def.top(lid.p, prof)
+    const foot = base.p.type === 'ring' ? (base.p.height ?? 0) : 0
+    const lidTop = foot + prof.height + (lid.p.seam ?? 0.005) + capRise
+    const knobR = resolveSlot(spec, 'knob').p.radius ?? 0     // ball 3
+
+    return [
+      // the signature relation: 壶盖到壶底的距离近似壶身最大直径 — the pot fits a circle
+      ['fits a circle (盖顶至底 ≈ 身径)', lidTop / (2 * maxR) >= 0.95 && lidTop / (2 * maxR) <= 1.15,
+       `height/width ${(lidTop / (2 * maxR)).toFixed(2)}  (measured 1.03, 1.05)`],
+      // 古法 E/E2 = 0.618; measured 0.63 and 0.66
+      ['mouth is the golden part of the body', rimR / maxR >= 0.58 && rimR / maxR <= 0.70,
+       `rim/body ${(rimR / maxR).toFixed(3)}  (0.618 by rule; measured 0.63, 0.66)`],
+      ['three balls, each smaller than the last', maxR > rimR && rimR > knobR && knobR > 0,
+       `${(2 * maxR).toFixed(2)} > ${(2 * rimR).toFixed(2)} > ${(2 * knobR).toFixed(2)}`],
+      ['lid is a cap, not a hemisphere', capRise / (2 * rimR) >= 0.26 && capRise / (2 * rimR) <= 0.44,
+       `rise/rim-dia ${(capRise / (2 * rimR)).toFixed(3)}  (measured 0.33, 0.35)`],
+      ['body rounder than 西施 but still wider than tall',
+       (2 * maxR) / prof.height >= 1.08 && (2 * maxR) / prof.height <= 1.40,
+       `width/height ${((2 * maxR) / prof.height).toFixed(2)}  (measured 1.21, 1.22)`],
+      ['widest near mid-height', widest.y / prof.height >= 0.32 && widest.y / prof.height <= 0.62,
+       `widest at ${((widest.y / prof.height) * 100).toFixed(0)}% of height`],
+      ['no straight run in the flank', worstRun < 6, `longest flat run ${worstRun} samples`],
+      ['round, not pinched (fullness >= 2)', (p.lowerFull ?? 2) >= 2 && (p.upperFull ?? 2) >= 2,
+       `lower ${(p.lowerFull ?? 0).toFixed(2)}, upper ${(p.upperFull ?? 0).toFixed(2)}`],
+    ]
+  },
+  slots: {
+    lid: (t) => [t === 'ballCap', 'lid is a 压盖 spherical cap (第二球)'],
+    knob: (t) => [t === 'bead', 'knob is a ball (第三球)'],
+    spout: (t) => [t === 'curved', 'spout is 一弯嘴'],
+    handle: (t) => [t === 'invertedEar', 'handle is an ear-shaped ring (耳形环把)'],
+    base: (t) => [t === 'ring', 'stands on a foot ring (圈足)'],
+  },
+}
+
 const want = process.argv.slice(2)
 let failed = 0
 for (const spec of SPECS) {
   const canonId = spec.canon ?? (spec.label?.includes('石瓢') ? 'shipiao'
     : spec.label?.includes('西施') ? 'xishi'
-    : spec.label?.includes('潘') ? 'panhu' : null)
+    : spec.label?.includes('潘') ? 'panhu'
+    : spec.label?.includes('掇球') ? 'duoqiu' : null)
   if (!canonId || !CANON[canonId]) continue
   if (want.length && !want.includes(spec.id)) continue
   const canon = CANON[canonId]
   console.log(`\n${spec.label}  (canon: ${canon.label})`)
   const { def, p } = resolveSlot(spec, 'body')
   const prof = def.profile(p)
-  const checks = canon.body(prof, p)
+  const checks = canon.body(prof, p, spec)
   for (const [slot, test] of Object.entries(canon.slots)) {
     const type = resolveSlot(spec, slot).p.type
     const [ok, name] = test(type)

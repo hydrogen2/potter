@@ -78,6 +78,87 @@ export const LIDS = {
     },
   },
 
+  // 压盖 for 掇球 — the *second ball*. Its dome is a true spherical cap, not a
+  // tuned spline: the whole point of 掇球 is that lid and knob read as spheres
+  // stacked on the body, so the surface has to be genuinely spherical. The rim
+  // sits on (not into) the mouth and overhangs it, and a 子口 flange drops
+  // inside to locate it.
+  //
+  // Measured off two near-level photographs of 寿珍掇球 (see README): the cap
+  // rises about a third of its own rim diameter. The written sources call it
+  // 明显的半球状 — a clear hemisphere, which would be a half — so `rise` is a
+  // fraction of the rim *radius* and the canon range comes from the photographs.
+  ballCap: {
+    label: '压盖 (球冠)',
+    params: {
+      overhang: { label: '盖沿', min: 0, max: 0.12, step: 0.002, default: 0.03 },
+      thickness: { label: '盖厚', min: 0.02, max: 0.1, step: 0.002, default: 0.038 },
+      rise: { label: '穹高', min: 0.2, max: 1.0, step: 0.01, default: 0.68 },
+      flange: { label: '子口', min: 0, max: 0.12, step: 0.004, default: 0.05 },
+      // the lid rim is a flat annulus and the cap springs from *inside* it.
+      // Without this the dome starts at the full rim radius and the lid reads
+      // tall and hat-like; on the real pots it reads broad and low.
+      brim: { label: '盖沿宽', min: 0, max: 0.12, step: 0.004, default: 0.03 },
+      vent: { label: '气孔', min: 0, max: 0.03, step: 0.001, default: 0.013 },
+      seam: { label: '盖缝', min: 0.0, max: 0.02, step: 0.001, default: 0.005 },
+    },
+    // rise is a fraction of the rim radius, so the cap keeps its shape when the
+    // mouth is resized
+    top: (p, prof) => (prof.mouthR + p.overhang - (p.brim ?? 0)) * p.rise,
+    build(p, mouthR, material) {
+      const R = mouthR + p.overhang          // the rim, ball 2's widest circle
+      const Rd = Math.max(R - (p.brim ?? 0), R * 0.5)   // where the cap springs
+      const h = Rd * p.rise
+      const T = p.thickness
+      const v = Math.max(p.vent, 0.004)
+      // the sphere the cap is cut from: base radius R, height h
+      const Rs = (Rd * Rd + h * h) / (2 * h)
+      const cy = h - Rs                       // centre sits below the rim plane
+      const arc = (radius, from, to, n) => {
+        const out = []
+        for (let i = 0; i <= n; i++) {
+          const t = from + ((to - from) * i) / n
+          out.push(new THREE.Vector2(radius * Math.sin(t), cy + radius * Math.cos(t)))
+        }
+        return out
+      }
+      const thOuter = Math.asin(Math.min(1, Rd / Rs))
+      const thVent = Math.asin(Math.min(1, v / Rs))
+      // the inner surface is the same sphere shrunk by the wall — for a sphere
+      // an offset along the normal is exactly a smaller concentric radius
+      const Ri = Rs - T
+      const thInner = Math.acos(Math.min(1, Math.max(-1, -cy / Ri)))   // where it meets y = 0
+      const rimEdge = T * 0.6                 // the rim has a visible vertical face
+      const pts = [
+        new THREE.Vector2(R, 0),
+        new THREE.Vector2(R, T * 0.35),       // the flat brim…
+        new THREE.Vector2(Rd, T * 0.5),       // …then the cap springs from inside it
+        ...arc(Rs, thOuter, thVent, 34),      // over the dome
+        new THREE.Vector2(v, h - T),          // down the bore of the 气孔
+        ...arc(Ri, thVent, thInner, 34),      // and back under it
+        new THREE.Vector2(R - T, -rimEdge),
+        new THREE.Vector2(R, -rimEdge),
+        new THREE.Vector2(R, 0),
+      ]
+      const g = new THREE.Group()
+      g.add(new THREE.Mesh(loftGeometry({ profile: pts, capBottom: false }), material))
+      // 子口: the flange that drops into the mouth and holds the lid in place
+      if (p.flange > 0) {
+        const fr = mouthR - 0.02
+        const f = p.flange
+        const ring = [
+          new THREE.Vector2(fr, -rimEdge),
+          new THREE.Vector2(fr, -rimEdge - f),
+          new THREE.Vector2(fr - T * 0.7, -rimEdge - f),
+          new THREE.Vector2(fr - T * 0.7, -rimEdge),
+          new THREE.Vector2(fr, -rimEdge),
+        ]
+        g.add(new THREE.Mesh(loftGeometry({ profile: ring, capBottom: false }), material))
+      }
+      return g
+    },
+  },
+
   dome: {
     label: '穹盖',
     params: {

@@ -149,7 +149,7 @@ export function vesselMetrics(spec) {
   const attachFactor = spec.spout?.type && spec.spout.type !== 'none' ? 1.45 : 1.15
   const grams = shell * S ** 3 * CLAY_DENSITY * attachFactor
   const lid = resolveSlot(spec, 'lid')
-  const lidTop = lid.def.top ? lid.def.top(lid.p) : 0
+  const lidTop = lid.def.top ? lid.def.top(lid.p, prof) : 0
   const base = resolveSlot(spec, 'base')
   const lift = base.def.build(base.p, prof, null).lift
   const knob = resolveSlot(spec, 'knob')

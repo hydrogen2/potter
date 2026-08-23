@@ -32,13 +32,16 @@ page.on('console', (m) => {
 await page.goto('http://localhost:5199/', { waitUntil: 'networkidle' })
 await page.waitForTimeout(2500)
 
-const shapeButtons = await page.$$('.shape-btn')
-for (let i = 0; i < shapeButtons.length; i++) {
+// the app rebuilds the shape list when a shape is picked, which detaches the
+// handles — so re-query on every pass rather than holding them across clicks
+const count = (await page.$$('.shape-btn')).length
+for (let i = 0; i < count; i++) {
+  const btn = () => page.$$('.shape-btn').then((b) => b[i])
   if (i > 0) {
-    await shapeButtons[i].click()
+    await (await btn()).click()
     await page.waitForTimeout(1500)
   }
-  const label = await shapeButtons[i].evaluate((el) => el.querySelector('strong').textContent)
+  const label = await (await btn()).evaluate((el) => el.querySelector('strong').textContent)
   const file = path.join(outDir, `shot-${i}-${label}.png`)
   await page.screenshot({ path: file })
   console.log('saved', file)

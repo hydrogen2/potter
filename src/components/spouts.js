@@ -29,12 +29,17 @@ export const SPOUTS = {
     build(p, material, prof) {
       const H = prof?.height ?? 1
       const y0 = H * p.attachY
-      const x0 = (prof?.radiusAt ? prof.radiusAt(y0) : 0.8) - 0.05
+      // How deep the curve starts inside the body has to scale with the root:
+      // a tube of radius R centred on a curve that starts only 0.13 in will
+      // have its underside outside a convex belly, and the root opens a notch.
+      // The floor keeps the slimmer spouts (潘壶) where they were.
+      const embed = Math.max(0.13, p.rootR + 0.02)
+      const x0 = (prof?.radiusAt ? prof.radiusAt(y0) : 0.8)
       const tipY = y0 + H * p.rise
       const tipX = x0 + p.length
       // control points: out of the belly, through the bend, up to the lip
       const curve = new THREE.CatmullRomCurve3([
-        new THREE.Vector3(x0 - 0.08, y0 - 0.02, 0),
+        new THREE.Vector3(x0 - embed, y0 - 0.02, 0),
         new THREE.Vector3(x0 + p.length * 0.32, y0 + H * p.rise * 0.16, 0),
         new THREE.Vector3(x0 + p.length * 0.68, y0 + H * p.rise * (0.42 + p.bend * 0.4), 0),
         new THREE.Vector3(tipX, tipY, 0),

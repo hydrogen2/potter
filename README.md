@@ -52,8 +52,8 @@ Component vocabulary (growing):
 | slot | types today | planned |
 |---|---|---|
 | body 身 | cone, superellipse, pear, spline, bowl | lerpBell, polyline (方器), lobed (筋纹), mesh |
-| rim 口 | — | plain, gallery, neck |
-| lid 盖 | none, flatDisc, dome | douli, inset (kyusu), saucer |
+| rim 口 | (`collar` on the superellipse body) | its own slot: plain, gallery, neck |
+| lid 盖 | none, flatDisc, dome, flush (截盖), ballCap (压盖) | douli, inset (kyusu), saucer |
 | knob 钮 | none, bridgeStrap, bead | bridgePlate, loop, figural |
 | spout 流 | none, straightCone, curved (弯嘴) | formedLip, curved, 三弯 |
 | handle 把 | none, rearLoop | sideStick (横手), overheadBail (提梁), rearStick |
@@ -180,7 +180,18 @@ Families so far:
 |---|---|---|
 | 石瓢 | `cone` | a cone with the tip cut off: widest at the foot, flank never widening upward, straight within 3%; flat lid, bridge knob, straight spout, three feet |
 | 潘壶 | `pear` | 口小肚大 with an **inflection** neither other family can make: convex round the belly, concave as it draws in to the neck. Belly in the middle third, foot narrower than the belly, a **弯嘴** curved spout, 环把 ring handle, 圆珠钮, and a flat base standing on a **底圈** foot ring. (The seal belongs on the lid rim — a decoration rule, recorded but not checkable geometrically.) |
+| 掇球 | `superellipse` + `ballCap` | 掇 means *to stack*: body, lid and knob are three balls piled on one axis, each smaller than the one below. The identity is the proportions between them — the whole pot fits a circle (盖顶至底 ≈ 身径), the mouth is the golden part of the body (E/E2 = 0.618), the lid is a true spherical cap springing from inside a flat brim, and a projecting rim collar (唇) separates ball 1 from ball 2. 一弯嘴, 耳形环把, 圈足 |
 | 西施 | `superellipse` | fuller than an ellipse and asymmetric top to bottom; widest near mid-height, wider than tall, no straight run anywhere in the flank; a wide mouth closed by a **截盖** lid that runs up the body's own curve until the ball is complete (a flat-topped lid reads as the wrong family), a bead knob on the neck it converges to, a **短流略粗** spout, a fully-round **倒耳把** thick at the shoulder and tapering to the belly, flat footless base |
+
+掇球 is where the sources and the objects disagreed. The literature calls the
+寿珍 lid 明显的半球状 — "a clear hemisphere". Measured off two near-level
+photographs, both sit at **a third** of their rim diameter, not a half; the two
+also agree on 1.03 / 1.05 for 盖顶至底 ÷ 身径 and 0.63 / 0.66 for the mouth,
+bracketing the classical 0.618. The canon ranges come from the photographs, the
+literature's claim is recorded next to them in the spec's notes, and the
+measured values are printed by every check so a later correction has something
+to argue with. This is the same discipline that caught the invented "mouth
+45-70% of foot" bound: a number nobody measured is not canon.
 
 The 西施 case is the interesting one: you cannot name its shape (it is not a
 sphere, and an ellipse reads as cheap), but you *can* name its relations, and

@@ -1,0 +1,90 @@
+{
+  "id": "duoqiu",
+  "label": "掇球",
+  "category": "zisha",
+  "categoryLabel": "紫砂 · Yixing",
+  "canon": "duoqiu",
+  "notes": "掇球壶（寿珍掇球一路）：身、盖、钮三球相掇，故名。身筒近球而略扁，压盖为真球冠（非样条穹顶），珠钮微扁，一弯流，耳形环把，圈足。两张近平视实物照片实测：盖顶至壶底约等于身筒最大直径（1.03、1.05），盖沿直径为身径的 0.63、0.66（古法称 E/E2=0.618），身筒宽高比 1.21、1.22，盖高约为盖沿直径的 1/3（0.33、0.35）——文献称『明显的半球状』，实测并非半球，从实测。",
+  "material": "zini",
+  "scaleCm": 9,
+  "wall": {
+    "base": 0.05,
+    "belly": 0.04,
+    "top": 0.036
+  },
+  "body": {
+    "type": "superellipse",
+    "maxR": 0.95,
+    "bellyY": 0.44,
+    "lowerAxis": 0.92,
+    "upperAxis": 0.8,
+    "lowerFull": 2.3,
+    "upperFull": 2.45,
+    "mouthR": 0.562,
+    "basePress": 0.04,
+    "footR": 0.5,
+    "collar": 0.065,
+    "collarH": 0.095
+  },
+  "lid": {
+    "type": "ballCap",
+    "overhang": 0.012,
+    "thickness": 0.038,
+    "rise": 0.72,
+    "flange": 0.05,
+    "vent": 0.013,
+    "seam": 0.005,
+    "brim": 0.055
+  },
+  "knob": {
+    "type": "bead",
+    "radius": 0.15,
+    "squash": 0.75,
+    "blend": 0.022
+  },
+  "spout": {
+    "type": "curved",
+    "length": 0.58,
+    "rootR": 0.22,
+    "tipR": 0.115,
+    "attachY": 0.46,
+    "rise": 0.42,
+    "wall": 0.016,
+    "blend": 0.09,
+    "bend": 0.3
+  },
+  "handle": {
+    "type": "invertedEar",
+    "tube": 0.115,
+    "taper": 0.93,
+    "outerX": 1.48,
+    "topY": 0.7,
+    "botY": 0.22,
+    "loopY": 0.47,
+    "stretch": 1.12,
+    "blend": 0.06
+  },
+  "base": {
+    "type": "ring",
+    "height": 0.022,
+    "inset": 0.16,
+    "wall": 0.05
+  },
+  "expose": [
+    "body.maxR",
+    "body.lowerFull",
+    "body.upperFull",
+    "body.mouthR",
+    "lid.rise",
+    "lid.overhang",
+    "knob.radius",
+    "spout.length",
+    "handle.outerX",
+    "lid.brim"
+  ],
+  "sources": [
+    "https://www.zisha.com/knowledge/30802.shtml",
+    "https://chenpot.com/sz-duo-qiu.html",
+    "https://baike.baidu.com/item/%E6%8E%87%E7%90%83%E5%A3%B6/3576954"
+  ]
+}

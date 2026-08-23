@@ -21,10 +21,12 @@ export const HANDLES = {
   none: { label: '无', params: {}, build: () => null },
 
   invertedEar: {
-    label: '倒耳把',
-    // 西施's 倒把: a thick clay strap rolled into a round ear — thick where it
-    // meets the shoulder, tapering as it sweeps down to a thinner tail at the
-    // belly. Built on a true circular arc so no straight segment can appear.
+    label: '耳把',
+    // A clay strap rolled into a round ear, built on a true circular arc so no
+    // straight segment can appear. `taper` decides which end is thick: below 1
+    // it is 西施's 倒把 (thin at the shoulder, thickest at the lower root);
+    // near 1 it is the even 环把 that 掇球 wants. rearLoop is the other family
+    // of handle — a D with a corner at the top — and is wrong for both.
     params: {
       tube: { label: '把粗', min: 0.03, max: 0.12, step: 0.002, default: 0.075 },
       // 倒 = inverted: unlike an ordinary ear, the strap is *thin* where it
