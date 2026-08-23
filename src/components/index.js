@@ -74,11 +74,15 @@ export function buildVessel(spec, material) {
 
   const lidMesh = lid.def.build(lid.p, prof.mouthR, material, prof)
   if (lidMesh) {
-    lidMesh.position.y = prof.height
+    // a lid seats with a hair of clearance; that gap *is* the seam line. With
+    // the surfaces coincident the seam z-fights and draws as a dotted line —
+    // conspicuous on a 截盖, where the seam is the feature you look at.
+    const seam = lid.p.seam ?? 0.005
+    lidMesh.position.y = prof.height + seam
     raised.add(lidMesh)
     const knobMesh = knob.def.build(knob.p, material)
     if (knobMesh) {
-      knobMesh.position.y += prof.height + lid.def.top(lid.p, prof) - 0.006
+      knobMesh.position.y += prof.height + seam + lid.def.top(lid.p, prof) - 0.006
       raised.add(knobMesh)
     }
   }

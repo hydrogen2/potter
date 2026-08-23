@@ -17,6 +17,7 @@ export const LIDS = {
       thickness: { label: '盖厚', min: 0.02, max: 0.1, step: 0.002, default: 0.05 },
       crown: { label: '盖面', min: 0, max: 0.06, step: 0.002, default: 0.008 },
       vent: { label: '气孔', min: 0, max: 0.03, step: 0.001, default: 0.013 },
+      seam: { label: '盖缝', min: 0.0, max: 0.02, step: 0.001, default: 0.005 },
     },
     top: (p) => p.thickness + p.crown,
     build(p, mouthR, material) {
@@ -48,6 +49,7 @@ export const LIDS = {
       thickness: { label: '盖厚', min: 0.02, max: 0.09, step: 0.002, default: 0.04 },
       rise: { label: '盖高', min: 0.3, max: 1.0, step: 0.01, default: 0.94 },  // fraction of the cap to the pole
       vent: { label: '气孔', min: 0, max: 0.03, step: 0.001, default: 0.012 },
+      seam: { label: '盖缝', min: 0.0, max: 0.02, step: 0.001, default: 0.005 },
     },
     top: (p, prof) => (prof?.capLimit ?? 0.18) * p.rise,
     build(p, mouthR, material, prof) {
@@ -83,6 +85,7 @@ export const LIDS = {
       thickness: { label: '盖厚', min: 0.02, max: 0.1, step: 0.002, default: 0.04 },
       rise: { label: '穹高', min: 0.02, max: 0.3, step: 0.002, default: 0.13 },
       vent: { label: '气孔', min: 0, max: 0.03, step: 0.001, default: 0.013 },
+      seam: { label: '盖缝', min: 0.0, max: 0.02, step: 0.001, default: 0.005 },
     },
     top: (p) => p.thickness + p.rise,
     build(p, mouthR, material) {

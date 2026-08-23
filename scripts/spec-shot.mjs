@@ -17,7 +17,8 @@ const browser = await chromium.launch({
     '/home/supper-user/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell',
   args: ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--no-sandbox'],
 })
-const page = await browser.newPage({ viewport: { width: 1100, height: 700 } })
+// 2x pixel ratio: a hairline seam aliases into dashes at 1x
+const page = await browser.newPage({ viewport: { width: 1100, height: 700 }, deviceScaleFactor: 2 })
 page.setDefaultTimeout(120000)
 page.on('pageerror', (e) => console.log('[pageerror]', e.message))
 
