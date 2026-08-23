@@ -35,10 +35,9 @@
   "knob": {
     "type": "bridgeMound",
     "span": 0.7827,
-    "rise": 0.1237,
-    "holeW": 0.16,
-    "holeH": 0.08,
-    "depth": 0.2859
+    "rise": 0.14,
+    "tube": 0.055,
+    "width": 1.8
   },
   "spout": {
     "type": "straightCone",

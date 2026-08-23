@@ -1,4 +1,5 @@
 import * as THREE from 'three'
+import { sweptTube } from '../geometry/sweep.js'
 
 /**
  * 钮 — knobs. Positioned by the assembler at the lid's top surface;
@@ -29,51 +30,25 @@ export const KNOBS = {
 
   bridgeMound: {
     label: '桥钮·矮',
+    // A rolled strap of clay bent into a low wide arch: round in section, so
+    // the top is a curve you can hook a finger under. An extruded outline gives
+    // a flat-topped plate instead — correct in silhouette, wrong from above.
     params: {
       span: { label: '跨度', min: 0.2, max: 0.9, step: 0.005, default: 0.58 },
       rise: { label: '拱高', min: 0.05, max: 0.3, step: 0.005, default: 0.15 },
-      holeW: { label: '孔宽', min: 0.04, max: 0.4, step: 0.005, default: 0.16 },
-      holeH: { label: '孔高', min: 0.02, max: 0.2, step: 0.005, default: 0.087 },
-      depth: { label: '厚度', min: 0.08, max: 0.4, step: 0.005, default: 0.2 },
+      tube: { label: '条粗', min: 0.02, max: 0.12, step: 0.002, default: 0.055 },
+      width: { label: '条宽', min: 0.8, max: 3.0, step: 0.05, default: 1.7 },
     },
     build(p, material) {
-      // a low wide mound with splayed feet melting into the lid, thin over
-      // the crown, small tunnel through — the classic 桥钮 (see 顾景舟 大石瓢)
-      const hs = p.span / 2
-      // superellipse-ish arch: broad feet, soft rounded crown (no apex point)
-      const outer = new THREE.SplineCurve([
-        new THREE.Vector2(-hs - 0.05, -0.02),
-        new THREE.Vector2(-hs * 0.88, p.rise * 0.22),
-        new THREE.Vector2(-hs * 0.64, p.rise * 0.6),
-        new THREE.Vector2(-hs * 0.34, p.rise * 0.9),
-        new THREE.Vector2(-hs * 0.12, p.rise * 0.99),
-        new THREE.Vector2(hs * 0.12, p.rise * 0.99),
-        new THREE.Vector2(hs * 0.34, p.rise * 0.9),
-        new THREE.Vector2(hs * 0.64, p.rise * 0.6),
-        new THREE.Vector2(hs * 0.88, p.rise * 0.22),
-        new THREE.Vector2(hs + 0.05, -0.02),
-      ]).getPoints(48)
-      const hw = p.holeW / 2
-      const inner = new THREE.SplineCurve([
-        new THREE.Vector2(hw, -0.02),
-        new THREE.Vector2(hw * 0.92, p.holeH * 0.55),
-        new THREE.Vector2(hw * 0.5, p.holeH * 0.93),
-        new THREE.Vector2(0, p.holeH),
-        new THREE.Vector2(-hw * 0.5, p.holeH * 0.93),
-        new THREE.Vector2(-hw * 0.92, p.holeH * 0.55),
-        new THREE.Vector2(-hw, -0.02),
-      ]).getPoints(24)
-      const shape = new THREE.Shape([...outer, ...inner])
-      const geo = new THREE.ExtrudeGeometry(shape, {
-        depth: p.depth,
-        curveSegments: 24,
-        bevelEnabled: true,
-        bevelThickness: p.depth * 0.3,
-        bevelSize: 0.028,
-        bevelSegments: 8,
-      })
-      geo.translate(0, 0, -p.depth / 2)
-      return new THREE.Mesh(geo, material)
+      const arc = new THREE.EllipseCurve(
+        0, 0, p.span / 2, p.rise, Math.PI * 1.04, -Math.PI * 0.04, true,
+      )
+      const curve = new THREE.CatmullRomCurve3(
+        arc.getSpacedPoints(36).map((v) => new THREE.Vector3(v.x, v.y, 0)),
+      )
+      const mesh = new THREE.Mesh(sweptTube(curve, () => p.tube, 56, 18), material)
+      mesh.scale.z = p.width          // a strap is wider than it is thick
+      return mesh
     },
   },
 
