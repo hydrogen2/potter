@@ -40,6 +40,12 @@ export const HANDLES = {
       loopY: { label: '环心高', min: 0.2, max: 0.9, step: 0.01, default: 0.52 },
       stretch: { label: '环高扁', min: 0.6, max: 1.8, step: 0.02, default: 1.0 },
       blend: { label: '润接', min: 0, max: 0.16, step: 0.005, default: 0.045 },
+      // A circle through three points has a single curvature everywhere, which
+      // is what 西施's ear wants. 掇球's is a teardrop: full where it leaves the
+      // shoulder, tighter where it tucks under the belly. See the note on the
+      // modulation below for why this is a radius function and not extra
+      // control points. 0 leaves the plain circle.
+      teardrop: { label: '梨形', min: 0, max: 0.50, step: 0.01, default: 0 },
     },
     build(p, prof, material) {
       const H = prof.height
@@ -68,13 +74,27 @@ export const HANDLES = {
       // a circle through the three points is the base; `stretch` makes it an
       // oval, since a real 环把 is taller than it is wide
       const k = p.stretch ?? 1
+      // Teardrop by *radius modulation* rather than by adding control points.
+      // Threading a spline through a peak and a tuck gives a curve with
+      // near-straight runs between the anchors and abrupt turns at them — an
+      // angular arm, not an ear. Multiplying the circle's radius by a smooth
+      // function instead keeps curvature continuous by construction, so no
+      // corner is possible at any parameter value.
+      //
+      // sin(2*pi*t) is the right function: it is exactly zero at both roots
+      // (so the ends still meet the body), positive across the upper half
+      // (the strap swells and rises as it leaves the shoulder) and negative
+      // across the lower (it draws in as it tucks under the belly).
+      const drop = p.teardrop ?? 0
       const pts = []
-      const N = 64
+      const N = 96
       for (let i = 0; i <= N; i++) {
-        const a = a0 + delta * (i / N)
+        const t = i / N
+        const a = a0 + delta * t
+        const r = radius * (1 + drop * Math.sin(2 * Math.PI * t))
         pts.push(new THREE.Vector3(
-          centre.x + radius * Math.cos(a),
-          centre.y + radius * Math.sin(a) * k,
+          centre.x + r * Math.cos(a),
+          centre.y + r * Math.sin(a) * k,
           0,
         ))
       }

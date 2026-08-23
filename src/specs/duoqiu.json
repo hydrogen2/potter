@@ -59,12 +59,13 @@
     "type": "invertedEar",
     "tube": 0.09,
     "taper": 1.28,
-    "outerX": 1.44,
-    "topY": 0.7,
-    "botY": 0.16,
-    "loopY": 0.46,
-    "stretch": 1.28,
-    "blend": 0.09
+    "outerX": 1.52,
+    "topY": 0.72,
+    "botY": 0.14,
+    "loopY": 0.44,
+    "stretch": 1.22,
+    "blend": 0.09,
+    "teardrop": 0.36
   },
   "base": {
     "type": "ring",
@@ -79,6 +80,7 @@
     "body.upperFull",
     "handle.outerX",
     "handle.taper",
+    "handle.teardrop",
     "knob.radius",
     "lid.brim",
     "lid.overhang",
