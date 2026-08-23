@@ -41,8 +41,12 @@ export const HANDLES = {
     },
     build(p, prof, material) {
       const H = prof.height
-      const A = new THREE.Vector2(-(prof.radiusAt(H * p.topY) - 0.035), H * p.topY)
-      const B = new THREE.Vector2(-(prof.radiusAt(H * p.botY) - 0.035), H * p.botY)
+      // The ends have to start deeper inside the body than the strap is thick,
+      // or the tube's flat end cap sits proud of a convex belly and reads as a
+      // step at the root. Same failure as a spout root embedded too shallowly.
+      const embed = Math.max(0.035, p.tube * 0.9)
+      const A = new THREE.Vector2(-(prof.radiusAt(H * p.topY) - embed), H * p.topY)
+      const B = new THREE.Vector2(-(prof.radiusAt(H * p.botY) - embed), H * p.botY)
       const C = new THREE.Vector2(-p.outerX, H * p.loopY)
       const { centre, radius } = circleThrough(A, B, C)
       const ang = (v) => Math.atan2(v.y - centre.y, v.x - centre.x)

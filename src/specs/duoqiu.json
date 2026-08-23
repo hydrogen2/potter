@@ -44,14 +44,14 @@
   },
   "spout": {
     "type": "curved",
-    "length": 0.58,
-    "rootR": 0.22,
-    "tipR": 0.115,
-    "attachY": 0.46,
-    "rise": 0.42,
+    "length": 0.38,
+    "rootR": 0.19,
+    "tipR": 0.095,
+    "attachY": 0.5,
+    "rise": 0.3,
     "wall": 0.016,
     "blend": 0.09,
-    "bend": 0.3
+    "bend": 0.18
   },
   "handle": {
     "type": "invertedEar",

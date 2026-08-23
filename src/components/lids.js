@@ -104,7 +104,9 @@ export const LIDS = {
     },
     // rise is a fraction of the rim radius, so the cap keeps its shape when the
     // mouth is resized
-    top: (p, prof) => (prof.mouthR + p.overhang - (p.brim ?? 0)) * p.rise,
+    // the cap springs from the top of the brim, not from the seating plane
+    top: (p, prof) =>
+      (prof.mouthR + p.overhang - (p.brim ?? 0)) * p.rise + p.thickness * 0.58,
     build(p, mouthR, material) {
       const R = mouthR + p.overhang          // the rim, ball 2's widest circle
       const Rd = Math.max(R - (p.brim ?? 0), R * 0.5)   // where the cap springs
@@ -114,11 +116,11 @@ export const LIDS = {
       // the sphere the cap is cut from: base radius R, height h
       const Rs = (Rd * Rd + h * h) / (2 * h)
       const cy = h - Rs                       // centre sits below the rim plane
-      const arc = (radius, from, to, n) => {
+      const arc = (radius, from, to, n, lift = 0) => {
         const out = []
         for (let i = 0; i <= n; i++) {
           const t = from + ((to - from) * i) / n
-          out.push(new THREE.Vector2(radius * Math.sin(t), cy + radius * Math.cos(t)))
+          out.push(new THREE.Vector2(radius * Math.sin(t), cy + radius * Math.cos(t) + lift))
         }
         return out
       }
@@ -127,18 +129,47 @@ export const LIDS = {
       // the inner surface is the same sphere shrunk by the wall — for a sphere
       // an offset along the normal is exactly a smaller concentric radius
       const Ri = Rs - T
-      const thInner = Math.acos(Math.min(1, Math.max(-1, -cy / Ri)))   // where it meets y = 0
-      const rimEdge = T * 0.6                 // the rim has a visible vertical face
+      const rimEdge = T * 0.6
+      const brimTop = T * 0.42
+      const domeBase = brimTop + T * 0.16     // where the cap actually springs
+      const thInner = Math.acos(
+        Math.min(1, Math.max(-1, (Rs - h - domeBase) / Ri)),
+      )
+      // Corners here are what the eye reads as a staircase, so the rim is a
+      // rounded band rather than a stack of square steps: a quarter-round at
+      // the bottom of the outer face, one at the top, and an eased ramp in to
+      // where the dome springs. The dome arc is lifted by domeBase — springing
+      // it from the seating plane left a vertical drop behind the brim.
+      const rr = Math.min(T * 0.5, Math.max((p.brim ?? 0.03) * 0.55, 0.006))
+      const quarter = (cx, cyy, a0, a1, n = 7) => {
+        const out = []
+        for (let i = 0; i <= n; i++) {
+          const a = a0 + ((a1 - a0) * i) / n
+          out.push(new THREE.Vector2(cx + rr * Math.cos(a), cyy + rr * Math.sin(a)))
+        }
+        return out
+      }
+      const ease = (n = 8) => {
+        const out = []
+        for (let i = 1; i <= n; i++) {
+          const t = i / n
+          const k = t * t * (3 - 2 * t)
+          out.push(new THREE.Vector2(
+            THREE.MathUtils.lerp(R - rr, Rd, k),
+            THREE.MathUtils.lerp(brimTop, domeBase, k),
+          ))
+        }
+        return out
+      }
       const pts = [
-        new THREE.Vector2(R, 0),
-        new THREE.Vector2(R, T * 0.35),       // the flat brim…
-        new THREE.Vector2(Rd, T * 0.5),       // …then the cap springs from inside it
-        ...arc(Rs, thOuter, thVent, 34),      // over the dome
-        new THREE.Vector2(v, h - T),          // down the bore of the 气孔
-        ...arc(Ri, thVent, thInner, 34),      // and back under it
         new THREE.Vector2(R - T, -rimEdge),
-        new THREE.Vector2(R, -rimEdge),
-        new THREE.Vector2(R, 0),
+        ...quarter(R - rr, -rimEdge + rr, -Math.PI / 2, 0),   // round under the rim
+        ...quarter(R - rr, brimTop - rr, 0, Math.PI / 2),     // round over the rim
+        ...ease(),                                            // ramp in to the cap
+        ...arc(Rs, thOuter, thVent, 34, domeBase),            // over the dome
+        new THREE.Vector2(v, h - T + domeBase),               // the bore of the 气孔
+        ...arc(Ri, thVent, thInner, 34, domeBase),            // and back under it
+        new THREE.Vector2(R - T, -rimEdge),
       ]
       const g = new THREE.Group()
       g.add(new THREE.Mesh(loftGeometry({ profile: pts, capBottom: false }), material))

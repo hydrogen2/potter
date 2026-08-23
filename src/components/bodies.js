@@ -196,14 +196,25 @@ export const BODIES = {
       // back out into a projecting collar (唇) for the lid to sit on
       const collar = p.collar ?? 0
       const cH = p.collarH ?? 0.05
-      const top = collar > 0
-        ? [
-            new THREE.Vector2(p.mouthR, rim.y),
-            new THREE.Vector2(p.mouthR, rim.y + cH * 0.25),        // the neck
-            new THREE.Vector2(p.mouthR + collar, rim.y + cH * 0.62), // flaring out
-            new THREE.Vector2(p.mouthR + collar, rim.y + cH),        // the ledge
-          ]
-        : [new THREE.Vector2(p.mouthR, rim.y)]
+      // Sampled as a rounded bead rather than stepped out with corner points:
+      // square corners here stack with the lid's rim and read as a staircase.
+      // It swells past the ledge radius in the middle and rounds back to it at
+      // the top, which is the seat the lid sits on.
+      const top = []
+      if (collar > 0) {
+        const N2 = 18
+        for (let i = 0; i <= N2; i++) {
+          const t = i / N2
+          const flare = t * t * (3 - 2 * t)               // smoothstep out to the ledge
+          const swell = Math.sin(Math.PI * t) * 0.22      // …bulging on the way
+          top.push(new THREE.Vector2(
+            p.mouthR + collar * (flare + swell),
+            rim.y + cH * t,
+          ))
+        }
+      } else {
+        top.push(new THREE.Vector2(p.mouthR, rim.y))
+      }
       const outer = [
         new THREE.Vector2(0.03, foot.y + press),
         new THREE.Vector2(footR * 0.5, foot.y + press * 0.78),
