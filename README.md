@@ -142,10 +142,8 @@ node scripts/screenshot.mjs   # headless render check → shots/
 - **Photo→spec v2**: shading-based
   terms for features silhouettes can't see; use the base photo (feet, seal)
   as a fourth constraint
-- **Fillets (润接)**: done for spouts, handles and axis-centred knobs. Remaining:
-  a bridge knob's feet land off-axis on a lid, which neither fillet covers — the
-  两 石瓢 still use the legacy collar there, which is fine on their flat lids.
-  `check-details.mjs` names which of the two each attachment used
+- **Fillets (润接)**: done — every attachment in the archive now uses a tangent
+  fillet, and `check-details.mjs` names which kind each one used
 
 ## Canon before pixels
 
@@ -228,6 +226,10 @@ tangents. Swept round, that meets both surfaces smoothly by construction. The
 check asserts a fillet was actually *built*, since the crossing search can fail
 and return empty geometry — which would vanish from the render silently, exactly
 as the NaN-positioned spout once did.
+
+What a fillet lands *on* is a parameter, not an assumption: `revolutionSurface`
+for a belly, `heightField` for a lid top. A bridge knob's feet land off-axis on
+a lid and need the second, which is why they went unfilleted for a while.
 
 A knob centred on a lid is the easy case and gets an exact answer instead:
 knob and lid share the pot's axis, so the junction is a surface of revolution

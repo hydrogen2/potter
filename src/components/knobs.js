@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import { sweptTube, axisFillet, filletCollar } from '../geometry/sweep.js'
+import { sweptTube, axisFillet, filletBlend, heightField, filletCollar } from '../geometry/sweep.js'
 
 /**
  * 钮 — knobs. Positioned by the assembler at the lid's top surface;
@@ -15,16 +15,30 @@ export const KNOBS = {
       span: { label: '跨度', min: 0.2, max: 0.8, step: 0.005, default: 0.54 },
       rise: { label: '拱高', min: 0.06, max: 0.35, step: 0.005, default: 0.16 },
       tube: { label: '条粗', min: 0.03, max: 0.12, step: 0.002, default: 0.078 },
+      blend: { label: '润接', min: 0, max: 0.1, step: 0.005, default: 0.03 },
     },
-    build(p, material) {
+    build(p, material, drop) {
       // a thick clay strap bent into an arch: round section, feet buried
       const arc = new THREE.EllipseCurve(
-        0, 0, p.span / 2, p.rise, Math.PI * 1.06, -Math.PI * 0.06, true,
+        0, 0, p.span / 2, p.rise, Math.PI * 1.16, -Math.PI * 0.16, true,
       )
       const curve = new THREE.CatmullRomCurve3(
         arc.getSpacedPoints(32).map((v) => new THREE.Vector3(v.x, v.y, 0)),
       )
-      return new THREE.Mesh(new THREE.TubeGeometry(curve, 64, p.tube, 16), material)
+      const strap = new THREE.Mesh(new THREE.TubeGeometry(curve, 64, p.tube, 16), material)
+      if (!p.blend) return strap
+      // Both feet land on the lid *off* the axis, so this is neither the body
+      // case nor the axis-symmetric one: the lid is a height field and each
+      // foot gets its own fillet.
+      const group = new THREE.Group()
+      group.add(strap)
+      const lid = heightField((r) => -(drop ? drop(r) : 0))
+      for (const fromStart of [true, false]) {
+        group.add(new THREE.Mesh(
+          filletBlend(curve, () => p.tube, lid, p.blend, fromStart), material,
+        ))
+      }
+      return group
     },
   },
 
@@ -40,9 +54,12 @@ export const KNOBS = {
       width: { label: '条宽', min: 0.8, max: 3.0, step: 0.05, default: 1.7 },
       blend: { label: '润接', min: 0, max: 0.1, step: 0.005, default: 0.03 },
     },
-    build(p, material) {
+    build(p, material, drop) {
       const arc = new THREE.EllipseCurve(
-        0, 0, p.span / 2, p.rise, Math.PI * 1.04, -Math.PI * 0.04, true,
+        // swept well past the horizontal on purpose: a tube is open at its
+        // ends, and a foot buried less deep than the strap is thick leaves that
+        // opening showing above the lid as a dark crescent
+        0, 0, p.span / 2, p.rise, Math.PI * 1.16, -Math.PI * 0.16, true,
       )
       const curve = new THREE.CatmullRomCurve3(
         arc.getSpacedPoints(36).map((v) => new THREE.Vector3(v.x, v.y, 0)),
@@ -50,15 +67,15 @@ export const KNOBS = {
       const group = new THREE.Group()
       group.add(new THREE.Mesh(sweptTube(curve, () => p.tube, 56, 18), material))
       if (p.blend) {
-        // 润接 where the strap's feet meet the lid: the collar's far edge is
-        // pulled onto the lid plane, so the foot spreads instead of butting
-        const onLid = (P) => new THREE.Vector3(P.x, 0, P.z)
-        for (const [t, sign] of [[0, 1], [1, -1]]) {
-          const end = curve.getPointAt(t)
-          const dir = curve.getTangentAt(t).multiplyScalar(sign)
-          const anchor = new THREE.Vector3(end.x, 0, end.z)
+        // 润接 at both feet. The lid is a height field and the feet land off
+        // its axis, so this is the general case rather than the axis-symmetric
+        // one. Built before the width scale below, in the strap's round frame —
+        // the z stretch then carries the fillet with it, which is a shade wrong
+        // wherever the lid is not level, and imperceptible on a 平盖's crown.
+        const lid = heightField((r) => -(drop ? drop(r) : 0))
+        for (const fromStart of [true, false]) {
           group.add(new THREE.Mesh(
-            filletCollar(anchor, dir, p.tube, p.blend, 24, 12, onLid), material,
+            filletBlend(curve, () => p.tube, lid, p.blend, fromStart), material,
           ))
         }
       }

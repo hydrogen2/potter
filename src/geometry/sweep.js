@@ -237,6 +237,42 @@ export function surfaceCrossing(curve, prof, fromStart = true, samples = 60) {
 }
 
 /**
+ * What a fillet is landing *on*. filletBlend used to assume the pot's body and
+ * test "inside a solid of revolution", which is the wrong question for a lid:
+ * a lid top is a height field, and a bridge knob's feet land on it off-axis.
+ */
+export function revolutionSurface(prof) {
+  return {
+    inside: (P) => Math.hypot(P.x, P.z) < prof.radiusAt(P.y),
+    project: (P) => {
+      const rho = Math.hypot(P.x, P.z) || 1e-6
+      const target = prof.radiusAt(P.y)
+      return new THREE.Vector3((P.x * target) / rho, P.y, (P.z * target) / rho)
+    },
+    normal: (P) => {
+      const h = 0.008
+      const slope = (prof.radiusAt(P.y + h) - prof.radiusAt(P.y - h)) / (2 * h)
+      const rho = Math.hypot(P.x, P.z) || 1e-6
+      return new THREE.Vector3(P.x / rho, -slope, P.z / rho).normalize()
+    },
+  }
+}
+
+/** A surface given as height above the axis plane: y = f(r). Lids are these. */
+export function heightField(surfaceY) {
+  return {
+    inside: (P) => P.y < surfaceY(Math.hypot(P.x, P.z)),
+    project: (P) => new THREE.Vector3(P.x, surfaceY(Math.hypot(P.x, P.z)), P.z),
+    normal: (P) => {
+      const rho = Math.hypot(P.x, P.z) || 1e-6
+      const h = 0.008
+      const d = (surfaceY(rho + h) - surfaceY(Math.max(0, rho - h))) / (2 * h)
+      return new THREE.Vector3((-d * P.x) / rho, 1, (-d * P.z) / rho).normalize()
+    },
+  }
+}
+
+/**
  * 润接 — a real fillet between a swept attachment and the body.
  *
  * `filletCollar` (below) was never a fillet: it built a collar of revolution
@@ -258,8 +294,10 @@ export function surfaceCrossing(curve, prof, fromStart = true, samples = 60) {
  *   blend      how far the fillet reaches, along the tube and across the body
  *   fromStart  true if the buried root is at t = 0 (both ends for a handle)
  */
-export function filletBlend(curve, radiusAt, prof, blend, fromStart = true,
+export function filletBlend(curve, radiusAt, surface, blend, fromStart = true,
                             radial = 72, steps = 14) {
+  // accepts a body profile directly, for the common case
+  const S = surface.radiusAt ? revolutionSurface(surface) : surface
   const N = 256
   const frames = curve.computeFrenetFrames(N, false)
   const frameAt = (t) => {
@@ -273,21 +311,9 @@ export function filletBlend(curve, radiusAt, prof, blend, fromStart = true,
   }
   const surf = (t, v) => curve.getPointAt(Math.min(1, Math.max(0, t)))
     .addScaledVector(dirAt(t, v), radiusAt(Math.min(1, Math.max(0, t))))
-  const inside = (P) => Math.hypot(P.x, P.z) < prof.radiusAt(P.y)
-
-  // body outward normal at a point, for a surface of revolution r(y)
-  const bodyNormal = (P) => {
-    const h = 0.008
-    const slope = (prof.radiusAt(P.y + h) - prof.radiusAt(P.y - h)) / (2 * h)
-    const rho = Math.hypot(P.x, P.z) || 1e-6
-    const n = new THREE.Vector3(P.x / rho, -slope, P.z / rho)
-    return n.normalize()
-  }
-  const onBody = (P) => {
-    const rho = Math.hypot(P.x, P.z) || 1e-6
-    const target = prof.radiusAt(P.y)
-    return new THREE.Vector3((P.x * target) / rho, P.y, (P.z * target) / rho)
-  }
+  const inside = (P) => S.inside(P)
+  const bodyNormal = (P) => S.normal(P)
+  const onBody = (P) => S.project(P)
 
   const L = curve.getLength() || 1
   const step = blend / L
@@ -298,6 +324,12 @@ export function filletBlend(curve, radiusAt, prof, blend, fromStart = true,
     let lo = fromStart ? 0 : 1
     let hi = fromStart ? 1 : 0
     const dir = fromStart ? 1 : -1
+    // A meridian that starts *outside* never crosses: that happens wherever the
+    // attachment is only shallowly buried, as a bridge knob's feet are — the
+    // top of the foot stands clear of the lid and has nothing to blend into.
+    // Without this guard the search returns a crossing at the very first step
+    // and the fillet grows a spike there.
+    if (!inside(surf(lo, v))) { rows.push(null); continue }
     let found = false
     for (let k = 1; k <= 90; k++) {
       const t = lo + dir * (k / 90) * Math.abs(hi - lo)
@@ -311,21 +343,44 @@ export function filletBlend(curve, radiusAt, prof, blend, fromStart = true,
     const tc = hi
     const Pc = surf(tc, v)
 
+    // B: across the surface, away from the tube, snapped back onto it.
+    // The direction to travel is the tube's *radial* direction at this
+    // meridian, flattened into the surface's tangent plane. Deriving it from
+    // the tube's axis instead degenerates whenever the attachment meets the
+    // surface head-on — which is precisely how a bridge knob's feet enter a
+    // lid, and it grew a spike at every foot.
+    const nb = bodyNormal(Pc)
+    const w = dirAt(tc, v).clone()
+    w.addScaledVector(nb, -w.dot(nb))
+    // How much "away across the surface" there is to travel. It vanishes where
+    // the tube runs parallel to the surface normal — around the underside of a
+    // bridge knob's foot — and normalising near-zero turns noise into a spike.
+    // Rather than cut those meridians out, which leaves the band ending on an
+    // exposed edge, taper the fillet to nothing as they are approached.
+    let wl = w.length()
+    if (wl < 0.34) {
+      const axial = surf(Math.min(1, Math.max(0, tc + dir * 0.004)), v).sub(Pc).normalize()
+      const alt = axial.negate()
+      alt.addScaledVector(nb, -alt.dot(nb))
+      if (alt.length() > wl) { w.copy(alt); wl = alt.length() }
+    }
+    if (wl < 0.10) { rows.push(null); continue }
+    const u0 = Math.min(1, Math.max(0, (wl - 0.10) / 0.55))
+    // and it cannot reach further back along the tube than the tube has left:
+    // where the crossing sits close to the tube's own end, asking for the full
+    // blend clamps A against the end and leaves a thin wedge poking out
+    const room = fromStart ? 1 - tc : tc
+    const u1 = Math.min(1, room / Math.max(step, 1e-6))
+    const taper = u0 * u0 * (3 - 2 * u0) * (u1 * u1 * (3 - 2 * u1))
+    const reach = blend * taper
+    w.normalize()
     // A: back along the tube, away from the body, still on the tube surface
-    const tA = Math.min(1, Math.max(0, tc + dir * step))
+    const tA = Math.min(1, Math.max(0, tc + dir * step * taper))
     const A = surf(tA, v)
     // tangent at A pointing back toward the body
     const tAe = Math.min(1, Math.max(0, tA - dir * 0.004))
     const tanA = surf(tAe, v).sub(A).normalize()
-
-    // B: across the body, away from the tube, snapped onto the surface
-    const nb = bodyNormal(Pc)
-    const axial = surf(Math.min(1, Math.max(0, tc + dir * 0.004)), v).sub(Pc).normalize()
-    const w = axial.clone().negate()
-    w.addScaledVector(nb, -w.dot(nb))
-    if (w.lengthSq() < 1e-9) { rows.push(null); continue }
-    w.normalize()
-    const B = onBody(Pc.clone().addScaledVector(w, blend))
+    const B = onBody(Pc.clone().addScaledVector(w, reach))
     const tanB = w
 
     // Q: where the two tangent lines meet. Closest approach if they are skew.
@@ -362,12 +417,18 @@ export function filletBlend(curve, radiusAt, prof, blend, fromStart = true,
     for (const p of row) pos.push(p.x, p.y, p.z)
   }
   const W = steps + 1
+  // Marching from t = 1 reverses the parameter direction, which reverses the
+  // grid's handedness and so the triangle winding. Left as-is, one of a
+  // handle's two roots — or one of a bridge knob's two feet — renders its back
+  // faces and reads as a thin dark sliver. It shows on exactly one end, which
+  // is the tell.
   for (let j = 1; j <= radial; j++) {
     if (!valid[j] || !valid[j - 1]) continue
     for (let k = 1; k <= steps; k++) {
       const a2 = W * (j - 1) + (k - 1), b2 = W * j + (k - 1)
       const c3 = W * j + k, d3 = W * (j - 1) + k
-      idx.push(a2, b2, d3, b2, c3, d3)
+      if (fromStart) idx.push(a2, b2, d3, b2, c3, d3)
+      else idx.push(a2, d3, b2, b2, d3, c3)
     }
   }
   const g = new THREE.BufferGeometry()

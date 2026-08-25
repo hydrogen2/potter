@@ -20,6 +20,27 @@ export const LIDS = {
       seam: { label: '盖缝', min: 0.0, max: 0.02, step: 0.001, default: 0.005 },
     },
     top: (p) => p.thickness + p.crown,
+    // the same control points the top surface is lofted from, as a drop below
+    // the apex — a 平盖 is not perfectly flat and a knob's fillet should land on
+    // the crown it actually has
+    drop(p, prof) {
+      const R = prof.mouthR + p.overhang
+      const T = p.thickness, c = p.crown
+      const pts = [
+        [0, 0], [Math.max(p.vent, 0.004) + 0.03, 0],
+        [R * 0.25, c * 0.05], [R * 0.6, c * 0.4], [R, c + 0.012],
+      ]
+      return (r) => {
+        if (r <= pts[1][0]) return 0
+        for (let i = 1; i < pts.length; i++) {
+          if (r <= pts[i][0]) {
+            const [r0, d0] = pts[i - 1], [r1, d1] = pts[i]
+            return d0 + ((d1 - d0) * (r - r0)) / Math.max(r1 - r0, 1e-6)
+          }
+        }
+        return pts[pts.length - 1][1]
+      }
+    },
     build(p, mouthR, material) {
       const R = mouthR + p.overhang
       const v = Math.max(p.vent, 0.004)
