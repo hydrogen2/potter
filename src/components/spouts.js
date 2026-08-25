@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import { loftGeometry } from '../geometry/loft.js'
+import { loftGeometry, ngonSection } from '../geometry/loft.js'
 import { sweptTube, filletBlend, filletCollar, surfaceCrossing } from '../geometry/sweep.js'
 
 /**
@@ -57,6 +57,9 @@ export const SPOUTS = {
       // how far back the rim rolls over. A square or knife-edged lip is the one
       // sharp thing on an otherwise round pot and it shows.
       lipRoll: { label: '口圆', min: 0, max: 0.2, step: 0.005, default: 0.06 },
+      // a 方器's spout is faceted like its body; 0 leaves it round
+      facets: { label: '流面数', min: 0, max: 8, step: 1, default: 0 },
+      crisp: { label: '流棱', min: 3, max: 40, step: 1, default: 16 },
       rootR: { label: '根径', min: 0.05, max: 0.26, step: 0.002, default: 0.155 },
       tipR: { label: '口径', min: 0.02, max: 0.12, step: 0.002, default: 0.058 },
       wall: { label: '壁厚', min: 0.005, max: 0.03, step: 0.001, default: 0.014 },
@@ -109,8 +112,9 @@ export const SPOUTS = {
       const outerAt = (t) =>
         p.tipR + (p.rootR - p.tipR) * Math.pow(1 - t, p.flare ?? 2.6)
       const tube = new THREE.Mesh(
-        sweptTube(curve, outerAt, 96, 24,
-          (t) => Math.max(outerAt(t) - p.wall, 0.005), p.bevel ?? 0, p.lipRoll ?? 0),
+        sweptTube(curve, outerAt, 96, p.facets >= 3 ? 96 : 24,
+          (t) => Math.max(outerAt(t) - p.wall, 0.005), p.bevel ?? 0, p.lipRoll ?? 0,
+          p.facets >= 3 ? ngonSection(p.facets, p.crisp ?? 16) : null),
         material,
       )
       tube.userData.centreline = curve.getPoints(160)

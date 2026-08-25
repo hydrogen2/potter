@@ -1,0 +1,101 @@
+{
+  "id": "liufang",
+  "label": "六方",
+  "category": "zisha",
+  "categoryLabel": "紫砂 · Yixing",
+  "canon": "liufang",
+  "notes": "六方（藏六方一路）：方器。身筒六面等分，棱线自肩贯足，面微鼓而不失其直。以直线、横线为主，曲线为辅。",
+  "material": "zini",
+  "scaleCm": 11,
+  "wall": {
+    "base": 0.05,
+    "belly": 0.042,
+    "top": 0.038
+  },
+  "body": {
+    "type": "faceted",
+    "facets": 6,
+    "crisp": 30,
+    "height": 0.9,
+    "maxR": 0.92,
+    "bellyY": 0.44,
+    "bow": 0.02,
+    "shoulderY": 0.8,
+    "shoulderR": 0.74,
+    "mouthR": 0.58,
+    "footR": 0.66,
+    "footH": 0.05,
+    "belly": 0.14
+  },
+  "lid": {
+    "type": "stepped",
+    "overhang": 0.028,
+    "thickness": 0.05,
+    "tiers": 2,
+    "step": 0.2,
+    "rise": 0.05,
+    "flange": 0.05,
+    "vent": 0.013,
+    "seam": 0.005
+  },
+  "knob": {
+    "type": "button",
+    "radius": 0.17,
+    "height": 0.078,
+    "taper": 0.8,
+    "facets": 6,
+    "crisp": 30,
+    "round": 0.22,
+    "blend": 0.022
+  },
+  "spout": {
+    "type": "oneBend",
+    "attachY": 0.44,
+    "length": 0.72,
+    "rootAngle": 40,
+    "tipAngle": -4,
+    "bend": 1.0,
+    "lip": 0,
+    "rootR": 0.17,
+    "tipR": 0.07,
+    "wall": 0.016,
+    "flare": 1.6,
+    "bevel": 0.04,
+    "lipRoll": 0.07,
+    "blend": 0.06,
+    "facets": 6,
+    "crisp": 22
+  },
+  "handle": {
+    "type": "invertedEar",
+    "tube": 0.088,
+    "taper": 1.15,
+    "outerX": 1.4,
+    "topY": 0.74,
+    "botY": 0.2,
+    "loopY": 0.46,
+    "stretch": 1.15,
+    "teardrop": 0.1,
+    "blend": 0.05,
+    "facets": 6,
+    "crisp": 18
+  },
+  "base": {
+    "type": "flat"
+  },
+  "expose": [
+    "body.belly",
+    "body.bow",
+    "body.crisp",
+    "body.facets",
+    "body.maxR",
+    "body.mouthR",
+    "body.shoulderR",
+    "handle.outerX",
+    "lid.crown",
+    "lid.step",
+    "lid.tiers",
+    "spout.facets",
+    "spout.length"
+  ]
+}

@@ -244,13 +244,64 @@ CANON.duoqiu = {
   },
 }
 
+CANON.liufang = {
+  label: '六方',
+  // 方器 is the first family here whose canon *inverts* the round wares'. For
+  // 石瓢 or 西施 a straight run in the flank is a fault; here it is the point —
+  // 以直线、横线为主，曲线、细线为辅. What makes a 方器 is flat faces meeting at
+  // clean 棱线, equally divided, and every element carrying the same section.
+  body: (prof, p, spec) => {
+    const n = p.facets ?? 6
+    // the section's corner-to-face ratio, against the ideal for a sharp n-gon.
+    // Round the corners away and it is a barrel with creases drawn on it.
+    const face = prof.radiusAt(prof.height * 0.5, 0)
+    const corner = prof.radiusAt(prof.height * 0.5, Math.PI / n)
+    const ideal = 1 / Math.cos(Math.PI / n)
+    const sharp = (corner / face - 1) / (ideal - 1)
+    // facets evenly divided: every face centre should sit at the same radius
+    let spread = 0
+    for (let i = 0; i < n; i++) {
+      const r = prof.radiusAt(prof.height * 0.5, (i * 2 * Math.PI) / n)
+      spread = Math.max(spread, Math.abs(r / face - 1))
+    }
+    // straight-dominant flank: the longest run whose radius changes at a
+    // near-constant rate, as a fraction of the flank
+    const pts = prof.outer.filter((v) => v.y > 0.08 && v.y < prof.height * 0.78)
+    let run = 0, best = 0
+    for (let i = 2; i < pts.length; i++) {
+      const d2 = (pts[i].x - pts[i - 1].x) - (pts[i - 1].x - pts[i - 2].x)
+      if (Math.abs(d2) < 6e-3) best = Math.max(best, ++run)
+      else run = 0
+    }
+    const straight = pts.length > 3 ? best / (pts.length - 2) : 0
+    return [
+      ['six faces, evenly divided', n === 6 && spread < 0.005,
+       `${n} faces, widest disagreement ${(spread * 100).toFixed(2)}%`],
+      ['corners are 棱, not rounded away', sharp > 0.72,
+       `corner/face ${(corner / face).toFixed(3)} of an ideal ${ideal.toFixed(3)} — ${(sharp * 100).toFixed(0)}% as crisp`],
+      ['flank is straight-dominant (以直线为主)', straight > 0.55,
+       `${(straight * 100).toFixed(0)}% of the flank runs straight`],
+      ['stands on a squared foot', (p.footH ?? 0) > 0.01,
+       `foot ${(p.footH ?? 0).toFixed(3)} tall`],
+    ]
+  },
+  slots: {
+    lid: (t) => [t === 'stepped', 'lid is a 台阶盖 carrying the same section'],
+    knob: (t) => [t === 'button', 'knob is a 方钮'],
+    spout: (t) => [t === 'oneBend', 'spout is 一弯嘴'],
+    handle: (t) => [t === 'invertedEar', 'handle is an ear'],
+    base: (t) => [t === 'flat' || t === 'ring', 'flat or ringed foot'],
+  },
+}
+
 const want = process.argv.slice(2)
 let failed = 0
 for (const spec of SPECS) {
   const canonId = spec.canon ?? (spec.label?.includes('石瓢') ? 'shipiao'
     : spec.label?.includes('西施') ? 'xishi'
     : spec.label?.includes('潘') ? 'panhu'
-    : spec.label?.includes('掇球') ? 'duoqiu' : null)
+    : spec.label?.includes('掇球') ? 'duoqiu'
+    : spec.label?.includes('六方') ? 'liufang' : null)
   if (!canonId || !CANON[canonId]) continue
   if (want.length && !want.includes(spec.id)) continue
   const canon = CANON[canonId]

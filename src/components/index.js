@@ -70,7 +70,11 @@ export function buildVessel(spec, material) {
   const vessel = new THREE.Group()
   const raised = new THREE.Group()
 
-  raised.add(bodyMesh(prof, wall, material))
+  raised.add(bodyMesh(prof, wall, material, {
+    crossSection: prof.crossSection,
+    // a 棱线 only reads as an edge if there are enough segments across it
+    radialSegments: prof.facets ? 288 : undefined,
+  }))
 
   const lidMesh = lid.def.build(lid.p, prof.mouthR, material, prof)
   if (lidMesh) {

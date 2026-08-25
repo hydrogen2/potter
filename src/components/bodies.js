@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import { shellGeometry } from '../geometry/loft.js'
+import { shellGeometry, ngonSection } from '../geometry/loft.js'
 
 /**
  * 身 — body profile families. Each returns { outer: Vector2[], radiusAt(y) }
@@ -26,7 +26,82 @@ function radiusFn(outer) {
   }
 }
 
+
+
 export const BODIES = {
+  // 方器. The geometry layer has taken a crossSection since the beginning and
+  // nothing has ever used one — every body so far has been a surface of
+  // revolution. This is the first that is not.
+  //
+  // The profile is deliberately straight-dominant: 以直线、横线为主，曲线、细线
+  // 为辅. A 方器's authority comes from flat faces meeting at clean 棱线, so the
+  // flank is a straight run with only a slight 鼓 (bow), and the shoulder is a
+  // turn rather than a curve.
+  faceted: {
+    label: '方器',
+    params: {
+      facets: { label: '面数', min: 4, max: 8, step: 1, default: 6 },
+      crisp: { label: '棱角', min: 3, max: 40, step: 1, default: 16 },
+      height: { label: '身高', min: 0.3, max: 1.6, step: 0.01, default: 0.72 },
+      maxR: { label: '身宽', min: 0.4, max: 1.3, step: 0.005, default: 0.95 },
+      bellyY: { label: '腹高', min: 0.15, max: 0.7, step: 0.01, default: 0.40 },
+      bow: { label: '鼓', min: 0, max: 0.14, step: 0.004, default: 0.035 },
+      // how far the belly's turn is rounded. The flank is two straight runs
+      // meeting at the widest point; left as a hard min they meet in a crease
+      // and the pot reads as two cones stuck together. 方器 wants straight
+      // faces and a *turn* at the belly, not a corner.
+      belly: { label: '腹圆', min: 0.01, max: 0.4, step: 0.01, default: 0.12 },
+      shoulderY: { label: '肩高', min: 0.5, max: 0.98, step: 0.01, default: 0.80 },
+      shoulderR: { label: '肩宽', min: 0.3, max: 1.2, step: 0.005, default: 0.80 },
+      mouthR: { label: '口径', min: 0.2, max: 0.9, step: 0.005, default: 0.60 },
+      footR: { label: '底径', min: 0.2, max: 1.1, step: 0.005, default: 0.70 },
+      footH: { label: '足高', min: 0, max: 0.14, step: 0.004, default: 0.045 },
+    },
+    profile(p) {
+      const H = p.height
+      const pts = []
+      const V = (r, y) => pts.push(new THREE.Vector2(r, y))
+      V(0.02, 0)
+      V(p.footR * 0.7, 0)
+      V(p.footR, 0.004)
+      V(p.footR, p.footH)                       // the foot stands square
+      // flank: a straight run to the belly and on to the shoulder, bowed
+      // slightly outward so it does not read as machined
+      const yB = H * p.bellyY, yS = H * p.shoulderY
+      // the two straight runs, and a smooth minimum of them so the belly is a
+      // turn rather than a crease
+      const up = (y) => THREE.MathUtils.lerp(
+        p.footR, p.maxR, (y - p.footH) / Math.max(yB - p.footH, 1e-6))
+      const dn = (y) => THREE.MathUtils.lerp(
+        p.maxR, p.shoulderR, (y - yB) / Math.max(yS - yB, 1e-6))
+      const k = 1 / Math.max(p.belly ?? 0.12, 1e-3)
+      const softMin = (a, b) => -Math.log(Math.exp(-k * a) + Math.exp(-k * b)) / k
+      const N = 26
+      for (let i = 1; i <= N; i++) {
+        const y = THREE.MathUtils.lerp(p.footH, yS, i / N)
+        const bow = p.bow * Math.sin(Math.PI * ((y - p.footH) / Math.max(yS - p.footH, 1e-6)))
+        V(softMin(up(y), dn(y)) + bow, y)
+      }
+      // shoulder: a turn, not a curve — three points is enough to read as an edge
+      V(THREE.MathUtils.lerp(p.shoulderR, p.mouthR, 0.45), THREE.MathUtils.lerp(yS, H, 0.55))
+      V(p.mouthR, H * 0.97)
+      V(p.mouthR, H)
+      const outer = pts
+      const section = ngonSection(p.facets, p.crisp)
+      const rFn = radiusFn(outer)
+      return {
+        outer,
+        // the apothem at this height, times the polygon's shape at this angle
+        radiusAt: (y, theta = 0) => rFn(y) * section(theta),
+        crossSection: (theta) => section(theta),
+        facets: p.facets,
+        height: H,
+        mouthR: p.mouthR,
+        bottomAt: () => 0,
+      }
+    },
+  },
+
   spline: {
     label: '样条',
     params: {
@@ -361,3 +436,5 @@ export function bodyMesh(prof, wall, material, opts = {}) {
   const geo = shellGeometry(prof.outer, wall, opts)
   return new THREE.Mesh(geo, material)
 }
+
+export { ngonSection }

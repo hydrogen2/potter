@@ -179,3 +179,31 @@ export function shellGeometry(outer, wall, opts = {}) {
     capBottom: true,
   })
 }
+
+/**
+ * 方器 — a regular n-gon cross-section with rounded corners.
+ *
+ * A convex polygon is the intersection of half-planes, so its radius at angle
+ * theta is min over the facet normals of 1/cos(theta - phi_i). Replacing that
+ * min with a p-norm rounds the corners by a controllable amount and stays
+ * smooth everywhere, which matters because the corner is where every seam,
+ * fillet and normal is going to be computed:
+ *
+ *   r(theta) = [ sum_i max(0, cos(theta - phi_i))^crisp ]^(-1/crisp)
+ *
+ * At a facet's centre this is exactly 1 — so the profile radius is the
+ * *apothem*, the distance to a face, not to a corner. Corners stand at
+ * 1/cos(pi/n) further out: 1.155 for a hexagon.
+ */
+export function ngonSection(facets, crisp) {
+  const phi = []
+  for (let i = 0; i < facets; i++) phi.push((i * 2 * Math.PI) / facets)
+  return (theta) => {
+    let sum = 0
+    for (const f of phi) {
+      const c = Math.cos(theta - f)
+      if (c > 0) sum += Math.pow(c, crisp)
+    }
+    return sum > 0 ? Math.pow(sum, -1 / crisp) : 1
+  }
+}

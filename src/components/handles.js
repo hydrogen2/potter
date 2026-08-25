@@ -1,4 +1,5 @@
 import * as THREE from 'three'
+import { ngonSection } from '../geometry/loft.js'
 import { sweptTube, filletBlend, filletCollar, surfaceCrossing } from '../geometry/sweep.js'
 
 /** the circle through three points, as centre + radius */
@@ -46,6 +47,9 @@ export const HANDLES = {
       // modulation below for why this is a radius function and not extra
       // control points. 0 leaves the plain circle.
       teardrop: { label: '梨形', min: 0, max: 0.50, step: 0.01, default: 0 },
+      // faceted strap for 方器; 0 leaves it round
+      facets: { label: '把面数', min: 0, max: 8, step: 1, default: 0 },
+      crisp: { label: '把棱', min: 3, max: 40, step: 1, default: 14 },
     },
     build(p, prof, material) {
       const H = prof.height
@@ -113,7 +117,10 @@ export const HANDLES = {
       // no end pinning: fitted unstretched, the arc already lands on A and B
       const curve = new THREE.CatmullRomCurve3(pts, false, 'centripetal')
       const rAt = (t) => p.tube * (p.taper + (1 - p.taper) * Math.pow(t, 1.4))
-      const loop = new THREE.Mesh(sweptTube(curve, rAt), material)
+      const loop = new THREE.Mesh(sweptTube(
+        curve, rAt, 72, p.facets >= 3 ? 96 : 16, null, 0, 0,
+        p.facets >= 3 ? ngonSection(p.facets, p.crisp ?? 14) : null,
+      ), material)
       // keep the curve the strap was built from: the detail checks read it to
       // assert the loop never reverses, which no rendering can tell them
       loop.userData.centreline = curve.getPoints(160)

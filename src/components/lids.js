@@ -61,6 +61,76 @@ export const LIDS = {
     },
   },
 
+  // 台阶盖 for 方器. The lid has to carry the body's own cross-section or the
+  // 棱线 die at the seam, so it takes `prof.crossSection` and lofts with it —
+  // the same machinery the body uses. Stepped in tiers, as the references are:
+  // a flat brim, a raised middle, and the knob on top of that.
+  stepped: {
+    label: '台阶盖',
+    params: {
+      overhang: { label: '盖沿', min: 0, max: 0.12, step: 0.002, default: 0.028 },
+      thickness: { label: '盖厚', min: 0.02, max: 0.1, step: 0.002, default: 0.042 },
+      tiers: { label: '台阶', min: 1, max: 3, step: 1, default: 2 },
+      step: { label: '阶宽', min: 0.06, max: 0.4, step: 0.01, default: 0.22 },
+      rise: { label: '阶高', min: 0.01, max: 0.12, step: 0.002, default: 0.034 },
+      flange: { label: '子口', min: 0, max: 0.12, step: 0.004, default: 0.05 },
+      vent: { label: '气孔', min: 0, max: 0.03, step: 0.001, default: 0.013 },
+      seam: { label: '盖缝', min: 0.0, max: 0.02, step: 0.001, default: 0.005 },
+    },
+    top: (p) => p.thickness + p.rise * p.tiers,
+    drop(p, prof) {
+      // the knob stands on the topmost tier, which is flat
+      return () => 0
+    },
+    build(p, mouthR, material, prof) {
+      const R = mouthR + p.overhang
+      const v = Math.max(p.vent, 0.004)
+      const T = p.thickness
+      const pts = []
+      const V = (r, y) => pts.push(new THREE.Vector2(r, y))
+      // underside, out to the rim
+      V(v, -0.002)
+      V(R * 0.6, -0.002)
+      V(R - 0.006, -0.004)
+      V(R, 0.006)
+      V(R, T)                                   // the rim's own face
+      let r = R, y = T
+      for (let i = 0; i < p.tiers; i++) {
+        const rn = Math.max(v + 0.06, r - p.step * R)
+        V(rn, y)                                // in across the step
+        V(rn, y + p.rise)                       // and up its face
+        r = rn; y += p.rise
+      }
+      V(v + 0.03, y)
+      V(v, y - 0.004)
+      V(v, -0.002)
+      const g = new THREE.Group()
+      g.add(new THREE.Mesh(loftGeometry({
+        profile: pts,
+        crossSection: prof?.crossSection,
+        radialSegments: prof?.facets ? 288 : undefined,
+        capBottom: false,
+      }), material))
+      if (p.flange > 0) {
+        const fr = (prof?.boreR ?? mouthR) - 0.02
+        const ring = [
+          new THREE.Vector2(fr, -0.002),
+          new THREE.Vector2(fr, -0.002 - p.flange),
+          new THREE.Vector2(fr - T * 0.7, -0.002 - p.flange),
+          new THREE.Vector2(fr - T * 0.7, -0.002),
+          new THREE.Vector2(fr, -0.002),
+        ]
+        g.add(new THREE.Mesh(loftGeometry({
+          profile: ring,
+          crossSection: prof?.crossSection,
+          radialSegments: prof?.facets ? 288 : undefined,
+          capBottom: false,
+        }), material))
+      }
+      return g
+    },
+  },
+
   flush: {
     label: '截盖',
     // 西施 and its relatives take a lid cut from the body's own curve: closed,

@@ -4,7 +4,8 @@ import * as THREE from 'three'
  * Tube of varying radius along a curve — three's TubeGeometry is fixed-radius,
  * but a hand-formed strap or spout is never a constant tube.
  */
-export function sweptTube(curve, radiusAt, tubular = 72, radial = 16, innerAt = null, bevel = 0, lipRoll = 0) {
+export function sweptTube(curve, radiusAt, tubular = 72, radial = 16, innerAt = null,
+                          bevel = 0, lipRoll = 0, section = null) {
   // With innerAt the sweep is a *walled* tube: an outer surface, an inner bore
   // and an annulus closing them at the tip. Without a bore a spout has no wall
   // at the pour opening, which the DSL forbids — no surface without a back face.
@@ -67,10 +68,13 @@ export function sweptTube(curve, radiusAt, tubular = 72, radial = 16, innerAt = 
     const N = frames.normals[i]
     const B = frames.binormals[i]
     for (let j = 0; j <= radial; j++) {
+      const v = (j / radial) * Math.PI * 2
       const tt = param(t, j)
       const P = curve.getPointAt(tt)
-      const r = innerAt ? rolled(tt, radiusAt(tt), Math.max(innerAt(tt), 0.004))[0] : radiusAt(tt)
-      const v = (j / radial) * Math.PI * 2
+      // a 方器's spout is faceted like its body: the section modulates the
+      // radius round the tube exactly as a cross-section does round a lathe
+      const sec = section ? section(v) : 1
+      const r = (innerAt ? rolled(tt, radiusAt(tt), Math.max(innerAt(tt), 0.004))[0] : radiusAt(tt)) * sec
       const sn = Math.sin(v), cs = -Math.cos(v)
       const nx = cs * N.x + sn * B.x
       const ny = cs * N.y + sn * B.y
@@ -95,10 +99,11 @@ export function sweptTube(curve, radiusAt, tubular = 72, radial = 16, innerAt = 
       const N = frames.normals[i]
       const B = frames.binormals[i]
       for (let j = 0; j <= radial; j++) {
+        const v = (j / radial) * Math.PI * 2
         const tt = param(t, j)
         const P = curve.getPointAt(tt)
-        const r = rolled(tt, radiusAt(tt), Math.max(innerAt(tt), 0.004))[1]
-        const v = (j / radial) * Math.PI * 2
+        const sec = section ? section(v) : 1
+        const r = rolled(tt, radiusAt(tt), Math.max(innerAt(tt), 0.004))[1] * sec
         const sn = Math.sin(v), cs = -Math.cos(v)
         const nx = cs * N.x + sn * B.x
         const ny = cs * N.y + sn * B.y
@@ -241,22 +246,39 @@ export function surfaceCrossing(curve, prof, fromStart = true, samples = 60) {
  * test "inside a solid of revolution", which is the wrong question for a lid:
  * a lid top is a height field, and a bridge knob's feet land on it off-axis.
  */
-export function revolutionSurface(prof) {
+export function bodySurface(prof) {
+  // radiusAt takes an azimuth as well as a height. For a surface of revolution
+  // it is ignored; for a 方器 it is the whole point, and the normal then has a
+  // sideways component too — a fillet crossing a 棱线 has to lean with it.
+  const r = (y, th) => prof.radiusAt(y, th)
   return {
-    inside: (P) => Math.hypot(P.x, P.z) < prof.radiusAt(P.y),
+    inside: (P) => Math.hypot(P.x, P.z) < r(P.y, Math.atan2(P.z, P.x)),
     project: (P) => {
       const rho = Math.hypot(P.x, P.z) || 1e-6
-      const target = prof.radiusAt(P.y)
+      const target = r(P.y, Math.atan2(P.z, P.x))
       return new THREE.Vector3((P.x * target) / rho, P.y, (P.z * target) / rho)
     },
     normal: (P) => {
-      const h = 0.008
-      const slope = (prof.radiusAt(P.y + h) - prof.radiusAt(P.y - h)) / (2 * h)
+      const th = Math.atan2(P.z, P.x)
       const rho = Math.hypot(P.x, P.z) || 1e-6
-      return new THREE.Vector3(P.x / rho, -slope, P.z / rho).normalize()
+      const h = 0.008, dth = 0.02
+      const dy = (r(P.y + h, th) - r(P.y - h, th)) / (2 * h)
+      const dA = (r(P.y, th + dth) - r(P.y, th - dth)) / (2 * dth)
+      // surface (r(y,th) cos th, y, r(y,th) sin th): cross the two tangents
+      const rr = r(P.y, th)
+      const Pt = new THREE.Vector3(
+        dA * Math.cos(th) - rr * Math.sin(th), 0, dA * Math.sin(th) + rr * Math.cos(th),
+      )
+      const Py = new THREE.Vector3(dy * Math.cos(th), 1, dy * Math.sin(th))
+      const n = new THREE.Vector3().crossVectors(Pt, Py).normalize()
+      // point it outward
+      if (n.x * Math.cos(th) + n.z * Math.sin(th) < 0) n.negate()
+      return n
     },
   }
 }
+/** @deprecated name kept so existing callers keep working */
+export const revolutionSurface = bodySurface
 
 /** A surface given as height above the axis plane: y = f(r). Lids are these. */
 export function heightField(surfaceY) {
@@ -297,7 +319,7 @@ export function heightField(surfaceY) {
 export function filletBlend(curve, radiusAt, surface, blend, fromStart = true,
                             radial = 72, steps = 14) {
   // accepts a body profile directly, for the common case
-  const S = surface.radiusAt ? revolutionSurface(surface) : surface
+  const S = surface.radiusAt ? bodySurface(surface) : surface
   const N = 256
   const frames = curve.computeFrenetFrames(N, false)
   const frameAt = (t) => {

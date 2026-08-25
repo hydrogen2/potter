@@ -51,10 +51,10 @@ Component vocabulary (growing):
 
 | slot | types today | planned |
 |---|---|---|
-| body 身 | cone, superellipse, pear, spline, bowl | lerpBell, polyline (方器), lobed (筋纹), mesh |
+| body 身 | cone, superellipse, pear, spline, bowl, **faceted (方器)** | lobed (筋纹), mesh |
 | rim 口 | (`collar` on the superellipse body) | its own slot: plain, gallery, neck |
-| lid 盖 | none, flatDisc, dome, flush (截盖), ballCap (压盖) | douli, inset (kyusu), saucer |
-| knob 钮 | none, bridgeStrap, bead | bridgePlate, loop, figural |
+| lid 盖 | none, flatDisc, dome, flush (截盖), ballCap (压盖), stepped (台阶盖) | douli, inset (kyusu), saucer |
+| knob 钮 | none, bridgeStrap, bridgeMound, bead, button (方钮) | loop, figural |
 | spout 流 | none, straightCone, curved (弯嘴) | formedLip, curved, 三弯 |
 | handle 把 | none, rearLoop | sideStick (横手), overheadBail (提梁), rearStick |
 | base 足 | flat, studs, ring | — |
@@ -129,7 +129,7 @@ node scripts/screenshot.mjs   # headless render check → shots/
 
 ## Roadmap
 
-- **Shapes**: 西施 / 仿古 (圆器), 六方 (方器 — cross-section already supported),
+- **Shapes**: 仿古 (圆器),
   菱花 (筋纹器), 急須 kyusu side-handle, Brown Betty, 供春 (花器, mesh import)
 - **Function metrics v2**: center of mass / balance point, handle clearance,
   spout-vs-rim water line, pour angle
@@ -211,7 +211,27 @@ Families so far:
 | 石瓢 | `cone` | a cone with the tip cut off: widest at the foot, flank never widening upward, straight within 3%; flat lid, bridge knob, straight spout, three feet |
 | 潘壶 | `pear` | 口小肚大 with an **inflection** neither other family can make: convex round the belly, concave as it draws in to the neck. Belly in the middle third, foot narrower than the belly, a **弯嘴** curved spout, 环把 ring handle, 圆珠钮, and a flat base standing on a **底圈** foot ring. (The seal belongs on the lid rim — a decoration rule, recorded but not checkable geometrically.) |
 | 掇球 | `superellipse` + `ballCap` | 掇 means *to stack*: body, lid and knob are three balls piled on one axis, each smaller than the one below. The identity is the proportions between them — the whole pot fits a circle (盖顶至底 ≈ 身径), the mouth is the golden part of the body (E/E2 = 0.618), the lid is a true spherical cap springing from inside a *flat* brim, hanging a **skirt** down over the body's projecting rim collar (唇) — 压盖 means the lid presses over the mouth, and that collar-and-skirt pair is what separates ball 1 from ball 2. A **一弯嘴** whose last third turns up so the lip faces the sky, a short **neck** carrying a **collar that stands proud**, with the lid's own ring stacked on it — two rings, each with its own shadow line. A **一弯嘴** built from its tangent angle so the S is guaranteed, an ordinary **耳形环把** — a *teardrop*, thick at the shoulder, tapering down — *not* 西施's 倒把, and a 圈足 |
+| 六方 | `faceted` | 方器, and the first body here that is not a surface of revolution. Six faces evenly divided, corners that stay 棱 rather than rounding back toward a barrel, and a flank that is *straight*-dominant — 以直线、横线为主，曲线、细线为辅, which inverts the round wares' rule that a straight run is a fault. Every element carries the same section: a 台阶盖 stepped lid, a 方钮, a faceted 一弯嘴 |
 | 西施 | `superellipse` | fuller than an ellipse and asymmetric top to bottom; widest near mid-height, wider than tall, no straight run anywhere in the flank; a wide mouth closed by a **截盖** lid that runs up the body's own curve until the ball is complete (a flat-topped lid reads as the wrong family), a bead knob on the neck it converges to, a **短流略粗** spout, a fully-round **倒耳把** thick at the shoulder and tapering to the belly, flat footless base |
+
+**方器 breaks the surface of revolution, and everything downstream had to
+notice.** `loftGeometry` and `shellGeometry` have taken a `crossSection(theta, t)`
+since the beginning — the comments even name 方器 and 筋纹器 — and nothing had
+ever passed one. The reason was not the geometry layer but everything attached
+to it: seventeen places asked the body `radiusAt(y)`, "how wide are you at this
+height", which stops being a complete question once the body has faces. So
+`radiusAt` now takes an azimuth too, ignored by every round body, and the fillet
+surface asks with the point's own azimuth — which also means the body normal
+gains a sideways component, so a fillet crossing a 棱线 leans with it.
+
+The cross-section itself is a soft-min of half-planes. A convex polygon is the
+intersection of its faces, so its radius is `min_i 1/cos(theta - phi_i)`;
+replacing that min with a p-norm rounds the corners by a controllable amount and
+stays smooth everywhere, which matters because the corner is exactly where every
+seam, fillet and normal gets computed. The profile radius is then the *apothem*,
+not the corner. `check-canon.mjs` measures how much of a true hexagon's
+corner-to-face ratio survives, which caught the first attempt sitting at 68% —
+crisp on paper, a barrel with creases drawn on it in fact.
 
 **润接 is a fillet, not a collar.** The first attempt built a collar of
 revolution about the *attachment's* axis and projected its far edge onto the
