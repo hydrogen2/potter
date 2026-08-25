@@ -127,6 +127,30 @@ for (const spec of SPECS) {
       const at = (f) => line[Math.min(line.length - 1, Math.floor(line.length * f))]
       const dy = at(0.62).y - at(0.30).y
       checks.push(['spout rises as it leaves', dy > 0.02, `rise over the visible run ${dy.toFixed(3)}`])
+
+      // 流口: the lip is cut obliquely, opening up and forward, so the
+      // underside runs out to the thin edge the stream leaves from. Cut the
+      // other way and the pot pours down its own outside.
+      if ((s.p.bevel ?? 0) > 0) {
+        let geo = null
+        mesh.traverse((o) => { if (o.isMesh && o.geometry.userData?.tipRing) geo = o.geometry })
+        if (geo) {
+          const { start, count } = geo.userData.tipRing
+          const pos = geo.getAttribute('position')
+          const V = (i) => new THREE.Vector3(pos.getX(i), pos.getY(i), pos.getZ(i))
+          let lo = V(start), hi = V(start)
+          for (let k = 1; k < count; k++) {
+            const p = V(start + k)
+            if (p.y < lo.y) lo = p
+            if (p.y > hi.y) hi = p
+          }
+          const axis = V(start).sub(V(start - count)).normalize()
+          const d = lo.dot(axis) - hi.dot(axis)
+          checks.push(['lip opens up and forward', d > 0.01,
+            d > 0.01 ? `underside leads by ${d.toFixed(3)}`
+              : `top leads by ${(-d).toFixed(3)} — bevel is the wrong way round`])
+        }
+      }
     }
   }
 

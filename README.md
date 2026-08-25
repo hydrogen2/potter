@@ -178,6 +178,7 @@ dead giveaways, so they get their own assertions on the curves themselves:
 | spout bends most at the root | a straight run with a knee near the lip — reads as a square corner, not a curve |
 | spout rises across its *visible* run | a spout that sags before it climbs — measured outside the belly, since the buried quarter says nothing about what anyone sees |
 | mouth collar stands proud (rise *and* fall in r(y)) | a collar that swells and stays wide — a flange |
+| lip opens up and forward | a 流口 bevelled the wrong way round, so the pot pours down its own outside |
 
 Attachments record the curve they were built from in `userData.centreline`, so
 the checks read the actual geometry rather than re-deriving it.
@@ -213,6 +214,15 @@ Families so far:
 | 潘壶 | `pear` | 口小肚大 with an **inflection** neither other family can make: convex round the belly, concave as it draws in to the neck. Belly in the middle third, foot narrower than the belly, a **弯嘴** curved spout, 环把 ring handle, 圆珠钮, and a flat base standing on a **底圈** foot ring. (The seal belongs on the lid rim — a decoration rule, recorded but not checkable geometrically.) |
 | 掇球 | `superellipse` + `ballCap` | 掇 means *to stack*: body, lid and knob are three balls piled on one axis, each smaller than the one below. The identity is the proportions between them — the whole pot fits a circle (盖顶至底 ≈ 身径), the mouth is the golden part of the body (E/E2 = 0.618), the lid is a true spherical cap springing from inside a narrow brim, hanging a **skirt** down over the body's projecting rim collar (唇) — 压盖 means the lid presses over the mouth, and that collar-and-skirt pair is what separates ball 1 from ball 2. A **一弯嘴** whose last third turns up so the lip faces the sky, a short **neck** carrying a **collar that stands proud**, with the lid's own ring stacked on it — two rings, each with its own shadow line. A **一弯嘴** built from its tangent angle so the S is guaranteed, an ordinary **耳形环把** — a *teardrop*, thick at the shoulder, tapering down — *not* 西施's 倒把, and a 圈足 |
 | 西施 | `superellipse` | fuller than an ellipse and asymmetric top to bottom; widest near mid-height, wider than tall, no straight run anywhere in the flank; a wide mouth closed by a **截盖** lid that runs up the body's own curve until the ball is complete (a flat-topped lid reads as the wrong family), a bead knob on the neck it converges to, a **短流略粗** spout, a fully-round **倒耳把** thick at the shoulder and tapering to the belly, flat footless base |
+
+**The lip is cut oblique, and which way is measured.** A spout finished square
+across its axis is a giveaway; a real 流口 opens up and forward, the underside
+running out to the thin edge the stream leaves from. `sweptTube` takes a
+`bevel` and runs each meridian to a different parameter, so the outer surface
+and the bore stay matched and the tip annulus closes however oblique the cut.
+Which side to shorten is *not* readable off a shaded render — I read it
+backwards once — so the geometry records where its tip ring is and the check
+measures the two edges along the tube's own axis.
 
 **Log curve, not square curve.** A 一弯嘴 turns hard where it leaves the belly
 and then straightens — steep first, flattening after. Bend it the other way

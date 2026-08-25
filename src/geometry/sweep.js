@@ -4,19 +4,53 @@ import * as THREE from 'three'
  * Tube of varying radius along a curve — three's TubeGeometry is fixed-radius,
  * but a hand-formed strap or spout is never a constant tube.
  */
-export function sweptTube(curve, radiusAt, tubular = 72, radial = 16, innerAt = null) {
+export function sweptTube(curve, radiusAt, tubular = 72, radial = 16, innerAt = null, bevel = 0) {
   // With innerAt the sweep is a *walled* tube: an outer surface, an inner bore
   // and an annulus closing them at the tip. Without a bore a spout has no wall
   // at the pour opening, which the DSL forbids — no surface without a back face.
+  //
+  // `bevel` cuts the tip obliquely instead of square across the axis, as a
+  // fraction of the curve. A real 流口 is cut so the opening faces up and
+  // forward: the underside runs out past the top and finishes as a thin edge,
+  // which is the edge the stream leaves from. Rather than slicing the finished
+  // tube, each meridian is simply run to a different parameter — the ends stay
+  // matched between the outer surface and the bore, so the tip annulus closes
+  // by construction however oblique the cut.
   const frames = curve.computeFrenetFrames(tubular, false)
+  const cut = new Array(radial + 1).fill(0)
+  if (bevel > 0) {
+    const N = frames.normals[tubular], B = frames.binormals[tubular]
+    let peak = 1e-6
+    const up = []
+    for (let j = 0; j <= radial; j++) {
+      const v = (j / radial) * Math.PI * 2
+      const y = -Math.cos(v) * N.y + Math.sin(v) * B.y
+      up.push(y)
+      peak = Math.max(peak, Math.abs(y))
+    }
+    // Cut the *upper* meridians back so the underside runs out to the forward
+    // edge — that thin lower edge is what the stream leaves from, and the
+    // opening then faces up and forward. Cutting the other way makes the top
+    // the extremity, which pours down its own outside.
+    // (Which sign does that is not obvious from a shaded render: measure it.
+    // scripts/check-details.mjs asserts it.)
+    for (let j = 0; j <= radial; j++) cut[j] = bevel * (0.5 + (0.5 * up[j]) / peak)
+  }
+  // the cut only bites over the last stretch, so the root is untouched
+  const ramp = (t) => {
+    const u = Math.min(1, Math.max(0, (t - 0.55) / 0.45))
+    return u * u * (3 - 2 * u)
+  }
+  const param = (t, j) => Math.min(1, Math.max(0, t - cut[j] * ramp(t)))
   const pos = [], nor = [], idx = []
   for (let i = 0; i <= tubular; i++) {
     const t = i / tubular
-    const P = curve.getPointAt(t)
     const N = frames.normals[i]
     const B = frames.binormals[i]
-    const r = radiusAt(t)
     for (let j = 0; j <= radial; j++) {
+      const tt = param(t, j)
+      const P = curve.getPointAt(tt)
+      const r = radiusAt(tt)
       const v = (j / radial) * Math.PI * 2
       const sn = Math.sin(v), cs = -Math.cos(v)
       const nx = cs * N.x + sn * B.x
@@ -39,11 +73,12 @@ export function sweptTube(curve, radiusAt, tubular = 72, radial = 16, innerAt = 
     const base = (tubular + 1) * (radial + 1)
     for (let i = 0; i <= tubular; i++) {
       const t = i / tubular
-      const P = curve.getPointAt(t)
       const N = frames.normals[i]
       const B = frames.binormals[i]
-      const r = Math.max(innerAt(t), 0.004)
       for (let j = 0; j <= radial; j++) {
+        const tt = param(t, j)
+        const P = curve.getPointAt(tt)
+        const r = Math.max(innerAt(tt), 0.004)
         const v = (j / radial) * Math.PI * 2
         const sn = Math.sin(v), cs = -Math.cos(v)
         const nx = cs * N.x + sn * B.x
@@ -74,6 +109,10 @@ export function sweptTube(curve, radiusAt, tubular = 72, radial = 16, innerAt = 
   g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3))
   g.setAttribute('normal', new THREE.Float32BufferAttribute(nor, 3))
   g.setIndex(idx)
+  // where the tip ring sits, so the detail checks can inspect the 流口 cut.
+  // Which way round a bevel falls is not readable off a shaded render — I got
+  // it backwards once by eye — so it is measured instead.
+  g.userData.tipRing = { start: (radial + 1) * tubular, count: radial + 1 }
   return g
 }
 
