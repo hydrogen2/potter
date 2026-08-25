@@ -34,22 +34,49 @@ export const SPOUTS = {
     params: {
       attachY: { label: '接身', min: 0.1, max: 0.8, step: 0.01, default: 0.46 },
       length: { label: '流长', min: 0.2, max: 1.2, step: 0.01, default: 0.62 },
-      rootAngle: { label: '起角', min: -10, max: 60, step: 1, default: 26 },
+      // measured *from the body's own surface normal* at the attachment, not
+      // from horizontal: 0 leaves straight out of the belly. Absolute angles
+      // make the buried run cut across the surface obliquely, and the tube then
+      // grazes it and exits as a thin fin instead of a round root.
+      rootAngle: { label: '起角', min: -25, max: 45, step: 1, default: 4 },
       tipAngle: { label: '口角', min: 10, max: 85, step: 1, default: 58 },
       sBend: { label: '弯度', min: 0, max: 1.2, step: 0.02, default: 0.62 },
       rootR: { label: '根径', min: 0.05, max: 0.26, step: 0.002, default: 0.155 },
       tipR: { label: '口径', min: 0.02, max: 0.12, step: 0.002, default: 0.058 },
       wall: { label: '壁厚', min: 0.005, max: 0.03, step: 0.001, default: 0.014 },
+      // How fast the root narrows. A real spout is not a tube of slowly falling
+      // bore stuck on the belly — it flares wide where it meets the body and
+      // thins away within the first fraction of its length, so it reads as
+      // growing out of the shoulder rather than butted against it. 1 is a
+      // straight taper; 3 puts almost all the flare at the root.
+      flare: { label: '根张', min: 1, max: 4, step: 0.1, default: 2.6 },
       blend: { label: '润接', min: 0, max: 0.2, step: 0.005, default: 0.08 },
     },
     build(p, material, prof) {
       const H = prof?.height ?? 1
-      const y0 = H * p.attachY
+      let y0 = H * p.attachY
       const embed = Math.max(0.13, p.rootR + 0.02)
-      const x0 = (prof?.radiusAt ? prof.radiusAt(y0) : 0.8) - embed
       const rad = (d) => (d * Math.PI) / 180
-      const a0 = rad(p.rootAngle), a1 = rad(p.tipAngle)
-      const theta = (t) => a0 + (a1 - a0) * t - p.sBend * Math.sin(Math.PI * t)
+      // the outward normal of the body profile at the attachment height
+      const rr = (yy) => (prof?.radiusAt ? prof.radiusAt(yy) : 0.8)
+      const dh = 0.012
+      const slope = (rr(y0 + dh) - rr(y0 - dh)) / (2 * dh)
+      const nAng = Math.atan2(-slope, 1)
+      const a0 = nAng + rad(p.rootAngle), a1 = rad(p.tipAngle)
+      // start the buried run back along that normal, so the tube meets the
+      // surface square rather than slicing across it
+      const x0 = rr(y0) - embed * Math.cos(nAng)
+      y0 -= embed * Math.sin(nAng)
+      // The dip must not be spent on the buried run. Roughly a quarter of the
+      // curve is inside the belly; if sin(pi t) starts there, the tube has
+      // already flattened by the time it emerges and the spout reads as
+      // drooping however positive the root angle was. Shift the S so it begins
+      // at the surface: straight out along the normal, then bend.
+      const tE = Math.min(0.6, embed / Math.max(p.length, 1e-3))
+      const theta = (t) => {
+        const u = Math.min(1, Math.max(0, (t - tE) / (1 - tE)))
+        return a0 + (a1 - a0) * t - p.sBend * Math.sin(Math.PI * u)
+      }
       const N = 88
       const pts = [new THREE.Vector3(x0, y0, 0)]
       let x = x0, y = y0
@@ -60,9 +87,10 @@ export const SPOUTS = {
         pts.push(new THREE.Vector3(x, y, 0))
       }
       const curve = new THREE.CatmullRomCurve3(pts, false, 'centripetal')
-      const outerAt = (t) => THREE.MathUtils.lerp(p.rootR, p.tipR, Math.pow(t, 0.75))
+      const outerAt = (t) =>
+        p.tipR + (p.rootR - p.tipR) * Math.pow(1 - t, p.flare ?? 2.6)
       const tube = new THREE.Mesh(
-        sweptTube(curve, outerAt, 84, 20, (t) => Math.max(outerAt(t) - p.wall, 0.005)),
+        sweptTube(curve, outerAt, 96, 20, (t) => Math.max(outerAt(t) - p.wall, 0.005)),
         material,
       )
       tube.userData.centreline = curve.getPoints(160)
@@ -104,7 +132,7 @@ export const SPOUTS = {
     },
     build(p, material, prof) {
       const H = prof?.height ?? 1
-      const y0 = H * p.attachY
+      let y0 = H * p.attachY
       // How deep the curve starts inside the body has to scale with the root:
       // a tube of radius R centred on a curve that starts only 0.13 in will
       // have its underside outside a convex belly, and the root opens a notch.

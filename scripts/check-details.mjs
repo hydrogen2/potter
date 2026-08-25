@@ -102,10 +102,12 @@ for (const spec of SPECS) {
       // a 一弯嘴 is an S: exactly one inflection. Zero means a U or a plain arc.
       const n = turns(line)
       checks.push(['spout is an S, not a U', n >= 1, `${n} inflection(s)`])
-      // and it must leave the belly *rising*
-      const k = Math.max(2, Math.floor(line.length * 0.12))
-      const dy = line[k].y - line[0].y
-      checks.push(['spout leaves the body rising', dy > 0, `root rise ${dy.toFixed(3)}`])
+      // and it must rise as it leaves — measured across the *visible* stretch,
+      // since the first quarter of the curve is buried in the belly and its
+      // rise says nothing about what anyone sees
+      const at = (f) => line[Math.min(line.length - 1, Math.floor(line.length * f))]
+      const dy = at(0.62).y - at(0.30).y
+      checks.push(['spout rises as it leaves', dy > 0.02, `rise over the visible run ${dy.toFixed(3)}`])
     }
   }
 
