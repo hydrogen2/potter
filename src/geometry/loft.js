@@ -207,3 +207,28 @@ export function ngonSection(facets, crisp) {
     return sum > 0 ? Math.pow(sum, -1 / crisp) : 1
   }
 }
+
+/**
+ * A rounded rectangle, as a radius function — the section of a flat clay strap,
+ * and also the outline of a squared handle loop.
+ *
+ * Same construction as ngonSection: a convex shape is the intersection of its
+ * half-planes, so its radius is min over faces of d_i/cos(theta - phi_i), and a
+ * p-norm in place of the min rounds the corners smoothly. Here the four faces
+ * carry different offsets, which is what makes it a rectangle rather than a
+ * square: 1 across, `wide` along.
+ */
+export function rectSection(wide, crisp) {
+  const faces = [
+    [0, 1], [Math.PI, 1],
+    [Math.PI / 2, wide], [-Math.PI / 2, wide],
+  ]
+  return (theta) => {
+    let sum = 0
+    for (const [phi, d] of faces) {
+      const c = Math.cos(theta - phi) / d
+      if (c > 0) sum += Math.pow(c, crisp)
+    }
+    return sum > 0 ? Math.pow(sum, -1 / crisp) : 1
+  }
+}

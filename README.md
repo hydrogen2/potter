@@ -56,7 +56,7 @@ Component vocabulary (growing):
 | lid 盖 | none, flatDisc, dome, flush (截盖), ballCap (压盖), stepped (台阶盖) | douli, inset (kyusu), saucer |
 | knob 钮 | none, bridgeStrap, bridgeMound, bead, button (方钮) | loop, figural |
 | spout 流 | none, straightCone, curved (弯嘴) | formedLip, curved, 三弯 |
-| handle 把 | none, rearLoop | sideStick (横手), overheadBail (提梁), rearStick |
+| handle 把 | none, rearLoop, invertedEar (round ear, 倒把, teardrop, flat strap, squared D) | sideStick (横手), overheadBail (提梁), rearStick |
 | base 足 | flat, studs, ring | — |
 | strainer 滤 | — | singleHole, 球孔, mesh (sasame), plate |
 | surface | material | ornament: seal 印章, engraving, relief |
@@ -223,6 +223,13 @@ height", which stops being a complete question once the body has faces. So
 `radiusAt` now takes an azimuth too, ignored by every round body, and the fillet
 surface asks with the point's own azimuth — which also means the body normal
 gains a sideways component, so a fillet crossing a 棱线 leans with it.
+
+The same construction does the handle. A 方器's handle is a rolled clay slab,
+not a rod: `rectSection` gives it a flat outer face with crisp edges by using
+four half-planes with two different offsets, and `squared` pushes the loop's
+*outline* from a circle toward a rounded rectangle by the same means. One idea —
+a convex shape is the intersection of its faces — ends up serving the body's
+facets, the strap's section and the handle's outline.
 
 The cross-section itself is a soft-min of half-planes. A convex polygon is the
 intersection of its faces, so its radius is `min_i 1/cos(theta - phi_i)`;

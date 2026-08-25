@@ -4,7 +4,7 @@
   "category": "zisha",
   "categoryLabel": "紫砂 · Yixing",
   "canon": "liufang",
-  "notes": "六方（藏六方一路）：方器。身筒六面等分，棱线自肩贯足，面微鼓而不失其直。以直线、横线为主，曲线为辅。",
+  "notes": "六方（藏六方一路）：方器。身筒六面等分，棱线自肩贯足，面微鼓而不失其直。以直线、横线为主，曲线为辅。　把为泥片镶接之扁带：截面作圆角矩形（宽厚比 2.5），外面平而棱清；把之轮廓亦方，作圆角之 D，非圆环。",
   "material": "zini",
   "scaleCm": 11,
   "wall": {
@@ -68,17 +68,18 @@
   },
   "handle": {
     "type": "invertedEar",
-    "tube": 0.088,
-    "taper": 1.15,
-    "outerX": 1.4,
-    "topY": 0.74,
+    "tube": 0.06,
+    "taper": 1.05,
+    "outerX": 1.32,
+    "topY": 0.8,
     "botY": 0.2,
-    "loopY": 0.46,
-    "stretch": 1.15,
-    "teardrop": 0.1,
+    "loopY": 0.52,
+    "stretch": 1.0,
+    "teardrop": 0.0,
     "blend": 0.05,
-    "facets": 6,
-    "crisp": 18
+    "crisp": 9,
+    "strap": 2.5,
+    "squared": 0.92
   },
   "base": {
     "type": "flat"
@@ -92,6 +93,8 @@
     "body.mouthR",
     "body.shoulderR",
     "handle.outerX",
+    "handle.squared",
+    "handle.strap",
     "lid.crown",
     "lid.step",
     "lid.tiers",

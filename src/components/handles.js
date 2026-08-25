@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import { ngonSection } from '../geometry/loft.js'
+import { ngonSection, rectSection } from '../geometry/loft.js'
 import { sweptTube, filletBlend, filletCollar, surfaceCrossing } from '../geometry/sweep.js'
 
 /** the circle through three points, as centre + radius */
@@ -50,6 +50,13 @@ export const HANDLES = {
       // faceted strap for 方器; 0 leaves it round
       facets: { label: '把面数', min: 0, max: 8, step: 1, default: 0 },
       crisp: { label: '把棱', min: 3, max: 40, step: 1, default: 14 },
+      // a flat strap: how much wider across the pot than it is thick. 1 is
+      // round. 方器 handles are rolled clay slabs, not rods, and read as a flat
+      // outer face with two crisp edges.
+      strap: { label: '把宽厚比', min: 1, max: 3, step: 0.05, default: 1 },
+      // how far the loop's *outline* is pushed from a circle toward a squared
+      // D. A 方器 handle turns corners; an ear does not.
+      squared: { label: '把方', min: 0, max: 1, step: 0.02, default: 0 },
     },
     build(p, prof, material) {
       const H = prof.height
@@ -102,12 +109,17 @@ export const HANDLES = {
       // early (t ~ 0.32) so the swell sits where the strap leaves the shoulder
       // and decays monotonically into the belly. Monotone decay cannot reverse.
       const drop = p.teardrop ?? 0
+      const boxR = rectSection(1, 6)
       const pts = []
       const N = 96
       for (let i = 0; i <= N; i++) {
         const t = i / N
         const a = a0 + delta * t
-        const r = radius * (1 + drop * Math.sin(Math.PI * Math.pow(t, 0.6)))
+        // the loop's outline: a circle, optionally pushed toward a rounded
+        // rectangle by the same half-plane construction the body's facets use
+        const sq = p.squared ?? 0
+        const box = sq > 0 ? THREE.MathUtils.lerp(1, boxR(a - a0 + Math.PI), sq) : 1
+        const r = radius * box * (1 + drop * Math.sin(Math.PI * Math.pow(t, 0.6)))
         pts.push(new THREE.Vector3(
           centre.x + r * Math.cos(a),
           (centre.y + r * Math.sin(a)) * k,
@@ -117,9 +129,12 @@ export const HANDLES = {
       // no end pinning: fitted unstretched, the arc already lands on A and B
       const curve = new THREE.CatmullRomCurve3(pts, false, 'centripetal')
       const rAt = (t) => p.tube * (p.taper + (1 - p.taper) * Math.pow(t, 1.4))
+      const strapW = p.strap ?? 1
+      const section = strapW > 1.001
+        ? rectSection(strapW, p.crisp ?? 14)
+        : p.facets >= 3 ? ngonSection(p.facets, p.crisp ?? 14) : null
       const loop = new THREE.Mesh(sweptTube(
-        curve, rAt, 72, p.facets >= 3 ? 96 : 16, null, 0, 0,
-        p.facets >= 3 ? ngonSection(p.facets, p.crisp ?? 14) : null,
+        curve, rAt, 96, section ? 128 : 16, null, 0, 0, section,
       ), material)
       // keep the curve the strap was built from: the detail checks read it to
       // assert the loop never reverses, which no rendering can tell them
