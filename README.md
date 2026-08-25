@@ -222,7 +222,11 @@ running out to the thin edge the stream leaves from. `sweptTube` takes a
 and the bore stay matched and the tip annulus closes however oblique the cut.
 Which side to shorten is *not* readable off a shaded render — I read it
 backwards once — so the geometry records where its tip ring is and the check
-measures the two edges along the tube's own axis.
+measures the two edges along the tube's own axis. The rim is also *rolled*:
+over the last stretch the outer surface turns in and the bore turns out along
+a quarter circle, so the wall finishes round, like the end of a thick straw.
+A knife-edged lip is the one sharp thing on a pot whose whole character is
+roundness, and it carries further than its size suggests.
 
 **Log curve, not square curve.** A 一弯嘴 turns hard where it leaves the belly
 and then straightens — steep first, flattening after. Bend it the other way

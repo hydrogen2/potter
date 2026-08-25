@@ -54,6 +54,9 @@ export const SPOUTS = {
       // which no potter would leave; the real ones open upward and forward so
       // the underside finishes as the thin edge the stream leaves from.
       bevel: { label: '口斜', min: 0, max: 0.3, step: 0.01, default: 0.12 },
+      // how far back the rim rolls over. A square or knife-edged lip is the one
+      // sharp thing on an otherwise round pot and it shows.
+      lipRoll: { label: '口圆', min: 0, max: 0.2, step: 0.005, default: 0.06 },
       rootR: { label: '根径', min: 0.05, max: 0.26, step: 0.002, default: 0.155 },
       tipR: { label: '口径', min: 0.02, max: 0.12, step: 0.002, default: 0.058 },
       wall: { label: '壁厚', min: 0.005, max: 0.03, step: 0.001, default: 0.014 },
@@ -107,7 +110,7 @@ export const SPOUTS = {
         p.tipR + (p.rootR - p.tipR) * Math.pow(1 - t, p.flare ?? 2.6)
       const tube = new THREE.Mesh(
         sweptTube(curve, outerAt, 96, 24,
-          (t) => Math.max(outerAt(t) - p.wall, 0.005), p.bevel ?? 0),
+          (t) => Math.max(outerAt(t) - p.wall, 0.005), p.bevel ?? 0, p.lipRoll ?? 0),
         material,
       )
       tube.userData.centreline = curve.getPoints(160)

@@ -4,7 +4,7 @@ import * as THREE from 'three'
  * Tube of varying radius along a curve — three's TubeGeometry is fixed-radius,
  * but a hand-formed strap or spout is never a constant tube.
  */
-export function sweptTube(curve, radiusAt, tubular = 72, radial = 16, innerAt = null, bevel = 0) {
+export function sweptTube(curve, radiusAt, tubular = 72, radial = 16, innerAt = null, bevel = 0, lipRoll = 0) {
   // With innerAt the sweep is a *walled* tube: an outer surface, an inner bore
   // and an annulus closing them at the tip. Without a bore a spout has no wall
   // at the pour opening, which the DSL forbids — no surface without a back face.
@@ -42,6 +42,25 @@ export function sweptTube(curve, radiusAt, tubular = 72, radial = 16, innerAt = 
     return u * u * (3 - 2 * u)
   }
   const param = (t, j) => Math.min(1, Math.max(0, t - cut[j] * ramp(t)))
+
+  // A rolled lip. Cut square (or worse, cut oblique to a long point) the rim is
+  // a knife edge, and on a pot whose whole character is roundness that one
+  // sharp detail carries. Over the last `lipRoll` of the curve the outer
+  // surface turns in and the bore turns out along a quarter circle, so the wall
+  // finishes as a rounded rim — the end of a thick straw rather than a blade.
+  // Stopping just short of closing leaves a sliver of annulus, which keeps the
+  // tip triangles non-degenerate.
+  const rollPhi = (t) => {
+    if (lipRoll <= 0) return 0
+    const u = Math.max(0, (t - (1 - lipRoll)) / lipRoll)
+    return u * (Math.PI / 2) * 0.86
+  }
+  const rolled = (t, rOut, rIn) => {
+    const phi = rollPhi(t)
+    if (phi <= 0) return [rOut, rIn]
+    const mid = (rOut + rIn) / 2, half = (rOut - rIn) / 2
+    return [mid + half * Math.cos(phi), mid - half * Math.cos(phi)]
+  }
   const pos = [], nor = [], idx = []
   for (let i = 0; i <= tubular; i++) {
     const t = i / tubular
@@ -50,7 +69,7 @@ export function sweptTube(curve, radiusAt, tubular = 72, radial = 16, innerAt = 
     for (let j = 0; j <= radial; j++) {
       const tt = param(t, j)
       const P = curve.getPointAt(tt)
-      const r = radiusAt(tt)
+      const r = innerAt ? rolled(tt, radiusAt(tt), Math.max(innerAt(tt), 0.004))[0] : radiusAt(tt)
       const v = (j / radial) * Math.PI * 2
       const sn = Math.sin(v), cs = -Math.cos(v)
       const nx = cs * N.x + sn * B.x
@@ -78,7 +97,7 @@ export function sweptTube(curve, radiusAt, tubular = 72, radial = 16, innerAt = 
       for (let j = 0; j <= radial; j++) {
         const tt = param(t, j)
         const P = curve.getPointAt(tt)
-        const r = Math.max(innerAt(tt), 0.004)
+        const r = rolled(tt, radiusAt(tt), Math.max(innerAt(tt), 0.004))[1]
         const v = (j / radial) * Math.PI * 2
         const sn = Math.sin(v), cs = -Math.cos(v)
         const nx = cs * N.x + sn * B.x
