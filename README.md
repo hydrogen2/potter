@@ -173,7 +173,7 @@ dead giveaways, so they get their own assertions on the curves themselves:
 |---|---|
 | every non-`none` slot has real geometry | a spout positioned at NaN — invisible in the render, silent in every other check |
 | handle never reverses (0 curvature sign changes) | the wiggle where a strap curls in and kicks back out |
-| spout bends most at the root | a straight run with a knee near the lip — reads as a square corner, not a curve |
+| spout has no knee at the lip | a straight run that turns sharply near the lip — a square corner, not a curve. Curvature falling toward the tip (a log curve) and curvature holding steady (a circular arc) are both shapes real spouts have; only curvature *rising* toward the lip is wrong |
 | spout rises across its *visible* run | a spout that sags before it climbs — measured outside the belly, since the buried quarter says nothing about what anyone sees |
 | mouth collar stands proud (rise *and* fall in r(y)) | a collar that swells and stays wide — a flange |
 | lip opens up and forward | a 流口 bevelled the wrong way round, so the pot pours down its own outside |

@@ -137,8 +137,15 @@ for (const spec of SPECS) {
       }
       const third = Math.floor(vis.length / 3)
       const root = curv(0, third), tip = curv(2 * third, vis.length)
-      checks.push(['spout bends most at the root', root > tip * 1.25,
-        `root ${root.toFixed(4)} vs tip ${tip.toFixed(4)}`])
+      // The failure mode is a *knee*: a straight run that turns sharply near
+      // the lip, which reads as a square corner. Curvature falling toward the
+      // tip is fine (a log curve) and so is curvature holding steady (a
+      // circular arc) — both are shapes real spouts have. Only curvature
+      // *rising* toward the tip is wrong, so that is what this asserts. It
+      // used to demand a fall, which would have rejected an honest arc.
+      checks.push(['spout has no knee at the lip', tip <= root * 1.15,
+        `root ${root.toFixed(4)} vs tip ${tip.toFixed(4)}` +
+        (tip > root * 1.15 ? ' — turning hardest at the lip' : '')])
       // and it must rise as it leaves — measured across the *visible* stretch,
       // since the first quarter of the curve is buried in the belly and its
       // rise says nothing about what anyone sees
