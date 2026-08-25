@@ -208,6 +208,7 @@ export function filletCollar(anchor, dir, r0, blend, radial = 24, steps = 12, on
   g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3))
   g.setAttribute('normal', new THREE.Float32BufferAttribute(nor, 3))
   g.setIndex(idx)
+  g.userData.legacyCollar = true
   return g
 }
 
@@ -373,5 +374,93 @@ export function filletBlend(curve, radiusAt, prof, blend, fromStart = true,
   g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3))
   g.setIndex(idx)
   g.computeVertexNormals()
+  g.userData.fillet = true          // so the checks can tell a fillet from the part it blends
+  return g
+}
+
+/**
+ * A fillet where both sides share the pot's axis — a knob sitting on a lid.
+ *
+ * filletBlend has to hunt for the intersection because a spout meets a belly
+ * obliquely. A knob centred on a domed lid does not: the whole junction is a
+ * surface of revolution, so the fillet is one tangent arc in the (r, y) plane
+ * swept round. That is exact rather than approximated, and much cheaper.
+ *
+ *   shapeAt(s)   the knob's outline, s from 0 at its lowest point upward → (r, y)
+ *   surfaceY(r)  the supporting surface's height at radius r, same origin
+ *   blend        how far the fillet reaches up the knob and out across the lid
+ */
+export function axisFillet(shapeAt, surfaceY, blend, radial = 72, steps = 14) {
+  const inside = (p) => p.y < surfaceY(p.x)
+  let lo = 0, hi = 1, found = false
+  for (let k = 1; k <= 200; k++) {
+    const s = k / 200
+    if (!inside(shapeAt(s))) { hi = s; lo = (k - 1) / 200; found = true; break }
+  }
+  if (!found) return new THREE.BufferGeometry()
+  for (let k = 0; k < 30; k++) {
+    const mid = (lo + hi) / 2
+    if (inside(shapeAt(mid))) lo = mid; else hi = mid
+  }
+  const Pc = shapeAt(hi)
+
+  // A: up the knob by `blend` of arc, and the direction back down toward the lid
+  let sA = hi, walked = 0
+  let prev = Pc.clone()
+  for (let k = 1; k <= 400 && walked < blend; k++) {
+    const s = Math.min(1, hi + (k / 400) * (1 - hi))
+    const p = shapeAt(s)
+    walked += p.distanceTo(prev)
+    prev = p; sA = s
+    if (s >= 1) break
+  }
+  const A = shapeAt(sA)
+  const tanA = shapeAt(Math.max(hi, sA - 0.004)).sub(A).normalize()
+
+  // B: out across the lid by `blend`, and the direction continuing outward
+  const B = new THREE.Vector2(Pc.x + blend, surfaceY(Pc.x + blend))
+  const tanB = new THREE.Vector2(
+    blend, surfaceY(Pc.x + blend) - surfaceY(Pc.x),
+  ).normalize()
+
+  // Q: where the two tangents meet, in 2D
+  const det = tanA.x * -tanB.y - tanA.y * -tanB.x
+  let Q
+  if (Math.abs(det) < 1e-9) {
+    Q = A.clone().add(B).multiplyScalar(0.5)
+  } else {
+    const rx = B.x - A.x, ry = B.y - A.y
+    const u = (rx * -tanB.y - ry * -tanB.x) / det
+    Q = A.clone().addScaledVector(tanA, u)
+  }
+
+  const section = []
+  for (let k = 0; k <= steps; k++) {
+    const u = k / steps
+    section.push(new THREE.Vector2(
+      (1 - u) * (1 - u) * A.x + 2 * (1 - u) * u * Q.x + u * u * B.x,
+      (1 - u) * (1 - u) * A.y + 2 * (1 - u) * u * Q.y + u * u * B.y,
+    ))
+  }
+
+  const pos = [], idx = []
+  for (let j = 0; j <= radial; j++) {
+    const a = (j / radial) * Math.PI * 2
+    const c = Math.cos(a), s2 = Math.sin(a)
+    for (const p of section) pos.push(p.x * c, p.y, p.x * s2)
+  }
+  const W = steps + 1
+  for (let j = 1; j <= radial; j++) {
+    for (let k = 1; k <= steps; k++) {
+      const a2 = W * (j - 1) + (k - 1), b2 = W * j + (k - 1)
+      const c3 = W * j + k, d3 = W * (j - 1) + k
+      idx.push(a2, d3, b2, b2, d3, c3)
+    }
+  }
+  const g = new THREE.BufferGeometry()
+  g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3))
+  g.setIndex(idx)
+  g.computeVertexNormals()
+  g.userData.fillet = true          // so the checks can tell a fillet from the part it blends
   return g
 }

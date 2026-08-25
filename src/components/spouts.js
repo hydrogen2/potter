@@ -186,14 +186,8 @@ export const SPOUTS = {
       // 润接: the root flows into the belly instead of being butted against it
       const group = new THREE.Group()
       group.userData.centreline = tube.userData.centreline
-      const onBody = (P) => {
-        const r = Math.hypot(P.x, P.z) || 1e-6
-        const target = prof.radiusAt(P.y)
-        return new THREE.Vector3(P.x * target / r, P.y, P.z * target / r)
-      }
-      const { point, tangent, t } = surfaceCrossing(curve, prof, true)
-      const rootR = THREE.MathUtils.lerp(p.rootR, p.tipR, Math.pow(t, 0.8))
-      group.add(tube, new THREE.Mesh(filletCollar(point, tangent, rootR, p.blend, 26, 12, onBody), material))
+      group.add(tube, new THREE.Mesh(
+        filletBlend(curve, outerAt, prof, p.blend, true), material))
       return group
     },
   },

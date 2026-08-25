@@ -80,7 +80,10 @@ export function buildVessel(spec, material) {
     const seam = lid.p.seam ?? 0.005
     lidMesh.position.y = prof.height + seam
     raised.add(lidMesh)
-    const knobMesh = knob.def.build(knob.p, material)
+    // the lid's own surface, so a knob can fillet onto a dome rather than
+    // assume it is standing on something flat
+    const drop = lid.def.drop ? lid.def.drop(lid.p, prof) : () => 0
+    const knobMesh = knob.def.build(knob.p, material, drop)
     if (knobMesh) {
       knobMesh.position.y += prof.height + seam + lid.def.top(lid.p, prof) - 0.006
       raised.add(knobMesh)

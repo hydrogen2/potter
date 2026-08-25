@@ -112,6 +112,20 @@ export const LIDS = {
       vent: { label: '气孔', min: 0, max: 0.03, step: 0.001, default: 0.013 },
       seam: { label: '盖缝', min: 0.0, max: 0.02, step: 0.001, default: 0.005 },
     },
+    // How far the lid's outer surface falls below its own apex at radius r.
+    // The knob sits on that apex, so this is the surface its fillet has to meet.
+    drop(p, prof) {
+      const R = prof.mouthR + p.overhang
+      const Rd = Math.max(R - (p.brim ?? 0), R * 0.5)
+      const h = Rd * p.rise
+      const Rs = (Rd * Rd + h * h) / (2 * h)
+      const brimTop = p.thickness * 0.42
+      const domeBase = brimTop + p.thickness * 0.16 + (p.bead ? p.beadH ?? 0.035 : 0)
+      const apex = h + domeBase
+      return (r) => (r <= Rd
+        ? Rs - Math.sqrt(Math.max(0, Rs * Rs - r * r))
+        : apex - brimTop)
+    },
     // rise is a fraction of the rim radius, so the cap keeps its shape when the
     // mouth is resized
     // the cap springs from the top of the brim, not from the seating plane

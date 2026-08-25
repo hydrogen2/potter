@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import { sweptTube, filletCollar } from '../geometry/sweep.js'
+import { sweptTube, axisFillet, filletCollar } from '../geometry/sweep.js'
 
 /**
  * 钮 — knobs. Positioned by the assembler at the lid's top surface;
@@ -74,20 +74,24 @@ export const KNOBS = {
       squash: { label: '扁度', min: 0.5, max: 1.2, step: 0.02, default: 0.85 },
       blend: { label: '润接', min: 0, max: 0.1, step: 0.005, default: 0.025 },
     },
-    build(p, material) {
+    build(p, material, drop) {
       const m = new THREE.Mesh(new THREE.SphereGeometry(p.radius, 28, 20), material)
       m.scale.y = p.squash
-      m.position.y = p.radius * p.squash * 0.7
+      const yc = p.radius * p.squash * 0.7
+      m.position.y = yc
       if (!p.blend) return m
       const group = new THREE.Group()
       group.add(m)
-      // the bead is luted on, so clay gathers where it meets the lid
-      const onLid = (P) => new THREE.Vector3(P.x, 0, P.z)
-      group.add(new THREE.Mesh(
-        filletCollar(new THREE.Vector3(0, 0, 0), new THREE.Vector3(0, 1, 0),
-                     p.radius * 0.62, p.blend, 24, 12, onLid),
-        material,
-      ))
+      // The bead is luted on, so clay gathers where it meets the lid. Knob and
+      // lid share the pot's axis, so that gathering is one tangent arc revolved
+      // — exact, where a spout on a belly has to be approximated.
+      const R = p.radius, k = p.squash
+      const beadAt = (s) => {
+        const th = Math.PI * (1 - s)          // s = 0 at the bead's lowest point
+        return new THREE.Vector2(R * Math.sin(th), yc + k * R * Math.cos(th))
+      }
+      const surfaceY = (r) => -(drop ? drop(r) : 0)
+      group.add(new THREE.Mesh(axisFillet(beadAt, surfaceY, p.blend), material))
       return group
     },
   },

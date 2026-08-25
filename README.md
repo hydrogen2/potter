@@ -142,8 +142,10 @@ node scripts/screenshot.mjs   # headless render check → shots/
 - **Photo→spec v2**: shading-based
   terms for features silhouettes can't see; use the base photo (feet, seal)
   as a fourth constraint
-- **Fillets (润接)**: done — see below. Remaining: the knob still uses the old
-  collar, which is adequate on a flat lid but would tab on a domed one
+- **Fillets (润接)**: done for spouts, handles and axis-centred knobs. Remaining:
+  a bridge knob's feet land off-axis on a lid, which neither fillet covers — the
+  两 石瓢 still use the legacy collar there, which is fine on their flat lids.
+  `check-details.mjs` names which of the two each attachment used
 
 ## Canon before pixels
 
@@ -226,6 +228,12 @@ tangents. Swept round, that meets both surfaces smoothly by construction. The
 check asserts a fillet was actually *built*, since the crossing search can fail
 and return empty geometry — which would vanish from the render silently, exactly
 as the NaN-positioned spout once did.
+
+A knob centred on a lid is the easy case and gets an exact answer instead:
+knob and lid share the pot's axis, so the junction is a surface of revolution
+and the fillet is one tangent arc in the (r, y) plane swept round — `axisFillet`.
+Lids expose `drop(r)`, how far their surface falls below their own apex, so a
+knob can blend onto a dome rather than assume it is standing on something flat.
 
 **The lip is cut oblique, and which way is measured.** A spout finished square
 across its axis is a giveaway; a real 流口 opens up and forward, the underside

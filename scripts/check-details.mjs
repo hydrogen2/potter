@@ -96,14 +96,17 @@ for (const spec of SPECS) {
     // returns empty geometry if it never finds one — which would vanish in the
     // render exactly like the NaN spout did.
     if ((s.p.blend ?? 0) > 0 && mesh) {
-      let verts = 0
+      let verts = 0, legacy = 0
       mesh.traverse((o) => {
-        if (o.isMesh && !o.geometry.userData?.tipRing) {
-          verts += o.geometry.getAttribute('position')?.count ?? 0
-        }
+        if (!o.isMesh) return
+        const n = o.geometry.getAttribute('position')?.count ?? 0
+        if (o.geometry.userData?.fillet) verts += n
+        else if (o.geometry.userData?.legacyCollar) legacy += n
       })
-      checks.push([`${slot} fillet was built`, verts > 0,
-        verts > 0 ? `${verts} fillet vertices` : 'blend asked for, no fillet geometry'])
+      checks.push([`${slot} 润接 was built`, verts > 0 || legacy > 0,
+        verts > 0 ? `${verts} vertices, tangent fillet`
+          : legacy > 0 ? `${legacy} vertices, legacy collar (flat surfaces only)`
+            : 'blend asked for, nothing built'])
     }
 
     const line = mesh?.userData?.centreline
