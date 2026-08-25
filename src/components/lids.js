@@ -117,7 +117,7 @@ export const LIDS = {
     // the cap springs from the top of the brim, not from the seating plane
     top: (p, prof) =>
       (prof.mouthR + p.overhang - (p.brim ?? 0)) * p.rise
-      + p.thickness * 0.58 + (p.brim ?? 0) * 0.55
+      + p.thickness * 0.58
       + (p.bead ? p.beadH ?? 0.035 : 0),
     build(p, mouthR, material, prof) {
       const R = mouthR + p.overhang          // the rim, ball 2's widest circle
@@ -143,10 +143,12 @@ export const LIDS = {
       const Ri = Rs - T
       const rimEdge = Math.max(p.skirt ?? 0, T * 0.6)   // how far the skirt hangs
       const brimTop = T * 0.42
-      // The shelf between rim and dome climbs as it goes in. Held flat, a wide
-      // brim reads as a flying saucer; on the real pots it is a short stepped
-      // bevel hugging the dome.
-      const domeBase = brimTop + T * 0.16 + (p.brim ?? 0) * 0.55 + (p.bead ? p.beadH ?? 0.035 : 0)
+      // The brim is *flat*: a level annulus from the rim in to where the cap
+      // springs. It was sloped for a while, which was compensating for a dome
+      // that was too tall — a wide shelf under a tall dome reads as a flying
+      // saucer. With the cap brought down to size the slope stopped earning its
+      // place, and on the real pots the brim is plainly level.
+      const domeBase = brimTop + T * 0.16 + (p.bead ? p.beadH ?? 0.035 : 0)
       const thInner = Math.acos(
         Math.min(1, Math.max(-1, (Rs - h - domeBase) / Ri)),
       )
