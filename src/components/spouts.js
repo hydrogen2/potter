@@ -39,8 +39,18 @@ export const SPOUTS = {
       // make the buried run cut across the surface obliquely, and the tube then
       // grazes it and exits as a thin fin instead of a round root.
       rootAngle: { label: '起角', min: -25, max: 45, step: 1, default: 4 },
-      tipAngle: { label: '口角', min: 10, max: 85, step: 1, default: 58 },
-      sBend: { label: '弯度', min: 0, max: 1.2, step: 0.02, default: 0.62 },
+      // where the *lip* points, measured from horizontal. Small: on the real
+      // pots the outer half of the spout runs nearly flat.
+      tipAngle: { label: '口角', min: -10, max: 60, step: 1, default: 14 },
+      // How front-loaded the turning is. The spout leaves the belly already
+      // curving hard and then straightens — steep first, flattening after, the
+      // shape of a log curve. Above 1 concentrates the bend at the root; at 1
+      // the angle changes at a constant rate and the spout reads as a straight
+      // run with a knee in it.
+      bend: { label: '弯度', min: 1, max: 4, step: 0.1, default: 2.2 },
+      // the short upward flick of the lip itself, and the only place the
+      // curvature reverses
+      lip: { label: '口上扬', min: 0, max: 45, step: 1, default: 20 },
       rootR: { label: '根径', min: 0.05, max: 0.26, step: 0.002, default: 0.155 },
       tipR: { label: '口径', min: 0.02, max: 0.12, step: 0.002, default: 0.058 },
       wall: { label: '壁厚', min: 0.005, max: 0.03, step: 0.001, default: 0.014 },
@@ -67,15 +77,18 @@ export const SPOUTS = {
       // surface square rather than slicing across it
       const x0 = rr(y0) - embed * Math.cos(nAng)
       y0 -= embed * Math.sin(nAng)
-      // The dip must not be spent on the buried run. Roughly a quarter of the
-      // curve is inside the belly; if sin(pi t) starts there, the tube has
-      // already flattened by the time it emerges and the spout reads as
-      // drooping however positive the root angle was. Shift the S so it begins
-      // at the surface: straight out along the normal, then bend.
+      // The turn must not be spent on the buried run — roughly a quarter of the
+      // curve is inside the belly — so the shaping starts at the surface.
       const tE = Math.min(0.6, embed / Math.max(p.length, 1e-3))
+      const g = p.bend ?? 2.2
+      const lip = rad(p.lip ?? 0)
       const theta = (t) => {
         const u = Math.min(1, Math.max(0, (t - tE) / (1 - tE)))
-        return a0 + (a1 - a0) * t - p.sBend * Math.sin(Math.PI * u)
+        // decay from the root angle to the lip angle, front-loaded by g, plus
+        // a flick that only bites over the last stretch. theta' is negative
+        // almost throughout and turns positive right at the end: one
+        // inflection, at the lip, which is where the real ones have it.
+        return a1 + (a0 - a1) * Math.pow(1 - u, g) + lip * Math.pow(u, 6)
       }
       const N = 88
       const pts = [new THREE.Vector3(x0, y0, 0)]

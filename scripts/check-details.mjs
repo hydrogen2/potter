@@ -99,9 +99,28 @@ for (const spec of SPECS) {
       checks.push(['handle never reverses', n === 0, `${n} curvature reversal(s)`])
     }
     if (line && slot === 'spout') {
-      // a 一弯嘴 is an S: exactly one inflection. Zero means a U or a plain arc.
-      const n = turns(line)
-      checks.push(['spout is an S, not a U', n >= 1, `${n} inflection(s)`])
+      // A 一弯嘴 turns hard where it leaves the belly and then straightens —
+      // steep first, flattening after. Bending it the other way round gives a
+      // straight run with a knee in it, which reads as a square corner rather
+      // than a curve. So assert where the bending *is*, not that an inflection
+      // exists somewhere: mean curvature over the first third of the visible
+      // run must beat the last third.
+      const vis = line.slice(Math.floor(line.length * 0.28))
+      const curv = (a, b) => {
+        let sum = 0, n = 0
+        for (let i = a + 2; i < b; i++) {
+          const ax = vis[i - 1].x - vis[i - 2].x, ay = vis[i - 1].y - vis[i - 2].y
+          const bx = vis[i].x - vis[i - 1].x, by = vis[i].y - vis[i - 1].y
+          const sc = Math.hypot(ax, ay) * Math.hypot(bx, by)
+          if (sc < 1e-9) continue
+          sum += Math.abs(ax * by - ay * bx) / sc; n++
+        }
+        return n ? sum / n : 0
+      }
+      const third = Math.floor(vis.length / 3)
+      const root = curv(0, third), tip = curv(2 * third, vis.length)
+      checks.push(['spout bends most at the root', root > tip * 1.25,
+        `root ${root.toFixed(4)} vs tip ${tip.toFixed(4)}`])
       // and it must rise as it leaves — measured across the *visible* stretch,
       // since the first quarter of the curve is buried in the belly and its
       // rise says nothing about what anyone sees
