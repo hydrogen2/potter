@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import { sweptTube, filletCollar, surfaceCrossing } from '../geometry/sweep.js'
+import { sweptTube, filletBlend, filletCollar, surfaceCrossing } from '../geometry/sweep.js'
 
 /** the circle through three points, as centre + radius */
 function circleThrough(A, B, C) {
@@ -121,14 +121,8 @@ export const HANDLES = {
       const group = new THREE.Group()
       group.userData.centreline = loop.userData.centreline
       group.add(loop)
-      const onBody = (P) => {
-        const r = Math.hypot(P.x, P.z) || 1e-6
-        const target = prof.radiusAt(P.y)
-        return new THREE.Vector3(P.x * target / r, P.y, P.z * target / r)
-      }
       for (const fromStart of [true, false]) {
-        const { point, tangent, t } = surfaceCrossing(curve, prof, fromStart)
-        group.add(new THREE.Mesh(filletCollar(point, tangent, rAt(t), p.blend, 26, 12, onBody), material))
+        group.add(new THREE.Mesh(filletBlend(curve, rAt, prof, p.blend, fromStart), material))
       }
       return group
     },

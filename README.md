@@ -142,10 +142,8 @@ node scripts/screenshot.mjs   # headless render check → shots/
 - **Photo→spec v2**: shading-based
   terms for features silhouettes can't see; use the base photo (feet, seal)
   as a fourth constraint
-- **Fillets (润接)**: spout and handle roots on real pots blend into the body
-  with wide concave fillets; the vocabulary attaches them crisply. A per-
-  attachment `blend` radius is the next fidelity step — and now the *largest*
-  measured error, since the body silhouette is settled
+- **Fillets (润接)**: done — see below. Remaining: the knob still uses the old
+  collar, which is adequate on a flat lid but would tab on a domed one
 
 ## Canon before pixels
 
@@ -214,6 +212,20 @@ Families so far:
 | 潘壶 | `pear` | 口小肚大 with an **inflection** neither other family can make: convex round the belly, concave as it draws in to the neck. Belly in the middle third, foot narrower than the belly, a **弯嘴** curved spout, 环把 ring handle, 圆珠钮, and a flat base standing on a **底圈** foot ring. (The seal belongs on the lid rim — a decoration rule, recorded but not checkable geometrically.) |
 | 掇球 | `superellipse` + `ballCap` | 掇 means *to stack*: body, lid and knob are three balls piled on one axis, each smaller than the one below. The identity is the proportions between them — the whole pot fits a circle (盖顶至底 ≈ 身径), the mouth is the golden part of the body (E/E2 = 0.618), the lid is a true spherical cap springing from inside a *flat* brim, hanging a **skirt** down over the body's projecting rim collar (唇) — 压盖 means the lid presses over the mouth, and that collar-and-skirt pair is what separates ball 1 from ball 2. A **一弯嘴** whose last third turns up so the lip faces the sky, a short **neck** carrying a **collar that stands proud**, with the lid's own ring stacked on it — two rings, each with its own shadow line. A **一弯嘴** built from its tangent angle so the S is guaranteed, an ordinary **耳形环把** — a *teardrop*, thick at the shoulder, tapering down — *not* 西施's 倒把, and a 圈足 |
 | 西施 | `superellipse` | fuller than an ellipse and asymmetric top to bottom; widest near mid-height, wider than tall, no straight run anywhere in the flank; a wide mouth closed by a **截盖** lid that runs up the body's own curve until the ball is complete (a flat-topped lid reads as the wrong family), a bead knob on the neck it converges to, a **短流略粗** spout, a fully-round **倒耳把** thick at the shoulder and tapering to the belly, flat footless base |
+
+**润接 is a fillet, not a collar.** The first attempt built a collar of
+revolution about the *attachment's* axis and projected its far edge onto the
+body. A circle about the tube's axis does not lie on a curved belly, so the
+projection had to snap some vertices and ease others, and that split showed as a
+boxy tab at every root — bad enough that the fillets were switched off entirely
+for a while. `filletBlend` walks the real intersection instead: for each meridian
+of the tube it bisects out to where that meridian crosses the body, then builds a
+cross-section that leaves the tube tangentially, arrives at the body tangentially,
+and bridges the two with a quadratic Bezier through the intersection of those
+tangents. Swept round, that meets both surfaces smoothly by construction. The
+check asserts a fillet was actually *built*, since the crossing search can fail
+and return empty geometry — which would vanish from the render silently, exactly
+as the NaN-positioned spout once did.
 
 **The lip is cut oblique, and which way is measured.** A spout finished square
 across its axis is a giveaway; a real 流口 opens up and forward, the underside

@@ -91,6 +91,21 @@ for (const spec of SPECS) {
     const ok = !!b && b.getSize(new THREE.Vector3()).length() > 1e-3
     checks.push([`${slot} has real geometry`, ok, ok ? 'ok' : 'missing / NaN / empty'])
 
+    // 润接: when a blend is asked for, a fillet must actually have been built.
+    // filletBlend walks each meridian out of the body to find the crossing, and
+    // returns empty geometry if it never finds one — which would vanish in the
+    // render exactly like the NaN spout did.
+    if ((s.p.blend ?? 0) > 0 && mesh) {
+      let verts = 0
+      mesh.traverse((o) => {
+        if (o.isMesh && !o.geometry.userData?.tipRing) {
+          verts += o.geometry.getAttribute('position')?.count ?? 0
+        }
+      })
+      checks.push([`${slot} fillet was built`, verts > 0,
+        verts > 0 ? `${verts} fillet vertices` : 'blend asked for, no fillet geometry'])
+    }
+
     const line = mesh?.userData?.centreline
     if (line && slot === 'handle') {
       // a loop should turn one way the whole way round; a reversal is the

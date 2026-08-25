@@ -234,3 +234,144 @@ export function surfaceCrossing(curve, prof, fromStart = true, samples = 60) {
   const tan = curve.getTangentAt(t)
   return { point: curve.getPointAt(t), tangent: fromStart ? tan : tan.multiplyScalar(-1), t }
 }
+
+/**
+ * 润接 — a real fillet between a swept attachment and the body.
+ *
+ * `filletCollar` (below) was never a fillet: it built a collar of revolution
+ * about the tube's own axis and then *projected* its far edge onto the body.
+ * A circle about the tube axis does not lie on a curved belly, so the
+ * projection had to snap some vertices and ease others, and that split showed
+ * as a boxy tab at every root.
+ *
+ * This walks the actual intersection instead. For each meridian of the tube it
+ * finds where that meridian crosses the body, then builds a cross-section that
+ * leaves the tube tangentially, arrives at the body tangentially, and bridges
+ * the two with a quadratic Bezier through the intersection of those tangents.
+ * Sweeping that around the tube gives a surface that meets both sides smoothly
+ * by construction — the clay gathered in the crevice, which is what 润接 is.
+ *
+ *   curve      the attachment's centreline
+ *   radiusAt   its radius along that centreline
+ *   prof       the body profile (radiusAt(y))
+ *   blend      how far the fillet reaches, along the tube and across the body
+ *   fromStart  true if the buried root is at t = 0 (both ends for a handle)
+ */
+export function filletBlend(curve, radiusAt, prof, blend, fromStart = true,
+                            radial = 72, steps = 14) {
+  const N = 256
+  const frames = curve.computeFrenetFrames(N, false)
+  const frameAt = (t) => {
+    const i = Math.min(N, Math.max(0, Math.round(t * N)))
+    return { Nv: frames.normals[i], Bv: frames.binormals[i] }
+  }
+  const dirAt = (t, v) => {
+    const { Nv, Bv } = frameAt(t)
+    const c = -Math.cos(v), s = Math.sin(v)
+    return new THREE.Vector3(c * Nv.x + s * Bv.x, c * Nv.y + s * Bv.y, c * Nv.z + s * Bv.z)
+  }
+  const surf = (t, v) => curve.getPointAt(Math.min(1, Math.max(0, t)))
+    .addScaledVector(dirAt(t, v), radiusAt(Math.min(1, Math.max(0, t))))
+  const inside = (P) => Math.hypot(P.x, P.z) < prof.radiusAt(P.y)
+
+  // body outward normal at a point, for a surface of revolution r(y)
+  const bodyNormal = (P) => {
+    const h = 0.008
+    const slope = (prof.radiusAt(P.y + h) - prof.radiusAt(P.y - h)) / (2 * h)
+    const rho = Math.hypot(P.x, P.z) || 1e-6
+    const n = new THREE.Vector3(P.x / rho, -slope, P.z / rho)
+    return n.normalize()
+  }
+  const onBody = (P) => {
+    const rho = Math.hypot(P.x, P.z) || 1e-6
+    const target = prof.radiusAt(P.y)
+    return new THREE.Vector3((P.x * target) / rho, P.y, (P.z * target) / rho)
+  }
+
+  const L = curve.getLength() || 1
+  const step = blend / L
+  const rows = []
+  for (let j = 0; j <= radial; j++) {
+    const v = (j / radial) * Math.PI * 2
+    // march out of the body along this meridian and bisect the crossing
+    let lo = fromStart ? 0 : 1
+    let hi = fromStart ? 1 : 0
+    const dir = fromStart ? 1 : -1
+    let found = false
+    for (let k = 1; k <= 90; k++) {
+      const t = lo + dir * (k / 90) * Math.abs(hi - lo)
+      if (!inside(surf(t, v))) { hi = t; lo = t - dir * (Math.abs(hi - lo) / 90); found = true; break }
+    }
+    if (!found) { rows.push(null); continue }
+    for (let k = 0; k < 24; k++) {
+      const mid = (lo + hi) / 2
+      if (inside(surf(mid, v))) lo = mid; else hi = mid
+    }
+    const tc = hi
+    const Pc = surf(tc, v)
+
+    // A: back along the tube, away from the body, still on the tube surface
+    const tA = Math.min(1, Math.max(0, tc + dir * step))
+    const A = surf(tA, v)
+    // tangent at A pointing back toward the body
+    const tAe = Math.min(1, Math.max(0, tA - dir * 0.004))
+    const tanA = surf(tAe, v).sub(A).normalize()
+
+    // B: across the body, away from the tube, snapped onto the surface
+    const nb = bodyNormal(Pc)
+    const axial = surf(Math.min(1, Math.max(0, tc + dir * 0.004)), v).sub(Pc).normalize()
+    const w = axial.clone().negate()
+    w.addScaledVector(nb, -w.dot(nb))
+    if (w.lengthSq() < 1e-9) { rows.push(null); continue }
+    w.normalize()
+    const B = onBody(Pc.clone().addScaledVector(w, blend))
+    const tanB = w
+
+    // Q: where the two tangent lines meet. Closest approach if they are skew.
+    const r0 = A, d0 = tanA, r1 = B, d1 = tanB.clone().negate()
+    const rr = r1.clone().sub(r0)
+    const a = d0.dot(d0), b = d0.dot(d1), c2 = d1.dot(d1)
+    const d = d0.dot(rr), e = d1.dot(rr)
+    const den = a * c2 - b * b
+    let Q
+    if (Math.abs(den) < 1e-8) {
+      Q = A.clone().add(B).multiplyScalar(0.5)
+    } else {
+      const s0 = (b * e - c2 * d) / -den
+      const s1 = (a * e - b * d) / -den
+      Q = A.clone().addScaledVector(d0, s0).add(B.clone().addScaledVector(d1, s1)).multiplyScalar(0.5)
+    }
+    const row = []
+    for (let k = 0; k <= steps; k++) {
+      const u = k / steps
+      const p = A.clone().multiplyScalar((1 - u) * (1 - u))
+        .addScaledVector(Q, 2 * (1 - u) * u)
+        .addScaledVector(B, u * u)
+      row.push(p)
+    }
+    rows.push(row)
+  }
+
+  const pos = [], idx = []
+  const valid = rows.map((r) => r !== null)
+  const fallback = rows.find((r) => r !== null)
+  if (!fallback) return new THREE.BufferGeometry()
+  for (let j = 0; j <= radial; j++) {
+    const row = rows[j] ?? fallback
+    for (const p of row) pos.push(p.x, p.y, p.z)
+  }
+  const W = steps + 1
+  for (let j = 1; j <= radial; j++) {
+    if (!valid[j] || !valid[j - 1]) continue
+    for (let k = 1; k <= steps; k++) {
+      const a2 = W * (j - 1) + (k - 1), b2 = W * j + (k - 1)
+      const c3 = W * j + k, d3 = W * (j - 1) + k
+      idx.push(a2, b2, d3, b2, c3, d3)
+    }
+  }
+  const g = new THREE.BufferGeometry()
+  g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3))
+  g.setIndex(idx)
+  g.computeVertexNormals()
+  return g
+}

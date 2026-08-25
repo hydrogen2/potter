@@ -1,6 +1,6 @@
 import * as THREE from 'three'
 import { loftGeometry } from '../geometry/loft.js'
-import { sweptTube, filletCollar, surfaceCrossing } from '../geometry/sweep.js'
+import { sweptTube, filletBlend, filletCollar, surfaceCrossing } from '../geometry/sweep.js'
 
 /**
  * 流 — spouts. Built along +Y from the base (y=0) to the tip; the
@@ -117,14 +117,8 @@ export const SPOUTS = {
       if (!p.blend) return tube
       const group = new THREE.Group()
       group.userData.centreline = tube.userData.centreline
-      const onBody = (P) => {
-        const r = Math.hypot(P.x, P.z) || 1e-6
-        const target = prof.radiusAt(P.y)
-        return new THREE.Vector3((P.x * target) / r, P.y, (P.z * target) / r)
-      }
-      const { point, tangent, t } = surfaceCrossing(curve, prof, true)
       group.add(tube, new THREE.Mesh(
-        filletCollar(point, tangent, outerAt(t), p.blend, 28, 12, onBody), material,
+        filletBlend(curve, outerAt, prof, p.blend, true), material,
       ))
       return group
     },
