@@ -18,6 +18,22 @@ function circleThrough(A, B, C) {
  * meets the wall wherever the wall is.
  */
 
+
+/**
+ * Which way round to lay a flat strap's section.
+ *
+ * sweptTube builds its ring from the curve's Frenet frame, and for a *planar*
+ * curve three puts the normal out of the plane and the binormal in it — the
+ * opposite of the intuition. rectSection's wide faces sit at v = +-pi/2, which
+ * map to +-B, so taken at face value the strap comes out wide radially and thin
+ * towards the viewer: a slab standing on edge. Rather than hard-code a quarter
+ * turn, ask the frame and rotate only if it needs it.
+ */
+function strapPhase(curve) {
+  const f = curve.computeFrenetFrames(2, false)
+  return Math.abs(f.normals[1].z) > Math.abs(f.binormals[1].z) ? Math.PI / 2 : 0
+}
+
 export const HANDLES = {
   none: { label: '无', params: {}, build: () => null },
 
@@ -65,7 +81,9 @@ export const HANDLES = {
       const curve = new THREE.CatmullRomCurve3(
         path.map((v) => new THREE.Vector3(v.x, v.y, 0)), false, 'centripetal',
       )
-      const section = rectSection(p.strap, p.crisp)
+      const rect = rectSection(p.strap, p.crisp)
+      const phase = strapPhase(curve)
+      const section = (v) => rect(v + phase)
       const strap = new THREE.Mesh(
         sweptTube(curve, () => p.tube, 140, 128, null, 0, 0, section), material,
       )
@@ -197,9 +215,14 @@ export const HANDLES = {
       const curve = new THREE.CatmullRomCurve3(pts, false, 'centripetal')
       const rAt = (t) => p.tube * (p.taper + (1 - p.taper) * Math.pow(t, 1.4))
       const strapW = p.strap ?? 1
-      const section = strapW > 1.001
-        ? rectSection(strapW, p.crisp ?? 14)
-        : p.facets >= 3 ? ngonSection(p.facets, p.crisp ?? 14) : null
+      let section = null
+      if (strapW > 1.001) {
+        const rect = rectSection(strapW, p.crisp ?? 14)
+        const phase = strapPhase(curve)
+        section = (v) => rect(v + phase)
+      } else if (p.facets >= 3) {
+        section = ngonSection(p.facets, p.crisp ?? 14)
+      }
       const loop = new THREE.Mesh(sweptTube(
         curve, rAt, 96, section ? 128 : 16, null, 0, 0, section,
       ), material)

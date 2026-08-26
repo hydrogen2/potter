@@ -232,7 +232,13 @@ centre, so it cannot lean the descending run in while leaving the top run flat.
 `roundedPolyline` states the runs and the corner radii separately and replaces
 each corner with a tangent arc, which is what the maker does.
 
-The same construction does the handle's section. A 方器's handle is a rolled clay slab,
+The same construction does the handle's section — with one trap. sweptTube
+builds its ring from the curve's Frenet frame, and for a *planar* curve three
+puts the normal **out** of the plane and the binormal **in** it, which is the
+opposite of the intuition. Taken at face value the wide faces land radially and
+the strap comes out standing on edge: thick in silhouette, thin towards the
+viewer, the exact inverse of a slab. `strapPhase` asks the frame which way it
+came out and rotates the section a quarter turn only if it needs to. A 方器's handle is a rolled clay slab,
 not a rod: `rectSection` gives it a flat outer face with crisp edges by using
 four half-planes with two different offsets, and `squared` pushes the loop's
 *outline* from a circle toward a rounded rectangle by the same means. One idea —
