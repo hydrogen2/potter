@@ -1,0 +1,31 @@
+{
+  "id": "jubian",
+  "label": "菊瓣",
+  "category": "zisha",
+  "categoryLabel": "紫砂 · Yixing",
+  "canon": "jinwen",
+  "notes": "菊瓣壶：筋纹器之典型。十六等分筋瓤，自钮顶经盖面、身筒直贯壶底，上下一气。『通转』——盖可任意转至十六位之一，缝口皆合，故十六分须分毫不差。筋纹非另一种器形，乃圆器之表面处理，故身筒仍用超椭圆，只加筋纹截面。",
+  "material": "duanni",
+  "scaleCm": 9,
+  "wall": { "base": 0.048, "belly": 0.04, "top": 0.036 },
+  "body": {
+    "type": "superellipse",
+    "maxR": 0.95, "bellyY": 0.44, "lowerAxis": 0.86, "upperAxis": 0.74,
+    "lowerFull": 2.35, "upperFull": 2.5,
+    "mouthR": 0.50, "footR": 0.52, "basePress": 0.035,
+    "lobes": 16, "lobeDepth": 0.034, "lobeSharp": 1.0
+  },
+  "lid": { "type": "ballCap", "overhang": 0.012, "thickness": 0.036, "rise": 0.52,
+           "brim": 0.0, "bead": 0, "skirt": 0.03, "flange": 0.045, "vent": 0.012, "seam": 0.005 },
+  "knob": { "type": "button", "radius": 0.155, "height": 0.10, "taper": 0.55,
+            "facets": 0, "lobes": 16, "lobeDepth": 0.055, "lobeSharp": 1.0,
+            "round": 0.30, "blend": 0.022 },
+  "spout": { "type": "oneBend", "attachY": 0.50, "length": 0.72, "rootAngle": 40, "tipAngle": 2,
+             "bend": 1.0, "lip": 0, "rootR": 0.16, "tipR": 0.062, "wall": 0.015,
+             "flare": 1.7, "bevel": 0.04, "lipRoll": 0.07, "blend": 0.07 },
+  "handle": { "type": "invertedEar", "tube": 0.082, "taper": 1.15, "outerX": 1.34,
+              "topY": 0.72, "botY": 0.22, "loopY": 0.46, "stretch": 1.15,
+              "teardrop": 0.22, "blend": 0.055 },
+  "base": { "type": "flat" },
+  "expose": ["body.lobes","body.lobeDepth","body.lobeSharp","body.maxR","body.mouthR","lid.rise","knob.radius","spout.length"]
+}

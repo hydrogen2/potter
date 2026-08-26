@@ -232,3 +232,26 @@ export function rectSection(wide, crisp) {
     return sum > 0 ? Math.pow(sum, -1 / crisp) : 1
   }
 }
+
+/**
+ * 筋纹器 — a lobed cross-section: n equal ribs round the pot.
+ *
+ * Unlike 方器's facets this is a *surface treatment* on a round body rather
+ * than a different profile family, which is what 菊瓣 and 合菱 actually are.
+ *
+ *   r(theta) = 1 + depth * (2 |cos(n theta / 2)|^sharp - 1)
+ *
+ * Ridge at theta = 0 and every 2pi/n after it, groove halfway between. `sharp`
+ * shapes the section between them: above 1 narrows the ridges toward petals,
+ * below 1 broadens them and cuts the grooves finer.
+ *
+ * The n-fold symmetry is exact, which is the whole point — 通转 means the lid
+ * can be lifted, turned to any rib and set down still matching, and that is
+ * only true if every division is identical.
+ */
+export function lobeSection(n, depth, sharp = 1) {
+  return (theta) => {
+    const c = Math.abs(Math.cos((n * theta) / 2))
+    return 1 + depth * (2 * Math.pow(c, sharp) - 1)
+  }
+}

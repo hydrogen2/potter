@@ -294,6 +294,65 @@ CANON.liufang = {
   },
 }
 
+CANON.jinwen = {
+  label: '筋纹器',
+  // 筋纹器 is not a profile family — it is a surface treatment on a round body,
+  // which is why the body here is still a superellipse. What makes it the
+  // family is the discipline of the ribs:
+  //
+  //   等分   the divisions are exactly equal;
+  //   贯通   the ribs run unbroken from the knob, over the lid, down the body;
+  //   通转   the lid lifts, turns to any rib, and sets down still matching.
+  //
+  // 通转 is the demanding one and the reason 等分 has to be exact rather than
+  // close: it only holds if every one of the n divisions is identical, so the
+  // check measures the disagreement between them rather than trusting it.
+  body: (prof, p, spec) => {
+    const n = p.lobes ?? 0
+    const knob = resolveSlot(spec, 'knob').p
+    const lidT = resolveSlot(spec, 'lid').p
+    const sec = prof.crossSection
+    let spread = 0, ridge = 0, groove = 0
+    if (sec && n >= 3) {
+      ridge = sec(0); groove = sec(Math.PI / n)
+      for (let i = 0; i < n; i++) {
+        spread = Math.max(spread, Math.abs(sec((i * 2 * Math.PI) / n) - ridge))
+        spread = Math.max(spread, Math.abs(sec(((i + 0.5) * 2 * Math.PI) / n) - groove))
+      }
+    }
+    const relief = ridge > 0 ? (ridge - groove) / ridge : 0
+    const pts = prof.outer.filter((v) => v.y > 0.02 && v.y < prof.height - 0.02)
+    let run = 0, worst = 0
+    for (let i = 2; i < pts.length; i++) {
+      const d2 = (pts[i].x - pts[i - 1].x) - (pts[i - 1].x - pts[i - 2].x)
+      if (Math.abs(d2) < 1e-4) worst = Math.max(worst, ++run)
+      else run = 0
+    }
+    return [
+      ['ribs are equally divided (等分)', n >= 3 && spread < 1e-9,
+       n >= 3 ? `${n} ribs, largest disagreement ${spread.toExponential(1)}` : 'no ribs'],
+      // the lid can only turn to any rib if it carries the same count as the body
+      ['lid and knob turn to any rib (通转)',
+       (knob.lobes ?? 0) === n && n >= 3,
+       `body ${n}, knob ${knob.lobes ?? 0}`],
+      ['ribs run knob → lid → body unbroken (贯通)',
+       (p.lobeDepth ?? 0) > 0 && (knob.lobeDepth ?? 0) > 0 && !lidT.brim && !lidT.bead,
+       `body ${(p.lobeDepth ?? 0).toFixed(3)}, knob ${(knob.lobeDepth ?? 0).toFixed(3)}` +
+       (lidT.brim || lidT.bead ? ' — a brim or bead would break the run' : '')],
+      ['ribs deep enough to read', relief >= 0.04 && relief <= 0.22,
+       `ridge to groove ${(relief * 100).toFixed(1)}% of the radius`],
+      ['body is still a round ware underneath', worst < 6,
+       `longest straight run ${worst} samples`],
+    ]
+  },
+  slots: {
+    knob: (t) => [t === 'button', 'knob is ribbed (筋纹之始)'],
+    spout: (t) => [t === 'oneBend' || t === 'straightCone', 'spout is 一弯嘴 or 直流'],
+    handle: (t) => [t === 'invertedEar', 'handle is an ear'],
+    base: (t) => [t === 'flat' || t === 'ring', 'flat or ringed foot'],
+  },
+}
+
 const want = process.argv.slice(2)
 let failed = 0
 for (const spec of SPECS) {
@@ -301,7 +360,8 @@ for (const spec of SPECS) {
     : spec.label?.includes('西施') ? 'xishi'
     : spec.label?.includes('潘') ? 'panhu'
     : spec.label?.includes('掇球') ? 'duoqiu'
-    : spec.label?.includes('六方') ? 'liufang' : null)
+    : spec.label?.includes('六方') ? 'liufang'
+    : spec.label?.includes('菊瓣') ? 'jinwen' : null)
   if (!canonId || !CANON[canonId]) continue
   if (want.length && !want.includes(spec.id)) continue
   const canon = CANON[canonId]

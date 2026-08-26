@@ -311,7 +311,14 @@ export const LIDS = {
         new THREE.Vector2(R - T, -rimEdge),
       ]
       const g = new THREE.Group()
-      g.add(new THREE.Mesh(loftGeometry({ profile: pts, capBottom: false }), material))
+      // 贯通: on a 筋纹器 the ribs must run unbroken from the knob, over the lid
+      // and down the body, so the lid is lofted with the body's own section
+      g.add(new THREE.Mesh(loftGeometry({
+        profile: pts,
+        crossSection: prof?.crossSection,
+        radialSegments: (prof?.facets || prof?.lobes) ? 288 : undefined,
+        capBottom: false,
+      }), material))
       // 子口: the flange that drops into the mouth and holds the lid in place
       if (p.flange > 0) {
         // the bore, not the seat: with a rim collar those differ, and sizing
@@ -325,7 +332,12 @@ export const LIDS = {
           new THREE.Vector2(fr - T * 0.7, -rimEdge),
           new THREE.Vector2(fr, -rimEdge),
         ]
-        g.add(new THREE.Mesh(loftGeometry({ profile: ring, capBottom: false }), material))
+        g.add(new THREE.Mesh(loftGeometry({
+          profile: ring,
+          crossSection: prof?.crossSection,
+          radialSegments: (prof?.facets || prof?.lobes) ? 288 : undefined,
+          capBottom: false,
+        }), material))
       }
       return g
     },

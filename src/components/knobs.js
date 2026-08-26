@@ -1,6 +1,6 @@
 import * as THREE from 'three'
 import { sweptTube, axisFillet, filletBlend, heightField, filletCollar } from '../geometry/sweep.js'
-import { loftGeometry, ngonSection } from '../geometry/loft.js'
+import { loftGeometry, ngonSection, lobeSection } from '../geometry/loft.js'
 
 /**
  * 钮 — knobs. Positioned by the assembler at the lid's top surface;
@@ -96,6 +96,10 @@ export const KNOBS = {
       taper: { label: '收分', min: 0.5, max: 1.0, step: 0.02, default: 0.82 },
       facets: { label: '面数', min: 0, max: 8, step: 1, default: 6 },
       crisp: { label: '棱角', min: 3, max: 40, step: 1, default: 16 },
+      // 筋纹器: the knob is where the ribs start, so it carries them too
+      lobes: { label: '筋数', min: 0, max: 24, step: 1, default: 0 },
+      lobeDepth: { label: '筋深', min: 0, max: 0.14, step: 0.002, default: 0.05 },
+      lobeSharp: { label: '筋形', min: 0.4, max: 3, step: 0.05, default: 1 },
       round: { label: '顶圆', min: 0, max: 0.5, step: 0.02, default: 0.22 },
       blend: { label: '润接', min: 0, max: 0.1, step: 0.005, default: 0.025 },
     },
@@ -118,7 +122,9 @@ export const KNOBS = {
       V(rTop * 0.5, H)
       V(0.01, H)
       V(0.01, -0.004)
-      const section = p.facets >= 3 ? ngonSection(p.facets, p.crisp) : null
+      const section = p.lobes >= 3
+        ? lobeSection(p.lobes, p.lobeDepth, p.lobeSharp)
+        : p.facets >= 3 ? ngonSection(p.facets, p.crisp) : null
       const g = new THREE.Group()
       g.add(new THREE.Mesh(loftGeometry({
         profile: pts,

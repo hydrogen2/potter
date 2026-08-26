@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import { shellGeometry, ngonSection } from '../geometry/loft.js'
+import { shellGeometry, ngonSection, lobeSection } from '../geometry/loft.js'
 
 /**
  * 身 — body profile families. Each returns { outer: Vector2[], radiusAt(y) }
@@ -232,6 +232,12 @@ export const BODIES = {
       // lid ball, and without it the two read as one continuous egg. 0 (the
       // default) leaves the mouth cut flat, as 西施 wants it.
       collar: { label: '唇宽', min: 0, max: 0.16, step: 0.004, default: 0 },
+      // 筋纹器: ribs round the body. 0 leaves it plain, which is every round
+      // ware so far. The ribs must run unbroken from knob to foot (贯通), so
+      // there is deliberately no fade — the lid and knob carry the same count.
+      lobes: { label: '筋数', min: 0, max: 24, step: 1, default: 0 },
+      lobeDepth: { label: '筋深', min: 0, max: 0.12, step: 0.002, default: 0.03 },
+      lobeSharp: { label: '筋形', min: 0.4, max: 3, step: 0.05, default: 1 },
       collarH: { label: '唇高', min: 0.01, max: 0.14, step: 0.004, default: 0.05 },
       // 颈 — a short upright run lifting the mouth clear of the shoulder. The
       // collar needs something to stand on; grown straight out of the shoulder
@@ -308,6 +314,7 @@ export const BODIES = {
         top.push(new THREE.Vector2(p.mouthR, rim.y))
       }
       const seatR = collar > 0 ? p.mouthR * 0.97 + collar * 0.45 : p.mouthR
+      const ribs = p.lobes >= 3 ? lobeSection(p.lobes, p.lobeDepth, p.lobeSharp) : () => 1
       const outer = [
         new THREE.Vector2(0.03, foot.y + press),
         new THREE.Vector2(footR * 0.5, foot.y + press * 0.78),
@@ -326,7 +333,10 @@ export const BODIES = {
       return {
         // rim.y is a reference into `outer`, so it is already relative to the
         // foot; with a collar the body's top is the ledge, not the mouth cut
-        outer, radiusAt: radiusFn(outer),
+        outer,
+        radiusAt: (y, theta = 0) => radiusFn(outer)(y) * ribs(theta),
+        crossSection: p.lobes >= 3 ? (theta) => ribs(theta) : undefined,
+        lobes: p.lobes >= 3 ? p.lobes : 0,
         height: rim.y + (collar > 0 ? neck + cH : 0),
         mouthR: seatR,               // what the lid seats on
         boreR: p.mouthR,             // the actual opening, which the 子口 drops into
