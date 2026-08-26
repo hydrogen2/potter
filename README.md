@@ -17,8 +17,8 @@ vocabulary potters already use (身 口 盖 钮 流 把 足):
 
 ```jsonc
 {
-  "id": "gu-jingzhou-dashipiao",
-  "label": "大石瓢 · 顾景舟",
+  "id": "jingzhou-shipiao",
+  "label": "景舟石瓢",
   "material": "zini", "scaleCm": 7,
   "wall":   { "base": 0.045, "belly": 0.036, "top": 0.034 },
   "body":   { "type": "spline", "height": 0.75, "bellyR": 0.90, "bellyY": 0.40, ... },
@@ -98,11 +98,14 @@ scripts/
     overlay.py           outline overlay of a render on a photo
 ```
 
-Fitting results so far: 相明石瓢 (three photos: level / near-level / steep
-3-4) mean IoU 0.909, level view 0.952 — cameras solved to 5.5°/6.5°, 1.5°/0°,
-35°/23°. 大石瓢 (four photos: auction side + three exhibition angles) mean IoU 0.936 —
-0.929 / 0.917 / 0.940 / 0.959, body 0.96-0.99 in every view; cameras
-(elev/az/dist) 10°/−7.5°/10, 12°/−6°/10, 20°/38°/7, 25°/−32°/8.
+Fitting results so far: 景舟石瓢 (four photos: auction side + three exhibition
+angles) mean IoU 0.936 — 0.929 / 0.917 / 0.940 / 0.959, body 0.96-0.99 in every
+view; cameras (elev/az/dist) 10°/−7.5°/10, 12°/−6°/10, 20°/38°/7, 25°/−32°/8. A
+second fit of 相明石瓢 (three photos) reached mean IoU 0.909 and produced a spec
+whose body was identical to this one and whose fittings differed by 10-16% — a
+spread inside the pipeline's own error, from a different photo set. The two
+entries were merged: what actually separates 顾景舟's five 大石瓢 is 吴湖帆's
+engraving on each, and 陶刻 is not in the DSL yet.
 
 Two measurement bugs found while fitting it, both worth knowing about:
 a photo mask built on colour alone **swallows the pot's cast shadow**, which

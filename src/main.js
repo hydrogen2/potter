@@ -100,7 +100,7 @@ function paramDef(path) {
 }
 
 // ---- URL specs: every design is a shareable address ------------------------
-// #id=gu-jingzhou-dashipiao&mat=zini&body.bellyR=0.9&knob.rise=0.16&cam=side&ui=hide
+// #id=jingzhou-shipiao&mat=zini&body.bellyR=0.9&knob.rise=0.16&cam=side&ui=hide
 
 function applyHash() {
   const h = new URLSearchParams(location.hash.slice(1))
