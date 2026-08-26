@@ -639,3 +639,72 @@ Traceback (most recent call last):
 ConnectionResetError: [Errno 104] Connection reset by peer
 ----------------------------------------
 178.104.53.233 - - [26/Aug/2026 08:19:21] "GET /refs/ HTTP/1.1" 200 -
+119.56.79.26 - - [26/Aug/2026 08:25:28] "GET /refs/ HTTP/1.1" 200 -
+119.56.79.26 - - [26/Aug/2026 08:25:29] "GET /refs/shipiao_two.png HTTP/1.1" 200 -
+119.56.79.26 - - [26/Aug/2026 08:25:29] "GET /refs/liufang_cmp.png HTTP/1.1" 200 -
+119.56.79.26 - - [26/Aug/2026 08:25:29] "GET /refs/liufang_qc.png HTTP/1.1" 200 -
+119.56.79.26 - - [26/Aug/2026 08:25:29] "GET /refs/ziye_qc.png HTTP/1.1" 200 -
+119.56.79.26 - - [26/Aug/2026 08:25:29] "GET /refs/ziye_cmp.png HTTP/1.1" 200 -
+119.56.79.26 - - [26/Aug/2026 08:25:29] "GET /refs/liufang.png HTTP/1.1" 200 -
+119.56.79.26 - - [26/Aug/2026 08:25:31] "GET /refs/refs_measured.png HTTP/1.1" 200 -
+119.56.79.26 - - [26/Aug/2026 08:25:31] "GET /refs/refs_all.png HTTP/1.1" 200 -
+119.56.79.26 - - [26/Aug/2026 08:25:31] "GET /refs/dq11.png HTTP/1.1" 200 -
+119.56.79.26 - - [26/Aug/2026 08:25:32] "GET /refs/dq_compare6.png HTTP/1.1" 200 -
+119.56.79.26 - - [26/Aug/2026 08:25:33] "GET /refs/part_compare.png HTTP/1.1" 200 -
+119.56.79.26 - - [26/Aug/2026 08:25:35] "GET /refs/td_sweep.png HTTP/1.1" 200 -
+119.56.79.26 - - [26/Aug/2026 08:25:37] "GET /refs/qc_detail.png HTTP/1.1" 200 -
+119.56.79.26 - - [26/Aug/2026 08:25:37] "GET /refs/spout_zoom.png HTTP/1.1" 200 -
+119.56.79.26 - - [26/Aug/2026 08:25:39] "GET /refs/lip.png HTTP/1.1" 200 -
+119.56.79.26 - - [26/Aug/2026 08:25:39] "GET /refs/lid_sweep.png HTTP/1.1" 200 -
+119.56.79.26 - - [26/Aug/2026 08:25:41] "GET /refs/bead.png HTTP/1.1" 200 -
+119.56.79.26 - - [26/Aug/2026 08:25:42] "GET /refs/fillet.png HTTP/1.1" 200 -
+119.56.79.26 - - [26/Aug/2026 08:25:43] "GET /refs/knob.png HTTP/1.1" 200 -
+119.56.79.26 - - [26/Aug/2026 08:25:43] "GET /refs/neck_after.png HTTP/1.1" 200 -
+119.56.79.26 - - [26/Aug/2026 08:25:44] "GET /refs/jingzhou.png HTTP/1.1" 200 -
+119.56.79.26 - - [26/Aug/2026 08:25:45] "GET /refs/qc_duoqiu2.png HTTP/1.1" 200 -
+119.56.79.26 - - [26/Aug/2026 08:25:46] "GET /refs/gp_regress.png HTTP/1.1" 200 -
+119.56.79.26 - - [26/Aug/2026 08:25:48] "GET /refs/xs_regress.png HTTP/1.1" 200 -
+----------------------------------------
+Exception occurred during processing of request from ('119.56.79.26', 41928)
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/socketserver.py", line 692, in process_request_thread
+    self.finish_request(request, client_address)
+  File "/usr/lib/python3.12/http/server.py", line 1311, in finish_request
+    self.RequestHandlerClass(request, client_address, self,
+  File "/usr/lib/python3.12/http/server.py", line 672, in __init__
+    super().__init__(*args, **kwargs)
+  File "/usr/lib/python3.12/socketserver.py", line 761, in __init__
+    self.handle()
+  File "/usr/lib/python3.12/http/server.py", line 436, in handle
+    self.handle_one_request()
+  File "/usr/lib/python3.12/http/server.py", line 404, in handle_one_request
+    self.raw_requestline = self.rfile.readline(65537)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/socket.py", line 707, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+ConnectionResetError: [Errno 104] Connection reset by peer
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('119.56.79.26', 17830)
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/socketserver.py", line 692, in process_request_thread
+    self.finish_request(request, client_address)
+  File "/usr/lib/python3.12/http/server.py", line 1311, in finish_request
+    self.RequestHandlerClass(request, client_address, self,
+  File "/usr/lib/python3.12/http/server.py", line 672, in __init__
+    super().__init__(*args, **kwargs)
+  File "/usr/lib/python3.12/socketserver.py", line 761, in __init__
+    self.handle()
+  File "/usr/lib/python3.12/http/server.py", line 436, in handle
+    self.handle_one_request()
+  File "/usr/lib/python3.12/http/server.py", line 404, in handle_one_request
+    self.raw_requestline = self.rfile.readline(65537)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/socket.py", line 707, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+ConnectionResetError: [Errno 104] Connection reset by peer
+----------------------------------------
+45.91.64.6 - - [26/Aug/2026 08:35:08] code 400, message Bad request version ("¯nãY»bhlÿ(=':©\\x82ÙoÈ¢×\\x93\\x98´ï\\x80å¹\\x90\\x00(À")
+45.91.64.6 - - [26/Aug/2026 08:35:08] "\x16\x03\x02\x01o\x01\x00\x01k\x03\x02RHÅ\x1a#÷:Nßâ´\x82/ÿ\x09T\x9f§Äy°hÆ\x13\x8c¤\x1c="á\x1a\x98 \x84´,\x85¯nãY»bhlÿ(=':©\x82ÙoÈ¢×\x93\x98´ï\x80å¹\x90\x00(À" 400 -
