@@ -4,7 +4,7 @@
   "category": "zisha",
   "categoryLabel": "紫砂 · Yixing",
   "canon": "liufang",
-  "notes": "六方（藏六方一路）：方器。身筒六面等分，棱线自肩贯足，面微鼓而不失其直。以直线、横线为主，曲线为辅。　把为泥片镶接之扁带：截面作圆角矩形（宽厚比 2.5），外面平而棱清；把之轮廓亦方，作圆角之 D，非圆环。　把厚以实物量得：f9 之把，背脊厚度约为壶宽 0.046；初作 0.090（两倍），今 0.021 之管径得 0.051，近之。",
+  "notes": "六方（藏六方一路）：方器。身筒六面等分，棱线自肩贯足，面微鼓而不失其直。以直线、横线为主，曲线为辅。　把为泥片镶接之扁带：截面作圆角矩形（宽厚比 2.5），外面平而棱清；把之轮廓亦方，作圆角之 D，非圆环。　把厚以实物量得：f9 之把，背脊厚度约为壶宽 0.046；初作 0.090（两倍），今 0.021 之管径得 0.051，近之。　把改为方把：以直段与圆角相接成形（起翘、横行、近直角、下行略收、末端回弯入身），非圆环变形所能为。",
   "material": "zini",
   "scaleCm": 11,
   "wall": {
@@ -67,19 +67,18 @@
     "crisp": 22
   },
   "handle": {
-    "type": "invertedEar",
-    "tube": 0.021,
-    "taper": 1.0,
-    "outerX": 1.26,
-    "topY": 0.78,
-    "botY": 0.24,
-    "loopY": 0.53,
-    "stretch": 1.0,
-    "teardrop": 0.0,
-    "blend": 0.035,
-    "crisp": 9,
+    "type": "squareEar",
+    "tube": 0.03,
     "strap": 2.0,
-    "squared": 0.9
+    "crisp": 10,
+    "topY": 0.8,
+    "botY": 0.18,
+    "lift": 0.07,
+    "outerX": 1.27,
+    "corner": 0.085,
+    "lean": 0.07,
+    "foot": 0.13,
+    "blend": 0.035
   },
   "base": {
     "type": "flat"
@@ -92,13 +91,13 @@
     "body.maxR",
     "body.mouthR",
     "body.shoulderR",
-    "handle.outerX",
-    "handle.squared",
-    "handle.strap",
     "lid.crown",
     "lid.step",
     "lid.tiers",
     "spout.facets",
-    "spout.length"
+    "spout.length",
+    "handle.outerX",
+    "handle.lean",
+    "handle.corner"
   ]
 }

@@ -1,6 +1,6 @@
 import * as THREE from 'three'
 import { ngonSection, rectSection } from '../geometry/loft.js'
-import { sweptTube, filletBlend, filletCollar, surfaceCrossing } from '../geometry/sweep.js'
+import { sweptTube, filletBlend, filletCollar, surfaceCrossing, roundedPolyline } from '../geometry/sweep.js'
 
 /** the circle through three points, as centre + radius */
 function circleThrough(A, B, C) {
@@ -20,6 +20,68 @@ function circleThrough(A, B, C) {
 
 export const HANDLES = {
   none: { label: '无', params: {}, build: () => null },
+
+  // 方器's handle: a clay slab bent over formers. Stated as the runs and the
+  // corners it is actually made from, rather than as a deformed circle —
+  //
+  //   off the shoulder with a small lift, then horizontal back;
+  //   a near right angle;
+  //   straight down, leaning slightly inward;
+  //   and a curve forward into the belly.
+  //
+  // A modulated circle cannot say that: it is symmetric about its own centre,
+  // so it cannot lean the descending run in while leaving the top run flat.
+  squareEar: {
+    label: '方把',
+    params: {
+      tube: { label: '把厚', min: 0.012, max: 0.08, step: 0.001, default: 0.030 },
+      strap: { label: '宽厚比', min: 1, max: 3, step: 0.05, default: 2.0 },
+      crisp: { label: '把棱', min: 3, max: 40, step: 1, default: 10 },
+      topY: { label: '上接', min: 0.4, max: 1.0, step: 0.01, default: 0.78 },
+      botY: { label: '下接', min: 0.05, max: 0.6, step: 0.01, default: 0.24 },
+      lift: { label: '起翘', min: 0, max: 0.25, step: 0.005, default: 0.06 },
+      outerX: { label: '外缘', min: 0.8, max: 2.0, step: 0.01, default: 1.30 },
+      corner: { label: '转角', min: 0.01, max: 0.30, step: 0.005, default: 0.10 },
+      lean: { label: '收分', min: 0, max: 0.3, step: 0.005, default: 0.06 },
+      foot: { label: '下弯', min: 0.02, max: 0.4, step: 0.005, default: 0.16 },
+      blend: { label: '润接', min: 0, max: 0.16, step: 0.005, default: 0.035 },
+    },
+    build(p, prof, material) {
+      const H = prof.height
+      const embed = Math.max(0.03, p.tube * 1.4)
+      const yTop = H * p.topY, yBot = H * p.botY
+      const A = new THREE.Vector2(-(prof.radiusAt(yTop, Math.PI) - embed), yTop)
+      const B = new THREE.Vector2(-(prof.radiusAt(yBot, Math.PI) - embed), yBot)
+      const yRun = yTop + H * p.lift            // the horizontal run, lifted off the shoulder
+      const corners = [
+        A,
+        new THREE.Vector2(A.x - (p.outerX + A.x) * 0.30, yRun),   // the small lift
+        new THREE.Vector2(-p.outerX, yRun),                        // corner: near right angle
+        new THREE.Vector2(-(p.outerX - p.lean), yBot + H * 0.10),  // down the back, leaning in
+        B,
+      ]
+      const radii = [0, H * 0.10, p.corner, p.foot, 0]
+      const path = roundedPolyline(corners, radii, 16)
+      const curve = new THREE.CatmullRomCurve3(
+        path.map((v) => new THREE.Vector3(v.x, v.y, 0)), false, 'centripetal',
+      )
+      const section = rectSection(p.strap, p.crisp)
+      const strap = new THREE.Mesh(
+        sweptTube(curve, () => p.tube, 140, 128, null, 0, 0, section), material,
+      )
+      strap.userData.centreline = curve.getPoints(160)
+      if (!p.blend) return strap
+      const group = new THREE.Group()
+      group.userData.centreline = strap.userData.centreline
+      group.add(strap)
+      for (const fromStart of [true, false]) {
+        group.add(new THREE.Mesh(
+          filletBlend(curve, () => p.tube, prof, p.blend, fromStart), material,
+        ))
+      }
+      return group
+    },
+  },
 
   invertedEar: {
     label: '耳把',

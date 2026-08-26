@@ -547,3 +547,52 @@ export function axisFillet(shapeAt, surfaceY, blend, radial = 72, steps = 14) {
   g.userData.fillet = true          // so the checks can tell a fillet from the part it blends
   return g
 }
+
+/**
+ * A polyline with its corners replaced by tangent arcs — how a slab handle is
+ * actually made: straight runs bent over formers of a given radius.
+ *
+ * A loop built by modulating a circle can only be symmetric about that circle's
+ * centre, so it cannot say "run horizontally back, turn a near right angle, then
+ * descend leaning slightly inward". This can, because each run and each corner
+ * is stated separately.
+ *
+ * @param {THREE.Vector2[]} pts     corner points, ends included
+ * @param {number[]} radii          corner radius at each interior point
+ */
+export function roundedPolyline(pts, radii, perArc = 14) {
+  const out = [pts[0].clone()]
+  for (let i = 1; i < pts.length - 1; i++) {
+    const V = pts[i], P = pts[i - 1], N = pts[i + 1]
+    const d1 = P.clone().sub(V), d2 = N.clone().sub(V)
+    const l1 = d1.length(), l2 = d2.length()
+    if (l1 < 1e-6 || l2 < 1e-6) continue
+    d1.divideScalar(l1); d2.divideScalar(l2)
+    const cosA = Math.min(1, Math.max(-1, d1.dot(d2)))
+    const half = Math.acos(cosA) / 2
+    if (half < 1e-3 || Math.abs(half - Math.PI / 2) < 1e-3) { out.push(V.clone()); continue }
+    let r = radii[i] ?? 0
+    // a corner cannot eat more than half of either run
+    r = Math.min(r, Math.tan(half) * Math.min(l1, l2) * 0.5)
+    if (r < 1e-5) { out.push(V.clone()); continue }
+    const t = r / Math.tan(half)
+    const T1 = V.clone().addScaledVector(d1, t)
+    const T2 = V.clone().addScaledVector(d2, t)
+    const bis = d1.clone().add(d2)
+    if (bis.lengthSq() < 1e-12) { out.push(V.clone()); continue }
+    bis.normalize()
+    const C = V.clone().addScaledVector(bis, r / Math.sin(half))
+    const a1 = Math.atan2(T1.y - C.y, T1.x - C.x)
+    let a2 = Math.atan2(T2.y - C.y, T2.x - C.x)
+    while (a2 - a1 > Math.PI) a2 -= Math.PI * 2
+    while (a2 - a1 < -Math.PI) a2 += Math.PI * 2
+    out.push(T1)
+    for (let k = 1; k < perArc; k++) {
+      const a = a1 + ((a2 - a1) * k) / perArc
+      out.push(new THREE.Vector2(C.x + r * Math.cos(a), C.y + r * Math.sin(a)))
+    }
+    out.push(T2)
+  }
+  out.push(pts[pts.length - 1].clone())
+  return out
+}

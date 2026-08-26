@@ -56,7 +56,7 @@ Component vocabulary (growing):
 | lid 盖 | none, flatDisc, dome, flush (截盖), ballCap (压盖), stepped (台阶盖) | douli, inset (kyusu), saucer |
 | knob 钮 | none, bridgeStrap, bridgeMound, bead, button (方钮) | loop, figural |
 | spout 流 | none, straightCone, curved (弯嘴) | formedLip, curved, 三弯 |
-| handle 把 | none, rearLoop, invertedEar (round ear, 倒把, teardrop, flat strap, squared D) | sideStick (横手), overheadBail (提梁), rearStick |
+| handle 把 | none, rearLoop, invertedEar (round ear, 倒把, teardrop), squareEar (方把) | sideStick (横手), overheadBail (提梁), rearStick |
 | base 足 | flat, studs, ring | — |
 | strainer 滤 | — | singleHole, 球孔, mesh (sasame), plate |
 | surface | material | ornament: seal 印章, engraving, relief |
@@ -224,7 +224,15 @@ height", which stops being a complete question once the body has faces. So
 surface asks with the point's own azimuth — which also means the body normal
 gains a sideways component, so a fillet crossing a 棱线 leans with it.
 
-The same construction does the handle. A 方器's handle is a rolled clay slab,
+A 方器 handle needed something else again. It is a clay slab bent over formers:
+off the shoulder with a small lift, horizontally back, a near right angle,
+straight down leaning slightly inward, then a curve home into the belly. A loop
+built by modulating a circle cannot say that — it is symmetric about its own
+centre, so it cannot lean the descending run in while leaving the top run flat.
+`roundedPolyline` states the runs and the corner radii separately and replaces
+each corner with a tangent arc, which is what the maker does.
+
+The same construction does the handle's section. A 方器's handle is a rolled clay slab,
 not a rod: `rectSection` gives it a flat outer face with crisp edges by using
 four half-planes with two different offsets, and `squared` pushes the loop's
 *outline* from a circle toward a rounded rectangle by the same means. One idea —
