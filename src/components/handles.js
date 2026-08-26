@@ -118,7 +118,12 @@ export const HANDLES = {
         // the loop's outline: a circle, optionally pushed toward a rounded
         // rectangle by the same half-plane construction the body's facets use
         const sq = p.squared ?? 0
-        const box = sq > 0 ? THREE.MathUtils.lerp(1, boxR(a - a0 + Math.PI), sq) : 1
+        // `a` is already a world-frame angle about the loop's centre, so the
+        // box's faces land where they should: flat across the top, flat down
+        // the back. Phase-shifting it by the arc's start angle — which is what
+        // this did — rotated the square into a diamond, and the amount depended
+        // on where the arc happened to begin.
+        const box = sq > 0 ? THREE.MathUtils.lerp(1, boxR(a), sq) : 1
         const r = radius * box * (1 + drop * Math.sin(Math.PI * Math.pow(t, 0.6)))
         pts.push(new THREE.Vector3(
           centre.x + r * Math.cos(a),

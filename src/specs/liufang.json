@@ -68,18 +68,18 @@
   },
   "handle": {
     "type": "invertedEar",
-    "tube": 0.06,
+    "tube": 0.043,
     "taper": 1.05,
-    "outerX": 1.32,
-    "topY": 0.8,
-    "botY": 0.2,
-    "loopY": 0.52,
+    "outerX": 1.26,
+    "topY": 0.78,
+    "botY": 0.24,
+    "loopY": 0.53,
     "stretch": 1.0,
     "teardrop": 0.0,
     "blend": 0.05,
     "crisp": 9,
-    "strap": 2.5,
-    "squared": 0.92
+    "strap": 2.6,
+    "squared": 0.9
   },
   "base": {
     "type": "flat"
