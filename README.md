@@ -207,7 +207,8 @@ one. Nothing could fail, because nothing had been written down.
 is guaranteed by construction (`bow` 0 is dead straight), rather than a general
 spline that *can* be a cone if the optimiser happens to land there.
 
-Families so far:
+Families so far. Two of the entries are the same family and deliberately so: 景舟石瓢 and 子冶石瓢 are 石瓢 with opposite temperaments — 景舟 full, wide-mouthed and low-centred; 子冶 a hard triangle, small-mouthed and standing tall, with a pronounced triangular handle and a slender spout. The canon they share is the *family*; the diff between their two spec files is the connoisseurship, which is what an archive of specs is for.
+
 
 | family | primitive | what makes it that family |
 |---|---|---|

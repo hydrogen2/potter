@@ -59,7 +59,7 @@ const CANON = {
       lid: (t) => [t === 'flatDisc', 'lid is a flat disc'],
       knob: (t) => [t.startsWith('bridge'), 'knob is a bridge'],
       spout: (t) => [t === 'straightCone', 'spout is straight (直流)'],
-      handle: (t) => [t === 'rearLoop', 'handle is a rear loop'],
+      handle: (t) => [t === 'rearLoop' || t === 'squareEar', 'handle is a rear loop'],
       base: (t) => [t === 'studs', 'stands on studs (围棋足)'],
     },
   },

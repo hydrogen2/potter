@@ -81,11 +81,16 @@ export const HANDLES = {
       const curve = new THREE.CatmullRomCurve3(
         path.map((v) => new THREE.Vector3(v.x, v.y, 0)), false, 'centripetal',
       )
-      const rect = rectSection(p.strap, p.crisp)
-      const phase = strapPhase(curve)
-      const section = (v) => rect(v + phase)
+      // strap 1 means a round strap — 石瓢's handle is a rolled rod, not a slab,
+      // and rectSection(1) would give it a rounded square instead
+      let section = null
+      if ((p.strap ?? 1) > 1.001) {
+        const rect = rectSection(p.strap, p.crisp)
+        const phase = strapPhase(curve)
+        section = (v) => rect(v + phase)
+      }
       const strap = new THREE.Mesh(
-        sweptTube(curve, () => p.tube, 140, 128, null, 0, 0, section), material,
+        sweptTube(curve, () => p.tube, 140, section ? 128 : 20, null, 0, 0, section), material,
       )
       strap.userData.centreline = curve.getPoints(160)
       if (!p.blend) return strap
