@@ -134,6 +134,8 @@ export const BODIES = {
       faceSpan: { label: '字宽', min: 0, max: 200, step: 2, default: 0 },
       faceAt: { label: '字位', min: -180, max: 180, step: 5, default: 90 },
       faceLo: { label: '字底', min: 0, max: 0.6, step: 0.01, default: 0.06 },
+      roofAt: { label: '戗脊位', min: 20, max: 90, step: 1, default: 60 },
+      roofW: { label: '戗脊宽', min: 0.006, max: 0.05, step: 0.002, default: 0.016 },
       faceHi: { label: '字顶', min: 0.4, max: 1.0, step: 0.01, default: 0.93 },
       glyph: { label: '字', min: 0, max: 0, step: 1, default: 'cha' },
     },
@@ -225,16 +227,28 @@ export const BODIES = {
         }
         const eavesY = key[1] ? key[1].y : H * 0.55
         const mouthY = key[2] ? key[2].y : H * 0.86
+        // 艹 is not here: it belongs on the lid and the mouth, and the lid is a
+        // separate mesh, so the glyph travels out on the profile and discRing
+        // draws it. Splitting it between the two would draw the crossbar twice.
+        // 𠆢 is not here either — see the ridges below. A drawn 𠆢 wrapped onto
+        // the cone is a picture of a roof laid on a roof; the roof's own hips are
+        // meridians, and a meridian needs no glyph at all.
+        // 一 is put exactly on the eaves — the join between cylinder and cone —
+        // by solving the band for it rather than trimming near it. 木 then runs
+        // from the foot up to that line, and only the top of 丨 crosses onto the
+        // cone, which is what the character does under its own roof.
+        const wbb = GS.wood?.bbox ?? [0, 0, 0, 1]
+        const gBar = G.woodBarY ?? wbb[3]
+        const lo0 = H * p.faceLo
+        const hi0 = lo0 + (eavesY - lo0) * ((wbb[3] - wbb[2]) / Math.max(gBar - wbb[2], 1e-6))
         const parts = [
-          ['wood', H * p.faceLo, eavesY - H * 0.02],
-          ['roof', eavesY, mouthY],
-          ['cao', mouthY, H],
+          ['wood', lo0, hi0, p.faceSpan > 0 ? p.faceSpan : 70],
         ]
         // Each group is held undistorted — its arc width is its own aspect times
         // its band's height — but capped, because a group placed where the pot
         // has narrowed would otherwise wrap past the front face and out of view.
-        const cap = THREE.MathUtils.degToRad(p.faceSpan > 0 ? p.faceSpan : 70)
-        for (const [k, lo, hi] of parts) {
+        for (const [k, lo, hi, capDeg] of parts) {
+          const cap = THREE.MathUtils.degToRad(capDeg)
           const o = GS[k]
           if (!o || !(hi > lo)) continue
           const bb = o.bbox
@@ -245,19 +259,59 @@ export const BODIES = {
         }
       }
       const at = THREE.MathUtils.degToRad(p.faceAt)
-      const crossSection = bands.length
+
+      // 𠆢 as the cone's own ridges — 戗脊, the hips of a 攒尖顶 roof. A hip runs
+      // straight down the slope, which on a cone is a meridian: constant azimuth.
+      // Seen from the front two meridians converge toward the top all by
+      // themselves, because the cone narrows, so they read as 𠆢 with nothing
+      // wrapped and nothing distorted. Their apparent slope is set by where they
+      // stand: at ±87° they reproduce 𠆢's own 36.39° exactly, but that is the
+      // silhouette seen edge-on, so `roofAt` is a parameter and not a guess.
+      const eavesY2 = key[1] ? key[1].y : H * 0.55
+      const mouthY2 = key[2] ? key[2].y : H * 0.86
+      const ridgeAt = THREE.MathUtils.degToRad(p.roofAt ?? 60)
+      // On the cone the two hips are true meridians — constant azimuth, straight
+      // down the slope. Over the neck they close to the axis so they meet: a
+      // roof's hips join at its apex, and the neck is where this one's would be.
+      const ridgeA = (y) => (y <= mouthY2
+        ? ridgeAt
+        : ridgeAt * (1 - Math.min(1, (y - mouthY2) / Math.max(H - mouthY2, 1e-6))))
+      const ridge = (d, y) => {
+        if (y < eavesY2) return 0
+        // constant *physical* width, so the ridge does not thin as the cone closes
+        const aw = (p.roofW ?? 0.016) / Math.max(rFn(y), 1e-6)
+        const a = Math.abs(Math.abs(d) - ridgeA(y))
+        if (a > aw) return 0
+        const u = a / aw
+        return 1 - u * u
+      }
+      // One relief function, read by both the geometry and the colour, so the
+      // raised line and the coloured line cannot drift apart.
+      const relief = (theta, y) => {
+        let d = theta - at
+        while (d > Math.PI) d -= Math.PI * 2
+        while (d < -Math.PI) d += Math.PI * 2
+        const rv = ridge(d, y)
+        if (rv > 0) return rv
+        for (const b of bands) {
+          if (y < b.lo || y > b.hi || Math.abs(d) > b.span / 2) continue
+          const gx = (d / b.span) * (b.bb[1] - b.bb[0]) + (b.bb[0] + b.bb[1]) / 2
+          const gy = ((y - b.lo) / (b.hi - b.lo)) * (b.bb[3] - b.bb[2]) + b.bb[2]
+          const v = b.sample(gx, gy)
+          if (v > 0) return v
+        }
+        return 0
+      }
+      const live = bands.length || p.face > 0
+      const crossSection = live ? (theta, _t, y) => 1 + p.face * relief(theta, y) : undefined
+      const LINE_TINT = [0.60, 0.47, 0.34]
+      const colorAt = live
         ? (theta, _t, y) => {
-            let d = theta - at
-            while (d > Math.PI) d -= Math.PI * 2
-            while (d < -Math.PI) d += Math.PI * 2
-            for (const b of bands) {
-              if (y < b.lo || y > b.hi || Math.abs(d) > b.span / 2) continue
-              const gx = (d / b.span) * (b.bb[1] - b.bb[0]) + (b.bb[0] + b.bb[1]) / 2
-              const gy = ((y - b.lo) / (b.hi - b.lo)) * (b.bb[3] - b.bb[2]) + b.bb[2]
-              const v = b.sample(gx, gy)
-              if (v > 0) return 1 + p.face * v
-            }
-            return 1
+            const v = relief(theta, y)
+            if (v <= 0) return null
+            return [THREE.MathUtils.lerp(1, LINE_TINT[0], v),
+              THREE.MathUtils.lerp(1, LINE_TINT[1], v),
+              THREE.MathUtils.lerp(1, LINE_TINT[2], v)]
           }
         : undefined
 
@@ -265,7 +319,11 @@ export const BODIES = {
         outer,
         radiusAt: (y, theta = 0) => rFn(y),
         crossSection,
-        glyphFace: bands.length ? 1 : 0,
+        colorAt,
+        glyphFace: live ? 1 : 0,
+        // 艹 rides out to the lid on the profile: the body is what knows the
+        // glyph, and the lid is what 艹 is.
+        glyph: GS ? { groups: GS, at, face: p.face } : undefined,
         height: H,
         mouthR: outer[outer.length - 1].x,
         boreR: outer[outer.length - 1].x,
@@ -616,7 +674,11 @@ export const BODIES = {
 /** build the walled body mesh from a profile object */
 export function bodyMesh(prof, wall, material, opts = {}) {
   const geo = shellGeometry(prof.outer, wall, opts)
-  return new THREE.Mesh(geo, material)
+  // vertexColors multiplies the base, so it has to be switched on per-mesh —
+  // leaving it on the shared material would tint every other pot's geometry,
+  // which carries no colour attribute at all.
+  const mat = opts.colorAt ? Object.assign(material.clone(), { vertexColors: true }) : material
+  return new THREE.Mesh(geo, mat)
 }
 
 export { ngonSection }

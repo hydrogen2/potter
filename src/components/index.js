@@ -72,6 +72,7 @@ export function buildVessel(spec, material) {
 
   raised.add(bodyMesh(prof, wall, material, {
     crossSection: prof.crossSection,
+    colorAt: prof.colorAt,
     // a 棱线 only reads as an edge if there are enough segments across it
     radialSegments: prof.glyphFace ? 900 : (prof.facets || prof.lobes) ? 288 : undefined,
   }))

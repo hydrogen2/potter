@@ -180,7 +180,63 @@ export const LIDS = {
       }
       V(ri, T + p.up - rr)
       V(ri, -p.down)                       // straight down: the same ring, below
-      return new THREE.Mesh(loftGeometry({ profile: pts, capBottom: false }), material)
+
+      // 艹 drawn on the lid, because the lid is what 艹 is. The relief only has
+      // a radius to move, so it lands on the upright runs — the disc's rim, the
+      // ring's wall, the 子口 — and slides along the flats, which is the right
+      // place for it anyway: those uprights are the strokes.
+      const gl = prof?.glyph
+      const cao = gl?.groups?.cao
+      let cross
+      let rows = pts
+      if (cao && gl.face > 0) {
+        const bin = atob(cao.data)
+        const grid = new Uint8Array(bin.length)
+        for (let i = 0; i < bin.length; i++) grid[i] = bin.charCodeAt(i)
+        const bb = cao.bbox
+        const lo = -p.down, hi = T + p.up
+        const aspect = (bb[1] - bb[0]) / Math.max(bb[3] - bb[2], 1e-6)
+        const span = Math.min(THREE.MathUtils.degToRad(110),
+          ((hi - lo) * aspect) / Math.max(R, 1e-6))
+        // the lathe profile has too few rows for a drawn line to survive; the
+        // body resamples for the same reason
+        rows = [pts[0]]
+        for (let i = 1; i < pts.length; i++) {
+          const a = pts[i - 1], b = pts[i]
+          const n = Math.max(1, Math.ceil(a.distanceTo(b) / 0.004))
+          for (let j = 1; j <= n; j++) rows.push(a.clone().lerp(b, j / n))
+        }
+        cross = (theta, _t, y) => {
+          let d = theta - gl.at
+          while (d > Math.PI) d -= Math.PI * 2
+          while (d < -Math.PI) d += Math.PI * 2
+          if (y < lo || y > hi || Math.abs(d) > span / 2) return 1
+          const gx = (d / span) * (bb[1] - bb[0]) + (bb[0] + bb[1]) / 2
+          const gy = ((y - lo) / (hi - lo)) * (bb[3] - bb[2]) + bb[2]
+          const u = (gx - cao.x0) / (cao.x1 - cao.x0)
+          const v = (cao.y1 - gy) / (cao.y1 - cao.y0)
+          if (u < 0 || u > 1 || v < 0 || v > 1) return 1
+          const i = Math.min(cao.size - 1, Math.floor(u * cao.size))
+          const j = Math.min(cao.size - 1, Math.floor(v * cao.size))
+          return 1 + gl.face * (grid[j * cao.size + i] / 255)
+        }
+      }
+      let tint
+      if (cross) {
+        const T2 = [0.60, 0.47, 0.34]                 // the same 泥绘 as the body
+        tint = (theta, _t, y) => {
+          const v = (cross(theta, _t, y) - 1) / Math.max(gl.face, 1e-6)
+          if (v <= 0) return null
+          return [THREE.MathUtils.lerp(1, T2[0], v), THREE.MathUtils.lerp(1, T2[1], v),
+            THREE.MathUtils.lerp(1, T2[2], v)]
+        }
+      }
+      const geo = loftGeometry({
+        profile: rows, capBottom: false,
+        crossSection: cross, colorAt: tint, radialSegments: cross ? 600 : 160,
+      })
+      return new THREE.Mesh(geo,
+        tint ? Object.assign(material.clone(), { vertexColors: true }) : material)
     },
   },
 

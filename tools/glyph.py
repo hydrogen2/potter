@@ -396,6 +396,9 @@ data = {
     'mouthW': round(MOUTH_W / em, 4),
     'cao': CAO,
     'roofDeg': ROOF_DEG,
+    # where 一 sits inside 木, so the band can be solved to land it exactly on
+    # the eaves rather than approximately near them
+    'woodBarY': round(float(CY0 - bar_y) / em, 4),
     # A revolution is only available to a character that is symmetric about a
     # vertical axis — the whole method rests on it — so the measurement travels
     # with the glyph and the canon can refuse an unsuitable one.

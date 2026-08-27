@@ -24,6 +24,10 @@ import * as THREE from 'three'
 export function loftGeometry({
   profile,
   crossSection = () => 1,
+  // Relief can be picked out in colour — 泥绘, a line laid on in another clay.
+  // Returns [r,g,b] to multiply the base by, or null to leave it alone. White
+  // is the identity, so a geometry without lines is untouched.
+  colorAt = null,
   radialSegments = 160,
   capBottom = true,
 }) {
@@ -32,6 +36,7 @@ export function loftGeometry({
 
   const positions = []
   const uvs = []
+  const colors = colorAt ? [] : null
   const indices = []
 
   // cumulative arc length along the profile → v coordinate
@@ -49,6 +54,10 @@ export function loftGeometry({
       const m = crossSection(theta, t, y)
       positions.push(r * m * Math.cos(theta), y, r * m * Math.sin(theta))
       uvs.push(j / radialSegments, arc[i] / totalArc)
+      if (colors) {
+        const c = colorAt(theta, t, y)
+        colors.push(c ? c[0] : 1, c ? c[1] : 1, c ? c[2] : 1)
+      }
     }
   }
 
@@ -67,6 +76,7 @@ export function loftGeometry({
     const centerIdx = positions.length / 3
     positions.push(0, profile[0].y, 0)
     uvs.push(0.5, 0)
+    if (colors) colors.push(1, 1, 1)
     for (let j = 0; j < radialSegments; j++) {
       indices.push(centerIdx, j, j + 1)
     }
@@ -75,6 +85,7 @@ export function loftGeometry({
   const geo = new THREE.BufferGeometry()
   geo.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3))
   geo.setAttribute('uv', new THREE.Float32BufferAttribute(uvs, 2))
+  if (colors) geo.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3))
   geo.setIndex(indices)
   geo.computeVertexNormals()
   weldSeamNormals(geo, rows, cols)
@@ -178,6 +189,7 @@ export function shellGeometry(outer, wall, opts = {}) {
   return loftGeometry({
     profile,
     crossSection: opts.crossSection,
+    colorAt: opts.colorAt,
     radialSegments: opts.radialSegments,
     capBottom: true,
   })
