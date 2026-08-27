@@ -12,9 +12,12 @@ import * as THREE from 'three'
  *
  * @param {Object}   opts
  * @param {THREE.Vector2[]} opts.profile  sampled (radius, y) points, bottom → top
- * @param {(theta:number, t:number)=>number} [opts.crossSection]
+ * @param {(theta:number, t:number, y:number)=>number} [opts.crossSection]
  *        radius multiplier at angle theta; t ∈ [0,1] is normalized position
- *        along the profile (lets lobes fade toward the foot/rim)
+ *        along the profile (lets lobes fade toward the foot/rim) and y is that
+ *        point's height, which is what a relief placed *on the pot* needs — a
+ *        shell's profile runs up the outside and back down the inside, so the
+ *        same height occurs twice and t cannot tell you where you are.
  * @param {number}  [opts.radialSegments]
  * @param {boolean} [opts.capBottom]  close the base with a fan
  */
@@ -43,7 +46,7 @@ export function loftGeometry({
     const t = i / (rows - 1)
     for (let j = 0; j < cols; j++) {
       const theta = (j / radialSegments) * Math.PI * 2
-      const m = crossSection(theta, t)
+      const m = crossSection(theta, t, y)
       positions.push(r * m * Math.cos(theta), y, r * m * Math.sin(theta))
       uvs.push(j / radialSegments, arc[i] / totalArc)
     }

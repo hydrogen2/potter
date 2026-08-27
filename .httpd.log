@@ -1802,3 +1802,80 @@ Traceback (most recent call last):
            ^^^^^^^^^^^^^^^^^^^^^^^
 ConnectionResetError: [Errno 104] Connection reset by peer
 ----------------------------------------
+206.189.86.228 - - [27/Aug/2026 05:41:19] code 501, message Unsupported method ('CONNECT')
+206.189.86.228 - - [27/Aug/2026 05:41:19] "CONNECT google.com:443 HTTP/1.1" 501 -
+119.56.66.63 - - [27/Aug/2026 05:41:20] "GET /refs/ HTTP/1.1" 200 -
+119.56.66.63 - - [27/Aug/2026 05:41:20] "GET /refs/chahu.png HTTP/1.1" 200 -
+119.56.66.63 - - [27/Aug/2026 05:41:20] "GET /refs/cha_plan.png HTTP/1.1" 200 -
+119.56.66.63 - - [27/Aug/2026 05:41:20] "GET /refs/cha_sym.png HTTP/1.1" 200 -
+119.56.66.63 - - [27/Aug/2026 05:41:20] "GET /refs/cha_revolve.png HTTP/1.1" 200 -
+119.56.66.63 - - [27/Aug/2026 05:41:20] "GET /refs/shipiao_two.png HTTP/1.1" 200 -
+119.56.66.63 - - [27/Aug/2026 05:41:20] "GET /refs/ziye_cmp.png HTTP/1.1" 200 -
+119.56.66.63 - - [27/Aug/2026 05:41:20] "GET /refs/ziye_qc.png HTTP/1.1" 200 -
+119.56.66.63 - - [27/Aug/2026 05:41:21] "GET /refs/jubian_sheet.png HTTP/1.1" 200 -
+119.56.66.63 - - [27/Aug/2026 05:41:21] "GET /refs/liufang_cmp.png HTTP/1.1" 200 -
+119.56.66.63 - - [27/Aug/2026 05:41:21] "GET /refs/liufang.png HTTP/1.1" 200 -
+119.56.66.63 - - [27/Aug/2026 05:41:21] "GET /refs/liufang_qc.png HTTP/1.1" 200 -
+119.56.66.63 - - [27/Aug/2026 05:41:21] "GET /refs/refs_measured.png HTTP/1.1" 200 -
+119.56.66.63 - - [27/Aug/2026 05:41:22] "GET /refs/refs_all.png HTTP/1.1" 200 -
+119.56.66.63 - - [27/Aug/2026 05:41:22] "GET /refs/dq11.png HTTP/1.1" 200 -
+119.56.66.63 - - [27/Aug/2026 05:41:22] "GET /refs/dq_compare6.png HTTP/1.1" 200 -
+119.56.66.63 - - [27/Aug/2026 05:41:22] "GET /refs/part_compare.png HTTP/1.1" 200 -
+119.56.66.63 - - [27/Aug/2026 05:41:22] "GET /refs/td_sweep.png HTTP/1.1" 200 -
+119.56.66.63 - - [27/Aug/2026 05:41:23] "GET /refs/qc_detail.png HTTP/1.1" 200 -
+119.56.66.63 - - [27/Aug/2026 05:41:23] "GET /refs/spout_zoom.png HTTP/1.1" 200 -
+119.56.66.63 - - [27/Aug/2026 05:41:23] "GET /refs/lip.png HTTP/1.1" 200 -
+119.56.66.63 - - [27/Aug/2026 05:41:23] "GET /refs/lid_sweep.png HTTP/1.1" 200 -
+119.56.66.63 - - [27/Aug/2026 05:41:24] "GET /refs/bead.png HTTP/1.1" 200 -
+119.56.66.63 - - [27/Aug/2026 05:41:24] "GET /refs/fillet.png HTTP/1.1" 200 -
+119.56.66.63 - - [27/Aug/2026 05:41:24] "GET /refs/knob.png HTTP/1.1" 200 -
+119.56.66.63 - - [27/Aug/2026 05:41:25] "GET /refs/neck_after.png HTTP/1.1" 200 -
+119.56.66.63 - - [27/Aug/2026 05:41:25] "GET /refs/qc_duoqiu2.png HTTP/1.1" 200 -
+119.56.66.63 - - [27/Aug/2026 05:41:25] "GET /refs/jingzhou.png HTTP/1.1" 200 -
+119.56.66.63 - - [27/Aug/2026 05:41:25] "GET /refs/xs_regress.png HTTP/1.1" 200 -
+119.56.66.63 - - [27/Aug/2026 05:41:25] "GET /refs/gp_regress.png HTTP/1.1" 200 -
+119.56.66.63 - - [27/Aug/2026 05:41:56] "GET / HTTP/1.1" 200 -
+119.56.66.63 - - [27/Aug/2026 05:41:56] "GET /assets/index-utfaeDLZ.js HTTP/1.1" 200 -
+119.56.66.63 - - [27/Aug/2026 05:41:56] "GET /assets/index-Diu4_gQ2.css HTTP/1.1" 200 -
+----------------------------------------
+Exception occurred during processing of request from ('119.56.66.63', 42618)
+----------------------------------------
+Exception occurred during processing of request from ('119.56.66.63', 23956)
+Traceback (most recent call last):
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/socketserver.py", line 692, in process_request_thread
+    self.finish_request(request, client_address)
+  File "/usr/lib/python3.12/http/server.py", line 1311, in finish_request
+    self.RequestHandlerClass(request, client_address, self,
+  File "/usr/lib/python3.12/socketserver.py", line 692, in process_request_thread
+    self.finish_request(request, client_address)
+  File "/usr/lib/python3.12/http/server.py", line 1311, in finish_request
+    self.RequestHandlerClass(request, client_address, self,
+  File "/usr/lib/python3.12/http/server.py", line 672, in __init__
+    super().__init__(*args, **kwargs)
+  File "/usr/lib/python3.12/http/server.py", line 672, in __init__
+    super().__init__(*args, **kwargs)
+  File "/usr/lib/python3.12/socketserver.py", line 761, in __init__
+    self.handle()
+  File "/usr/lib/python3.12/socketserver.py", line 761, in __init__
+    self.handle()
+  File "/usr/lib/python3.12/http/server.py", line 436, in handle
+    self.handle_one_request()
+  File "/usr/lib/python3.12/http/server.py", line 404, in handle_one_request
+    self.raw_requestline = self.rfile.readline(65537)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/http/server.py", line 436, in handle
+    self.handle_one_request()
+  File "/usr/lib/python3.12/http/server.py", line 404, in handle_one_request
+    self.raw_requestline = self.rfile.readline(65537)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/socket.py", line 707, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+ConnectionResetError: [Errno 104] Connection reset by peer
+  File "/usr/lib/python3.12/socket.py", line 707, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+----------------------------------------
+ConnectionResetError: [Errno 104] Connection reset by peer
+----------------------------------------

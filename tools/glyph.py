@@ -267,6 +267,10 @@ data = {
     # the simplifier chooses its keep-points independently on each side. Trace it
     # closely instead and let the residual be sub-pixel.
     'lid': outlines(lid_d, simplify=0.6),
+    # the character's own extent, so a relief window can be filled by the glyph
+    # rather than by the empty margin the frame happens to carry
+    'bbox': [round((xs.min() - AXIS) / em, 4), round((xs.max() - AXIS) / em, 4),
+             round((CY - ys.max()) / em, 4), round((CY - ys.min()) / em, 4)],
     'revolve': [round(v, 4) for v in rev[::STEP]],
     'relief': {
         'size': R,

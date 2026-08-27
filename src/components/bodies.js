@@ -120,8 +120,18 @@ export const BODIES = {
       mouthR: { label: '口径', min: 0.2, max: 1.0, step: 0.005, default: 0.60 },
       baseR: { label: '底径', min: 0.3, max: 1.3, step: 0.005, default: 0.95 },
       footH: { label: '足高', min: 0, max: 0.20, step: 0.004, default: 0.075 },
-      relief: { label: '字纹', min: 0, max: 1, step: 0.01, default: 0.11 },
+      // The revolved character as rings round the whole pot. Read all the way
+      // round it looks like wrinkling rather than writing, so it defaults off —
+      // the character belongs on one face, not repeated infinitely.
+      relief: { label: '环纹', min: 0, max: 1, step: 0.01, default: 0 },
       reliefTop: { label: '纹起', min: 0, max: 1, step: 0.01, default: 0.30 },
+      // 陶刻: one 茶 raised on the surface, at one azimuth, so there is a place
+      // to stand where you simply read it.
+      face: { label: '字凸', min: 0, max: 0.12, step: 0.002, default: 0.022 },
+      faceSpan: { label: '字宽', min: 20, max: 160, step: 2, default: 96 },
+      faceAt: { label: '字位', min: -180, max: 180, step: 5, default: 0 },
+      faceLo: { label: '字底', min: 0, max: 0.9, step: 0.01, default: 0.16 },
+      faceHi: { label: '字顶', min: 0.2, max: 1.0, step: 0.01, default: 0.92 },
       glyph: { label: '字', min: 0, max: 0, step: 1, default: 'cha' },
     },
     profile(p) {
@@ -155,9 +165,52 @@ export const BODIES = {
       }
       const outer = pts
       const rFn = radiusFn(outer)
+
+      // the character, raised on one face
+      const G = GLYPHS[p.glyph ?? 'cha']
+      const rel = G?.relief
+      let grid = null
+      if (rel && p.face > 0) {
+        const bin = atob(rel.data)
+        grid = new Uint8Array(bin.length)
+        for (let i = 0; i < bin.length; i++) grid[i] = bin.charCodeAt(i)
+      }
+      const sample = (gx, gy) => {
+        const u = (gx - rel.x0) / (rel.x1 - rel.x0)
+        const v = (rel.y1 - gy) / (rel.y1 - rel.y0)
+        if (u < 0 || u > 1 || v < 0 || v > 1) return 0
+        const i = Math.min(rel.size - 1, Math.floor(u * rel.size))
+        const j = Math.min(rel.size - 1, Math.floor(v * rel.size))
+        return grid[j * rel.size + i] / 255
+      }
+      const span = THREE.MathUtils.degToRad(p.faceSpan)
+      const at = THREE.MathUtils.degToRad(p.faceAt)
+      const yLo = H * p.faceLo, yHi = H * p.faceHi
+      // fill the window with the glyph, not with the frame's empty margin
+      const bb = G?.bbox ?? [rel?.x0, rel?.x1, rel?.y0, rel?.y1]
+      const gW = bb[1] - bb[0]
+      const crossSection = grid
+        ? (theta, _t, y) => {
+            let d = theta - at
+            while (d > Math.PI) d -= Math.PI * 2
+            while (d < -Math.PI) d += Math.PI * 2
+            if (Math.abs(d) > span / 2) return 1
+            if (y < yLo || y > yHi) return 1
+            const gx = (d / span) * gW + (bb[0] + bb[1]) / 2
+            const gy = ((y - yLo) / (yHi - yLo)) * (bb[3] - bb[2]) + bb[2]
+            // ease the character out at the edges of its window so it rises from
+            // the surface rather than stopping at a cliff
+            const fade = Math.min(1, (1 - Math.abs(d) / (span / 2)) * 6) *
+                         Math.min(1, ((y - yLo) / (yHi - yLo)) * 8, ((yHi - y) / (yHi - yLo)) * 8)
+            return 1 + p.face * sample(gx, gy) * Math.max(0, fade)
+          }
+        : undefined
+
       return {
         outer,
         radiusAt: (y, theta = 0) => rFn(y),
+        crossSection,
+        glyphFace: grid ? 1 : 0,
         height: H,
         mouthR: pts[pts.length - 1].x,
         boreR: pts[pts.length - 1].x,

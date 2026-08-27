@@ -4,7 +4,7 @@
   "category": "design",
   "categoryLabel": "自作 · own design",
   "canon": "glyph",
-  "notes": "茶字壶：以『茶』字回旋成器。字本对称，回旋则对称尽显。然直取回旋则成细腰双锥——木之竖笔在轴上，离轴无物，故腰几于无，非器也。乃取『锥去其尖、立于圆柱之足』为体，而以回旋所得与此锥之差的十分之一为纹，故字之笔画化作身上柔环。口即锥之上口，阔而易置茶叶。盖为『艹』之回旋：圆盘之上立一环，环即其钮。",
+  "notes": "茶字壶：以『茶』字回旋成器。字本对称，回旋则对称尽显。然直取回旋则成细腰双锥——木之竖笔在轴上，离轴无物，故腰几于无，非器也。乃取『锥去其尖、立于圆柱之足』为体。回旋之纹绕器一周，看去如皱非书，故弃之（环纹归零）；字乃以陶刻之意置于一面，平视即读，一字而已，不复回旋。口即锥之上口，阔而易置茶叶。盖为『艹』之回旋：圆盘之上立一环，环即其钮。",
   "material": "duanni",
   "scaleCm": 10,
   "wall": {
@@ -19,8 +19,13 @@
     "mouthR": 0.56,
     "baseR": 0.88,
     "footH": 0.08,
-    "relief": 0.11,
-    "reliefTop": 0.3
+    "relief": 0,
+    "reliefTop": 0.3,
+    "face": 0.03,
+    "faceSpan": 104,
+    "faceAt": 90,
+    "faceLo": 0.16,
+    "faceHi": 0.92
   },
   "lid": {
     "type": "discRing",
@@ -70,10 +75,12 @@
   },
   "expose": [
     "body.baseR",
+    "body.face",
+    "body.faceAt",
+    "body.faceSpan",
     "body.height",
     "body.mouthR",
     "body.relief",
-    "body.reliefTop",
     "handle.outerX",
     "lid.ringR",
     "lid.up",
