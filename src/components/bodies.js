@@ -201,48 +201,63 @@ export const BODIES = {
       const H = outer[outer.length - 1].y
       const eaves = key[1] ? key[1].y : H * 0.5
 
-      // 木, drawn on the cylinder as raised lines
-      const L = G?.lines
-      let grid = null
-      if (L && p.face > 0) {
-        const bin = atob(L.data)
-        grid = new Uint8Array(bin.length)
-        for (let i = 0; i < bin.length; i++) grid[i] = bin.charCodeAt(i)
-      }
-      const bb = L?.bbox ?? [0, 0, 0, 0]
-      const sample = (gx, gy) => {
-        const u = (gx - L.x0) / (L.x1 - L.x0)
-        const v = (L.y1 - gy) / (L.y1 - L.y0)
-        if (u < 0 || u > 1 || v < 0 || v > 1) return 0
-        const i = Math.min(L.size - 1, Math.floor(u * L.size))
-        const j = Math.min(L.size - 1, Math.floor(v * L.size))
-        return grid[j * L.size + i] / 255
+      // The three groups of 茶 are placed on the three parts of the pot the
+      // character itself names, and the house polygon's own corners say where
+      // each part is: 木 on the cylinder, 𠆢 on the cone whose slope it is, 艹
+      // at the mouth. Drawn as one block they can only be placed as a block,
+      // and then 𠆢 lands on the cylinder rather than on the slope it describes.
+      const GS = G?.groups
+      const bands = []
+      if (GS && p.face > 0) {
+        const decode = (o) => {
+          const bin = atob(o.data)
+          const a = new Uint8Array(bin.length)
+          for (let i = 0; i < bin.length; i++) a[i] = bin.charCodeAt(i)
+          return a
+        }
+        const sampler = (o, grid) => (gx, gy) => {
+          const u = (gx - o.x0) / (o.x1 - o.x0)
+          const v = (o.y1 - gy) / (o.y1 - o.y0)
+          if (u < 0 || u > 1 || v < 0 || v > 1) return 0
+          const i = Math.min(o.size - 1, Math.floor(u * o.size))
+          const j = Math.min(o.size - 1, Math.floor(v * o.size))
+          return grid[j * o.size + i] / 255
+        }
+        const eavesY = key[1] ? key[1].y : H * 0.55
+        const mouthY = key[2] ? key[2].y : H * 0.86
+        const parts = [
+          ['wood', H * p.faceLo, eavesY - H * 0.02],
+          ['roof', eavesY, mouthY],
+          ['cao', mouthY, H],
+        ]
+        // Each group is held undistorted — its arc width is its own aspect times
+        // its band's height — but capped, because a group placed where the pot
+        // has narrowed would otherwise wrap past the front face and out of view.
+        const cap = THREE.MathUtils.degToRad(p.faceSpan > 0 ? p.faceSpan : 70)
+        for (const [k, lo, hi] of parts) {
+          const o = GS[k]
+          if (!o || !(hi > lo)) continue
+          const bb = o.bbox
+          const aspect = (bb[1] - bb[0]) / Math.max(bb[3] - bb[2], 1e-6)
+          const rMid = Math.max(rFn((lo + hi) / 2), 1e-6)
+          bands.push({ lo, hi, bb, span: Math.min(cap, ((hi - lo) * aspect) / rMid),
+            sample: sampler(o, decode(o)) })
+        }
       }
       const at = THREE.MathUtils.degToRad(p.faceAt)
-      // the whole character, drawn up the whole side — 艹 and 𠆢 included. The
-      // silhouette echoes the roof; the writing states it.
-      const yLo = H * p.faceLo, yHi = H * p.faceHi
-      const aspect = (bb[1] - bb[0]) / Math.max(bb[3] - bb[2], 1e-6)
-      // The character's width is held constant in *arc length*, not in angle.
-      // Mapped to a fixed angle it shrinks wherever the pot narrows, so 艹 —
-      // which is the widest part of 茶 and sits at the top, where this pot is
-      // narrowest — came out a tenth the width it should be. Constant arc length
-      // keeps every stroke in proportion and simply wraps further round the
-      // shoulder, which is what writing on a tapered pot does.
-      const charW = (yHi - yLo) * aspect
-      const spanAt = (y) => (p.faceSpan > 0
-        ? THREE.MathUtils.degToRad(p.faceSpan)
-        : charW / Math.max(rFn(y), 1e-6))
-      const crossSection = grid
+      const crossSection = bands.length
         ? (theta, _t, y) => {
             let d = theta - at
             while (d > Math.PI) d -= Math.PI * 2
             while (d < -Math.PI) d += Math.PI * 2
-            const span = spanAt(y)
-            if (Math.abs(d) > span / 2 || y < yLo || y > yHi) return 1
-            const gx = (d / span) * (bb[1] - bb[0]) + (bb[0] + bb[1]) / 2
-            const gy = ((y - yLo) / (yHi - yLo)) * (bb[3] - bb[2]) + bb[2]
-            return 1 + p.face * sample(gx, gy)
+            for (const b of bands) {
+              if (y < b.lo || y > b.hi || Math.abs(d) > b.span / 2) continue
+              const gx = (d / b.span) * (b.bb[1] - b.bb[0]) + (b.bb[0] + b.bb[1]) / 2
+              const gy = ((y - b.lo) / (b.hi - b.lo)) * (b.bb[3] - b.bb[2]) + b.bb[2]
+              const v = b.sample(gx, gy)
+              if (v > 0) return 1 + p.face * v
+            }
+            return 1
           }
         : undefined
 
@@ -250,7 +265,7 @@ export const BODIES = {
         outer,
         radiusAt: (y, theta = 0) => rFn(y),
         crossSection,
-        glyphFace: grid ? 1 : 0,
+        glyphFace: bands.length ? 1 : 0,
         height: H,
         mouthR: outer[outer.length - 1].x,
         boreR: outer[outer.length - 1].x,

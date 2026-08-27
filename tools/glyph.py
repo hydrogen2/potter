@@ -290,32 +290,61 @@ branch_y = next((y for y in range(bar_y + 1, w_bot)
 slope = np.tan(np.radians(ROOF_DEG))
 dy = min(w_half * slope, w_bot - branch_y)
 dx = dy / max(slope, 1e-6)
+# Off CAO, not off the loose names: the 木 block above reuses `bar_half` for 一,
+# so reading it here silently drew 艹's crossbar at 木's width.
 cao_bar = (bar_t + bar_b) // 2                 # 艹's crossbar, as a single line
-cao_half = bar_half
-cao_vx = vert_r
+cao_half = CAO['barHalf'] * em
+cao_vx = CAO['ringR'] * em
 cao_top, cao_bot = cy_.min(), cy_.max()
-li = Image.new('L', (N, N), 0)
-dr = ImageDraw.Draw(li)
 W = 2 * LINE
-dr.line([(AXIS - bar_half, bar_y), (AXIS + bar_half, bar_y)], fill=255, width=W)   # 一
-dr.line([(AXIS, w_top), (AXIS, w_bot)], fill=255, width=W)                          # 丨
-dr.line([(AXIS, branch_y), (AXIS - dx, branch_y + dy)], fill=255, width=W)          # 撇
-dr.line([(AXIS, branch_y), (AXIS + dx, branch_y + dy)], fill=255, width=W)          # 捺
-# 艹 and 𠆢 as well. They cannot be drawn at the size the *silhouette* states them
-# — 𠆢 belongs where the cone has narrowed to r 0.33, so at that size its arms
-# wrap 214° and meet round the back, and 艹 belongs above the mouth, where there
-# is no body at all. Drawn at the size of the character as a whole, on the
-# cylinder, every stroke fits. So the pot says 茶 twice: once at full size in its
-# own outline, and once written on it, complete and legible from the front.
-dr.line([(AXIS - cao_half, cao_bar), (AXIS + cao_half, cao_bar)], fill=255, width=W)  # 艹 横
-for sgn in (-1, 1):                                                                   # 艹 两竖
-    dr.line([(AXIS + sgn * cao_vx, cao_top), (AXIS + sgn * cao_vx, cao_bot)],
-            fill=255, width=W)
-for sgn in (-1, 1):                                                                   # 𠆢 撇捺
-    dr.line([(apex_x, apex_y), (apex_x + sgn * half, eaves_y)], fill=255, width=W)
+
+def draw_group(strokes):
+    """Rasterise a group of strokes and mirror one half onto the other. PIL
+    rounds endpoints and widths per side, so drawing both halves leaves a few
+    hundred pixels of mismatch where mirroring leaves none."""
+    g = Image.new('L', (N, N), 0)
+    d = ImageDraw.Draw(g)
+    for a, b in strokes:
+        d.line([a, b], fill=255, width=W)
+    return mirror_about(np.asarray(g) > 127, AXIS)
+
+WOOD = [((AXIS - bar_half, bar_y), (AXIS + bar_half, bar_y)),          # 一
+        ((AXIS, w_top), (AXIS, w_bot)),                                 # 丨
+        ((AXIS, branch_y), (AXIS - dx, branch_y + dy)),                 # 撇
+        ((AXIS, branch_y), (AXIS + dx, branch_y + dy))]                 # 捺
+# The three groups are kept apart rather than drawn into one image, because each
+# belongs on a different part of the pot and the pot's own corners say where:
+# 木 on the cylinder, 𠆢 on the cone whose slope it is, 艹 at the mouth. Drawn as
+# one block they can only be placed as a block, and then 𠆢 lands on the cylinder
+# instead of on the slope it describes.
+ROOF = [((apex_x, apex_y), (apex_x - half, eaves_y)),
+        ((apex_x, apex_y), (apex_x + half, eaves_y))]
+CAO_LINES = [((AXIS - cao_half, cao_bar), (AXIS + cao_half, cao_bar))] + \
+      [((AXIS + sgn * cao_vx, cao_top), (AXIS + sgn * cao_vx, cao_bot)) for sgn in (-1, 1)]
 # PIL's rasteriser rounds endpoints and widths per-side, so drawing both halves
 # leaves a few hundred pixels of mismatch. Mirror one half instead: exact.
-lines_m = mirror_about(np.asarray(li) > 127, AXIS)
+
+def encode(mask, size=200):
+    """A stroke mask as a base64 height field, softened, with the window centred
+    on the glyph's own axis and the strokes' own bounding box alongside it."""
+    soft = ndimage.gaussian_filter(mask.astype(float), sigma=em * 0.006)
+    soft = np.clip(soft / max(soft.max(), 1e-6), 0, 1)
+    yy, xx = np.where(mask)
+    hw = max(AXIS - 0, N - AXIS)
+    pad = np.zeros((N, 2 * hw), float)
+    s0, s1 = max(0, AXIS - hw), min(N, AXIS + hw)
+    pad[:, s0 - (AXIS - hw):s1 - (AXIS - hw)] = soft[:, s0:s1]
+    g = np.array(Image.fromarray((pad * 255).astype(np.uint8)).resize((size, size), Image.BILINEAR))
+    return {
+        'size': size,
+        'bbox': [round(float(xx.min() - AXIS) / em, 4), round(float(xx.max() - AXIS) / em, 4),
+                 round(float(CY0 - yy.max()) / em, 4), round(float(CY0 - yy.min()) / em, 4)],
+        'x0': round(float(-hw) / em, 4), 'x1': round(float(hw) / em, 4),
+        'y0': round(float(CY0 - N) / em, 4), 'y1': round(float(CY0) / em, 4),
+        'data': base64.b64encode(g.tobytes()).decode(),
+    }
+
+lines_m = draw_group(WOOD + ROOF + CAO_LINES)
 mism_lines = np.logical_xor(lines_m[:, AXIS - 300:AXIS],
                             lines_m[:, AXIS + 1:AXIS + 301][:, ::-1]).sum()
 print(f'  木 as 4 lines: 一 half {bar_half/em:.3f}, 捺撇 from y {(CY0-branch_y)/em:+.3f} '
@@ -388,6 +417,8 @@ data = {
     'bbox': [round((xs.min() - AXIS) / em, 4), round((xs.max() - AXIS) / em, 4),
              round((CY - ys.max()) / em, 4), round((CY - ys.min()) / em, 4)],
     'revolve': [round(v, 4) for v in rev[::STEP]],
+    'groups': {k: encode(draw_group(v)) for k, v in
+               (('wood', WOOD), ('roof', ROOF), ('cao', CAO_LINES))},
     'lines': {
         'size': LR, 'bbox': LBB,
         'x0': round((AXIS - lhalf - AXIS) / em, 4), 'x1': round((AXIS + lhalf - AXIS) / em, 4),
@@ -404,7 +435,9 @@ data = {
 # Emitted as a JS module rather than JSON: a component importing .json needs an
 # import attribute under plain node, which the check scripts run without, while
 # Vite does not require one. A module works in both.
-body = json.dumps(data, ensure_ascii=False)
+# numpy scalars: float64 subclasses float and passes, int64 does not
+body = json.dumps(data, ensure_ascii=False,
+                  default=lambda o: o.item() if hasattr(o, 'item') else str(o))
 open(OUT, 'w').write(
     '// Generated by tools/glyph.py — do not edit by hand.\n'
     f'export default {body}\n')

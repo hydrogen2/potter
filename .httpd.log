@@ -2320,3 +2320,50 @@ ConnectionResetError: [Errno 104] Connection reset by peer
 ----------------------------------------
 94.154.43.201 - - [27/Aug/2026 09:02:49] code 404, message File not found
 94.154.43.201 - - [27/Aug/2026 09:02:49] "GET /login HTTP/1.1" 404 -
+119.56.66.63 - - [27/Aug/2026 09:06:04] "GET / HTTP/1.1" 200 -
+119.56.66.63 - - [27/Aug/2026 09:06:04] "GET /assets/index-3mZv2dJ5.js HTTP/1.1" 200 -
+119.56.66.63 - - [27/Aug/2026 09:06:04] "GET /assets/index-Diu4_gQ2.css HTTP/1.1" 200 -
+----------------------------------------
+Exception occurred during processing of request from ('119.56.66.63', 16047)
+----------------------------------------
+Exception occurred during processing of request from ('119.56.66.63', 63219)
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/socketserver.py", line 692, in process_request_thread
+    self.finish_request(request, client_address)
+  File "/usr/lib/python3.12/http/server.py", line 1311, in finish_request
+    self.RequestHandlerClass(request, client_address, self,
+  File "/usr/lib/python3.12/http/server.py", line 672, in __init__
+    super().__init__(*args, **kwargs)
+  File "/usr/lib/python3.12/socketserver.py", line 761, in __init__
+    self.handle()
+  File "/usr/lib/python3.12/http/server.py", line 436, in handle
+    self.handle_one_request()
+  File "/usr/lib/python3.12/http/server.py", line 404, in handle_one_request
+    self.raw_requestline = self.rfile.readline(65537)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/socket.py", line 707, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+ConnectionResetError: [Errno 104] Connection reset by peer
+----------------------------------------
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/socketserver.py", line 692, in process_request_thread
+    self.finish_request(request, client_address)
+  File "/usr/lib/python3.12/http/server.py", line 1311, in finish_request
+    self.RequestHandlerClass(request, client_address, self,
+  File "/usr/lib/python3.12/http/server.py", line 672, in __init__
+    super().__init__(*args, **kwargs)
+  File "/usr/lib/python3.12/socketserver.py", line 761, in __init__
+    self.handle()
+  File "/usr/lib/python3.12/http/server.py", line 436, in handle
+    self.handle_one_request()
+  File "/usr/lib/python3.12/http/server.py", line 404, in handle_one_request
+    self.raw_requestline = self.rfile.readline(65537)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/socket.py", line 707, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+ConnectionResetError: [Errno 104] Connection reset by peer
+----------------------------------------
+31.76.20.19 - - [27/Aug/2026 09:12:42] code 404, message File not found
+31.76.20.19 - - [27/Aug/2026 09:12:42] "GET /login HTTP/1.1" 404 -

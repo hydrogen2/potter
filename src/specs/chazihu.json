@@ -18,10 +18,10 @@
     "height": 0.9,
     "soften": 0.03,
     "face": 0.045,
-    "faceSpan": 0,
+    "faceSpan": 70,
     "faceAt": 90,
-    "faceLo": 0.045,
-    "faceHi": 0.55
+    "faceLo": 0.0,
+    "faceHi": 1.0
   },
   "lid": {
     "type": "discRing",
