@@ -1780,3 +1780,25 @@ ConnectionResetError: [Errno 104] Connection reset by peer
 119.56.66.63 - - [27/Aug/2026 05:12:35] "GET /refs/xs_regress.png HTTP/1.1" 200 -
 119.56.66.63 - - [27/Aug/2026 05:12:35] "GET /refs/gp_regress.png HTTP/1.1" 200 -
 178.104.53.233 - - [27/Aug/2026 05:13:02] "GET /refs/ HTTP/1.1" 200 -
+119.56.66.63 - - [27/Aug/2026 05:13:49] "GET /refs/ HTTP/1.1" 200 -
+----------------------------------------
+Exception occurred during processing of request from ('119.56.66.63', 31209)
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/socketserver.py", line 692, in process_request_thread
+    self.finish_request(request, client_address)
+  File "/usr/lib/python3.12/http/server.py", line 1311, in finish_request
+    self.RequestHandlerClass(request, client_address, self,
+  File "/usr/lib/python3.12/http/server.py", line 672, in __init__
+    super().__init__(*args, **kwargs)
+  File "/usr/lib/python3.12/socketserver.py", line 761, in __init__
+    self.handle()
+  File "/usr/lib/python3.12/http/server.py", line 436, in handle
+    self.handle_one_request()
+  File "/usr/lib/python3.12/http/server.py", line 404, in handle_one_request
+    self.raw_requestline = self.rfile.readline(65537)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/socket.py", line 707, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+ConnectionResetError: [Errno 104] Connection reset by peer
+----------------------------------------
