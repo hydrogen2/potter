@@ -1,0 +1,82 @@
+{
+  "id": "chazihu",
+  "label": "茶字壶",
+  "category": "design",
+  "categoryLabel": "自作 · own design",
+  "canon": "glyph",
+  "notes": "茶字壶：非以茶字刻于壶上，乃以茶字为壶之形。前作尽刻艹、𠆢、木于身，则字为字、壶为壶，锥形不任事，随取一壶刻之亦可，故非是。今分而任之：𠆢者屋也，即壶之坡肩，其斜三十六度有奇，取𠆢本身之斜，不刻而自见于轮廓；艹者盖与口也，一横贯之为盖之盘，两竖回旋为一环，环上出盘为钮、下入盘为子口，而口之径即艹两竖去轴之远，故环正落于口，竖线上下相续不断；唯木独刻于圆柱之身，取笔画之骨而非字体之填充，用无衬线之体。木之大小位置一依字中本位，不别定之——是以撇捺下垂而趋壶之两侧，字之势与器之势合。横幅以弧长为准而不以角度为准，故上下笔画粗细如一。艹之横本几与壶身同阔（真比例当占身径九成五），若尽依之则盖如笠、器如塔，不复为壶，故横取真长七九，余皆依真比例，此一处让步，志之。",
+  "material": "duanni",
+  "scaleCm": 10,
+  "wall": {
+    "base": 0.05,
+    "belly": 0.042,
+    "top": 0.038
+  },
+  "body": {
+    "type": "glyphRevolve",
+    "glyph": "cha",
+    "height": 0.9,
+    "soften": 0.03,
+    "face": 0.05,
+    "faceSpan": 0,
+    "faceAt": 90,
+    "faceLo": 0.116,
+    "faceHi": 0.6589
+  },
+  "lid": {
+    "type": "discRing",
+    "overhang": 0.1274,
+    "thickness": 0.0752,
+    "ringR": 0.2726,
+    "ringW": 0.0752,
+    "up": 0.0937,
+    "down": 0.1147,
+    "round": 0.25,
+    "vent": 0.012,
+    "seam": 0.005
+  },
+  "knob": {
+    "type": "none"
+  },
+  "spout": {
+    "type": "oneBend",
+    "attachY": 0.3,
+    "length": 0.66,
+    "rootAngle": 30,
+    "tipAngle": 6,
+    "bend": 1.0,
+    "lip": 0,
+    "rootR": 0.13,
+    "tipR": 0.055,
+    "wall": 0.015,
+    "flare": 1.7,
+    "bevel": 0.04,
+    "lipRoll": 0.07,
+    "blend": 0.06
+  },
+  "handle": {
+    "type": "invertedEar",
+    "tube": 0.062,
+    "taper": 1.1,
+    "outerX": 0.94,
+    "topY": 0.62,
+    "botY": 0.18,
+    "loopY": 0.4,
+    "stretch": 1.1,
+    "teardrop": 0.2,
+    "blend": 0.05
+  },
+  "base": {
+    "type": "flat"
+  },
+  "expose": [
+    "body.height",
+    "body.face",
+    "body.faceLo",
+    "body.faceHi",
+    "body.soften",
+    "lid.up",
+    "spout.length",
+    "handle.outerX"
+  ]
+}

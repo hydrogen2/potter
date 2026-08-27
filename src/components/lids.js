@@ -13,7 +13,7 @@ export const LIDS = {
   flatDisc: {
     label: '平盖',
     params: {
-      overhang: { label: '盖沿', min: 0, max: 0.12, step: 0.002, default: 0.045 },
+      overhang: { label: '盖沿', min: 0, max: 0.35, step: 0.002, default: 0.045 },
       thickness: { label: '盖厚', min: 0.02, max: 0.1, step: 0.002, default: 0.05 },
       crown: { label: '盖面', min: 0, max: 0.06, step: 0.002, default: 0.008 },
       vent: { label: '气孔', min: 0, max: 0.03, step: 0.001, default: 0.013 },
@@ -68,7 +68,7 @@ export const LIDS = {
   stepped: {
     label: '台阶盖',
     params: {
-      overhang: { label: '盖沿', min: 0, max: 0.12, step: 0.002, default: 0.028 },
+      overhang: { label: '盖沿', min: 0, max: 0.35, step: 0.002, default: 0.028 },
       thickness: { label: '盖厚', min: 0.02, max: 0.1, step: 0.002, default: 0.042 },
       tiers: { label: '台阶', min: 1, max: 3, step: 1, default: 2 },
       step: { label: '阶宽', min: 0.06, max: 0.4, step: 0.01, default: 0.22 },
@@ -141,7 +141,7 @@ export const LIDS = {
   discRing: {
     label: '艹盖',
     params: {
-      overhang: { label: '盖沿', min: 0, max: 0.12, step: 0.002, default: 0.02 },
+      overhang: { label: '盖沿', min: 0, max: 0.35, step: 0.002, default: 0.02 },
       thickness: { label: '盖厚', min: 0.02, max: 0.1, step: 0.002, default: 0.05 },
       ringR: { label: '环径', min: 0.1, max: 0.7, step: 0.005, default: 0.30 },
       ringW: { label: '环厚', min: 0.02, max: 0.14, step: 0.002, default: 0.05 },
@@ -235,7 +235,7 @@ export const LIDS = {
   ballCap: {
     label: '压盖 (球冠)',
     params: {
-      overhang: { label: '盖沿', min: 0, max: 0.12, step: 0.002, default: 0.03 },
+      overhang: { label: '盖沿', min: 0, max: 0.35, step: 0.002, default: 0.03 },
       thickness: { label: '盖厚', min: 0.02, max: 0.1, step: 0.002, default: 0.038 },
       rise: { label: '穹高', min: 0.2, max: 1.2, step: 0.01, default: 0.68 },
       flange: { label: '子口', min: 0, max: 0.12, step: 0.004, default: 0.05 },
@@ -399,7 +399,7 @@ export const LIDS = {
   dome: {
     label: '穹盖',
     params: {
-      overhang: { label: '盖沿', min: 0, max: 0.12, step: 0.002, default: 0.045 },
+      overhang: { label: '盖沿', min: 0, max: 0.35, step: 0.002, default: 0.045 },
       thickness: { label: '盖厚', min: 0.02, max: 0.1, step: 0.002, default: 0.04 },
       rise: { label: '穹高', min: 0.02, max: 0.3, step: 0.002, default: 0.13 },
       vent: { label: '气孔', min: 0, max: 0.03, step: 0.001, default: 0.013 },

@@ -160,7 +160,18 @@ export const BODIES = {
         d1.divideScalar(l1); d2.divideScalar(l2)
         const half2 = Math.acos(Math.min(1, Math.max(-1, d1.dot(d2)))) / 2
         const r = Math.min(r0, Math.tan(half2) * Math.min(l1, l2) * 0.45)
-        if (!(r > 1e-5) || half2 < 1e-3) { pts.push(V.clone()); continue }
+        // Two degeneracies, not one. half2 -> 0 is a spike, which was guarded.
+        // half2 -> pi/2 is the opposite: the edges are collinear, so there is no
+        // corner to round at all — and there the bisector is the zero vector, it
+        // normalises to nothing, the arc centre collapses onto the vertex, and
+        // the "arc" comes out as a ring of radius `soften` *around* V, moving the
+        // point outward by exactly that. It happens at the top of the mouth,
+        // where B is the synthetic vertical continuation, so every glyph pot's
+        // mouth has been `soften` too wide and the lid's ring could never sit in
+        // it. Caught by the canon rule, which measures the mouth against 艹.
+        if (!(r > 1e-5) || half2 < 1e-3 || Math.PI / 2 - half2 < 1e-3) {
+          pts.push(V.clone()); continue
+        }
         const t = r / Math.tan(half2)
         const T1 = V.clone().addScaledVector(d1, t)
         const T2 = V.clone().addScaledVector(d2, t)

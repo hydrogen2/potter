@@ -61,7 +61,10 @@ def find_axis(m):
             best = (mm, ax)
     mism, ax = best
     print(f'  axis x={ax}; glyph is {mism*100:.1f}% asymmetric about it')
+    ASYM.append(mism)
     return ax
+
+ASYM = []
 
 def mirror_about(m, ax):
     """Mirror the left half onto the right. Used for the *contours* only."""
@@ -130,7 +133,11 @@ half = max(AXIS - rx.min(), rx.max() - AXIS)      # symmetric about the axis by
                                                  # construction, not by luck
 cx0, cx1 = apex_x - half, apex_x + half
 
-MOUTH_W = 0.32 * em                              # a little wider than 艹's verticals
+# The mouth is where 艹's two verticals come down. Revolved, those verticals are
+# a ring, and that ring is the lid's — so the mouth's radius IS the 艹 verticals'
+# distance from the axis, and the lid's ring drops straight into it. Guessing a
+# narrower mouth here is what made the lid read as a lid rather than as 艹.
+MOUTH_W = 2 * 0.2162 * em
 MOUTH_D = 0.10 * em
 mx0, mx1 = apex_x - MOUTH_W / 2, apex_x + MOUTH_W / 2
 # where the roof's slope stands at the mouth's edges
@@ -149,6 +156,28 @@ body_d = np.asarray(body_img) > 127
 grow = 0
 lid_d = ndimage.binary_dilation(mirror_about(lid, AXIS), iterations=int(0.02 * em))
 lid_d &= ~ndimage.binary_dilation(body_d, iterations=2)   # keep the seam open
+
+# 艹's own proportions, so the lid is measured off the character rather than
+# guessed. The crossbar is the wide run of rows; the verticals are what stands
+# above and below it. Revolved, that is a disc with a ring standing through it.
+cy_, cx_ = np.where(lid)
+widths = np.array([lid[y].sum() for y in range(cy_.min(), cy_.max() + 1)])
+wmax = widths.max()
+bar_rows = np.where(widths > 0.55 * wmax)[0] + cy_.min()
+bar_t, bar_b = bar_rows.min(), bar_rows.max()
+bar_half = max(AXIS - cx_.min(), cx_.max() - AXIS)
+vert_up = lid[:bar_t]
+vy, vx = np.where(vert_up)
+vert_r = (max(AXIS - vx.min(), vx.max() - AXIS) + abs(np.median(np.abs(vx - AXIS)))) / 2
+CAO = {
+    'barHalf': round(bar_half / em, 4),          # crossbar half-length
+    'barH':    round((bar_b - bar_t + 1) / em, 4),
+    'ringR':   round(vert_r / em, 4),            # where the verticals stand
+    'up':      round((bar_t - cy_.min()) / em, 4),
+    'down':    round((cy_.max() - bar_b) / em, 4),
+}
+ROOF_DEG = round(float(np.degrees(np.arctan2(eaves_y - apex_y, half))), 2)
+print('  艹', CAO, 'roof', ROOF_DEG, 'deg from horizontal')
 
 def outlines(m, simplify=2.0):
     """Marching-squares contours, in em units, y up, origin at the glyph centre."""
@@ -231,11 +260,50 @@ def _dp(pts, eps):
 from skimage.morphology import skeletonize
 lbl_r, n_r = ndimage.label(relief_src)
 by_top = sorted((np.where(lbl_r == i + 1)[0].min(), i + 1) for i in range(n_r))
-# every stroke, 艹 and 𠆢 included: the silhouette echoes the roof, but the
-# character itself is drawn complete and in its own proportions
-skel = skeletonize(relief_src)
+# Only 木. Drawing 艹 and 𠆢 as well makes the pot a plain pot with a character
+# stuck on it — and if the character is only ever drawn, the cone shape is doing
+# no work and any pot would serve. So each part of 茶 carries a different piece
+# of the form: 𠆢 is the roof, i.e. the cone's own slope; 艹 is the lid and the
+# mouth, a bar crossed by a standing ring; 木 alone is drawn, on the cylinder.
+wood = np.isin(lbl_r, [i for _, i in by_top[2:]])
 LINE = max(1, int(round(0.013 * em)))         # the drawn line's half-width
-lines_m = ndimage.binary_dilation(skel, iterations=LINE)
+
+# 木 is drawn analytically rather than skeletonised, and the reason is the whole
+# premise of the revolution: a character may be revolved only because it is
+# symmetric about a vertical axis. 茶 is — except for 捺 and 撇, which are a
+# calligraphic pair, not mirror images. Skeletonising the font keeps that
+# asymmetry and puts it on a pot whose entire point is symmetry. So the four
+# strokes are measured off the glyph and re-drawn as lines: 一 and 丨 are already
+# symmetric, and 捺/撇 are abstracted to a mirrored pair on the roof's own slope,
+# inverted — 𠆢 upside down. Nothing here can come out asymmetric.
+wy, wx = np.where(wood)
+w_top, w_bot = wy.min(), wy.max()
+w_half = max(AXIS - wx.min(), wx.max() - AXIS)
+wid = np.array([wood[y].sum() for y in range(w_top, w_bot + 1)])
+bar_y = w_top + int(np.argmax(wid))                    # 一: the widest row
+bar_x = np.where(wood[bar_y])[0]
+bar_half = max(AXIS - bar_x.min(), bar_x.max() - AXIS)
+# where 捺/撇 leave 丨: the first row under 一 with ink well off the axis
+off = int(0.08 * em)
+branch_y = next((y for y in range(bar_y + 1, w_bot)
+                 if np.any(np.abs(np.where(wood[y])[0] - AXIS) > off)), bar_y + int(0.05 * em))
+slope = np.tan(np.radians(ROOF_DEG))
+dy = min(w_half * slope, w_bot - branch_y)
+dx = dy / max(slope, 1e-6)
+li = Image.new('L', (N, N), 0)
+dr = ImageDraw.Draw(li)
+W = 2 * LINE
+dr.line([(AXIS - bar_half, bar_y), (AXIS + bar_half, bar_y)], fill=255, width=W)   # 一
+dr.line([(AXIS, w_top), (AXIS, w_bot)], fill=255, width=W)                          # 丨
+dr.line([(AXIS, branch_y), (AXIS - dx, branch_y + dy)], fill=255, width=W)          # 撇
+dr.line([(AXIS, branch_y), (AXIS + dx, branch_y + dy)], fill=255, width=W)          # 捺
+# PIL's rasteriser rounds endpoints and widths per-side, so drawing both halves
+# leaves a few hundred pixels of mismatch. Mirror one half instead: exact.
+lines_m = mirror_about(np.asarray(li) > 127, AXIS)
+mism_lines = np.logical_xor(lines_m[:, AXIS - 300:AXIS],
+                            lines_m[:, AXIS + 1:AXIS + 301][:, ::-1]).sum()
+print(f'  木 as 4 lines: 一 half {bar_half/em:.3f}, 捺撇 from y {(CY0-branch_y)/em:+.3f} '
+      f'at {ROOF_DEG}°, mirror mismatch {mism_lines} px')
 lines = ndimage.gaussian_filter(lines_m.astype(float), sigma=em * 0.006)
 lines = np.clip(lines / max(lines.max(), 1e-6), 0, 1)
 ly, lx = np.where(lines_m)
@@ -281,6 +349,12 @@ data = {
     'em': int(em),
     'grow': round(grow / em, 4),
     'mouthW': round(MOUTH_W / em, 4),
+    'cao': CAO,
+    'roofDeg': ROOF_DEG,
+    # A revolution is only available to a character that is symmetric about a
+    # vertical axis — the whole method rests on it — so the measurement travels
+    # with the glyph and the canon can refuse an unsuitable one.
+    'asym': round(float(ASYM[0]), 4),
     'apexX': round((apex_x - (xs.min()+xs.max())/2) / em, 4),
     'seamY': round((cy - seam) / em, 4),
     # the house is already an exact polygon; sending it through a raster and a

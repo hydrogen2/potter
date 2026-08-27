@@ -19,7 +19,53 @@ const SPECS = fs.readdirSync(specDir)
   .filter((f) => f.endsWith('.json'))
   .map((f) => JSON.parse(fs.readFileSync(path.join(specDir, f), 'utf8')))
 
+import { GLYPHS } from '../src/glyphs/index.js'
+
 const CANON = {
+  glyph: {
+    label: '字·回旋',
+    // A revolution of a character is not a style, it is a method with a
+    // precondition: every stroke becomes a ring or a disc about one axis, so
+    // the character has to be symmetric about that axis or the pot is simply
+    // not the character any more. That is measurable, so it is checked rather
+    // than remembered — pointing this body at an unsuitable glyph must fail
+    // loudly, not quietly look wrong.
+    body: (prof, p, spec) => {
+      const G = GLYPHS[p.glyph ?? 'cha']
+      const out = []
+      const asym = G?.asym
+      out.push(['glyph is symmetric enough to revolve',
+        asym != null && asym <= 0.06, `${((asym ?? 1) * 100).toFixed(1)}% about its best axis`])
+      // The mouth is the character's own feature, not a chosen number: 艹's two
+      // verticals revolve into the lid's ring, and that ring has to land in the
+      // mouth, so the mouth's radius IS their distance from the axis. Scale the
+      // glyph into world units the same way the body does — by the house's own
+      // height — rather than trusting a number copied into the spec.
+      const hy = (G?.body?.[0] ?? []).map((q) => q[1])
+      const houseH = Math.max(...hy) - Math.min(...hy)
+      const k = p.height / houseH
+      const top = prof.outer[prof.outer.length - 1]
+      const mouthR = top.x
+      const want = (G?.cao?.ringR ?? 0) * k
+      out.push(['mouth stands where 艹\'s verticals do',
+        G?.cao != null && Math.abs(mouthR - want) < 0.01,
+        `mouth r ${mouthR.toFixed(3)} vs 艹 verticals at ${want.toFixed(3)}`])
+      // the shoulder must run on the character's own roof slope
+      const H = prof.height
+      const sh = prof.outer.filter((v) => v.y > H * 0.58 && v.y < H * 0.82)
+      const deg = Math.abs(Math.atan2(sh[sh.length - 1].y - sh[0].y,
+        sh[0].x - sh[sh.length - 1].x) * 180 / Math.PI)
+      out.push(['shoulder runs on 𠆢\'s own slope',
+        G?.roofDeg != null && Math.abs(deg - G.roofDeg) < 6,
+        `${deg.toFixed(1)}° vs ${G?.roofDeg}° in the glyph`])
+      return out
+    },
+    slots: {
+      lid: (t) => [t === 'discRing', 'lid is 艹 revolved (盘上一环)'],
+      handle: (t) => [t === 'invertedEar', 'handle is an inverted ear'],
+      base: (t) => [t === 'flat', 'flat base'],
+    },
+  },
   shipiao: {
     label: '石瓢',
     body: (prof, p) => {

@@ -22,6 +22,9 @@ page.on('pageerror', (e) => console.log('[pageerror]', e.message))
 await page.goto(`http://localhost:5203/#${hash}`, { waitUntil: 'networkidle' })
 await page.evaluate(() => document.body.classList.add('ui-hidden'))
 await page.waitForTimeout(4000)
-await page.screenshot({ path: out, timeout: 240000, animations: 'disabled', caret: 'hide' })
+// The glyph pots carry a 900-segment relief band; swiftshader needs well over
+// the 240s default to compose one, and the failure looks like a hang, not a
+// geometry error, so it is worth the long leash.
+await page.screenshot({ path: out, timeout: 900000, animations: 'disabled', caret: 'hide' })
 console.log('saved', out)
 await browser.close(); await server.close(); process.exit(0)
