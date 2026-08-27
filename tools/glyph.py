@@ -80,6 +80,7 @@ def mirror_about(m, ax):
 # So the axis is measured, the outlines are built symmetric about it, and the
 # relief keeps the glyph exactly as drawn.
 AXIS = find_axis(mask)
+CY0 = None   # set once the glyph's vertical extent is known
 def align_to(src, ref):
     """Warp one face's glyph onto another's box.
 
@@ -98,6 +99,7 @@ def align_to(src, ref):
 
 relief_src = align_to(draw(RELIEF_FONT), mask)
 ys, xs = np.where(mask)
+CY0 = (ys.min() + ys.max()) / 2
 em = ys.max() - ys.min()
 
 # the lid is the topmost connected piece — 艹 for 茶
@@ -222,6 +224,31 @@ def _dp(pts, eps):
     idx = [0] + rec(0, len(pts) - 1) + [len(pts) - 1]
     return [pts[i] for i in idx]
 
+# Line relief for the strokes that are *not* the silhouette. 艹 is the lid and
+# 𠆢 is the pot's own shoulder, so only 木 and its two diagonals get drawn — and
+# drawn as lines, skeletons of the strokes rather than the font's filled shapes,
+# because what belongs on a pot is a drawn character, not a typeset one.
+from skimage.morphology import skeletonize
+lbl_r, n_r = ndimage.label(relief_src)
+by_top = sorted((np.where(lbl_r == i + 1)[0].min(), i + 1) for i in range(n_r))
+mu = np.zeros_like(relief_src)
+for _, i in by_top[2:]:                       # skip 艹 and 𠆢
+    mu |= (lbl_r == i)
+skel = skeletonize(mu)
+LINE = max(1, int(round(0.013 * em)))         # the drawn line's half-width
+lines_m = ndimage.binary_dilation(skel, iterations=LINE)
+lines = ndimage.gaussian_filter(lines_m.astype(float), sigma=em * 0.006)
+lines = np.clip(lines / max(lines.max(), 1e-6), 0, 1)
+ly, lx = np.where(lines_m)
+LBB = [round((lx.min() - AXIS) / em, 4), round((lx.max() - AXIS) / em, 4),
+       round((CY0 - ly.max()) / em, 4), round((CY0 - ly.min()) / em, 4)]
+LR = 200
+lhalf = max(AXIS - 0, N - AXIS)
+lpad = np.zeros((N, 2 * lhalf), float)
+ls0, ls1 = max(0, AXIS - lhalf), min(N, AXIS + lhalf)
+lpad[:, ls0 - (AXIS - lhalf):ls1 - (AXIS - lhalf)] = lines[:, ls0:ls1]
+lgrid = np.array(Image.fromarray((lpad * 255).astype(np.uint8)).resize((LR, LR), Image.BILINEAR))
+
 # relief: the true strokes, softened, as a height field over the body's bbox
 relief = ndimage.gaussian_filter(relief_src.astype(float), sigma=em * 0.012)
 relief = np.clip((relief - 0.35) / 0.5, 0, 1)
@@ -272,6 +299,12 @@ data = {
     'bbox': [round((xs.min() - AXIS) / em, 4), round((xs.max() - AXIS) / em, 4),
              round((CY - ys.max()) / em, 4), round((CY - ys.min()) / em, 4)],
     'revolve': [round(v, 4) for v in rev[::STEP]],
+    'lines': {
+        'size': LR, 'bbox': LBB,
+        'x0': round((AXIS - lhalf - AXIS) / em, 4), 'x1': round((AXIS + lhalf - AXIS) / em, 4),
+        'y0': round((CY0 - N) / em, 4), 'y1': round((CY0 - 0) / em, 4),
+        'data': base64.b64encode(lgrid.tobytes()).decode(),
+    },
     'relief': {
         'size': R,
         'x0': round((wx0 - cx) / em, 4), 'x1': round((wx1 - cx) / em, 4),

@@ -1879,3 +1879,55 @@ ConnectionResetError: [Errno 104] Connection reset by peer
 ----------------------------------------
 ConnectionResetError: [Errno 104] Connection reset by peer
 ----------------------------------------
+119.56.66.63 - - [27/Aug/2026 05:59:19] "GET / HTTP/1.1" 200 -
+119.56.66.63 - - [27/Aug/2026 05:59:20] "GET /assets/index-C9qg1ago.js HTTP/1.1" 200 -
+119.56.66.63 - - [27/Aug/2026 05:59:20] "GET /assets/index-Diu4_gQ2.css HTTP/1.1" 200 -
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('119.56.66.63', 23077)
+Exception occurred during processing of request from ('119.56.66.63', 52660)
+Traceback (most recent call last):
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/socketserver.py", line 692, in process_request_thread
+    self.finish_request(request, client_address)
+  File "/usr/lib/python3.12/socketserver.py", line 692, in process_request_thread
+    self.finish_request(request, client_address)
+  File "/usr/lib/python3.12/http/server.py", line 1311, in finish_request
+    self.RequestHandlerClass(request, client_address, self,
+  File "/usr/lib/python3.12/http/server.py", line 672, in __init__
+    super().__init__(*args, **kwargs)
+  File "/usr/lib/python3.12/socketserver.py", line 761, in __init__
+    self.handle()
+  File "/usr/lib/python3.12/http/server.py", line 436, in handle
+    self.handle_one_request()
+  File "/usr/lib/python3.12/http/server.py", line 1311, in finish_request
+    self.RequestHandlerClass(request, client_address, self,
+  File "/usr/lib/python3.12/http/server.py", line 672, in __init__
+    super().__init__(*args, **kwargs)
+  File "/usr/lib/python3.12/http/server.py", line 404, in handle_one_request
+    self.raw_requestline = self.rfile.readline(65537)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/socket.py", line 707, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/socketserver.py", line 761, in __init__
+    self.handle()
+  File "/usr/lib/python3.12/http/server.py", line 436, in handle
+    self.handle_one_request()
+ConnectionResetError: [Errno 104] Connection reset by peer
+  File "/usr/lib/python3.12/http/server.py", line 404, in handle_one_request
+    self.raw_requestline = self.rfile.readline(65537)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/socket.py", line 707, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+ConnectionResetError: [Errno 104] Connection reset by peer
+----------------------------------------
+----------------------------------------
+159.223.45.227 - - [27/Aug/2026 06:01:44] code 501, message Unsupported method ('CONNECT')
+159.223.45.227 - - [27/Aug/2026 06:01:44] "CONNECT google.com:443 HTTP/1.1" 501 -
+45.198.224.26 - - [27/Aug/2026 06:02:13] code 501, message Unsupported method ('POST')
+45.198.224.26 - - [27/Aug/2026 06:02:13] "POST /goform/set_LimitClient_cfg HTTP/1.1" 501 -
+34.204.52.48 - - [27/Aug/2026 06:08:44] "GET / HTTP/1.1" 200 -
+167.71.208.164 - - [27/Aug/2026 06:23:51] code 501, message Unsupported method ('CONNECT')
+167.71.208.164 - - [27/Aug/2026 06:23:51] "CONNECT google.com:443 HTTP/1.1" 501 -

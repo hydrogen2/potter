@@ -113,96 +113,115 @@ export const BODIES = {
   // the literal revolution, and a tenth of the way gives soft rings tracing
   // where the strokes run. The symmetry the character already has is the whole
   // point, so nothing here breaks it.
+  // 茶 revolved — and the silhouette *is* the character.
+  //
+  // Engraving 茶 on a pot shaped like something else is not this design: it is
+  // a 石瓢 with writing on it. So the profile is the house the character itself
+  // gives — the right half of the outline in cha_plan, turned about the axis.
+  // 𠆢 is not drawn anywhere, because 𠆢 is the pot's own shoulder; the upright
+  // sides are the cylinder; the mouth is the notch at the peak. Only 木 and its
+  // two diagonals are drawn on, and drawn as *lines* — skeletons of the strokes
+  // rather than a font's filled shapes, because what belongs on a pot is a
+  // written character and not a typeset one.
   glyphRevolve: {
     label: '字·回旋',
     params: {
-      height: { label: '身高', min: 0.4, max: 1.6, step: 0.01, default: 0.86 },
-      mouthR: { label: '口径', min: 0.2, max: 1.0, step: 0.005, default: 0.60 },
-      baseR: { label: '底径', min: 0.3, max: 1.3, step: 0.005, default: 0.95 },
-      footH: { label: '足高', min: 0, max: 0.20, step: 0.004, default: 0.075 },
-      // The revolved character as rings round the whole pot. Read all the way
-      // round it looks like wrinkling rather than writing, so it defaults off —
-      // the character belongs on one face, not repeated infinitely.
-      relief: { label: '环纹', min: 0, max: 1, step: 0.01, default: 0 },
-      reliefTop: { label: '纹起', min: 0, max: 1, step: 0.01, default: 0.30 },
-      // 陶刻: one 茶 raised on the surface, at one azimuth, so there is a place
-      // to stand where you simply read it.
-      face: { label: '字凸', min: 0, max: 0.12, step: 0.002, default: 0.022 },
-      faceSpan: { label: '字宽', min: 20, max: 160, step: 2, default: 96 },
-      faceAt: { label: '字位', min: -180, max: 180, step: 5, default: 0 },
-      faceLo: { label: '字底', min: 0, max: 0.9, step: 0.01, default: 0.16 },
-      faceHi: { label: '字顶', min: 0.2, max: 1.0, step: 0.01, default: 0.92 },
+      height: { label: '身高', min: 0.4, max: 1.6, step: 0.01, default: 0.90 },
+      soften: { label: '折圆', min: 0, max: 0.12, step: 0.002, default: 0.03 },
+      face: { label: '字凸', min: 0, max: 0.10, step: 0.002, default: 0.020 },
+      // 0 lets the span be derived so the character keeps its own proportions:
+      // wrapped over too wide an arc it smears out sideways and stops reading.
+      faceSpan: { label: '字宽', min: 0, max: 200, step: 2, default: 0 },
+      faceAt: { label: '字位', min: -180, max: 180, step: 5, default: 90 },
       glyph: { label: '字', min: 0, max: 0, step: 1, default: 'cha' },
     },
     profile(p) {
-      const rev = GLYPHS[p.glyph ?? 'cha']?.revolve ?? []
-      const H = p.height
-      // the cone the pot actually is: mouth at the top, base at the foot
-      const cone = (t) => THREE.MathUtils.lerp(p.mouthR, p.baseR, t)
-      // the character, resampled over the same run and scaled to the cone's own
-      // width so the two are comparable at all
-      const revAt = (t) => {
-        if (!rev.length) return 0
-        const u = THREE.MathUtils.clamp((t - p.reliefTop) / (1 - p.reliefTop), 0, 1)
-        const i = u * (rev.length - 1)
-        const a = rev[Math.floor(i)], b = rev[Math.min(rev.length - 1, Math.ceil(i))]
-        return THREE.MathUtils.lerp(a, b, i - Math.floor(i))
-      }
-      const revMax = rev.length ? Math.max(...rev) : 1
-      const N = 96
-      const pts = []
-      const V = (r, y) => pts.push(new THREE.Vector2(r, y))
-      V(0.03, 0)
-      V(p.baseR * 0.72, 0)
-      V(p.baseR, 0.006)
-      V(p.baseR, p.footH)                       // the cylinder foot
-      for (let i = 1; i <= N; i++) {
-        const t = 1 - i / N                     // t: 0 at the mouth, 1 at the foot
-        const y = THREE.MathUtils.lerp(p.footH, H, 1 - t)
-        const base = cone(t)
-        const glyphR = (revAt(t) / revMax) * p.baseR
-        V(base + (glyphR - base) * p.relief, y)
-      }
-      const outer = pts
-      const rFn = radiusFn(outer)
-
-      // the character, raised on one face
       const G = GLYPHS[p.glyph ?? 'cha']
-      const rel = G?.relief
+      const half = (G?.body?.[0] ?? []).filter((q) => q[0] >= 0)
+        .map((q) => [q[0], q[1]]).sort((a, b) => a[1] - b[1])
+      const yMin = Math.min(...half.map((q) => q[1]))
+      const raw = Math.max(...half.map((q) => q[1])) - yMin
+      const k = p.height / (raw || 1)
+      const key = half.map(([r, y]) => new THREE.Vector2(r * k, (y - yMin) * k))
+
+      // walk the corners, rounding each by `soften` — a thrown or beaten pot
+      // has no knife edges, and a razor-sharp eave reads as cardboard
+      const pts = [new THREE.Vector2(0.03, 0), new THREE.Vector2(key[0].x * 0.7, 0)]
+      const r0 = p.soften
+      for (let i = 0; i < key.length; i++) {
+        const A = key[i - 1] ?? new THREE.Vector2(key[0].x, -1)
+        const V = key[i]
+        const B = key[i + 1] ?? new THREE.Vector2(V.x, V.y + 1)
+        const d1 = A.clone().sub(V), d2 = B.clone().sub(V)
+        const l1 = d1.length(), l2 = d2.length()
+        if (l1 < 1e-6 || l2 < 1e-6) { pts.push(V.clone()); continue }
+        d1.divideScalar(l1); d2.divideScalar(l2)
+        const half2 = Math.acos(Math.min(1, Math.max(-1, d1.dot(d2)))) / 2
+        const r = Math.min(r0, Math.tan(half2) * Math.min(l1, l2) * 0.45)
+        if (!(r > 1e-5) || half2 < 1e-3) { pts.push(V.clone()); continue }
+        const t = r / Math.tan(half2)
+        const T1 = V.clone().addScaledVector(d1, t)
+        const T2 = V.clone().addScaledVector(d2, t)
+        const bis = d1.clone().add(d2).normalize()
+        const C = V.clone().addScaledVector(bis, r / Math.sin(half2))
+        const a1 = Math.atan2(T1.y - C.y, T1.x - C.x)
+        let a2 = Math.atan2(T2.y - C.y, T2.x - C.x)
+        while (a2 - a1 > Math.PI) a2 -= Math.PI * 2
+        while (a2 - a1 < -Math.PI) a2 += Math.PI * 2
+        for (let j = 0; j <= 8; j++) {
+          const a = a1 + ((a2 - a1) * j) / 8
+          pts.push(new THREE.Vector2(C.x + r * Math.cos(a), C.y + r * Math.sin(a)))
+        }
+      }
+      // Resample the whole profile at a fine, even spacing. The corners supply
+      // very few points along the straight runs, and the drawn character needs
+      // rows to be drawn *on* — at the coarse spacing only its longest stroke
+      // survived and the rest vanished into the shading.
+      const dense = [pts[0]]
+      for (let i = 1; i < pts.length; i++) {
+        const a = pts[i - 1], b = pts[i]
+        const n = Math.max(1, Math.ceil(a.distanceTo(b) / 0.006))
+        for (let j = 1; j <= n; j++) dense.push(a.clone().lerp(b, j / n))
+      }
+      const outer = dense
+      const rFn = radiusFn(outer)
+      const H = outer[outer.length - 1].y
+      const eaves = key[1] ? key[1].y : H * 0.5
+
+      // 木, drawn on the cylinder as raised lines
+      const L = G?.lines
       let grid = null
-      if (rel && p.face > 0) {
-        const bin = atob(rel.data)
+      if (L && p.face > 0) {
+        const bin = atob(L.data)
         grid = new Uint8Array(bin.length)
         for (let i = 0; i < bin.length; i++) grid[i] = bin.charCodeAt(i)
       }
+      const bb = L?.bbox ?? [0, 0, 0, 0]
       const sample = (gx, gy) => {
-        const u = (gx - rel.x0) / (rel.x1 - rel.x0)
-        const v = (rel.y1 - gy) / (rel.y1 - rel.y0)
+        const u = (gx - L.x0) / (L.x1 - L.x0)
+        const v = (L.y1 - gy) / (L.y1 - L.y0)
         if (u < 0 || u > 1 || v < 0 || v > 1) return 0
-        const i = Math.min(rel.size - 1, Math.floor(u * rel.size))
-        const j = Math.min(rel.size - 1, Math.floor(v * rel.size))
-        return grid[j * rel.size + i] / 255
+        const i = Math.min(L.size - 1, Math.floor(u * L.size))
+        const j = Math.min(L.size - 1, Math.floor(v * L.size))
+        return grid[j * L.size + i] / 255
       }
-      const span = THREE.MathUtils.degToRad(p.faceSpan)
       const at = THREE.MathUtils.degToRad(p.faceAt)
-      const yLo = H * p.faceLo, yHi = H * p.faceHi
-      // fill the window with the glyph, not with the frame's empty margin
-      const bb = G?.bbox ?? [rel?.x0, rel?.x1, rel?.y0, rel?.y1]
-      const gW = bb[1] - bb[0]
+      // the drawn part lives on the cylinder, below the shoulder
+      const yLo = H * 0.05, yHi = eaves * 0.98
+      const rCyl = rFn((yLo + yHi) / 2)
+      const aspect = (bb[1] - bb[0]) / Math.max(bb[3] - bb[2], 1e-6)
+      const span = p.faceSpan > 0
+        ? THREE.MathUtils.degToRad(p.faceSpan)
+        : ((yHi - yLo) * aspect) / Math.max(rCyl, 1e-6)
       const crossSection = grid
         ? (theta, _t, y) => {
             let d = theta - at
             while (d > Math.PI) d -= Math.PI * 2
             while (d < -Math.PI) d += Math.PI * 2
-            if (Math.abs(d) > span / 2) return 1
-            if (y < yLo || y > yHi) return 1
-            const gx = (d / span) * gW + (bb[0] + bb[1]) / 2
+            if (Math.abs(d) > span / 2 || y < yLo || y > yHi) return 1
+            const gx = (d / span) * (bb[1] - bb[0]) + (bb[0] + bb[1]) / 2
             const gy = ((y - yLo) / (yHi - yLo)) * (bb[3] - bb[2]) + bb[2]
-            // ease the character out at the edges of its window so it rises from
-            // the surface rather than stopping at a cliff
-            const fade = Math.min(1, (1 - Math.abs(d) / (span / 2)) * 6) *
-                         Math.min(1, ((y - yLo) / (yHi - yLo)) * 8, ((yHi - y) / (yHi - yLo)) * 8)
-            return 1 + p.face * sample(gx, gy) * Math.max(0, fade)
+            return 1 + p.face * sample(gx, gy)
           }
         : undefined
 
@@ -212,8 +231,8 @@ export const BODIES = {
         crossSection,
         glyphFace: grid ? 1 : 0,
         height: H,
-        mouthR: pts[pts.length - 1].x,
-        boreR: pts[pts.length - 1].x,
+        mouthR: outer[outer.length - 1].x,
+        boreR: outer[outer.length - 1].x,
         bottomAt: () => 0,
       }
     },

@@ -73,7 +73,7 @@ export function buildVessel(spec, material) {
   raised.add(bodyMesh(prof, wall, material, {
     crossSection: prof.crossSection,
     // a 棱线 only reads as an edge if there are enough segments across it
-    radialSegments: (prof.facets || prof.lobes || prof.glyphFace) ? 512 : undefined,
+    radialSegments: prof.glyphFace ? 900 : (prof.facets || prof.lobes) ? 288 : undefined,
   }))
 
   const lidMesh = lid.def.build(lid.p, prof.mouthR, material, prof)
