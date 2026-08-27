@@ -61,7 +61,7 @@ const CANON = {
       return out
     },
     slots: {
-      lid: (t) => [t === 'discRing', 'lid is 艹 revolved (盘上一环)'],
+      lid: (t) => [t === 'discRing' || t === 'discSlab', 'lid carries 艹'],
       handle: (t) => [t === 'invertedEar', 'handle is an inverted ear'],
       base: (t) => [t === 'flat', 'flat base'],
     },

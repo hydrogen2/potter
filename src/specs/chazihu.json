@@ -24,14 +24,11 @@
     "faceHi": 1.0
   },
   "lid": {
-    "type": "discRing",
-    "overhang": 0.1274,
-    "thickness": 0.0752,
-    "ringR": 0.2726,
-    "ringW": 0.0752,
-    "up": 0.0937,
-    "down": 0.1147,
-    "round": 0.25,
+    "type": "discSlab",
+    "overhang": 0.127,
+    "thickness": 0.2,
+    "down": 0.06,
+    "round": 0.014,
     "vent": 0.012,
     "seam": 0.005
   },
