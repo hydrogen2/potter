@@ -1,5 +1,6 @@
 import * as THREE from 'three'
 import { shellGeometry, ngonSection, lobeSection } from '../geometry/loft.js'
+import { GLYPHS } from '../glyphs/index.js'
 
 /**
  * 身 — body profile families. Each returns { outer: Vector2[], radiusAt(y) }
@@ -97,6 +98,69 @@ export const BODIES = {
         facets: p.facets,
         height: H,
         mouthR: p.mouthR,
+        bottomAt: () => 0,
+      }
+    },
+  },
+
+  // 茶 revolved. The pot is a cone; the character is a *deviation* from it.
+  //
+  // Revolving 茶 literally gives a wasp-waisted double cone — at 木's vertical
+  // stroke there is nothing off the axis at all, so the profile pinches to
+  // almost nothing and there is no pot there. Instead the form is a truncated
+  // cone on a cylinder foot, and the revolved character is added as a fraction
+  // of its difference from that cone: `relief` 0 leaves a plain cone, 1 gives
+  // the literal revolution, and a tenth of the way gives soft rings tracing
+  // where the strokes run. The symmetry the character already has is the whole
+  // point, so nothing here breaks it.
+  glyphRevolve: {
+    label: '字·回旋',
+    params: {
+      height: { label: '身高', min: 0.4, max: 1.6, step: 0.01, default: 0.86 },
+      mouthR: { label: '口径', min: 0.2, max: 1.0, step: 0.005, default: 0.60 },
+      baseR: { label: '底径', min: 0.3, max: 1.3, step: 0.005, default: 0.95 },
+      footH: { label: '足高', min: 0, max: 0.20, step: 0.004, default: 0.075 },
+      relief: { label: '字纹', min: 0, max: 1, step: 0.01, default: 0.11 },
+      reliefTop: { label: '纹起', min: 0, max: 1, step: 0.01, default: 0.30 },
+      glyph: { label: '字', min: 0, max: 0, step: 1, default: 'cha' },
+    },
+    profile(p) {
+      const rev = GLYPHS[p.glyph ?? 'cha']?.revolve ?? []
+      const H = p.height
+      // the cone the pot actually is: mouth at the top, base at the foot
+      const cone = (t) => THREE.MathUtils.lerp(p.mouthR, p.baseR, t)
+      // the character, resampled over the same run and scaled to the cone's own
+      // width so the two are comparable at all
+      const revAt = (t) => {
+        if (!rev.length) return 0
+        const u = THREE.MathUtils.clamp((t - p.reliefTop) / (1 - p.reliefTop), 0, 1)
+        const i = u * (rev.length - 1)
+        const a = rev[Math.floor(i)], b = rev[Math.min(rev.length - 1, Math.ceil(i))]
+        return THREE.MathUtils.lerp(a, b, i - Math.floor(i))
+      }
+      const revMax = rev.length ? Math.max(...rev) : 1
+      const N = 96
+      const pts = []
+      const V = (r, y) => pts.push(new THREE.Vector2(r, y))
+      V(0.03, 0)
+      V(p.baseR * 0.72, 0)
+      V(p.baseR, 0.006)
+      V(p.baseR, p.footH)                       // the cylinder foot
+      for (let i = 1; i <= N; i++) {
+        const t = 1 - i / N                     // t: 0 at the mouth, 1 at the foot
+        const y = THREE.MathUtils.lerp(p.footH, H, 1 - t)
+        const base = cone(t)
+        const glyphR = (revAt(t) / revMax) * p.baseR
+        V(base + (glyphR - base) * p.relief, y)
+      }
+      const outer = pts
+      const rFn = radiusFn(outer)
+      return {
+        outer,
+        radiusAt: (y, theta = 0) => rFn(y),
+        height: H,
+        mouthR: pts[pts.length - 1].x,
+        boreR: pts[pts.length - 1].x,
         bottomAt: () => 0,
       }
     },

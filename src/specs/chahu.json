@@ -1,0 +1,82 @@
+{
+  "id": "chahu",
+  "label": "茶字壶",
+  "category": "design",
+  "categoryLabel": "自作 · own design",
+  "canon": "glyph",
+  "notes": "茶字壶：以『茶』字回旋成器。字本对称，回旋则对称尽显。然直取回旋则成细腰双锥——木之竖笔在轴上，离轴无物，故腰几于无，非器也。乃取『锥去其尖、立于圆柱之足』为体，而以回旋所得与此锥之差的十分之一为纹，故字之笔画化作身上柔环。口即锥之上口，阔而易置茶叶。盖为『艹』之回旋：圆盘之上立一环，环即其钮。",
+  "material": "duanni",
+  "scaleCm": 10,
+  "wall": {
+    "base": 0.05,
+    "belly": 0.042,
+    "top": 0.038
+  },
+  "body": {
+    "type": "glyphRevolve",
+    "glyph": "cha",
+    "height": 1.06,
+    "mouthR": 0.56,
+    "baseR": 0.88,
+    "footH": 0.08,
+    "relief": 0.11,
+    "reliefTop": 0.3
+  },
+  "lid": {
+    "type": "discRing",
+    "overhang": 0.018,
+    "thickness": 0.046,
+    "ringR": 0.3,
+    "ringW": 0.046,
+    "up": 0.28,
+    "down": 0.07,
+    "round": 0.4,
+    "vent": 0.012,
+    "seam": 0.005
+  },
+  "knob": {
+    "type": "none"
+  },
+  "spout": {
+    "type": "oneBend",
+    "attachY": 0.46,
+    "length": 0.7,
+    "rootAngle": 32,
+    "tipAngle": 6,
+    "bend": 1.0,
+    "lip": 0,
+    "rootR": 0.15,
+    "tipR": 0.062,
+    "wall": 0.015,
+    "flare": 1.7,
+    "bevel": 0.04,
+    "lipRoll": 0.07,
+    "blend": 0.06
+  },
+  "handle": {
+    "type": "invertedEar",
+    "tube": 0.068,
+    "taper": 1.1,
+    "outerX": 1.24,
+    "topY": 0.84,
+    "botY": 0.26,
+    "loopY": 0.54,
+    "stretch": 1.1,
+    "teardrop": 0.2,
+    "blend": 0.05
+  },
+  "base": {
+    "type": "flat"
+  },
+  "expose": [
+    "body.baseR",
+    "body.height",
+    "body.mouthR",
+    "body.relief",
+    "body.reliefTop",
+    "handle.outerX",
+    "lid.ringR",
+    "lid.up",
+    "spout.length"
+  ]
+}

@@ -131,6 +131,59 @@ export const LIDS = {
     },
   },
 
+  // 艹 revolved — the lid for 茶字壶.
+  //
+  // The revolved profile of 艹 is a wide bar at r 0.48 with its two verticals at
+  // r 0.24 standing *both above and below* it. Revolved, that is not a disc with
+  // a knob stuck on: it is one ring passing straight through a disc. The part
+  // above is the knob, the part below is the 子口 that drops into the mouth, and
+  // they are the same ring. The character supplies the whole lid.
+  discRing: {
+    label: '艹盖',
+    params: {
+      overhang: { label: '盖沿', min: 0, max: 0.12, step: 0.002, default: 0.02 },
+      thickness: { label: '盖厚', min: 0.02, max: 0.1, step: 0.002, default: 0.05 },
+      ringR: { label: '环径', min: 0.1, max: 0.7, step: 0.005, default: 0.30 },
+      ringW: { label: '环厚', min: 0.02, max: 0.14, step: 0.002, default: 0.05 },
+      up: { label: '环高', min: 0.02, max: 0.4, step: 0.005, default: 0.15 },
+      down: { label: '子口', min: 0, max: 0.2, step: 0.005, default: 0.06 },
+      round: { label: '环圆', min: 0, max: 0.5, step: 0.02, default: 0.4 },
+      vent: { label: '气孔', min: 0, max: 0.03, step: 0.001, default: 0.012 },
+      seam: { label: '盖缝', min: 0.0, max: 0.02, step: 0.001, default: 0.005 },
+    },
+    top: (p) => p.thickness + p.up,
+    drop: (p) => () => 0,
+    build(p, mouthR, material, prof) {
+      const R = mouthR + p.overhang
+      const T = p.thickness
+      const v = Math.max(p.vent, 0.004)
+      const ro = p.ringR + p.ringW / 2
+      const ri = Math.max(v + 0.02, p.ringR - p.ringW / 2)
+      const rr = Math.min(p.round * p.ringW, p.up * 0.45)
+      const pts = []
+      const V = (r, y) => pts.push(new THREE.Vector2(r, y))
+      // underside of the disc, out to the rim
+      V(ri, -p.down)
+      V(ri, -0.002)
+      V(R * 0.6, -0.002)
+      V(R - 0.006, -0.004)
+      V(R, 0.006)
+      V(R, T - 0.008)
+      V(R - 0.012, T)
+      V(ro, T)
+      // the ring standing on it, rounded over the top
+      V(ro, T + p.up - rr)
+      const N = 7
+      for (let i = 1; i <= N; i++) {
+        const a = (i / N) * Math.PI
+        V(p.ringR + Math.cos(a) * p.ringW / 2, T + p.up - rr + Math.sin(a) * rr)
+      }
+      V(ri, T + p.up - rr)
+      V(ri, -p.down)                       // straight down: the same ring, below
+      return new THREE.Mesh(loftGeometry({ profile: pts, capBottom: false }), material)
+    },
+  },
+
   flush: {
     label: '截盖',
     // 西施 and its relatives take a lid cut from the body's own curve: closed,
