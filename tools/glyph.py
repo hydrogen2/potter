@@ -16,15 +16,87 @@ from scipy import ndimage
 CHAR = sys.argv[1] if len(sys.argv) > 1 else '茶'
 OUT = sys.argv[2] if len(sys.argv) > 2 else 'src/glyphs/cha.json'
 N = 1024
-FONT = sorted(glob.glob('/usr/share/fonts/opentype/noto/NotoSerifCJK-Regular.ttc'))[0]
+# Sans, not serif. 茶 is a symmetric character and a serif face fights that: its
+# 艹 carries a flared right end the left does not have, and 捺 is nothing like a
+# mirrored 撇. Measured against its own best mirror axis, the serif glyph is 22.8%
+# asymmetric and the sans one 5.2%.
+FONT = sorted(glob.glob('/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc'))[0]
+# The relief may use a different face from the contours. The contour wants the
+# plainest, most symmetric letterform; the bulges want calligraphic life, and
+# 捺 and 撇 are a *pair* rather than mirror images — flattening that costs them.
+RELIEF_FONT = sorted(glob.glob('/usr/share/fonts/opentype/noto/NotoSerifCJK-Regular.ttc'))[0]
 
-f = ImageFont.truetype(FONT, 820)
-im = Image.new('L', (N, N), 0)
-d = ImageDraw.Draw(im)
-bb = d.textbbox((0, 0), CHAR, font=f)
-d.text(((N - (bb[2] - bb[0])) / 2 - bb[0], (N - (bb[3] - bb[1])) / 2 - bb[1]),
-       CHAR, font=f, fill=255)
-mask = np.asarray(im) > 127
+def draw(path, size=820):
+    f = ImageFont.truetype(path, size)
+    im = Image.new('L', (N, N), 0)
+    d = ImageDraw.Draw(im)
+    bb = d.textbbox((0, 0), CHAR, font=f)
+    d.text(((N - (bb[2] - bb[0])) / 2 - bb[0], (N - (bb[3] - bb[1])) / 2 - bb[1]),
+           CHAR, font=f, fill=255)
+    return np.asarray(im) > 127
+
+mask = draw(FONT)
+
+def find_axis(m):
+    """The glyph's own vertical axis.
+
+    The axis is searched for rather than assumed to be the bounding box centre,
+    but constrained near it and required to compare a real half — an
+    unconstrained search happily returns an axis at the very edge, where only a
+    sliver overlaps and the mismatch is trivially near zero.
+    """
+    ys, xs = np.where(m)
+    x0, x1 = xs.min(), xs.max()
+    c = (x0 + x1) // 2
+    best = (1e9, c)
+    for ax in range(c - int(0.10 * (x1 - x0)), c + int(0.10 * (x1 - x0)) + 1):
+        L = min(ax - x0, x1 - ax)
+        if L < 0.40 * (x1 - x0):
+            continue
+        a = m[:, ax - L:ax]
+        b = m[:, ax + 1:ax + 1 + L][:, ::-1]
+        w = min(a.shape[1], b.shape[1])
+        mm = np.logical_xor(a[:, -w:], b[:, -w:]).sum() / max(m.sum(), 1)
+        if mm < best[0]:
+            best = (mm, ax)
+    mism, ax = best
+    print(f'  axis x={ax}; glyph is {mism*100:.1f}% asymmetric about it')
+    return ax
+
+def mirror_about(m, ax):
+    """Mirror the left half onto the right. Used for the *contours* only."""
+    ys, xs = np.where(m)
+    L = min(ax - xs.min(), xs.max() - ax)
+    half = m[:, ax - L:ax]
+    out = np.zeros_like(m)
+    out[:, ax - L:ax] = half
+    out[:, ax + 1:ax + 1 + half.shape[1]] = half[:, ::-1]
+    out[:, ax] = m[:, ax]
+    return out
+
+# The *contour* must be symmetric — it is the pot's silhouette, and 茶 is a
+# symmetric character. The *relief* need not be: 捺 and 撇 are a calligraphic
+# pair, not mirror images, and flattening that costs the strokes their life.
+# So the axis is measured, the outlines are built symmetric about it, and the
+# relief keeps the glyph exactly as drawn.
+AXIS = find_axis(mask)
+def align_to(src, ref):
+    """Warp one face's glyph onto another's box.
+
+    Two faces do not share metrics: the serif 茶 is wider than the sans one, so
+    dropped in as-is its 捺 runs off the roof and its 艹 sits away from the lid's
+    outline. Scale the relief glyph so its bounding box matches the contour
+    glyph's, and it lands where the contour says it should.
+    """
+    sy, sx = np.where(src); ry, rx = np.where(ref)
+    crop = Image.fromarray((src * 255).astype(np.uint8)).crop(
+        (sx.min(), sy.min(), sx.max() + 1, sy.max() + 1))
+    w, h = rx.max() - rx.min() + 1, ry.max() - ry.min() + 1
+    out = Image.new('L', (N, N), 0)
+    out.paste(crop.resize((w, h), Image.LANCZOS), (rx.min(), ry.min()))
+    return np.asarray(out) > 127
+
+relief_src = align_to(draw(RELIEF_FONT), mask)
 ys, xs = np.where(mask)
 em = ys.max() - ys.min()
 
@@ -48,12 +120,12 @@ order = sorted((np.where(lbl == i + 1)[0].min(), i + 1) for i in range(n))
 roof = lbl == order[1][1]                        # 艹 is order[0]; 𠆢 is next
 ry, rx = np.where(roof)
 apex_y = ry.min()
-apex_x = rx[ry == apex_y].mean()
+apex_x = float(AXIS)
 eaves_y = ry.max()                               # where the roof's arms end
 by = np.where(body)[0]
 base_y = by.max()
-half = (rx.max() - rx.min()) / 2                 # sides at the roof's own span,
-                                                 # so 撇 and 捺 both fall inside
+half = max(AXIS - rx.min(), rx.max() - AXIS)      # symmetric about the axis by
+                                                 # construction, not by luck
 cx0, cx1 = apex_x - half, apex_x + half
 
 MOUTH_W = 0.32 * em                              # a little wider than 艹's verticals
@@ -73,7 +145,7 @@ body_img = Image.new('L', (N, N), 0)
 ImageDraw.Draw(body_img).polygon(house, fill=255)
 body_d = np.asarray(body_img) > 127
 grow = 0
-lid_d = ndimage.binary_dilation(lid, iterations=int(0.02 * em))
+lid_d = ndimage.binary_dilation(mirror_about(lid, AXIS), iterations=int(0.02 * em))
 lid_d &= ~ndimage.binary_dilation(body_d, iterations=2)   # keep the seam open
 
 def outlines(m, simplify=2.0):
@@ -85,13 +157,32 @@ def outlines(m, simplify=2.0):
         pts = [(float(x), float(y)) for y, x in c]
         # Douglas-Peucker
         keep = _dp_closed(pts, simplify)
-        cx, cy = (xs.min() + xs.max()) / 2, (ys.min() + ys.max()) / 2
-        out.append([[(x - cx) / em, (cy - y) / em] for x, y in keep])
+        out.append([[(x - AXIS) / em, (CY - y) / em] for x, y in keep])
     out.sort(key=lambda p: -_area(p))
     # drop specks: marching squares finds a few 3-4 point contours around the
     # dilation's stair-steps, and they are not holes anyone meant
     biggest = _area(out[0]) if out else 0
     return [c for c in out if _area(c) > biggest * 0.01 and len(c) >= 6]
+
+
+def sym_poly(poly):
+    """Make a closed polygon exactly symmetric about x = 0.
+
+    Extracting a contour from an already-mirrored raster is not enough: the
+    simplifier chooses its keep-points independently on each side, so the two
+    halves end up a few pixels apart. Take the left chain and mirror it.
+    """
+    if not poly:
+        return poly
+    top = max(range(len(poly)), key=lambda i: (poly[i][1], -abs(poly[i][0])))
+    n = len(poly)
+    order = [poly[(top + i) % n] for i in range(n)]
+    bot = min(range(n), key=lambda i: (order[i][1], abs(order[i][0])))
+    a, b = order[:bot + 1], order[bot:] + [order[0]]
+    left = a if sum(p[0] for p in a) < sum(p[0] for p in b) else b
+    left = [[-abs(x), y] for x, y in left]
+    right = [[-x, y] for x, y in reversed(left)]
+    return left + right[1:-1]
 
 def _area(p):
     a = 0.0
@@ -132,14 +223,20 @@ def _dp(pts, eps):
     return [pts[i] for i in idx]
 
 # relief: the true strokes, softened, as a height field over the body's bbox
-relief = ndimage.gaussian_filter(mask.astype(float), sigma=em * 0.012)
+relief = ndimage.gaussian_filter(relief_src.astype(float), sigma=em * 0.012)
 relief = np.clip((relief - 0.35) / 0.5, 0, 1)
+# The relief window must be centred on the glyph's own axis, not on the image.
+# Exported over the whole 1024 frame it sits three pixels off centre, and the
+# relief then reads very slightly off-axis on a pot whose whole point is symmetry.
 R = 160
-bx0, bx1 = np.where(body_d)[1].min(), np.where(body_d)[1].max()
-by0, by1 = np.where(body_d)[0].min(), np.where(body_d)[0].max()
-grid = np.array(Image.fromarray((relief * 255).astype(np.uint8)).resize((R, R), Image.BILINEAR))
-
-cx, cy = (xs.min() + xs.max()) / 2, (ys.min() + ys.max()) / 2
+cx, cy = float(AXIS), (ys.min() + ys.max()) / 2
+halfw = max(AXIS - 0, N - AXIS)
+wx0, wx1 = int(cx - halfw), int(cx + halfw)
+pad = np.zeros((N, wx1 - wx0), float)
+src0, src1 = max(0, wx0), min(N, wx1)
+pad[:, src0 - wx0:src1 - wx0] = relief[:, src0:src1]
+grid = np.array(Image.fromarray((pad * 255).astype(np.uint8)).resize((R, R), Image.BILINEAR))
+CY = (ys.min() + ys.max()) / 2
 data = {
     'char': CHAR,
     'em': int(em),
@@ -147,11 +244,19 @@ data = {
     'mouthW': round(MOUTH_W / em, 4),
     'apexX': round((apex_x - (xs.min()+xs.max())/2) / em, 4),
     'seamY': round((cy - seam) / em, 4),
-    'body': outlines(body_d),
-    'lid': outlines(lid_d),
+    # the house is already an exact polygon; sending it through a raster and a
+    # contour tracer would only add discretisation error to a symmetric shape
+    'body': [[[round((x - AXIS) / em, 5), round((CY - y) / em, 5)] for x, y in house]],
+    # The lid raster is already exactly mirrored, so its contour is symmetric to
+    # within the tracer's own step. Splitting the polygon to force symmetry does
+    # not work here — 艹 has a wide flat top with no vertex on the axis, so there
+    # is no natural pair of half-chains — and simplifying hard breaks it, because
+    # the simplifier chooses its keep-points independently on each side. Trace it
+    # closely instead and let the residual be sub-pixel.
+    'lid': outlines(lid_d, simplify=0.6),
     'relief': {
         'size': R,
-        'x0': round((0 - cx) / em, 4), 'x1': round((N - cx) / em, 4),
+        'x0': round((wx0 - cx) / em, 4), 'x1': round((wx1 - cx) / em, 4),
         'y0': round((cy - N) / em, 4), 'y1': round((cy - 0) / em, 4),
         'data': base64.b64encode(grid.tobytes()).decode(),
     },
