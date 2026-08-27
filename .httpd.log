@@ -2113,3 +2113,210 @@ Traceback (most recent call last):
            ^^^^^^^^^^^^^^^^^^^^^^^
 ConnectionResetError: [Errno 104] Connection reset by peer
 ----------------------------------------
+87.68.238.101 - - [27/Aug/2026 08:42:19] code 501, message Unsupported method ('POST')
+87.68.238.101 - - [27/Aug/2026 08:42:19] "POST /GponForm/diag_Form?images/ HTTP/1.1" 501 -
+119.56.66.63 - - [27/Aug/2026 08:47:12] "GET / HTTP/1.1" 304 -
+119.56.66.63 - - [27/Aug/2026 08:47:12] "GET /assets/index-Diu4_gQ2.css HTTP/1.1" 304 -
+119.56.66.63 - - [27/Aug/2026 08:47:13] "GET /assets/index-a9R_4I7F.js HTTP/1.1" 304 -
+119.56.66.63 - - [27/Aug/2026 08:47:26] "GET / HTTP/1.1" 304 -
+119.56.66.63 - - [27/Aug/2026 08:47:38] "GET /refs/ HTTP/1.1" 200 -
+119.56.66.63 - - [27/Aug/2026 08:47:38] "GET /refs/chazihu.png HTTP/1.1" 200 -
+119.56.66.63 - - [27/Aug/2026 08:47:38] "GET /refs/cha_sym.png HTTP/1.1" 200 -
+119.56.66.63 - - [27/Aug/2026 08:47:38] "GET /refs/cha_plan.png HTTP/1.1" 200 -
+119.56.66.63 - - [27/Aug/2026 08:47:38] "GET /refs/shipiao_two.png HTTP/1.1" 200 -
+119.56.66.63 - - [27/Aug/2026 08:47:38] "GET /refs/cha_revolve.png HTTP/1.1" 200 -
+119.56.66.63 - - [27/Aug/2026 08:47:38] "GET /refs/ziye_cmp.png HTTP/1.1" 200 -
+119.56.66.63 - - [27/Aug/2026 08:47:39] "GET /refs/ziye_qc.png HTTP/1.1" 200 -
+119.56.66.63 - - [27/Aug/2026 08:47:39] "GET /refs/jubian_sheet.png HTTP/1.1" 200 -
+119.56.66.63 - - [27/Aug/2026 08:47:39] "GET /refs/liufang.png HTTP/1.1" 200 -
+119.56.66.63 - - [27/Aug/2026 08:47:39] "GET /refs/liufang_cmp.png HTTP/1.1" 200 -
+119.56.66.63 - - [27/Aug/2026 08:47:40] "GET /refs/liufang_qc.png HTTP/1.1" 200 -
+119.56.66.63 - - [27/Aug/2026 08:48:00] "GET /refs/refs_measured.png HTTP/1.1" 200 -
+119.56.66.63 - - [27/Aug/2026 08:48:00] "GET /refs/refs_all.png HTTP/1.1" 200 -
+119.56.66.63 - - [27/Aug/2026 08:48:00] "GET /refs/dq11.png HTTP/1.1" 200 -
+119.56.66.63 - - [27/Aug/2026 08:48:00] "GET /refs/dq_compare6.png HTTP/1.1" 200 -
+119.56.66.63 - - [27/Aug/2026 08:48:01] "GET /refs/part_compare.png HTTP/1.1" 200 -
+----------------------------------------
+Exception occurred during processing of request from ('119.56.66.63', 1976)
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/socketserver.py", line 692, in process_request_thread
+    self.finish_request(request, client_address)
+  File "/usr/lib/python3.12/http/server.py", line 1311, in finish_request
+    self.RequestHandlerClass(request, client_address, self,
+  File "/usr/lib/python3.12/http/server.py", line 672, in __init__
+    super().__init__(*args, **kwargs)
+  File "/usr/lib/python3.12/socketserver.py", line 761, in __init__
+    self.handle()
+  File "/usr/lib/python3.12/http/server.py", line 436, in handle
+    self.handle_one_request()
+  File "/usr/lib/python3.12/http/server.py", line 424, in handle_one_request
+    method()
+  File "/usr/lib/python3.12/http/server.py", line 679, in do_GET
+    self.copyfile(f, self.wfile)
+  File "/usr/lib/python3.12/http/server.py", line 878, in copyfile
+    shutil.copyfileobj(source, outputfile)
+  File "/usr/lib/python3.12/shutil.py", line 204, in copyfileobj
+    fdst_write(buf)
+  File "/usr/lib/python3.12/socketserver.py", line 840, in write
+    self._sock.sendall(b)
+BrokenPipeError: [Errno 32] Broken pipe
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('119.56.66.63', 3879)
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/socketserver.py", line 692, in process_request_thread
+    self.finish_request(request, client_address)
+  File "/usr/lib/python3.12/http/server.py", line 1311, in finish_request
+    self.RequestHandlerClass(request, client_address, self,
+  File "/usr/lib/python3.12/http/server.py", line 672, in __init__
+    super().__init__(*args, **kwargs)
+  File "/usr/lib/python3.12/socketserver.py", line 761, in __init__
+    self.handle()
+  File "/usr/lib/python3.12/http/server.py", line 436, in handle
+    self.handle_one_request()
+  File "/usr/lib/python3.12/http/server.py", line 424, in handle_one_request
+    method()
+  File "/usr/lib/python3.12/http/server.py", line 679, in do_GET
+    self.copyfile(f, self.wfile)
+  File "/usr/lib/python3.12/http/server.py", line 878, in copyfile
+    shutil.copyfileobj(source, outputfile)
+  File "/usr/lib/python3.12/shutil.py", line 204, in copyfileobj
+    fdst_write(buf)
+  File "/usr/lib/python3.12/socketserver.py", line 840, in write
+    self._sock.sendall(b)
+BrokenPipeError: [Errno 32] Broken pipe
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('119.56.66.63', 41320)
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/socketserver.py", line 692, in process_request_thread
+    self.finish_request(request, client_address)
+  File "/usr/lib/python3.12/http/server.py", line 1311, in finish_request
+    self.RequestHandlerClass(request, client_address, self,
+  File "/usr/lib/python3.12/http/server.py", line 672, in __init__
+    super().__init__(*args, **kwargs)
+  File "/usr/lib/python3.12/socketserver.py", line 761, in __init__
+    self.handle()
+  File "/usr/lib/python3.12/http/server.py", line 436, in handle
+    self.handle_one_request()
+  File "/usr/lib/python3.12/http/server.py", line 424, in handle_one_request
+    method()
+  File "/usr/lib/python3.12/http/server.py", line 679, in do_GET
+    self.copyfile(f, self.wfile)
+  File "/usr/lib/python3.12/http/server.py", line 878, in copyfile
+    shutil.copyfileobj(source, outputfile)
+  File "/usr/lib/python3.12/shutil.py", line 204, in copyfileobj
+    fdst_write(buf)
+  File "/usr/lib/python3.12/socketserver.py", line 840, in write
+    self._sock.sendall(b)
+BrokenPipeError: [Errno 32] Broken pipe
+----------------------------------------
+119.56.66.63 - - [27/Aug/2026 08:48:07] "GET /refs/jubian_sheet.png HTTP/1.1" 200 -
+119.56.66.63 - - [27/Aug/2026 08:48:07] "GET /refs/liufang_cmp.png HTTP/1.1" 200 -
+119.56.66.63 - - [27/Aug/2026 08:48:07] "GET /refs/refs_all.png HTTP/1.1" 200 -
+119.56.66.63 - - [27/Aug/2026 08:48:07] "GET /refs/dq11.png HTTP/1.1" 200 -
+119.56.66.63 - - [27/Aug/2026 08:48:07] "GET /refs/dq_compare6.png HTTP/1.1" 200 -
+119.56.66.63 - - [27/Aug/2026 08:48:07] "GET /refs/part_compare.png HTTP/1.1" 200 -
+119.56.66.63 - - [27/Aug/2026 08:48:08] "GET /refs/td_sweep.png HTTP/1.1" 200 -
+119.56.66.63 - - [27/Aug/2026 08:48:08] "GET /refs/qc_detail.png HTTP/1.1" 200 -
+119.56.66.63 - - [27/Aug/2026 08:48:08] "GET /refs/spout_zoom.png HTTP/1.1" 200 -
+119.56.66.63 - - [27/Aug/2026 08:48:08] "GET /refs/lip.png HTTP/1.1" 200 -
+119.56.66.63 - - [27/Aug/2026 08:48:08] "GET /refs/lid_sweep.png HTTP/1.1" 200 -
+119.56.66.63 - - [27/Aug/2026 08:48:08] "GET /refs/bead.png HTTP/1.1" 200 -
+119.56.66.63 - - [27/Aug/2026 08:48:09] "GET /refs/fillet.png HTTP/1.1" 200 -
+119.56.66.63 - - [27/Aug/2026 08:48:09] "GET /refs/knob.png HTTP/1.1" 200 -
+119.56.66.63 - - [27/Aug/2026 08:48:09] "GET /refs/neck_after.png HTTP/1.1" 200 -
+119.56.66.63 - - [27/Aug/2026 08:48:09] "GET /refs/qc_duoqiu2.png HTTP/1.1" 200 -
+119.56.66.63 - - [27/Aug/2026 08:48:09] "GET /refs/jingzhou.png HTTP/1.1" 200 -
+119.56.66.63 - - [27/Aug/2026 08:48:10] "GET /refs/xs_regress.png HTTP/1.1" 200 -
+119.56.66.63 - - [27/Aug/2026 08:48:10] "GET /refs/gp_regress.png HTTP/1.1" 200 -
+119.56.66.63 - - [27/Aug/2026 08:48:13] "GET /refs/ HTTP/1.1" 304 -
+119.56.66.63 - - [27/Aug/2026 08:48:26] "GET / HTTP/1.1" 304 -
+----------------------------------------
+Exception occurred during processing of request from ('119.56.66.63', 20528)
+----------------------------------------
+Exception occurred during processing of request from ('119.56.66.63', 21720)
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/socketserver.py", line 692, in process_request_thread
+    self.finish_request(request, client_address)
+  File "/usr/lib/python3.12/http/server.py", line 1311, in finish_request
+    self.RequestHandlerClass(request, client_address, self,
+  File "/usr/lib/python3.12/http/server.py", line 672, in __init__
+    super().__init__(*args, **kwargs)
+  File "/usr/lib/python3.12/socketserver.py", line 761, in __init__
+    self.handle()
+  File "/usr/lib/python3.12/http/server.py", line 436, in handle
+    self.handle_one_request()
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/http/server.py", line 404, in handle_one_request
+    self.raw_requestline = self.rfile.readline(65537)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/socket.py", line 707, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/socketserver.py", line 692, in process_request_thread
+    self.finish_request(request, client_address)
+ConnectionResetError: [Errno 104] Connection reset by peer
+  File "/usr/lib/python3.12/http/server.py", line 1311, in finish_request
+    self.RequestHandlerClass(request, client_address, self,
+  File "/usr/lib/python3.12/http/server.py", line 672, in __init__
+    super().__init__(*args, **kwargs)
+----------------------------------------
+  File "/usr/lib/python3.12/socketserver.py", line 761, in __init__
+    self.handle()
+  File "/usr/lib/python3.12/http/server.py", line 436, in handle
+    self.handle_one_request()
+  File "/usr/lib/python3.12/http/server.py", line 404, in handle_one_request
+    self.raw_requestline = self.rfile.readline(65537)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/socket.py", line 707, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+ConnectionResetError: [Errno 104] Connection reset by peer
+----------------------------------------
+45.198.224.26 - - [27/Aug/2026 08:49:31] code 404, message File not found
+45.198.224.26 - - [27/Aug/2026 08:49:31] "GET /login HTTP/1.1" 404 -
+----------------------------------------
+Exception occurred during processing of request from ('119.56.66.63', 27898)
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/socketserver.py", line 692, in process_request_thread
+    self.finish_request(request, client_address)
+  File "/usr/lib/python3.12/http/server.py", line 1311, in finish_request
+    self.RequestHandlerClass(request, client_address, self,
+  File "/usr/lib/python3.12/http/server.py", line 672, in __init__
+    super().__init__(*args, **kwargs)
+  File "/usr/lib/python3.12/socketserver.py", line 761, in __init__
+    self.handle()
+  File "/usr/lib/python3.12/http/server.py", line 436, in handle
+    self.handle_one_request()
+  File "/usr/lib/python3.12/http/server.py", line 404, in handle_one_request
+    self.raw_requestline = self.rfile.readline(65537)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/socket.py", line 707, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+ConnectionResetError: [Errno 104] Connection reset by peer
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('119.56.66.63', 9328)
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/socketserver.py", line 692, in process_request_thread
+    self.finish_request(request, client_address)
+  File "/usr/lib/python3.12/http/server.py", line 1311, in finish_request
+    self.RequestHandlerClass(request, client_address, self,
+  File "/usr/lib/python3.12/http/server.py", line 672, in __init__
+    super().__init__(*args, **kwargs)
+  File "/usr/lib/python3.12/socketserver.py", line 761, in __init__
+    self.handle()
+  File "/usr/lib/python3.12/http/server.py", line 436, in handle
+    self.handle_one_request()
+  File "/usr/lib/python3.12/http/server.py", line 404, in handle_one_request
+    self.raw_requestline = self.rfile.readline(65537)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/socket.py", line 707, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+ConnectionResetError: [Errno 104] Connection reset by peer
+----------------------------------------
+94.154.43.201 - - [27/Aug/2026 09:02:49] code 404, message File not found
+94.154.43.201 - - [27/Aug/2026 09:02:49] "GET /login HTTP/1.1" 404 -

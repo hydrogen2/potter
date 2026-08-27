@@ -290,6 +290,10 @@ branch_y = next((y for y in range(bar_y + 1, w_bot)
 slope = np.tan(np.radians(ROOF_DEG))
 dy = min(w_half * slope, w_bot - branch_y)
 dx = dy / max(slope, 1e-6)
+cao_bar = (bar_t + bar_b) // 2                 # 艹's crossbar, as a single line
+cao_half = bar_half
+cao_vx = vert_r
+cao_top, cao_bot = cy_.min(), cy_.max()
 li = Image.new('L', (N, N), 0)
 dr = ImageDraw.Draw(li)
 W = 2 * LINE
@@ -297,6 +301,18 @@ dr.line([(AXIS - bar_half, bar_y), (AXIS + bar_half, bar_y)], fill=255, width=W)
 dr.line([(AXIS, w_top), (AXIS, w_bot)], fill=255, width=W)                          # 丨
 dr.line([(AXIS, branch_y), (AXIS - dx, branch_y + dy)], fill=255, width=W)          # 撇
 dr.line([(AXIS, branch_y), (AXIS + dx, branch_y + dy)], fill=255, width=W)          # 捺
+# 艹 and 𠆢 as well. They cannot be drawn at the size the *silhouette* states them
+# — 𠆢 belongs where the cone has narrowed to r 0.33, so at that size its arms
+# wrap 214° and meet round the back, and 艹 belongs above the mouth, where there
+# is no body at all. Drawn at the size of the character as a whole, on the
+# cylinder, every stroke fits. So the pot says 茶 twice: once at full size in its
+# own outline, and once written on it, complete and legible from the front.
+dr.line([(AXIS - cao_half, cao_bar), (AXIS + cao_half, cao_bar)], fill=255, width=W)  # 艹 横
+for sgn in (-1, 1):                                                                   # 艹 两竖
+    dr.line([(AXIS + sgn * cao_vx, cao_top), (AXIS + sgn * cao_vx, cao_bot)],
+            fill=255, width=W)
+for sgn in (-1, 1):                                                                   # 𠆢 撇捺
+    dr.line([(apex_x, apex_y), (apex_x + sgn * half, eaves_y)], fill=255, width=W)
 # PIL's rasteriser rounds endpoints and widths per-side, so drawing both halves
 # leaves a few hundred pixels of mismatch. Mirror one half instead: exact.
 lines_m = mirror_about(np.asarray(li) > 127, AXIS)
