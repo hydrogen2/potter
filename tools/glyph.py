@@ -21,10 +21,10 @@ N = 1024
 # mirrored 撇. Measured against its own best mirror axis, the serif glyph is 22.8%
 # asymmetric and the sans one 5.2%.
 FONT = sorted(glob.glob('/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc'))[0]
-# The relief may use a different face from the contours. The contour wants the
-# plainest, most symmetric letterform; the bulges want calligraphic life, and
-# 捺 and 撇 are a *pair* rather than mirror images — flattening that costs them.
-RELIEF_FONT = sorted(glob.glob('/usr/share/fonts/opentype/noto/NotoSerifCJK-Regular.ttc'))[0]
+# The relief face. Sans, like the contour: the strokes are drawn as *lines* —
+# skeletons — and a serif face's flares and swells are exactly the information a
+# skeleton throws away, so all they add is an uneven line width.
+RELIEF_FONT = sorted(glob.glob('/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc'))[0]
 
 def draw(path, size=820):
     f = ImageFont.truetype(path, size)
@@ -231,10 +231,9 @@ def _dp(pts, eps):
 from skimage.morphology import skeletonize
 lbl_r, n_r = ndimage.label(relief_src)
 by_top = sorted((np.where(lbl_r == i + 1)[0].min(), i + 1) for i in range(n_r))
-mu = np.zeros_like(relief_src)
-for _, i in by_top[2:]:                       # skip 艹 and 𠆢
-    mu |= (lbl_r == i)
-skel = skeletonize(mu)
+# every stroke, 艹 and 𠆢 included: the silhouette echoes the roof, but the
+# character itself is drawn complete and in its own proportions
+skel = skeletonize(relief_src)
 LINE = max(1, int(round(0.013 * em)))         # the drawn line's half-width
 lines_m = ndimage.binary_dilation(skel, iterations=LINE)
 lines = ndimage.gaussian_filter(lines_m.astype(float), sigma=em * 0.006)

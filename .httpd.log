@@ -1931,3 +1931,56 @@ ConnectionResetError: [Errno 104] Connection reset by peer
 34.204.52.48 - - [27/Aug/2026 06:08:44] "GET / HTTP/1.1" 200 -
 167.71.208.164 - - [27/Aug/2026 06:23:51] code 501, message Unsupported method ('CONNECT')
 167.71.208.164 - - [27/Aug/2026 06:23:51] "CONNECT google.com:443 HTTP/1.1" 501 -
+119.56.66.63 - - [27/Aug/2026 06:37:49] "GET / HTTP/1.1" 200 -
+119.56.66.63 - - [27/Aug/2026 06:37:50] "GET /assets/index-BDGut2wP.js HTTP/1.1" 200 -
+119.56.66.63 - - [27/Aug/2026 06:37:50] "GET /assets/index-Diu4_gQ2.css HTTP/1.1" 200 -
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('119.56.66.63', 36665)
+Exception occurred during processing of request from ('119.56.66.63', 32977)
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/socketserver.py", line 692, in process_request_thread
+    self.finish_request(request, client_address)
+  File "/usr/lib/python3.12/http/server.py", line 1311, in finish_request
+    self.RequestHandlerClass(request, client_address, self,
+  File "/usr/lib/python3.12/http/server.py", line 672, in __init__
+    super().__init__(*args, **kwargs)
+  File "/usr/lib/python3.12/socketserver.py", line 761, in __init__
+    self.handle()
+  File "/usr/lib/python3.12/http/server.py", line 436, in handle
+    self.handle_one_request()
+  File "/usr/lib/python3.12/http/server.py", line 404, in handle_one_request
+    self.raw_requestline = self.rfile.readline(65537)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/socket.py", line 707, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+ConnectionResetError: [Errno 104] Connection reset by peer
+----------------------------------------
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/socketserver.py", line 692, in process_request_thread
+    self.finish_request(request, client_address)
+  File "/usr/lib/python3.12/http/server.py", line 1311, in finish_request
+    self.RequestHandlerClass(request, client_address, self,
+  File "/usr/lib/python3.12/http/server.py", line 672, in __init__
+    super().__init__(*args, **kwargs)
+  File "/usr/lib/python3.12/socketserver.py", line 761, in __init__
+    self.handle()
+  File "/usr/lib/python3.12/http/server.py", line 436, in handle
+    self.handle_one_request()
+  File "/usr/lib/python3.12/http/server.py", line 404, in handle_one_request
+    self.raw_requestline = self.rfile.readline(65537)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/socket.py", line 707, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+ConnectionResetError: [Errno 104] Connection reset by peer
+----------------------------------------
+185.247.137.240 - - [27/Aug/2026 06:41:11] "GET / HTTP/1.1" 200 -
+94.154.43.250 - - [27/Aug/2026 06:48:26] code 501, message Unsupported method ('CONNECT')
+94.154.43.250 - - [27/Aug/2026 06:48:26] "CONNECT ipinfo.io:443 HTTP/1.1" 501 -
+107.150.102.192 - - [27/Aug/2026 06:49:16] "GET / HTTP/1.1" 200 -
+107.150.102.192 - - [27/Aug/2026 06:49:16] code 404, message File not found
+107.150.102.192 - - [27/Aug/2026 06:49:16] "GET /favicon.ico HTTP/1.1" 404 -
+107.150.102.192 - - [27/Aug/2026 06:50:47] code 404, message File not found
+107.150.102.192 - - [27/Aug/2026 06:50:47] "GET /favicon.ico HTTP/1.1" 404 -

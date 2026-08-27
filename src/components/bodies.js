@@ -133,6 +133,8 @@ export const BODIES = {
       // wrapped over too wide an arc it smears out sideways and stops reading.
       faceSpan: { label: '字宽', min: 0, max: 200, step: 2, default: 0 },
       faceAt: { label: '字位', min: -180, max: 180, step: 5, default: 90 },
+      faceLo: { label: '字底', min: 0, max: 0.6, step: 0.01, default: 0.06 },
+      faceHi: { label: '字顶', min: 0.4, max: 1.0, step: 0.01, default: 0.93 },
       glyph: { label: '字', min: 0, max: 0, step: 1, default: 'cha' },
     },
     profile(p) {
@@ -206,18 +208,26 @@ export const BODIES = {
         return grid[j * L.size + i] / 255
       }
       const at = THREE.MathUtils.degToRad(p.faceAt)
-      // the drawn part lives on the cylinder, below the shoulder
-      const yLo = H * 0.05, yHi = eaves * 0.98
-      const rCyl = rFn((yLo + yHi) / 2)
+      // the whole character, drawn up the whole side — 艹 and 𠆢 included. The
+      // silhouette echoes the roof; the writing states it.
+      const yLo = H * p.faceLo, yHi = H * p.faceHi
       const aspect = (bb[1] - bb[0]) / Math.max(bb[3] - bb[2], 1e-6)
-      const span = p.faceSpan > 0
+      // The character's width is held constant in *arc length*, not in angle.
+      // Mapped to a fixed angle it shrinks wherever the pot narrows, so 艹 —
+      // which is the widest part of 茶 and sits at the top, where this pot is
+      // narrowest — came out a tenth the width it should be. Constant arc length
+      // keeps every stroke in proportion and simply wraps further round the
+      // shoulder, which is what writing on a tapered pot does.
+      const charW = (yHi - yLo) * aspect
+      const spanAt = (y) => (p.faceSpan > 0
         ? THREE.MathUtils.degToRad(p.faceSpan)
-        : ((yHi - yLo) * aspect) / Math.max(rCyl, 1e-6)
+        : charW / Math.max(rFn(y), 1e-6))
       const crossSection = grid
         ? (theta, _t, y) => {
             let d = theta - at
             while (d > Math.PI) d -= Math.PI * 2
             while (d < -Math.PI) d += Math.PI * 2
+            const span = spanAt(y)
             if (Math.abs(d) > span / 2 || y < yLo || y > yHi) return 1
             const gx = (d / span) * (bb[1] - bb[0]) + (bb[0] + bb[1]) / 2
             const gy = ((y - yLo) / (yHi - yLo)) * (bb[3] - bb[2]) + bb[2]
