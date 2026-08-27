@@ -18,10 +18,11 @@
     "height": 0.9,
     "soften": 0.03,
     "face": 0.045,
-    "faceSpan": 70,
+    "faceSpan": 88,
     "faceAt": 90,
-    "faceLo": 0.0,
-    "faceHi": 1.0
+    "faceLo": 0.025,
+    "faceHi": 1.0,
+    "neck": 0.21
   },
   "lid": {
     "type": "discSlab",
@@ -68,11 +69,11 @@
   },
   "expose": [
     "body.height",
+    "body.neck",
     "body.face",
+    "body.roofAt",
+    "body.roofW",
     "body.faceLo",
-    "body.faceHi",
-    "body.soften",
-    "lid.up",
     "spout.length",
     "handle.outerX"
   ]

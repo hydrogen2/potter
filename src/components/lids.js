@@ -297,19 +297,33 @@ export const LIDS = {
           const n = Math.max(1, Math.ceil(a.distanceTo(b) / 0.004))
           for (let j = 1; j <= n; j++) rows.push(a.clone().lerp(b, j / n))
         }
-        cross = (theta, _t, y) => {
-          let d = theta - gl.at
-          while (d > Math.PI) d -= Math.PI * 2
-          while (d < -Math.PI) d += Math.PI * 2
-          if (y < lo || y > hi || Math.abs(d) > span / 2) return 1
+        // 艹's crossbar goes right round the rim, the same way 一 goes round the
+        // body: the two horizontals are what tie the two written faces together.
+        const barY = lo + ((gl.caoBarY - bb[2]) / Math.max(bb[3] - bb[2], 1e-6)) * (hi - lo)
+        const bw = (hi - lo) * 0.08
+        const face = (d, y) => {
+          if (y < lo || y > hi || Math.abs(d) > span / 2) return 0
           const gx = (d / span) * (bb[1] - bb[0]) + (bb[0] + bb[1]) / 2
           const gy = ((y - lo) / (hi - lo)) * (bb[3] - bb[2]) + bb[2]
           const u = (gx - cao.x0) / (cao.x1 - cao.x0)
           const w = (cao.y1 - gy) / (cao.y1 - cao.y0)
-          if (u < 0 || u > 1 || w < 0 || w > 1) return 1
+          if (u < 0 || u > 1 || w < 0 || w > 1) return 0
           const i = Math.min(cao.size - 1, Math.floor(u * cao.size))
           const j = Math.min(cao.size - 1, Math.floor(w * cao.size))
-          return 1 + gl.face * (grid[j * cao.size + i] / 255)
+          return grid[j * cao.size + i] / 255
+        }
+        const wrap = (x) => {
+          let d = x
+          while (d > Math.PI) d -= Math.PI * 2
+          while (d < -Math.PI) d += Math.PI * 2
+          return d
+        }
+        cross = (theta, _t, y) => {
+          const a = Math.abs(y - barY)
+          const ring = a > bw ? 0 : 1 - (a / bw) * (a / bw)
+          const v = Math.max(ring, face(wrap(theta - gl.at), y),
+            face(wrap(theta - gl.at - Math.PI), y))
+          return v > 0 ? 1 + gl.face * v : 1
         }
       }
       let tint

@@ -134,6 +134,7 @@ export const BODIES = {
       faceSpan: { label: '字宽', min: 0, max: 200, step: 2, default: 0 },
       faceAt: { label: '字位', min: -180, max: 180, step: 5, default: 90 },
       faceLo: { label: '字底', min: 0, max: 0.6, step: 0.01, default: 0.06 },
+      neck: { label: '颈高', min: 0.05, max: 0.45, step: 0.005, default: 0.10 },
       roofAt: { label: '戗脊位', min: 20, max: 90, step: 1, default: 60 },
       roofW: { label: '戗脊宽', min: 0.006, max: 0.05, step: 0.002, default: 0.016 },
       faceHi: { label: '字顶', min: 0.4, max: 1.0, step: 0.01, default: 0.93 },
@@ -143,6 +144,14 @@ export const BODIES = {
       const G = GLYPHS[p.glyph ?? 'cha']
       const half = (G?.body?.[0] ?? []).filter((q) => q[0] >= 0)
         .map((q) => [q[0], q[1]]).sort((a, b) => a[1] - b[1])
+      // The neck is a free length — the character fixes the mouth's *radius*,
+      // not how far the wall stands above the roof — so it is a parameter, and
+      // it has to be set before the house is scaled to height or the pot would
+      // simply grow taller instead of the neck growing longer.
+      if (half.length >= 2 && p.neck != null) {
+        const top = half[half.length - 1], below = half[half.length - 2]
+        half[half.length - 1] = [top[0], below[1] + p.neck]
+      }
       const yMin = Math.min(...half.map((q) => q[1]))
       const raw = Math.max(...half.map((q) => q[1])) - yMin
       const k = p.height / (raw || 1)
@@ -202,6 +211,13 @@ export const BODIES = {
       const rFn = radiusFn(outer)
       const H = outer[outer.length - 1].y
       const eaves = key[1] ? key[1].y : H * 0.5
+      // 一 is carried right round as a ring, and a ring sitting *on* the eaves
+      // straddles the corner between cylinder and cone: half of it overhangs and
+      // it reads as a thin brim hung off the join rather than as a line drawn on
+      // the pot. Set it wholly onto the cylinder, clear of the corner by more
+      // than its own width.
+      const barInset = (p.roofW ?? 0.016) * 2.4
+      const barY = eaves - barInset
 
       // The three groups of 茶 are placed on the three parts of the pot the
       // character itself names, and the house polygon's own corners say where
@@ -240,7 +256,7 @@ export const BODIES = {
         const wbb = GS.wood?.bbox ?? [0, 0, 0, 1]
         const gBar = G.woodBarY ?? wbb[3]
         const lo0 = H * p.faceLo
-        const hi0 = lo0 + (eavesY - lo0) * ((wbb[3] - wbb[2]) / Math.max(gBar - wbb[2], 1e-6))
+        const hi0 = lo0 + (barY - lo0) * ((wbb[3] - wbb[2]) / Math.max(gBar - wbb[2], 1e-6))
         const parts = [
           ['wood', lo0, hi0, p.faceSpan > 0 ? p.faceSpan : 70],
         ]
@@ -270,14 +286,31 @@ export const BODIES = {
       const eavesY2 = key[1] ? key[1].y : H * 0.55
       const mouthY2 = key[2] ? key[2].y : H * 0.86
       const ridgeAt = THREE.MathUtils.degToRad(p.roofAt ?? 60)
-      // On the cone the two hips are true meridians — constant azimuth, straight
-      // down the slope. Over the neck they close to the axis so they meet: a
-      // roof's hips join at its apex, and the neck is where this one's would be.
-      const ridgeA = (y) => (y <= mouthY2
-        ? ridgeAt
-        : ridgeAt * (1 - Math.min(1, (y - mouthY2) / Math.max(H - mouthY2, 1e-6))))
+      // On the cone the hips are true meridians — constant azimuth, straight down
+      // the slope. Above the mouth they keep going *straight*, which fixes where
+      // they meet without anything to choose: a meridian carried on toward the
+      // axis arrives at the cone's own apex, the point the cone would reach if it
+      // were not cut off for the mouth. And the apex is where sin(roofAt)
+      // cancels out of the arithmetic, so the joint sits at the same height
+      // however far out the hips stand.
+      //
+      //   joinY - mouthY = r_mouth / (-dr/dy)      no roofAt in it
+      //
+      // Over the neck the radius no longer shrinks, so holding the *azimuth* would
+      // send them vertical and put a kink at the mouth. Holding the projected x on
+      // the straight line instead keeps them straight: a = asin(x / r).
+      const rM = key[2] ? key[2].x : rFn(mouthY2)
+      const dr = key[1] && key[2]
+        ? (key[2].x - key[1].x) / Math.max(key[2].y - key[1].y, 1e-6) : -1
+      const apexRise = rM / Math.max(-dr, 1e-6)
+      const joinY = mouthY2 + apexRise
+      const ridgeA = (y) => {
+        if (y <= mouthY2) return ridgeAt
+        const f = 1 - (y - mouthY2) / Math.max(apexRise, 1e-6)
+        return Math.asin(Math.max(0, Math.min(1, Math.sin(ridgeAt) * f)))
+      }
       const ridge = (d, y) => {
-        if (y < eavesY2) return 0
+        if (y < eavesY2 || y > joinY) return 0
         // constant *physical* width, so the ridge does not thin as the cone closes
         const aw = (p.roofW ?? 0.016) / Math.max(rFn(y), 1e-6)
         const a = Math.abs(Math.abs(d) - ridgeA(y))
@@ -285,12 +318,19 @@ export const BODIES = {
         const u = a / aw
         return 1 - u * u
       }
+
       // One relief function, read by both the geometry and the colour, so the
       // raised line and the coloured line cannot drift apart.
-      const relief = (theta, y) => {
-        let d = theta - at
+      const wrap = (x) => {
+        let d = x
         while (d > Math.PI) d -= Math.PI * 2
         while (d < -Math.PI) d += Math.PI * 2
+        return d
+      }
+      // The character is written on both sides, so every stroke is looked up at
+      // both faces and the stronger wins. That also gives the roof four hips
+      // rather than two, which is what a 攒尖顶 has.
+      const faceOne = (d, y) => {
         const rv = ridge(d, y)
         if (rv > 0) return rv
         for (const b of bands) {
@@ -302,6 +342,14 @@ export const BODIES = {
         }
         return 0
       }
+      // 一 is not carried round as a ring. A band at one height reads as a
+      // thrown cordon — a feature of the pot — and competes with the writing
+      // instead of joining it; 艹's crossbar still rings the lid, where it is
+      // the lid's own edge and cannot be mistaken for anything else.
+      const relief = (theta, y) => Math.max(
+        faceOne(wrap(theta - at), y),
+        faceOne(wrap(theta - at - Math.PI), y),
+      )
       const live = bands.length || p.face > 0
       const crossSection = live ? (theta, _t, y) => 1 + p.face * relief(theta, y) : undefined
       const LINE_TINT = [0.60, 0.47, 0.34]
@@ -323,7 +371,7 @@ export const BODIES = {
         glyphFace: live ? 1 : 0,
         // 艹 rides out to the lid on the profile: the body is what knows the
         // glyph, and the lid is what 艹 is.
-        glyph: GS ? { groups: GS, at, face: p.face } : undefined,
+        glyph: GS ? { groups: GS, at, face: p.face, caoBarY: G.caoBarY ?? 0 } : undefined,
         height: H,
         mouthR: outer[outer.length - 1].x,
         boreR: outer[outer.length - 1].x,

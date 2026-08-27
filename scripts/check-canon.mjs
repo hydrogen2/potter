@@ -38,26 +38,38 @@ const CANON = {
         asym != null && asym <= 0.06, `${((asym ?? 1) * 100).toFixed(1)}% about its best axis`])
       // The mouth is the character's own feature, not a chosen number: 艹's two
       // verticals revolve into the lid's ring, and that ring has to land in the
-      // mouth, so the mouth's radius IS their distance from the axis. Scale the
-      // glyph into world units the same way the body does — by the house's own
-      // height — rather than trusting a number copied into the spec.
-      const hy = (G?.body?.[0] ?? []).map((q) => q[1])
-      const houseH = Math.max(...hy) - Math.min(...hy)
-      const k = p.height / houseH
+      // mouth, so the mouth's radius IS their distance from the axis. Stated as a
+      // *ratio* against the pot's own widest point, so it holds whatever the pot
+      // is scaled to and whatever free lengths (the neck) it is given — an
+      // absolute figure derived from the house's height silently became wrong the
+      // moment the neck stopped being the glyph's own.
+      const hx = (G?.body?.[0] ?? []).map((q) => Math.abs(q[0]))
+      const houseHalf = Math.max(...hx, 1e-6)
       const top = prof.outer[prof.outer.length - 1]
-      const mouthR = top.x
-      const want = (G?.cao?.ringR ?? 0) * k
+      const maxR = Math.max(...prof.outer.map((v) => v.x))
+      const got = top.x / maxR
+      const want = (G?.cao?.ringR ?? 0) / houseHalf
       out.push(['mouth stands where 艹\'s verticals do',
-        G?.cao != null && Math.abs(mouthR - want) < 0.01,
-        `mouth r ${mouthR.toFixed(3)} vs 艹 verticals at ${want.toFixed(3)}`])
-      // the shoulder must run on the character's own roof slope
-      const H = prof.height
-      const sh = prof.outer.filter((v) => v.y > H * 0.58 && v.y < H * 0.82)
-      const deg = Math.abs(Math.atan2(sh[sh.length - 1].y - sh[0].y,
-        sh[0].x - sh[sh.length - 1].x) * 180 / Math.PI)
+        G?.cao != null && Math.abs(got - want) < 0.02,
+        `mouth/width ${got.toFixed(3)} vs 艹 verticals at ${want.toFixed(3)}`])
+      // The shoulder must run on the character's own roof slope. Measured on the
+      // run that is actually the cone — the samples where the radius is falling —
+      // and not on a fixed slice of the height, which stops being the cone as soon
+      // as the pot's proportions change.
+      const o = prof.outer
+      const slopes = []
+      for (let i = 1; i < o.length; i++) {
+        const dy = o[i].y - o[i - 1].y
+        if (dy <= 1e-9) continue
+        const g = (o[i].x - o[i - 1].x) / dy
+        if (g < -0.15) slopes.push(g)
+      }
+      slopes.sort((a, b) => a - b)
+      const med = slopes.length ? slopes[Math.floor(slopes.length / 2)] : -1
+      const deg = Math.atan(1 / Math.abs(med)) * 180 / Math.PI
       out.push(['shoulder runs on 𠆢\'s own slope',
-        G?.roofDeg != null && Math.abs(deg - G.roofDeg) < 6,
-        `${deg.toFixed(1)}° vs ${G?.roofDeg}° in the glyph`])
+        G?.roofDeg != null && Math.abs(deg - G.roofDeg) < 3,
+        `${deg.toFixed(1)}° vs ${G?.roofDeg}° in the glyph (${slopes.length} samples)`])
       return out
     },
     slots: {

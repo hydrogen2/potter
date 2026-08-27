@@ -399,6 +399,9 @@ data = {
     # where 一 sits inside 木, so the band can be solved to land it exactly on
     # the eaves rather than approximately near them
     'woodBarY': round(float(CY0 - bar_y) / em, 4),
+    # and where 艹's crossbar sits inside 艹, for the same reason: the two
+    # horizontals are carried right round the pot as rings
+    'caoBarY': round(float(CY0 - cao_bar) / em, 4),
     # A revolution is only available to a character that is symmetric about a
     # vertical axis — the whole method rests on it — so the measurement travels
     # with the glyph and the canon can refuse an unsuitable one.
