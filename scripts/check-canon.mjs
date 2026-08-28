@@ -49,9 +49,18 @@ const CANON = {
       const maxR = Math.max(...prof.outer.map((v) => v.x))
       const got = top.x / maxR
       const want = (G?.cao?.ringR ?? 0) / houseHalf
-      out.push(['mouth stands where 艹\'s verticals do',
-        G?.cao != null && Math.abs(got - want) < 0.02,
-        `mouth/width ${got.toFixed(3)} vs 艹 verticals at ${want.toFixed(3)}`])
+      // The character states the mouth — 艹's two verticals — and for a long time
+      // this rule asked for exactly that. A pot also has to be filled and
+      // emptied, and that is a real claim on the design, not a lapse. So the
+      // character's figure is the *floor* rather than the target: the mouth may
+      // be opened for use, never closed below what 艹 says, and never opened so
+      // far that the roof it is cut from stops existing. Both ends can fail,
+      // and a departure is reported rather than passed over in silence.
+      const open = got > want + 0.02
+      out.push([`mouth is at least 艹's verticals${open ? ', opened for use' : ''}`,
+        G?.cao != null && got >= want - 0.02 && got < 0.75,
+        `mouth/width ${got.toFixed(3)}, 艹 says ${want.toFixed(3)}`
+        + (open ? ` — opened by ${((got / want - 1) * 100).toFixed(0)}%` : '')])
       // The shoulder must run on the character's own roof slope. Measured on the
       // run that is actually the cone — the samples where the radius is falling —
       // and not on a fixed slice of the height, which stops being the cone as soon
@@ -70,10 +79,86 @@ const CANON = {
       out.push(['shoulder runs on 𠆢\'s own slope',
         G?.roofDeg != null && Math.abs(deg - G.roofDeg) < 3,
         `${deg.toFixed(1)}° vs ${G?.roofDeg}° in the glyph (${slopes.length} samples)`])
+      // The hips no longer have to be made to meet — the lid is the rest of the
+      // cone, and meridians on a cone arrive at the apex by themselves. What has
+      // to hold instead is that the lid really does carry the roof on: it must
+      // close most of the way to the apex, and the knob must stand where the
+      // hips arrive, so they run into the 宝顶 the way a 攒尖顶's hips do rather
+      // than stopping in mid-air. Both ends of this can fail from a bad spec.
+      // The handle attaches to the *body*, not to the neck the lid continues.
+      // Its centreline can clear the neck while the tube around it does not —
+      // which is what happened here: the root sat 0.013 below the neck with a
+      // 0.062 tube, so the strap ran a clear 0.05 into it and read as growing
+      // out of the lid. The clearance rule below could not see it, because the
+      // handle passes *beside* the lid at a larger radius and never intrudes on
+      // it. Measure the tube, not the line.
+      const hp2 = spec.handle ?? {}
+      if (hp2.type && hp2.type !== 'none' && hp2.topY != null) {
+        let wi2 = 0
+        for (let i = 0; i < o.length; i++) if (o[i].x > o[wi2].x) wi2 = i
+        const maxR2 = o[wi2].x
+        let eaves2 = 0
+        for (const v of o) if (v.x > maxR2 * 0.998) eaves2 = Math.max(eaves2, v.y)
+        let neckY = prof.height
+        for (let i = 0; i < o.length; i++) {
+          if (o[i].y > eaves2 && o[i].x <= top.x * 1.004) { neckY = o[i].y; break }
+        }
+        const rootY = prof.height * hp2.topY
+        const reach = rootY + (hp2.tube ?? 0.05)
+        out.push(['handle attaches below the neck', reach <= neckY,
+          `root ${rootY.toFixed(3)} + tube ${(hp2.tube ?? 0.05).toFixed(3)} = `
+          + `${reach.toFixed(3)} vs neck at ${neckY.toFixed(3)}`])
+      }
+      // The lid's side view has to *be* 艹. A revolved lid shows, from the side,
+      // its rim as a rectangle with the crossbar-ring as one horizontal across
+      // it and the two verticals where their azimuth projects. That is the
+      // character only if the rectangle carries 艹's own proportions — otherwise
+      // the strokes are right and the character is stretched. This is the rule
+      // that makes the revolution worth doing: without 艹 and 𠆢 standing in the
+      // silhouette, the pot is any pot with a character stuck on it.
+      const cao2 = G?.cao
+      const lp2 = spec.lid ?? {}
+      if (cao2 && lp2.thickness != null) {
+        const R2 = top.x + (lp2.overhang ?? 0)
+        const want2 = (cao2.up + cao2.barH + cao2.down) / (2 * cao2.barHalf)
+        const got2 = lp2.thickness / (2 * R2)
+        out.push(['the lid in side view is 艹, in proportion',
+          Math.abs(got2 - want2) < 0.02,
+          `height/width ${got2.toFixed(4)} vs 艹's own ${want2.toFixed(4)}`])
+      }
+      const lidP = spec.lid ?? {}
+      // Whichever way the roof is finished, it has to actually finish. With a
+      // neck the hips are bent to meet inside it, and the neck must be at least
+      // the apex rise or they are cut off at the rim — a coupling between two
+      // parameters set in different places, invisible in any render, since
+      // truncated hips look perfectly tidy from the front.
+      if (lidP.type !== 'coneCap') {
+        let wi = 0
+        for (let i = 0; i < o.length; i++) if (o[i].x > o[wi].x) wi = i
+        let mouthY = prof.height
+        for (let i = wi; i < o.length; i++) {
+          if (o[i].x <= top.x * 1.004) { mouthY = o[i].y; break }
+        }
+        const rise = top.x / Math.abs(med)
+        const neckLen = prof.height - mouthY
+        out.push(['the roof\'s hips meet inside the neck', rise <= neckLen,
+          `apex stands ${rise.toFixed(3)} above the mouth, neck is ${neckLen.toFixed(3)}`
+          + (rise <= neckLen ? ` — joins ${(rise / neckLen * 100).toFixed(0)}% up` : ' — CUT OFF')])
+      }
+      if (lidP.type === 'coneCap') {
+        const tip = lidP.tip ?? 0.16
+        const kR = lidP.knobR ?? 0.2
+        const rTip = top.x * tip
+        out.push(['the lid carries the roof on to its 宝顶',
+          tip <= 0.30 && kR >= rTip,
+          `cone closes ${((1 - tip) * 100).toFixed(0)}% of the way to the apex, `
+          + `knob r ${kR.toFixed(3)} vs hips arriving at ${rTip.toFixed(3)}`])
+      }
       return out
     },
     slots: {
-      lid: (t) => [t === 'discRing' || t === 'discSlab', 'lid carries 艹'],
+      lid: (t) => [t === 'discRing' || t === 'discSlab' || t === 'coneCap',
+        'lid carries 艹'],
       handle: (t) => [t === 'invertedEar', 'handle is an inverted ear'],
       base: (t) => [t === 'flat', 'flat base'],
     },

@@ -134,7 +134,10 @@ export const BODIES = {
       faceSpan: { label: '字宽', min: 0, max: 200, step: 2, default: 0 },
       faceAt: { label: '字位', min: -180, max: 180, step: 5, default: 90 },
       faceLo: { label: '字底', min: 0, max: 0.6, step: 0.01, default: 0.06 },
-      neck: { label: '颈高', min: 0.05, max: 0.45, step: 0.005, default: 0.10 },
+      neck: { label: '颈高', min: 0, max: 0.45, step: 0.005, default: 0.10 },
+      // 0 = the character's own figure: 艹's verticals' distance from the axis.
+      // Anything larger opens the mouth for use and departs from it knowingly.
+      mouth: { label: '口径', min: 0, max: 0.75, step: 0.005, default: 0 },
       roofAt: { label: '戗脊位', min: 20, max: 90, step: 1, default: 60 },
       roofW: { label: '戗脊宽', min: 0.006, max: 0.05, step: 0.002, default: 0.016 },
       faceHi: { label: '字顶', min: 0.4, max: 1.0, step: 0.01, default: 0.93 },
@@ -149,8 +152,46 @@ export const BODIES = {
       // it has to be set before the house is scaled to height or the pot would
       // simply grow taller instead of the neck growing longer.
       if (half.length >= 2 && p.neck != null) {
-        const top = half[half.length - 1], below = half[half.length - 2]
-        half[half.length - 1] = [top[0], below[1] + p.neck]
+        if (p.neck <= 1e-6) {
+          // No neck at all: the body simply stops on the cone, and the cut *is*
+          // the rim. Dropping the point rather than collapsing it to zero length
+          // matters — a repeated vertex gives the corner walk two coincident
+          // edges, and its bisector is then undefined.
+          half.pop()
+        } else {
+          const top = half[half.length - 1], below = half[half.length - 2]
+          half[half.length - 1] = [top[0], below[1] + p.neck]
+        }
+      }
+      // Opening the mouth. The character states it — 艹's two verticals stand at
+      // 0.420 of the half-width — and that is the default. A pot has to be filled
+      // and emptied, though, so the mouth may be opened past what the character
+      // says. The cone is cut off lower to do it, and the roof's *slope* is held
+      // exactly, since that slope is 𠆢 and is not negotiable.
+      if (half.length >= 4 && p.mouth > 0) {
+        const [R0] = half[half.length - 3]
+        const eavesQ = half[half.length - 3]
+        const mouthQ = half[half.length - 2]
+        const dr = mouthQ[0] - eavesQ[0]
+        const dy = mouthQ[1] - eavesQ[1]
+        const rNew = Math.min(p.mouth * R0, R0 * 0.92)
+        const yNew = eavesQ[1] + (rNew - eavesQ[0]) * (dy / (dr || -1))
+        // Runs *after* the neck, and that order is the whole point: the neck sets
+        // the house's top, and this holds it while the cone gives ground.
+        // Hold the house's total height, letting the neck take up what the cone
+        // gives back. Preserving the neck's *length* instead shortens the whole
+        // house, and since the house is then scaled to a fixed height the entire
+        // pot silently grows wider — so "widen the head" quietly rescaled the
+        // body too. Holding the top fixed changes nothing but the head: same
+        // cylinder, same cone, same slope, same width.
+        //
+        // It also keeps the roof safe for free. Cutting Δ lower raises the mouth
+        // by |dr/dy|·Δ, so apexRise = r/|dr/dy| grows by exactly Δ — and so does
+        // the neck. The margin between them is invariant, so the hips can never
+        // be cut off however far the head is opened.
+        const topY = half[half.length - 1][1]
+        half[half.length - 2] = [rNew, yNew]
+        half[half.length - 1] = [rNew, Math.max(topY, yNew + 0.01)]
       }
       const yMin = Math.min(...half.map((q) => q[1]))
       const raw = Math.max(...half.map((q) => q[1])) - yMin
@@ -216,7 +257,10 @@ export const BODIES = {
       // it reads as a thin brim hung off the join rather than as a line drawn on
       // the pot. Set it wholly onto the cylinder, clear of the corner by more
       // than its own width.
-      const barInset = (p.roofW ?? 0.016) * 2.4
+      // A fixed clearance, no longer tied to roofW. It was the 一 ring's own
+      // width that had to clear the corner; the ring is gone, and leaving the
+      // link in place meant thickening the hips silently dragged 木 down the pot.
+      const barInset = 0.04
       const barY = eaves - barInset
 
       // The three groups of 茶 are placed on the three parts of the pot the
@@ -226,7 +270,9 @@ export const BODIES = {
       // and then 𠆢 lands on the cylinder rather than on the slope it describes.
       const GS = G?.groups
       const bands = []
-      if (GS && p.face > 0) {
+      // Gated on the glyph alone, not on `face`. `face` is the raised line's
+      // depth, and at 绞泥 it is zero — the strokes are still drawn, in colour.
+      if (GS) {
         const decode = (o) => {
           const bin = atob(o.data)
           const a = new Uint8Array(bin.length)
@@ -286,26 +332,27 @@ export const BODIES = {
       const eavesY2 = key[1] ? key[1].y : H * 0.55
       const mouthY2 = key[2] ? key[2].y : H * 0.86
       const ridgeAt = THREE.MathUtils.degToRad(p.roofAt ?? 60)
-      // On the cone the hips are true meridians — constant azimuth, straight down
-      // the slope. Above the mouth they keep going *straight*, which fixes where
-      // they meet without anything to choose: a meridian carried on toward the
-      // axis arrives at the cone's own apex, the point the cone would reach if it
-      // were not cut off for the mouth. And the apex is where sin(roofAt)
-      // cancels out of the arithmetic, so the joint sits at the same height
-      // however far out the hips stand.
+      // One rule for the hips, stated once: they are straight lines in elevation.
+      // On the cone that is a meridian — constant azimuth — and if a lid carries
+      // the cone on, meridians reach the apex and meet there by themselves. Over
+      // a cylindrical neck the radius stops shrinking, so holding the azimuth
+      // would send them vertical and kink them at the mouth; holding their
+      // projected position on the same straight line keeps them straight, and
+      // brings them together at the cone's own apex:
       //
-      //   joinY - mouthY = r_mouth / (-dr/dy)      no roofAt in it
+      //   apexRise = r_mouth / |dr/dy|          sin(roofAt) cancels
+      //   a(y)     = asin(sin(roofAt) · (1 − (y − mouthY) / apexRise))
       //
-      // Over the neck the radius no longer shrinks, so holding the *azimuth* would
-      // send them vertical and put a kink at the mouth. Holding the projected x on
-      // the straight line instead keeps them straight: a = asin(x / r).
+      // With no neck the second branch never runs. With one, the neck must be at
+      // least apexRise or the hips are cut off at the rim before they meet.
       const rM = key[2] ? key[2].x : rFn(mouthY2)
-      const dr = key[1] && key[2]
-        ? (key[2].x - key[1].x) / Math.max(key[2].y - key[1].y, 1e-6) : -1
-      const apexRise = rM / Math.max(-dr, 1e-6)
-      const joinY = mouthY2 + apexRise
+      const drdy = key[1] && key[2] && Math.abs(key[2].y - key[1].y) > 1e-6
+        ? (key[2].x - key[1].x) / (key[2].y - key[1].y) : -1
+      const apexRise = rM / Math.max(-drdy, 1e-6)
+      const hasNeck = H - mouthY2 > 1e-4
+      const joinY = hasNeck ? Math.min(H, mouthY2 + apexRise) : H
       const ridgeA = (y) => {
-        if (y <= mouthY2) return ridgeAt
+        if (!hasNeck || y <= mouthY2) return ridgeAt
         const f = 1 - (y - mouthY2) / Math.max(apexRise, 1e-6)
         return Math.asin(Math.max(0, Math.min(1, Math.sin(ridgeAt) * f)))
       }
@@ -315,8 +362,15 @@ export const BODIES = {
         const aw = (p.roofW ?? 0.016) / Math.max(rFn(y), 1e-6)
         const a = Math.abs(Math.abs(d) - ridgeA(y))
         if (a > aw) return 0
+        // A plateau with a soft edge, not a crown. 1 - u² is full strength only
+        // at the very centre, so a hip carried the same width as a drawn stroke
+        // but far less ink and read thinner beside it. The glyph's strokes are a
+        // rasterised line blurred by sigma 0.006 em against a half-width of
+        // 0.013, so their edge is about 0.46 of the half-width: matched here.
         const u = a / aw
-        return 1 - u * u
+        if (u < 0.54) return 1
+        const e = (u - 0.54) / 0.46
+        return 1 - e * e
       }
 
       // One relief function, read by both the geometry and the colour, so the
@@ -350,8 +404,45 @@ export const BODIES = {
         faceOne(wrap(theta - at), y),
         faceOne(wrap(theta - at - Math.PI), y),
       )
-      const live = bands.length || p.face > 0
-      const crossSection = live ? (theta, _t, y) => 1 + p.face * relief(theta, y) : undefined
+      // Relief is applied as a radius multiplier, but what the eye reads is the
+      // displacement *perpendicular to the surface*. On the cone the outward
+      // normal is tilted away from radial by the roof's own angle, so the same
+      // radial bump stands only cos(36.4°) ≈ 0.59 as proud there as it does on
+      // the vertical neck — which is exactly why the hips looked crisp above the
+      // mouth and weak below it. Divide by the normal's radial component so that
+      // `face` sets the height off the surface, the same everywhere.
+      const ys = outer.map((v) => v.y)
+      const nrs = outer.map((_, i) => {
+        const a = outer[Math.max(0, i - 1)]
+        const b = outer[Math.min(outer.length - 1, i + 1)]
+        const h = Math.hypot(b.x - a.x, b.y - a.y) || 1
+        return Math.max(Math.abs(b.y - a.y) / h, 0.35)   // clamped: a flat run
+      })                                                  // would divide by zero
+      const nrAt = (y) => {
+        let lo = 0, hi = ys.length - 1
+        while (hi - lo > 1) {
+          const m2 = (lo + hi) >> 1
+          if (ys[m2] <= y) lo = m2; else hi = m2
+        }
+        return nrs[lo]
+      }
+      // `face` is a depth in world units, not a fraction of the radius. Two
+      // things were making the same line read differently in different places:
+      // the multiplier scales with r, so a line stands physically taller where
+      // the pot is fat, and the tilt above shrinks it where the surface leans.
+      // On this pot they nearly cancelled but not quite — 1.236 × 0.593 = 0.733,
+      // so the hips came out 27% shallower on the cone than on the neck. Dividing
+      // by both makes the height off the surface exactly `face` everywhere, which
+      // is what a line laid on in clay actually does.
+      // 绞泥: the lines are clay of another colour laid into the body, not clay
+      // standing off it. So the shape function drives the *colour* always, and
+      // the geometry only when `face` asks for a raised line as well. At face 0
+      // there is no displacement at all and the drawing is pure colour.
+      const live = bands.length > 0 || p.roofW > 0
+      const crossSection = live && p.face > 0
+        ? (theta, _t, y) => 1 + (p.face * relief(theta, y))
+            / (Math.max(rFn(y), 0.05) * nrAt(y))
+        : undefined
       const LINE_TINT = [0.60, 0.47, 0.34]
       const colorAt = live
         ? (theta, _t, y) => {
@@ -371,7 +462,14 @@ export const BODIES = {
         glyphFace: live ? 1 : 0,
         // 艹 rides out to the lid on the profile: the body is what knows the
         // glyph, and the lid is what 艹 is.
-        glyph: GS ? { groups: GS, at, face: p.face, caoBarY: G.caoBarY ?? 0 } : undefined,
+        glyph: GS ? { groups: GS, at, face: p.face, caoBarY: G.caoBarY ?? 0,
+          cao: G.cao } : undefined,
+        // so a lid can continue the roof rather than sit on top of it
+        cone: {
+          slope: key[1] && key[2]
+            ? Math.abs((key[2].x - key[1].x) / Math.max(key[2].y - key[1].y, 1e-6)) : 1,
+          at, roofAt: ridgeAt, roofW: p.roofW ?? 0.016, face: p.face,
+        },
         height: H,
         mouthR: outer[outer.length - 1].x,
         boreR: outer[outer.length - 1].x,

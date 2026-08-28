@@ -189,7 +189,8 @@ export const LIDS = {
       const cao = gl?.groups?.cao
       let cross
       let rows = pts
-      if (cao && gl.face > 0) {
+      // the glyph alone gates the drawing; the depths gate the displacement
+      if (cao) {
         const bin = atob(cao.data)
         const grid = new Uint8Array(bin.length)
         for (let i = 0; i < bin.length; i++) grid[i] = bin.charCodeAt(i)
@@ -252,6 +253,12 @@ export const LIDS = {
       thickness: { label: '盖高', min: 0.06, max: 0.34, step: 0.005, default: 0.20 },
       down: { label: '子口', min: 0, max: 0.2, step: 0.005, default: 0.06 },
       round: { label: '棱圆', min: 0, max: 0.06, step: 0.002, default: 0.014 },
+      ringRelief: { label: '弦纹', min: 0, max: 0.05, step: 0.002, default: 0.022 },
+      // 0 = the character's own stroke width, scaled with the lid. Any other
+      // value holds the line to that weight instead: a larger 艹 drawn at its own
+      // proportions carries proportionally fatter strokes, which is correct for
+      // the character but makes the lid's lines heavier than the body's.
+      strokeW: { label: '笔宽', min: 0, max: 0.05, step: 0.001, default: 0 },
       vent: { label: '气孔', min: 0, max: 0.03, step: 0.001, default: 0.012 },
       seam: { label: '盖缝', min: 0.0, max: 0.02, step: 0.001, default: 0.005 },
     },
@@ -278,29 +285,173 @@ export const LIDS = {
       // 艹 on the rim, and only on the rim: the band is [0, T], so no stroke
       // runs off onto the flat top or the underside, where a radial relief has
       // nothing to push against anyway.
+      // 艹 built from its own measurements rather than mapped from a raster, so
+      // that the lid *in side view* is the character and not an approximation of
+      // it. Seen from the side a revolved lid shows: its rim as a rectangle, the
+      // crossbar-ring as one horizontal line right across it, and the two
+      // verticals wherever their azimuth projects to. Make those projections
+      // land on 艹's own figures and the silhouette is 艹 exactly:
+      //
+      //   lid height / lid width = (up + barH + down) / 2·barHalf = 0.2954
+      //   verticals at azimuth     asin(ringR / barHalf) = 26.60°
+      //   bar centre at            (down + barH/2) / height = 0.5372 up the lid
+      //
+      // The stroke width falls out of the same scaling at 0.0185 against 木's
+      // 0.0182 — the character's own proportions give one line weight for free.
+      const gl = prof?.glyph
+      const C = gl?.cao
+      let cross
+      let shape
+      let rows = pts
+      if (C) {
+        const kLid = R / Math.max(C.barHalf, 1e-6)
+        const charH = (C.up + C.barH + C.down) * kLid
+        const barY = ((C.down + C.barH / 2) / (C.up + C.barH + C.down)) * T
+        const hw = p.strokeW > 0 ? p.strokeW : (C.barH / 2) * kLid
+        const vTheta = Math.asin(Math.min(1, C.ringR / Math.max(C.barHalf, 1e-6)))
+        const lo = 0, hi = T
+        const wrap = (x) => {
+          let d = x
+          while (d > Math.PI) d -= Math.PI * 2
+          while (d < -Math.PI) d += Math.PI * 2
+          return d
+        }
+        // the same plateau the hips use, so every line on the pot has one profile
+        const prof1 = (a, w) => {
+          if (a > w) return 0
+          const u = a / w
+          if (u < 0.54) return 1
+          const e = (u - 0.54) / 0.46
+          return 1 - e * e
+        }
+        shape = (theta, y) => {
+          if (y < lo || y > hi) return { ring: 0, chars: 0, all: 0 }
+          const ring = prof1(Math.abs(y - barY), hw)
+          const aw = hw / Math.max(R, 1e-6)
+          let chars = 0
+          for (const base of [gl.at, gl.at + Math.PI]) {
+            const d = Math.abs(wrap(theta - base))
+            chars = Math.max(chars, prof1(Math.abs(d - vTheta), aw))
+          }
+          return { ring, chars, all: Math.max(ring, chars) }
+        }
+        rows = [pts[0]]
+        for (let k = 1; k < pts.length; k++) {
+          const a = pts[k - 1], b = pts[k]
+          const n = Math.max(1, Math.ceil(a.distanceTo(b) / 0.004))
+          for (let q = 1; q <= n; q++) rows.push(a.clone().lerp(b, q / n))
+        }
+        // The ring and the strokes carry their own depths, and where they cross
+        // the displacement is whichever is greater — not the sum, or the
+        // crossbar would bulge where the verticals pass through it.
+        const ringD = p.ringRelief ?? 0
+        const charD = gl.face ?? 0
+        cross = (ringD > 0 || charD > 0)
+          ? (theta, _t, y) => {
+              const v = shape(theta, y)
+              const d = Math.max(v.ring * ringD, v.chars * charD)
+              return d > 0 ? 1 + d / Math.max(R, 0.05) : 1
+            }
+          : undefined
+        if (Math.abs(charH - T) > 0.002) {
+          // not fatal — the canon rule states it — but say so rather than let a
+          // stretched 艹 pass for the character
+          if (typeof console !== 'undefined' && console.debug) {
+            console.debug(`艹 lid: height ${T.toFixed(4)} vs exact ${charH.toFixed(4)}`)
+          }
+        }
+      }
+      let tint
+      if (shape) {
+        const T2 = [0.60, 0.47, 0.34]
+        tint = (theta, _t, y) => {
+          const a = shape(theta, y).all
+          if (a <= 0) return null
+          return [THREE.MathUtils.lerp(1, T2[0], a), THREE.MathUtils.lerp(1, T2[1], a),
+            THREE.MathUtils.lerp(1, T2[2], a)]
+        }
+      }
+      return new THREE.Mesh(loftGeometry({
+        profile: rows, capBottom: false,
+        crossSection: cross, colorAt: tint, radialSegments: shape ? 600 : 160,
+      }), tint ? Object.assign(material.clone(), { vertexColors: true }) : material)
+    },
+  },
+
+  coneCap: {
+    label: '截盖·艹钮',
+    // 截盖 in the strict sense: the lid is the rest of the cone. The body is cut
+    // off partway up the roof, and this carries the same slope on to the apex,
+    // so the silhouette runs unbroken from foot to tip and the roof's hips —
+    // meridians — arrive at the apex and meet there of their own accord. The 艹
+    // disc sits at the tip as the knob.
+    params: {
+      tip: { label: '收至', min: 0.04, max: 0.6, step: 0.01, default: 0.16 },
+      knobR: { label: '钮径', min: 0.06, max: 0.5, step: 0.005, default: 0.20 },
+      knobH: { label: '钮高', min: 0.04, max: 0.26, step: 0.005, default: 0.11 },
+      down: { label: '子口', min: 0, max: 0.2, step: 0.005, default: 0.05 },
+      round: { label: '棱圆', min: 0, max: 0.05, step: 0.002, default: 0.012 },
+      vent: { label: '气孔', min: 0, max: 0.03, step: 0.001, default: 0.012 },
+      seam: { label: '盖缝', min: 0.0, max: 0.02, step: 0.001, default: 0.005 },
+    },
+    top(p, prof) {
+      const m = prof?.cone?.slope ?? 1
+      const rise = ((prof?.mouthR ?? 0.3) * (1 - p.tip)) / Math.max(m, 1e-6)
+      return rise + p.knobH
+    },
+    drop: () => () => 0,
+    build(p, mouthR, material, prof) {
+      const cone = prof?.cone
+      const m = Math.max(cone?.slope ?? 1, 1e-6)
+      const rTip = mouthR * p.tip
+      const rise = (mouthR - rTip) / m          // the cone carried on, same slope
+      const kR = Math.max(p.knobR, rTip + 0.01)
+      const v = Math.max(p.vent, 0.004)
+      const ri = Math.max(v + 0.02, mouthR - 0.03)
+      const rr = Math.min(p.round, rise * 0.2)
+      const pts = []
+      const V = (r, y) => pts.push(new THREE.Vector2(r, y))
+      V(ri, -p.down)
+      V(ri, -0.002)
+      V(mouthR - 0.012, -0.002)
+      V(mouthR, 0.006)                          // the cut, seated on the mouth
+      V(rTip + rr * m, rise - rr)               // up the cone
+      V(rTip, rise)
+      V(kR - rr, rise)                          // the 艹 disc, sitting at the tip
+      V(kR, rise + rr)
+      V(kR, rise + p.knobH - rr)
+      V(kR - rr, rise + p.knobH)
+      V(Math.max(v, 0.01), rise + p.knobH)
+      V(Math.max(v, 0.01), -p.down)
+      let rows = pts
+
       const gl = prof?.glyph
       const cao = gl?.groups?.cao
       let cross
-      let rows = pts
-      if (cao && gl.face > 0) {
+      // the glyph alone gates the drawing; the depths gate the displacement
+      if (cao) {
         const bin = atob(cao.data)
         const grid = new Uint8Array(bin.length)
         for (let i = 0; i < bin.length; i++) grid[i] = bin.charCodeAt(i)
         const bb = cao.bbox
-        const lo = rr, hi = T - rr
+        const lo = rise + rr, hi = rise + p.knobH - rr
         const aspect = (bb[1] - bb[0]) / Math.max(bb[3] - bb[2], 1e-6)
         const span = Math.min(THREE.MathUtils.degToRad(110),
-          ((hi - lo) * aspect) / Math.max(R, 1e-6))
+          ((hi - lo) * aspect) / Math.max(kR, 1e-6))
+        const barY = lo + ((gl.caoBarY - bb[2]) / Math.max(bb[3] - bb[2], 1e-6)) * (hi - lo)
+        const bw = (hi - lo) * 0.08
         rows = [pts[0]]
         for (let i = 1; i < pts.length; i++) {
           const a = pts[i - 1], b = pts[i]
           const n = Math.max(1, Math.ceil(a.distanceTo(b) / 0.004))
           for (let j = 1; j <= n; j++) rows.push(a.clone().lerp(b, j / n))
         }
-        // 艹's crossbar goes right round the rim, the same way 一 goes round the
-        // body: the two horizontals are what tie the two written faces together.
-        const barY = lo + ((gl.caoBarY - bb[2]) / Math.max(bb[3] - bb[2], 1e-6)) * (hi - lo)
-        const bw = (hi - lo) * 0.08
+        const wrap = (x) => {
+          let d = x
+          while (d > Math.PI) d -= Math.PI * 2
+          while (d < -Math.PI) d += Math.PI * 2
+          return d
+        }
         const face = (d, y) => {
           if (y < lo || y > hi || Math.abs(d) > span / 2) return 0
           const gx = (d / span) * (bb[1] - bb[0]) + (bb[0] + bb[1]) / 2
@@ -312,25 +463,38 @@ export const LIDS = {
           const j = Math.min(cao.size - 1, Math.floor(w * cao.size))
           return grid[j * cao.size + i] / 255
         }
-        const wrap = (x) => {
-          let d = x
-          while (d > Math.PI) d -= Math.PI * 2
-          while (d < -Math.PI) d += Math.PI * 2
-          return d
+        // the hips, carried on across the seam at the same azimuth and the same
+        // physical width, so the roof's ridges do not stop at the cut
+        const hip = (theta, y, r) => {
+          if (y < 0 || y > rise || !cone) return 0
+          const aw = cone.roofW / Math.max(r, 1e-6)
+          let best = 0
+          for (const base of [cone.at, cone.at + Math.PI]) {
+            const a = Math.abs(Math.abs(wrap(theta - base)) - cone.roofAt)
+            if (a > aw) continue
+            const u = a / aw
+            best = Math.max(best, 1 - u * u)
+          }
+          return best
         }
         cross = (theta, _t, y) => {
+          const rHere = y <= rise ? mouthR - m * Math.max(y, 0) : kR
           const a = Math.abs(y - barY)
-          const ring = a > bw ? 0 : 1 - (a / bw) * (a / bw)
-          const v = Math.max(ring, face(wrap(theta - gl.at), y),
-            face(wrap(theta - gl.at - Math.PI), y))
-          return v > 0 ? 1 + gl.face * v : 1
+          const ring = (y >= lo && y <= hi && a <= bw) ? 1 - (a / bw) * (a / bw) : 0
+          const val = Math.max(ring, hip(theta, y, rHere),
+            face(wrap(theta - gl.at), y), face(wrap(theta - gl.at - Math.PI), y))
+          return val > 0 ? 1 + (gl.face * val) / Math.max(rHere, 0.05) : 1
         }
       }
       let tint
       if (cross) {
         const T2 = [0.60, 0.47, 0.34]
         tint = (theta, _t, y) => {
-          const a = (cross(theta, _t, y) - 1) / Math.max(gl.face, 1e-6)
+          // the same radius the crossSection used at this height — the cone is
+          // still narrowing here, so a single R would be wrong
+          const rHere = y <= rise ? mouthR - m * Math.max(y, 0) : kR
+          const a = Math.min(1, ((cross(theta, _t, y) - 1) * Math.max(rHere, 0.05))
+            / Math.max(gl.face, 1e-6))
           if (a <= 0) return null
           return [THREE.MathUtils.lerp(1, T2[0], a), THREE.MathUtils.lerp(1, T2[1], a),
             THREE.MathUtils.lerp(1, T2[2], a)]
