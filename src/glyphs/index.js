@@ -2,5 +2,6 @@
 // a vessel can be built from: the outlines of its pieces, a relief height field
 // of its strokes, and the profile it sweeps when revolved about its own axis.
 import cha from './cha.js'
+import hu from './hu.js'
 
-export const GLYPHS = { cha }
+export const GLYPHS = { cha, hu }

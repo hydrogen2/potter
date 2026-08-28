@@ -151,7 +151,13 @@ export const BODIES = {
       // not how far the wall stands above the roof — so it is a parameter, and
       // it has to be set before the house is scaled to height or the pot would
       // simply grow taller instead of the neck growing longer.
-      if (half.length >= 2 && p.neck != null) {
+      // Both of these edits — the neck's length and the mouth's width — assume
+      // the house ends in a cone cut off by a mouth wall, which is 茶's house and
+      // not every house. 壺 ends in a flat shoulder with a hole in it, and
+      // applying them there lifts the mouth into a neck the character never
+      // draws. Gated on the reading that has one.
+      const shaped = G?.roofDeg != null
+      if (shaped && half.length >= 2 && p.neck != null) {
         if (p.neck <= 1e-6) {
           // No neck at all: the body simply stops on the cone, and the cut *is*
           // the rim. Dropping the point rather than collapsing it to zero length
@@ -168,7 +174,7 @@ export const BODIES = {
       // and emptied, though, so the mouth may be opened past what the character
       // says. The cone is cut off lower to do it, and the roof's *slope* is held
       // exactly, since that slope is 𠆢 and is not negotiable.
-      if (half.length >= 4 && p.mouth > 0) {
+      if (shaped && half.length >= 4 && p.mouth > 0) {
         const [R0] = half[half.length - 3]
         const eavesQ = half[half.length - 3]
         const mouthQ = half[half.length - 2]
@@ -303,9 +309,17 @@ export const BODIES = {
         const gBar = G.woodBarY ?? wbb[3]
         const lo0 = H * p.faceLo
         const hi0 = lo0 + (barY - lo0) * ((wbb[3] - wbb[2]) / Math.max(gBar - wbb[2], 1e-6))
-        const parts = [
-          ['wood', lo0, hi0, p.faceSpan > 0 ? p.faceSpan : 70],
-        ]
+        // 壺 needs none of 茶's band arithmetic. 茶's 艹 and 𠆢 sit above the pot
+        // and on a cone that is not where the character puts them, so its groups
+        // have to be *placed*. 壺 is a pot drawn in elevation: 亞 already lies on
+        // the wall, at the height the character draws it, so it is mapped through
+        // the same k the house was scaled by and lands where it belongs.
+        const parts = G?.reading === 'hu'
+          ? (GS.ya
+              ? [['ya', (GS.ya.bbox[2] - yMin) * k, (GS.ya.bbox[3] - yMin) * k,
+                  p.faceSpan > 0 ? p.faceSpan : 88]]
+              : [])
+          : [['wood', lo0, hi0, p.faceSpan > 0 ? p.faceSpan : 70]]
         // Each group is held undistorted — its arc width is its own aspect times
         // its band's height — but capped, because a group placed where the pot
         // has narrowed would otherwise wrap past the front face and out of view.
@@ -356,8 +370,12 @@ export const BODIES = {
         const f = 1 - (y - mouthY2) / Math.max(apexRise, 1e-6)
         return Math.asin(Math.max(0, Math.min(1, Math.sin(ridgeAt) * f)))
       }
+      // Only a character with a roof gets hips. 壺 has no cone at all — its wall
+      // runs straight from foot to shoulder — so there is nothing for a ridge to
+      // run down, and drawing one would be an ornament rather than a reading.
+      const hasRoof = G?.roofDeg != null
       const ridge = (d, y) => {
-        if (y < eavesY2 || y > joinY) return 0
+        if (!hasRoof || y < eavesY2 || y > joinY) return 0
         // constant *physical* width, so the ridge does not thin as the cone closes
         const aw = (p.roofW ?? 0.016) / Math.max(rFn(y), 1e-6)
         const a = Math.abs(Math.abs(d) - ridgeA(y))
@@ -438,7 +456,7 @@ export const BODIES = {
       // standing off it. So the shape function drives the *colour* always, and
       // the geometry only when `face` asks for a raised line as well. At face 0
       // there is no displacement at all and the drawing is pure colour.
-      const live = bands.length > 0 || p.roofW > 0
+      const live = bands.length > 0 || (hasRoof && p.roofW > 0)
       const crossSection = live && p.face > 0
         ? (theta, _t, y) => 1 + (p.face * relief(theta, y))
             / (Math.max(rFn(y), 0.05) * nrAt(y))
@@ -463,7 +481,7 @@ export const BODIES = {
         // 艹 rides out to the lid on the profile: the body is what knows the
         // glyph, and the lid is what 艹 is.
         glyph: GS ? { groups: GS, at, face: p.face, caoBarY: G.caoBarY ?? 0,
-          cao: G.cao } : undefined,
+          cao: G.cao, shi: G.shi, reading: G.reading, k } : undefined,
         // so a lid can continue the roof rather than sit on top of it
         cone: {
           slope: key[1] && key[2]

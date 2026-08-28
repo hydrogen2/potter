@@ -1,0 +1,76 @@
+{
+  "id": "huzihu",
+  "label": "壺字壺",
+  "category": "design",
+  "categoryLabel": "自作 · own design",
+  "canon": "glyph",
+  "notes": "壺字壺：壺之为字，本即壺之象。茶字须为之造形——𠆢作坡肩，艹作盖口，木独刻之；壺字则不待造，其字自上而下已是一壺之立面：士为盖，冖为肩，末横为足，亞居腹中为纹。以行测之（自字顶下计，em为度）：竖〇至〇九为钮，长横〇九至一六为盖沿，竖一六至二五为盖颈，短横二五至三二为子口，三二至三九空无一笔——此即盖之缝，字本以离画写盖之启也；冖三九至五七为肩兼壁顶，亞五七至九三居轮廓之内，末横九三至一〇为足，最阔，故器不欲倾。所造者惟一线：冖之两端垂至末横之间，字未尝画，然二笔已各指其向，补之乃续其笔，非另立形也。口径即字之子口（〇四一），非我所定；盖亦非饰以士，盖即士也，四段依次而上，故盖之侧视即士，犹茶字壺之盖侧视即艹——皆取字之本尺，不以目定。字之对称一〇六厘，远胜茶之五二〇，故回旋之法于此尤宜。",
+  "material": "duanni",
+  "scaleCm": 11,
+  "wall": {
+    "base": 0.05,
+    "belly": 0.042,
+    "top": 0.038
+  },
+  "body": {
+    "type": "glyphRevolve",
+    "glyph": "hu",
+    "height": 0.62,
+    "soften": 0.02,
+    "face": 0.02,
+    "faceSpan": 88,
+    "faceAt": 90,
+    "faceLo": 0.02,
+    "faceHi": 1.0
+  },
+  "lid": {
+    "type": "shiLid",
+    "scale": 1,
+    "drop": 0.045,
+    "round": 0.008,
+    "vent": 0.012,
+    "seam": 0.005
+  },
+  "knob": {
+    "type": "none"
+  },
+  "spout": {
+    "type": "oneBend",
+    "attachY": 0.3,
+    "length": 0.52,
+    "rootAngle": 30,
+    "tipAngle": 6,
+    "bend": 1.0,
+    "lip": 0,
+    "rootR": 0.11,
+    "tipR": 0.048,
+    "wall": 0.014,
+    "flare": 1.7,
+    "bevel": 0.035,
+    "lipRoll": 0.06,
+    "blend": 0.055
+  },
+  "handle": {
+    "type": "invertedEar",
+    "tube": 0.055,
+    "taper": 1.1,
+    "outerX": 0.92,
+    "topY": 0.66,
+    "botY": 0.2,
+    "loopY": 0.42,
+    "stretch": 1.1,
+    "teardrop": 0.2,
+    "blend": 0.05
+  },
+  "base": {
+    "type": "flat"
+  },
+  "expose": [
+    "body.height",
+    "body.face",
+    "lid.scale",
+    "lid.drop",
+    "spout.length",
+    "handle.outerX"
+  ]
+}

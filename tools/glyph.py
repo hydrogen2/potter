@@ -105,6 +105,140 @@ ys, xs = np.where(mask)
 CY0 = (ys.min() + ys.max()) / 2
 em = ys.max() - ys.min()
 
+def encode(mask, size=200):
+    """A stroke mask as a base64 height field, softened, with the window centred
+    on the glyph's own axis and the strokes' own bounding box alongside it."""
+    soft = ndimage.gaussian_filter(mask.astype(float), sigma=em * 0.006)
+    soft = np.clip(soft / max(soft.max(), 1e-6), 0, 1)
+    yy, xx = np.where(mask)
+    hw = max(AXIS - 0, N - AXIS)
+    pad = np.zeros((N, 2 * hw), float)
+    s0, s1 = max(0, AXIS - hw), min(N, AXIS + hw)
+    pad[:, s0 - (AXIS - hw):s1 - (AXIS - hw)] = soft[:, s0:s1]
+    g = np.array(Image.fromarray((pad * 255).astype(np.uint8)).resize((size, size), Image.BILINEAR))
+    return {
+        'size': size,
+        'bbox': [round(float(xx.min() - AXIS) / em, 4), round(float(xx.max() - AXIS) / em, 4),
+                 round(float(CY0 - yy.max()) / em, 4), round(float(CY0 - yy.min()) / em, 4)],
+        'x0': round(float(-hw) / em, 4), 'x1': round(float(hw) / em, 4),
+        'y0': round(float(CY0 - N) / em, 4), 'y1': round(float(CY0) / em, 4),
+        'data': base64.b64encode(g.tobytes()).decode(),
+    }
+
+# ---- per-character readings ------------------------------------------------
+#
+# The pipeline up to here is shared: render, find the axis, measure the em. What
+# a character *means* as a vessel is not, and pretending otherwise is what made
+# this file a 茶 pipeline wearing a general name. 茶 is a house — a roof over a
+# trunk — and its silhouette had to be built, because the strokes' own envelope
+# is a spidery thing that reads as about to topple. 壺 needs none of that: it is
+# already a pot drawn in elevation, and its own rows say so.
+
+def read_hu():
+    """壺 — a lidded jar, read straight off the character.
+
+    Measured per row, outermost ink from the axis (y down from the glyph's top):
+
+        0.000-0.090  r 0.040   竖         the peg
+        0.092-0.160  r 0.490   长横       the brim      | 士: the whole lid
+        0.161-0.247  r 0.040   竖         the stem      |
+        0.249-0.316  r 0.410   短横       the 子口      |
+        0.317-0.389    ——                 the lid seam — no ink at all
+        0.391-0.568  r 0.480   冖         shoulder, and the wall's top
+        0.570-0.929  r <=0.370 亞         inside the outline: relief
+        0.930-1.000  r 0.510   一         the foot, widest in the character
+
+    So the character hands over the mouth's radius (its own 子口, 0.410), the
+    wall's top and bottom, and a lid drawn in full. What it does not draw is the
+    wall between 冖's turned-down ends and the foot bar — that stretch is empty —
+    so the one thing built here is the line joining them, which is completing two
+    strokes the character already started rather than inventing a shape.
+    """
+    rows = []
+    for y in range(ys.min(), ys.max() + 1):
+        x = np.where(mask[y])[0]
+        rows.append(0.0 if len(x) == 0 else
+                    max(abs(x.min() - AXIS), abs(x.max() - AXIS)) / em)
+    rows = np.array(rows)
+    runs, prev, start = [], None, 0
+    for i, r in enumerate(rows):
+        k = round(float(r), 2)
+        if prev is None:
+            prev, start = k, i
+        elif k != prev:
+            if i - start >= 3:
+                runs.append((start / em, (i - 1) / em, prev))
+            prev, start = k, i
+    if len(rows) - start >= 3:
+        runs.append((start / em, (len(rows) - 1) / em, prev))
+
+    def band(i):
+        return runs[i]
+
+    peg, brim, stem, kou, seam, shoulder = (band(i) for i in range(6))
+    foot = runs[-1]
+    wall_top = shoulder[1]                      # 冖's ends stop here
+    foot_top = foot[0]
+
+    def up(v):                                  # glyph row -> y, up, centred
+        return round(float(CY0 - ys.min()) / em - v, 5)
+
+    R_SH, R_FT = shoulder[2], foot[2]
+    R_MOUTH = kou[2]
+    # The shoulder's top is flat, so its outer and inner points share a y. A
+    # profile sorted by height then has no way to know which comes first, and
+    # picking the mouth first turns the top face inside out. A hair of rim — far
+    # below anything visible — orders them and costs nothing.
+    yTop, yRim = up(shoulder[0]), up(shoulder[0]) + 1e-4
+    house = [
+        (-R_FT, up(1.0)), (-R_FT, up(foot_top)),
+        (-R_SH, up(wall_top)), (-R_SH, yTop),
+        (-R_MOUTH, yRim),
+        (R_MOUTH, yRim),
+        (R_SH, yTop), (R_SH, up(wall_top)),
+        (R_FT, up(foot_top)), (R_FT, up(1.0)),
+    ]
+    # 亞: everything inside the outline, drawn as it stands
+    inner = mask.copy()
+    # a shade below 冖's ends, or the last rows of the shoulder leak into the
+    # relief and 亞 comes out as wide as the wall
+    inner[:ys.min() + int((shoulder[1] + 0.012) * em), :] = False
+    inner[ys.min() + int(foot[0] * em):, :] = False
+    lines_m = mirror_about(inner, AXIS)
+    return {
+        'char': CHAR, 'em': int(em), 'asym': round(float(ASYM[0]), 4),
+        'reading': 'hu',
+        'body': [[[round(x, 5), y] for x, y in house]],
+        'mouthW': round(2 * R_MOUTH, 4),
+        # 士, in full: every disc and stem the lid is made of
+        'shi': {
+            'pegR': round(peg[2], 4), 'pegH': round(peg[1] - peg[0], 4),
+            'brimR': round(brim[2], 4), 'brimH': round(brim[1] - brim[0], 4),
+            'stemR': round(stem[2], 4), 'stemH': round(stem[1] - stem[0], 4),
+            'kouR': round(kou[2], 4), 'kouH': round(kou[1] - kou[0], 4),
+            'seamH': round(seam[1] - seam[0], 4),
+        },
+        'wall': {'shoulderR': round(R_SH, 4), 'footR': round(R_FT, 4),
+                 'topY': up(shoulder[0]), 'wallTopY': up(wall_top),
+                 'footTopY': up(foot_top), 'baseY': up(1.0)},
+        'groups': {'ya': encode(lines_m)},
+        'bbox': [round(float(xs.min() - AXIS) / em, 4), round(float(xs.max() - AXIS) / em, 4),
+                 round(float(CY0 - ys.max()) / em, 4), round(float(CY0 - ys.min()) / em, 4)],
+    }
+
+if CHAR in ('壺', '壶'):
+    data = read_hu()
+    body = json.dumps(data, ensure_ascii=False,
+                      default=lambda o: o.item() if hasattr(o, 'item') else str(o))
+    open(OUT, 'w').write(
+        '// Generated by tools/glyph.py — do not edit by hand.\n'
+        f'export default {body}\n')
+    sh = data['shi']
+    print(f"{CHAR}: asym {data['asym']*100:.2f}%, mouth {data['mouthW']:.3f} em, "
+          f"士 peg r{sh['pegR']} brim r{sh['brimR']} 子口 r{sh['kouR']}, "
+          f"wall {data['wall']['footR']} -> {data['wall']['shoulderR']}")
+    sys.exit()
+
 # the lid is the topmost connected piece — 艹 for 茶
 lbl, n = ndimage.label(mask)
 top = sorted((np.where(lbl == i + 1)[0].min(), i + 1) for i in range(n))[0][1]
@@ -323,26 +457,6 @@ CAO_LINES = [((AXIS - cao_half, cao_bar), (AXIS + cao_half, cao_bar))] + \
       [((AXIS + sgn * cao_vx, cao_top), (AXIS + sgn * cao_vx, cao_bot)) for sgn in (-1, 1)]
 # PIL's rasteriser rounds endpoints and widths per-side, so drawing both halves
 # leaves a few hundred pixels of mismatch. Mirror one half instead: exact.
-
-def encode(mask, size=200):
-    """A stroke mask as a base64 height field, softened, with the window centred
-    on the glyph's own axis and the strokes' own bounding box alongside it."""
-    soft = ndimage.gaussian_filter(mask.astype(float), sigma=em * 0.006)
-    soft = np.clip(soft / max(soft.max(), 1e-6), 0, 1)
-    yy, xx = np.where(mask)
-    hw = max(AXIS - 0, N - AXIS)
-    pad = np.zeros((N, 2 * hw), float)
-    s0, s1 = max(0, AXIS - hw), min(N, AXIS + hw)
-    pad[:, s0 - (AXIS - hw):s1 - (AXIS - hw)] = soft[:, s0:s1]
-    g = np.array(Image.fromarray((pad * 255).astype(np.uint8)).resize((size, size), Image.BILINEAR))
-    return {
-        'size': size,
-        'bbox': [round(float(xx.min() - AXIS) / em, 4), round(float(xx.max() - AXIS) / em, 4),
-                 round(float(CY0 - yy.max()) / em, 4), round(float(CY0 - yy.min()) / em, 4)],
-        'x0': round(float(-hw) / em, 4), 'x1': round(float(hw) / em, 4),
-        'y0': round(float(CY0 - N) / em, 4), 'y1': round(float(CY0) / em, 4),
-        'data': base64.b64encode(g.tobytes()).decode(),
-    }
 
 lines_m = draw_group(WOOD + ROOF + CAO_LINES)
 mism_lines = np.logical_xor(lines_m[:, AXIS - 300:AXIS],

@@ -36,6 +36,37 @@ const CANON = {
       const asym = G?.asym
       out.push(['glyph is symmetric enough to revolve',
         asym != null && asym <= 0.06, `${((asym ?? 1) * 100).toFixed(1)}% about its best axis`])
+
+      // 壺 is read differently from 茶 and so is checked differently. 茶 had to be
+      // given a silhouette; 壺 already is one, so what has to hold is that the pot
+      // still says what the character says: the foot wider than the shoulder, the
+      // mouth at 壺's own 子口, and the lid 士 in its own proportions.
+      if (G?.reading === 'hu') {
+        const o1 = prof.outer
+        const maxR1 = Math.max(...o1.map((v) => v.x))
+        const footR = Math.max(...o1.filter((v) => v.y < prof.height * 0.1).map((v) => v.x))
+        const shoulderR = Math.max(...o1.filter((v) => v.y > prof.height * 0.85).map((v) => v.x))
+        const W = G.wall
+        out.push(['foot is wider than the shoulder, as 壺 draws it',
+          footR > shoulderR && W.footR > W.shoulderR,
+          `${footR.toFixed(3)} vs ${shoulderR.toFixed(3)} (character ${W.footR}/${W.shoulderR})`])
+        const gotM = prof.mouthR / maxR1
+        const wantM = (G.mouthW / 2) / Math.max(W.footR, W.shoulderR)
+        out.push(['mouth is 壺\'s own 子口',
+          Math.abs(gotM - wantM) < 0.03,
+          `mouth/width ${gotM.toFixed(3)} vs 子口 ${wantM.toFixed(3)}`])
+        const S = G.shi
+        const lp3 = spec.lid ?? {}
+        const lidT = (S.kouH + S.stemH + S.brimH + S.pegH)
+        out.push(['the lid in side view is 士, in proportion',
+          lp3.type === 'shiLid' && (lp3.scale ?? 1) > 0,
+          `子口 ${S.kouH} · stem ${S.stemH} · brim ${S.brimH} · peg ${S.pegH}`
+          + ` = ${lidT.toFixed(4)} em, at scale ${(lp3.scale ?? 1)}`])
+        out.push(['the brim stands proud of the shoulder, as 士 does over 冖',
+          S.brimR > W.shoulderR,
+          `brim ${S.brimR} vs shoulder ${W.shoulderR}`])
+        return out
+      }
       // The mouth is the character's own feature, not a chosen number: 艹's two
       // verticals revolve into the lid's ring, and that ring has to land in the
       // mouth, so the mouth's radius IS their distance from the axis. Stated as a
@@ -157,8 +188,10 @@ const CANON = {
       return out
     },
     slots: {
-      lid: (t) => [t === 'discRing' || t === 'discSlab' || t === 'coneCap',
-        'lid carries 艹'],
+      // the lid is built from the character, not decorated with it — 艹 for 茶,
+      // 士 for 壺 — so what is asserted is that it is one of those, not a shape
+      lid: (t) => [['discRing', 'discSlab', 'coneCap', 'shiLid'].includes(t),
+        'lid is built from the character'],
       handle: (t) => [t === 'invertedEar', 'handle is an inverted ear'],
       base: (t) => [t === 'flat', 'flat base'],
     },
