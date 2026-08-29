@@ -380,55 +380,71 @@ export const LIDS = {
 
   shiLid: {
     label: '士盖',
-    // 壺's 士 is not a decoration on the lid — it *is* the lid, drawn in full and
-    // in order: a 子口 disc that seats on the mouth, a thin stem, a wide brim,
-    // and a peg standing on top. Nothing here is invented but the spigot that
-    // locates it, so the lid's side view is 士 for the same reason 茶字壶's is
-    // 艹: because it was built from the character's own measurements.
+    // 壺's 士 is the lid, not a decoration on one. Its two 一 are set against
+    // each other rather than held apart by the 竖: as a character the stroke
+    // passes between them, but revolved, a 0.04-radius waist between two discs
+    // is a stem holding up a plate. Stacked, they are one stepped lid — the
+    // wider disc over the narrower — which is what 士 reads as anyway. The 竖
+    // above them becomes the knob.
     params: {
       scale: { label: '盖率', min: 0.5, max: 1.4, step: 0.01, default: 1 },
-      drop: { label: '子口', min: 0, max: 0.12, step: 0.005, default: 0.045 },
-      round: { label: '棱圆', min: 0, max: 0.03, step: 0.001, default: 0.008 },
+      knobR: { label: '钮径', min: 0.04, max: 0.30, step: 0.005, default: 0.11 },
+      drop: { label: '子口', min: 0, max: 0.12, step: 0.005, default: 0.04 },
+      round: { label: '棱圆', min: 0, max: 0.03, step: 0.001, default: 0.007 },
       vent: { label: '气孔', min: 0, max: 0.03, step: 0.001, default: 0.012 },
       seam: { label: '盖缝', min: 0.0, max: 0.02, step: 0.001, default: 0.005 },
     },
     top(p, prof) {
       const S = prof?.glyph?.shi
-      const k = (prof?.glyph?.k ?? 1) * p.scale
       if (!S) return 0.2
-      return (S.kouH + S.stemH + S.brimH + S.pegH) * k
+      const k0 = prof.glyph.k ?? 1
+      const k = ((prof.mouthR ?? S.kouR * k0) / Math.max(S.kouR * k0, 1e-6)) * k0 * p.scale
+      return (S.kouH + S.brimH + S.pegH) * k
+    },
+    // This lid is wider than the mouth it seats in — the brim overhangs the 子口
+    // — so a clearance check cannot assume mouthR + overhang and has to ask.
+    widest(p, prof) {
+      const S = prof?.glyph?.shi
+      if (!S) return prof?.mouthR ?? 0.3
+      const k0 = prof.glyph.k ?? 1
+      const k = ((prof.mouthR ?? S.kouR * k0) / Math.max(S.kouR * k0, 1e-6)) * k0 * p.scale
+      return S.brimR * k
     },
     drop: () => () => 0,
     build(p, mouthR, material, prof) {
       const S = prof?.glyph?.shi
       if (!S) return null
-      const k = (prof?.glyph?.k ?? 1) * p.scale
+      // The lid's size is not chosen: its 子口 has to fit the mouth, so the scale
+      // is read back off the pot. `scale` multiplies that, it does not replace it.
+      const k0 = prof?.glyph?.k ?? 1
+      const k = (mouthR / Math.max(S.kouR * k0, 1e-6)) * k0 * p.scale
       const rKou = S.kouR * k, hKou = S.kouH * k
-      const rStem = S.stemR * k, hStem = S.stemH * k
       const rBrim = S.brimR * k, hBrim = S.brimH * k
-      const rPeg = S.pegR * k, hPeg = S.pegH * k
+      // the 竖 as a knob: a small disc rather than the character's 0.04 peg,
+      // which revolved is a rod too thin to grip and too thin to fire
+      const rKnob = Math.max(p.knobR * k, 0.02), hKnob = S.pegH * k
       const v = Math.max(p.vent, 0.004)
       const rr = p.round
-      const spig = Math.max(v + 0.02, Math.min(rKou, mouthR) - 0.025)
+      const spig = Math.max(v + 0.02, Math.min(rKou, mouthR) - 0.022)
       const pts = []
       const V = (r, y) => pts.push(new THREE.Vector2(r, y))
       let y = 0
       V(spig, -p.drop)
       V(spig, -0.002)
-      V(rKou - rr, -0.002)                       // underside of the 子口 disc
+      V(rKou - rr, -0.002)
       V(rKou, rr)
       y = hKou
-      V(rKou, y - rr); V(rKou - rr, y)           // 子口 disc, top
-      V(rStem + rr, y); V(rStem, y + rr)         // in to the stem
-      y += hStem
-      V(rStem, y - rr); V(rStem + rr, y)         // out to the brim
-      V(rBrim - rr, y); V(rBrim, y + rr)
+      V(rKou, y - rr)                            // the 子口 disc's rim
+      V(rKou + rr, y)                            // out onto the brim's underside
+      V(rBrim - rr, y)
+      V(rBrim, y + rr)
       y += hBrim
-      V(rBrim, y - rr); V(rBrim - rr, y)         // brim, top
-      V(rPeg + rr, y); V(rPeg, y + rr)           // in to the peg
-      y += hPeg
-      V(rPeg, y - rr); V(Math.max(v, 0.008), y)  // the peg's flat top
-      V(Math.max(v, 0.008), -p.drop)             // back down the bore
+      V(rBrim, y - rr); V(rBrim - rr, y)         // the brim's top
+      V(rKnob + rr, y); V(rKnob, y + rr)         // in to the knob
+      y += hKnob
+      V(rKnob, y - rr); V(rKnob - rr, y)
+      V(Math.max(v, 0.008), y)
+      V(Math.max(v, 0.008), -p.drop)
       return new THREE.Mesh(loftGeometry({ profile: pts, capBottom: false }), material)
     },
   },

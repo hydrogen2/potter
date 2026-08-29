@@ -47,24 +47,76 @@ const CANON = {
         const footR = Math.max(...o1.filter((v) => v.y < prof.height * 0.1).map((v) => v.x))
         const shoulderR = Math.max(...o1.filter((v) => v.y > prof.height * 0.85).map((v) => v.x))
         const W = G.wall
-        out.push(['foot is wider than the shoulder, as 壺 draws it',
-          footR > shoulderR && W.footR > W.shoulderR,
-          `${footR.toFixed(3)} vs ${shoulderR.toFixed(3)} (character ${W.footR}/${W.shoulderR})`])
+        // 壺 draws the foot wider than 冖, and that is what keeps the character
+        // from reading top-heavy. A pot may narrow it anyway — but then the
+        // reason the rule existed has to be met some other way, so the foot must
+        // still stand outside the lid's brim. A base narrower than the lid it
+        // carries looks like it is about to go over, whatever the arithmetic
+        // says. The departure is reported rather than passed over.
+        const S1 = G.shi
+        const k1 = prof.glyph?.k ?? 1
+        const brim1 = S1.brimR * ((prof.mouthR / Math.max(S1.kouR * k1, 1e-6)) * k1)
+        const narrowed = footR < shoulderR - 0.004
+        out.push([narrowed
+          ? 'foot narrowed below 冖 — still outside the lid'
+          : 'foot is wider than the shoulder, as 壺 draws it',
+          narrowed ? footR > brim1 : footR > shoulderR,
+          `foot ${footR.toFixed(3)} · 冖 ${shoulderR.toFixed(3)} · lid ${brim1.toFixed(3)}`
+          + (narrowed ? `  — 壺 says foot > 冖 (${W.footR}/${W.shoulderR})` : '')])
+        // 工. 冖 and the foot bar are both wider than 亞, so the waist's width is
+        // the character's own and not a choice — the pot flanges top and bottom
+        // and draws in between. Reading the wall as one line from 冖 to the foot,
+        // which is what the first attempt did, throws that away and leaves a
+        // cylinder; the rule exists so it cannot quietly come back.
+        const waistR = Math.min(...o1.filter((v) =>
+          v.y > prof.height * 0.25 && v.y < prof.height * 0.70).map((v) => v.x))
+        // One radius runs down through the pot: the lid's lowest disc is its 子口,
+        // the 子口 fits the mouth, and the waist is set to the mouth. Three
+        // things that could each drift on their own, tied together and checked.
+        const S0 = G.shi
+        const k00 = prof.glyph?.k ?? 1
+        const kL0 = (prof.mouthR / Math.max(S0.kouR * k00, 1e-6)) * k00
+        const waistM = Math.min(...o1.filter((v) =>
+          v.y > prof.height * 0.30 && v.y < prof.height * 0.65).map((v) => v.x))
+        out.push(['waist, mouth and the lid\'s 子口 are one radius',
+          Math.abs(waistM - prof.mouthR) < 0.006
+          && Math.abs(prof.mouthR - S0.kouR * kL0) < 1e-6,
+          `waist ${waistM.toFixed(4)} · mouth ${prof.mouthR.toFixed(4)} · `
+          + `子口 ${(S0.kouR * kL0).toFixed(4)}`])
+        out.push(['body is 工 — waist inside both flanges',
+          waistR < shoulderR && waistR < footR && W.waistR < W.shoulderR,
+          `waist ${waistR.toFixed(3)} vs 冖 ${shoulderR.toFixed(3)} and foot `
+          + `${footR.toFixed(3)} (character waist ${W.waistR})`])
+        // 壺 draws its 子口 at 0.804 of the half-width, nearly as wide as the
+        // foot. Faithful, and a jar — and because the lid is pinned to the mouth
+        // it comes out half the body's height. So the character's figure is the
+        // *ceiling* here, the mirror of 茶's, where it was the floor: the mouth
+        // may be closed toward a pot, never opened past what 壺 draws, and never
+        // closed so far that the lid stops being a lid. The departure is printed.
         const gotM = prof.mouthR / maxR1
         const wantM = (G.mouthW / 2) / Math.max(W.footR, W.shoulderR)
-        out.push(['mouth is 壺\'s own 子口',
-          Math.abs(gotM - wantM) < 0.03,
-          `mouth/width ${gotM.toFixed(3)} vs 子口 ${wantM.toFixed(3)}`])
+        const closed = gotM < wantM - 0.02
+        out.push([`mouth is at most 壺's 子口${closed ? ', closed for use' : ''}`,
+          gotM <= wantM + 0.02 && gotM > 0.30,
+          `mouth/width ${gotM.toFixed(3)}, 子口 says ${wantM.toFixed(3)}`
+          + (closed ? ` — closed by ${((1 - gotM / wantM) * 100).toFixed(0)}%` : '')])
         const S = G.shi
         const lp3 = spec.lid ?? {}
-        const lidT = (S.kouH + S.stemH + S.brimH + S.pegH)
         out.push(['the lid in side view is 士, in proportion',
           lp3.type === 'shiLid' && (lp3.scale ?? 1) > 0,
-          `子口 ${S.kouH} · stem ${S.stemH} · brim ${S.brimH} · peg ${S.pegH}`
-          + ` = ${lidT.toFixed(4)} em, at scale ${(lp3.scale ?? 1)}`])
-        out.push(['the brim stands proud of the shoulder, as 士 does over 冖',
-          S.brimR > W.shoulderR,
-          `brim ${S.brimR} vs shoulder ${W.shoulderR}`])
+          `子口 ${S.kouH} · brim ${S.brimH} · knob ${S.pegH}`
+          + ` = ${(S.kouH + S.brimH + S.pegH).toFixed(4)} em, at scale ${(lp3.scale ?? 1)}`])
+        // A pot rule rather than a character one, and it can fail: the lid is
+        // scaled off the mouth, so closing the mouth shrinks it and opening the
+        // mouth grows it — far enough and the brim reaches past the body.
+        const k0 = prof.glyph?.k ?? 1
+        const kLid = (prof.mouthR / Math.max(S.kouR * k0, 1e-6)) * k0
+        const brim = S.brimR * kLid
+        // 冖 is the widest thing at the top of the pot and stays so: the lid is
+        // scaled off the mouth, so opening the mouth grows the brim past it.
+        out.push(['the lid does not overhang 冖',
+          brim <= shoulderR,
+          `brim ${brim.toFixed(3)} vs 冖 ${shoulderR.toFixed(3)}`])
         return out
       }
       // The mouth is the character's own feature, not a chosen number: 艹's two
@@ -192,7 +244,15 @@ const CANON = {
       // 士 for 壺 — so what is asserted is that it is one of those, not a shape
       lid: (t) => [['discRing', 'discSlab', 'coneCap', 'shiLid'].includes(t),
         'lid is built from the character'],
-      handle: (t) => [t === 'invertedEar', 'handle is an inverted ear'],
+      // An ear or a squared ear. A round ear needs vertical room a wide, low
+      // pot does not have — on 壺字壺 it hangs below the foot at every setting
+      // that clears the lid — and a squared one suits a body of square steps.
+      // An ear, a squared ear, or a 提梁. A round ear needs vertical room a
+      // wide, low pot does not have — on 壺字壺 it hangs below the foot at every
+      // setting that clears the lid — and a pot with no room beside it has all
+      // the room in the world above it.
+      handle: (t) => [['invertedEar', 'squareEar', 'overhead'].includes(t),
+        'handle is an ear or a 提梁'],
       base: (t) => [t === 'flat', 'flat base'],
     },
   },
@@ -335,7 +395,12 @@ function clearsLid(spec, prof) {
   if (lid.p.type === 'none' || att.p.type === 'none') return null
   const bottom = prof.height + (lid.p.seam ?? 0.005)
   const top = bottom + lid.def.top(lid.p, prof)
-  const lidR = prof.mouthR + (lid.p.overhang ?? 0)
+  // Ask the lid how wide it is. Most sit within mouthR + overhang, but 士盖's
+  // brim overhangs its own 子口, so assuming that understates it by a third and
+  // the check passes a handle that runs straight through the lid.
+  const lidR = lid.def.widest
+    ? lid.def.widest(lid.p, prof)
+    : prof.mouthR + (lid.p.overhang ?? 0)
   // the handle is the one attachment built in body coordinates — the spout and
   // knob are positioned afterwards by buildVessel, so their raw vertices say nothing
   const mesh = att.def.build(att.p, prof, new THREE.MeshBasicMaterial())

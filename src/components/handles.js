@@ -56,7 +56,10 @@ export const HANDLES = {
       topY: { label: '上接', min: 0.4, max: 1.0, step: 0.01, default: 0.78 },
       botY: { label: '下接', min: 0.05, max: 0.6, step: 0.01, default: 0.24 },
       lift: { label: '起翘', min: 0, max: 0.25, step: 0.005, default: 0.06 },
-      outerX: { label: '外缘', min: 0.8, max: 2.0, step: 0.01, default: 1.30 },
+      // Down to 0.5: a wide, low pot has very little room between the table and
+      // the lid, and an ear sized for a tall one cannot fit in it — it hangs
+      // below the foot, so the pot rests on its handle.
+      outerX: { label: '外缘', min: 0.5, max: 2.0, step: 0.01, default: 1.30 },
       corner: { label: '转角', min: 0.01, max: 0.30, step: 0.005, default: 0.10 },
       lean: { label: '收分', min: 0, max: 0.3, step: 0.005, default: 0.06 },
       foot: { label: '下弯', min: 0.02, max: 0.4, step: 0.005, default: 0.16 },
@@ -106,6 +109,81 @@ export const HANDLES = {
     },
   },
 
+  overhead: {
+    label: '提梁',
+    // Springs from the *top face* of the shoulder, near its outer edge, and
+    // stands straight up before turning over. Arches in the spout's own plane.
+    //
+    // Rising from the top face rather than up the outer wall is not a look, it
+    // is what makes the joint buildable: a leg running along a vertical wall is
+    // near-tangent to the body, the fillet's crossing search has nothing clean
+    // to find, and its blend wandered from y 0.64 to 1.04 with no relation to
+    // its own size. Entering a horizontal face head-on is the case the fillet is
+    // built for. It also puts the joint below the lid instead of beside it.
+    params: {
+      tube: { label: '梁粗', min: 0.014, max: 0.07, step: 0.002, default: 0.028 },
+      strap: { label: '宽厚比', min: 1, max: 3, step: 0.05, default: 1.6 },
+      crisp: { label: '梁棱', min: 3, max: 40, step: 1, default: 12 },
+      attachR: { label: '接径', min: 0.7, max: 1.0, step: 0.01, default: 0.95 },
+      rise: { label: '梁高', min: 0.2, max: 1.2, step: 0.01, default: 0.62 },
+      legTop: { label: '腿直', min: 0.2, max: 0.85, step: 0.01, default: 0.62 },
+      // attachR near 1 puts the legs on the shoulder's outer edge, which they
+      // need: the shoulder is barely wider than the lid's brim, so a leg further
+      // in has its inner face inside the lid.
+      blend: { label: '润接', min: 0, max: 0.12, step: 0.005, default: 0.03 },
+    },
+    build(p, prof, material) {
+      const H = prof.height
+      const embed = Math.min(0.035, p.tube * 1.1)
+      // the shoulder's own radius, read just under the top face
+      const R = prof.radiusAt(H - Math.max(embed * 1.5, 0.02))
+      const rRoot = R * p.attachR
+      const yA = H - embed
+      const apexY = H + p.rise
+      const yLeg = yA + (apexY - yA) * p.legTop
+      // Straight leg, then a quarter ellipse over to the axis. The ellipse's
+      // tangent at its base is vertical, so it meets a vertical leg tangentially
+      // and the curvature never changes sign. Handing a spline the corner
+      // instead — leg points then an arch point — makes it bulge the wrong way
+      // for the last few samples before the turn: a real S, 8 samples long at
+      // |s| 0.016, which is exactly the kick-out the reversal rule exists to
+      // catch. The rule was right; the path was wrong.
+      const rLeg = rRoot
+      const half = [[-rRoot, yA], [-rLeg, yA + (yLeg - yA) * 0.55], [-rLeg, yLeg]]
+      const AR = 7
+      for (let i = 1; i <= AR; i++) {
+        const t = (i / AR) * (Math.PI / 2)
+        half.push([-rLeg * Math.cos(t), yLeg + (apexY - yLeg) * Math.sin(t)])
+      }
+      // the far half is the near half mirrored; the apex is shared, not repeated
+      const pts = [
+        ...half.map(([x, y]) => new THREE.Vector3(x, y, 0)),
+        ...half.slice(0, -1).reverse().map(([x, y]) => new THREE.Vector3(-x, y, 0)),
+      ]
+      const curve = new THREE.CatmullRomCurve3(pts, false, 'centripetal')
+      let section = null
+      if ((p.strap ?? 1) > 1.001) {
+        const rect = rectSection(p.strap, p.crisp)
+        const phase = strapPhase(curve)
+        section = (v) => rect(v + phase)
+      }
+      const bar = new THREE.Mesh(
+        sweptTube(curve, () => p.tube, 190, section ? 128 : 24, null, 0, 0, section), material,
+      )
+      bar.userData.centreline = curve.getPoints(200)
+      if (!p.blend) return bar
+      const group = new THREE.Group()
+      group.userData.centreline = bar.userData.centreline
+      group.add(bar)
+      for (const fromStart of [true, false]) {
+        group.add(new THREE.Mesh(
+          filletBlend(curve, () => p.tube, prof, p.blend, fromStart), material,
+        ))
+      }
+      return group
+    },
+  },
+
   invertedEar: {
     label: '耳把',
     // A clay strap rolled into a round ear, built on a true circular arc so no
@@ -120,7 +198,7 @@ export const HANDLES = {
       // means and it is 西施's signature. Above 1 it is the ordinary ear that
       // 掇球 and most other 环把 have: thick at the shoulder, tapering down.
       taper: { label: '上梢', min: 0.35, max: 1.8, step: 0.02, default: 0.6 },
-      outerX: { label: '外缘', min: 0.8, max: 2.0, step: 0.01, default: 1.30 },
+      outerX: { label: '外缘', min: 0.5, max: 2.0, step: 0.01, default: 1.30 },
       topY: { label: '上接', min: 0.45, max: 1.0, step: 0.01, default: 0.78 },
       botY: { label: '下接', min: 0.08, max: 0.6, step: 0.01, default: 0.30 },
       loopY: { label: '环心高', min: 0.2, max: 0.9, step: 0.01, default: 0.52 },

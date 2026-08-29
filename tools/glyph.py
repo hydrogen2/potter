@@ -26,6 +26,16 @@ FONT = sorted(glob.glob('/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc'
 # skeleton throws away, so all they add is an uneven line width.
 RELIEF_FONT = sorted(glob.glob('/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc'))[0]
 
+def draw_char(ch, path, size=820):
+    f = ImageFont.truetype(path, size)
+    im = Image.new('L', (N, N), 0)
+    d = ImageDraw.Draw(im)
+    bb = d.textbbox((0, 0), ch, font=f)
+    d.text(((N - (bb[2] - bb[0])) / 2 - bb[0], (N - (bb[3] - bb[1])) / 2 - bb[1]),
+           ch, font=f, fill=255)
+    return np.asarray(im) > 127
+
+
 def draw(path, size=820):
     f = ImageFont.truetype(path, size)
     im = Image.new('L', (N, N), 0)
@@ -108,9 +118,16 @@ em = ys.max() - ys.min()
 def encode(mask, size=200):
     """A stroke mask as a base64 height field, softened, with the window centred
     on the glyph's own axis and the strokes' own bounding box alongside it."""
-    soft = ndimage.gaussian_filter(mask.astype(float), sigma=em * 0.006)
+    # A boolean figure is a figure at one height. A float one carries relief
+    # *and* colour strength per pixel, since both are read from the same value —
+    # so bark drawn at a lower value comes out shallower and lighter, which is
+    # what bark is.
+    m = mask.astype(float)
+    if m.max() > 1.0:
+        m = m / 255.0
+    soft = ndimage.gaussian_filter(m, sigma=em * 0.006)
     soft = np.clip(soft / max(soft.max(), 1e-6), 0, 1)
-    yy, xx = np.where(mask)
+    yy, xx = np.where(m > 0.15)
     hw = max(AXIS - 0, N - AXIS)
     pad = np.zeros((N, 2 * hw), float)
     s0, s1 = max(0, AXIS - hw), min(N, AXIS + hw)
@@ -183,34 +200,161 @@ def read_hu():
     def up(v):                                  # glyph row -> y, up, centred
         return round(float(CY0 - ys.min()) / em - v, 5)
 
+    # 冖's bar is the full-width run at the top of its band; everything below it
+    # in that band is the two ends turning down, which belong to the wall and not
+    # to the flange. Reading the whole band as the flange makes it two and a half
+    # times as deep as every other slab in the character.
+    top_i = ys.min() + int(shoulder[0] * em)
+    span = 2 * shoulder[2] * em
+    bar_bot = shoulder[1]
+    for yy in range(top_i, ys.min() + int(shoulder[1] * em)):
+        if mask[yy].sum() < 0.55 * span:
+            bar_bot = (yy - ys.min()) / em
+            break
+
+    # 工. The wall between 冖's ends and the foot bar is not empty after all —
+    # 亞 is in it, and 亞 is narrower than either bar. So the middle's width is
+    # given by the character rather than invented: the pot flanges out top and
+    # bottom and draws in at the waist, which is what 工 is.
+    lo_i = int((shoulder[1] + 0.004) * em)
+    hi_i = int((foot_top - 0.004) * em)
+    R_YA = float(rows[lo_i:hi_i].max())
     R_SH, R_FT = shoulder[2], foot[2]
     R_MOUTH = kou[2]
-    # The shoulder's top is flat, so its outer and inner points share a y. A
-    # profile sorted by height then has no way to know which comes first, and
-    # picking the mouth first turns the top face inside out. A hair of rim — far
-    # below anything visible — orders them and costs nothing.
-    yTop, yRim = up(shoulder[0]), up(shoulder[0]) + 1e-4
+    # 工 has three horizontal steps, and each is two points at the same height.
+    # A profile sorted by height cannot order a tie, and getting one backwards
+    # sends the wall in before it goes out — the silhouette zigzags. Half a
+    # thousandth of an em separates them: invisible, and it fixes the order.
+    E = 5e-4
+    yFoot, yBar, yTop = up(foot_top), up(bar_bot), up(shoulder[0])
     house = [
-        (-R_FT, up(1.0)), (-R_FT, up(foot_top)),
-        (-R_SH, up(wall_top)), (-R_SH, yTop),
-        (-R_MOUTH, yRim),
-        (R_MOUTH, yRim),
-        (R_SH, yTop), (R_SH, up(wall_top)),
-        (R_FT, up(foot_top)), (R_FT, up(1.0)),
+        (-R_FT, up(1.0)), (-R_FT, yFoot),
+        (-R_YA, yFoot + E), (-R_YA, yBar),
+        (-R_SH, yBar + E), (-R_SH, yTop),
+        (-R_MOUTH, yTop + E),
+        (R_MOUTH, yTop + E),
+        (R_SH, yTop), (R_SH, yBar + E),
+        (R_YA, yBar), (R_YA, yFoot + E),
+        (R_FT, yFoot), (R_FT, up(1.0)),
     ]
-    # 亞: everything inside the outline, drawn as it stands
+    # 冖's two ends run down the *same rows* as 亞's top verticals, so cutting by
+    # row to be rid of them takes the top of the cross with it — which is what
+    # happened. Cut them by radius instead: they stand at 0.48 and every stroke
+    # of 亞 is inside 0.375, so a line between the two keeps the cross whole and
+    # drops the ends. The bar of 冖 itself is a full-width run, so the slice
+    # starts where that run stops rather than at a guessed offset.
     inner = mask.copy()
-    # a shade below 冖's ends, or the last rows of the shoulder leak into the
-    # relief and 亞 comes out as wide as the wall
-    inner[:ys.min() + int((shoulder[1] + 0.012) * em), :] = False
-    inner[ys.min() + int(foot[0] * em):, :] = False
+    inner[:ys.min() + int(bar_bot * em), :] = False
+    inner[ys.min() + int(foot_top * em):, :] = False
+    cols = np.abs(np.arange(N) - AXIS) / em
+    # just outside 亞's own reach, not halfway to 冖 — halfway cuts *through*
+    # the ends and leaves a sliver of each standing at the edge of the pattern
+    inner[:, cols > R_YA + 0.012] = False
     lines_m = mirror_about(inner, AXIS)
+
+    # 业 as two trees, drawn the way a child draws one: a thick trunk, one bough
+    # off it, a couple of leaves. Not mirrored, and not laid out on a grid — the
+    # trunks lean differently, the boughs leave at different heights and angles,
+    # the leaves are not a matched pair. Every earlier attempt was exact
+    # geometry, and exact geometry is what made it read as a lattice rather than
+    # as a drawing. The 一 underneath is gone: the pot's own foot is that stroke.
+    by0, by1 = -0.429, 0.0396              # 亞's own extent, so they interchange
+    # thick. Thin trunks with a stub and a dot read as bare saplings, not trees
+    TRUNK = max(1, int(round(0.112 * em)))
+    BOUGH = max(1, int(round(0.030 * em)))
+    BARKW = max(1, int(round(0.013 * em)))
+    BARK = 132                              # drawn under the trunk's own 255
+
+    def em2px(x, y):
+        return (AXIS + x * em, CY0 - y * em)
+
+    def stroke(d, pts, w, v=255):
+        d.line([em2px(*q) for q in pts], fill=v, width=w, joint='curve')
+
+    def blossom(d, x, y, rp, spread, tilt, v=255):
+        """梅花 — five petals round a centre. A rosette holds together at this
+        size where a blade does not: it is compact, and its notches read as
+        shape even when the whole flower is only a tenth of an em across. The
+        petals are set to overlap, so the flower is one piece with a scalloped
+        edge rather than five dots that the blur would weld into a disc anyway.
+        """
+        for k in range(5):
+            a = tilt + k * 2 * np.pi / 5
+            cx, cy = x + spread * np.cos(a), y + spread * np.sin(a)
+            d.ellipse([em2px(cx - rp, cy + rp), em2px(cx + rp, cy - rp)], fill=v)
+        # the eye of it, lighter, the way bark is lighter than trunk
+        e = rp * 0.42
+        d.ellipse([em2px(x - e, y + e), em2px(x + e, y - e)], fill=150)
+
+    tree = Image.new('L', (N, N), 0)
+    td = ImageDraw.Draw(tree)
+
+    # The bough leaves *low* and the trunk carries on bare above it. Branching
+    # near the top puts trunk, bough and leaves in one place and they merge into
+    # a single knob — which is what the last pass drew: two mushrooms. A tree is
+    # legible because there is clear trunk above the branch.
+    #
+    # left tree: near-straight, a small lean, standing to the ceiling
+    stroke(td, [(-0.178, by0 + 0.004), (-0.184, -0.16), (-0.192, by1 - 0.004)], TRUNK)
+    stroke(td, [(-0.186, -0.244), (-0.300, -0.170), (-0.372, -0.116)], BOUGH)
+    # Leaves stand clear of the bough. Touching it, they are read as its blunt
+    # end and vanish — everything on this motif is small enough that whatever
+    # touches merges into one mass. A gap is what makes them leaves.
+    # 梅花 set off the bough, alternately above and below it, and out toward the
+    # tip. Threaded along its centreline they only thicken the twig into a
+    # knobbly stick — the flower has to break the line of the branch to be seen
+    # as a flower. Each still overlaps the wood, as plum does; it is the part
+    # standing off to one side that reads.
+    RP, SP = 0.018, 0.025
+
+    def spray(a, b, plan):
+        ax, ay = a
+        bx, by = b
+        dx, dy = bx - ax, by - ay
+        L = np.hypot(dx, dy) or 1
+        nx, ny = -dy / L, dx / L                 # unit normal to the bough
+        for t, off, tilt in plan:
+            cx, cy = ax + dx * t, ay + dy * t
+            blossom(td, cx + nx * off, cy + ny * off, RP, SP, tilt)
+
+    # two on this one, three on the other, and at different places along each
+    # bough. Three and three at matching stations reads as one spray copied,
+    # which is the last thing left making the two trees look like a pair.
+    spray((-0.186, -0.244), (-0.372, -0.116),
+          [(0.84, 0.052, 0.30), (1.22, -0.046, -0.55)])
+
+    # right tree: branches lower, reaches further, leans the other way
+    stroke(td, [(0.190, by0 + 0.004), (0.200, -0.18), (0.186, by1 - 0.010)], TRUNK)
+    stroke(td, [(0.196, -0.292), (0.306, -0.222), (0.378, -0.172)], BOUGH)
+    spray((0.196, -0.292), (0.378, -0.172),
+          [(0.70, -0.050, -0.20), (0.99, 0.054, 0.45), (1.31, -0.042, -0.35)])
+
+    # Bark. Even fissures at even spacing are a ladder, which is what the last
+    # pass drew — bark is irregular, so the marks vary in length, in how far off
+    # centre they sit, and in where they start. Deterministic, not random: the
+    # same glyph must come out the same every time it is generated.
+    rng = np.random.default_rng(7)
+    for tx in (-0.185, 0.194):
+        yy2 = by0 + 0.045
+        while yy2 < by1 - 0.075:
+            seg = float(rng.uniform(0.030, 0.075))
+            dx = float(rng.choice([-0.030, -0.010, 0.012, 0.031]))
+            stroke(td, [(tx + dx, yy2), (tx + dx, min(yy2 + seg, by1 - 0.075))],
+                   BARKW, BARK)
+            yy2 += seg * float(rng.uniform(0.45, 0.80))
+
+    ye = np.asarray(tree).astype(float)
+
     return {
         'char': CHAR, 'em': int(em), 'asym': round(float(ASYM[0]), 4),
         'reading': 'hu',
         'body': [[[round(x, 5), y] for x, y in house]],
         'mouthW': round(2 * R_MOUTH, 4),
-        # 士, in full: every disc and stem the lid is made of
+        # 士 as the lid. The two 一 are kept together rather than held apart by
+        # the 竖: as a *character* the stroke passes between them, but as a pot a
+        # 0.04-radius waist between two discs is a stem holding up a plate. Set
+        # against each other they are one stepped lid, the wider over the
+        # narrower, which is what 士 looks like at a glance anyway.
         'shi': {
             'pegR': round(peg[2], 4), 'pegH': round(peg[1] - peg[0], 4),
             'brimR': round(brim[2], 4), 'brimH': round(brim[1] - brim[0], 4),
@@ -219,9 +363,10 @@ def read_hu():
             'seamH': round(seam[1] - seam[0], 4),
         },
         'wall': {'shoulderR': round(R_SH, 4), 'footR': round(R_FT, 4),
+                 'waistR': round(R_YA, 4), 'barH': round(bar_bot - shoulder[0], 4),
                  'topY': up(shoulder[0]), 'wallTopY': up(wall_top),
                  'footTopY': up(foot_top), 'baseY': up(1.0)},
-        'groups': {'ya': encode(lines_m)},
+        'groups': {'ya': encode(lines_m), 'ye': encode(ye)},
         'bbox': [round(float(xs.min() - AXIS) / em, 4), round(float(xs.max() - AXIS) / em, 4),
                  round(float(CY0 - ys.max()) / em, 4), round(float(CY0 - ys.min()) / em, 4)],
     }
@@ -458,6 +603,70 @@ CAO_LINES = [((AXIS - cao_half, cao_bar), (AXIS + cao_half, cao_bar))] + \
 # PIL's rasteriser rounds endpoints and widths per-side, so drawing both halves
 # leaves a few hundred pixels of mismatch. Mirror one half instead: exact.
 
+# 木 as the oracle bone draws it — a tree, not a character: one upright, two
+# limbs curving up from it, two roots curving down. The seal and modern forms
+# straightened those curves into 撇 and 捺 and the picture became a sign; this
+# goes back the other way. Laid out in the same box as the drawn 木 so the two
+# faces of the pot can carry one each.
+def _oracle_wood():
+    im2 = Image.new('L', (N, N), 0)
+    d2 = ImageDraw.Draw(im2)
+
+    def px(x, y):
+        return (AXIS + x * em, CY0 - y * em)
+
+    def walk(pts, n=90):
+        """the polyline resampled evenly, so a taper runs smoothly along it"""
+        seg = [np.array(q, float) for q in pts]
+        out = []
+        for i in range(n + 1):
+            t = i / n * (len(seg) - 1)
+            k = min(int(t), len(seg) - 2)
+            f = t - k
+            out.append(seg[k] * (1 - f) + seg[k + 1] * f)
+        return out
+
+    def limb(pts, r0, r1):
+        """A tapered stroke: circles down the curve, wide at the root and fine at
+        the tip. A constant-width line is a wire; a limb thins as it goes, and
+        that taper is most of what makes it read as grown rather than drawn."""
+        w = walk(pts)
+        for i, q in enumerate(w):
+            r = r0 + (r1 - r0) * (i / (len(w) - 1)) ** 0.75
+            d2.ellipse([px(q[0] - r, q[1] + r), px(q[0] + r, q[1] - r)], fill=255)
+
+    def leaf(x, y, L, W, tilt):
+        n = 16
+        out = []
+        for sgn in (1, -1):
+            for k in range(n + 1):
+                t = (-1 + 2 * k / n) * sgn
+                out.append((t * L / 2, sgn * (1 - t * t) * W / 2))
+        ct, st = np.cos(tilt), np.sin(tilt)
+        d2.polygon([px(x + ex * ct - ey * st, y + ex * st + ey * ct)
+                    for ex, ey in out], fill=255)
+
+    # trunk: thick at the foot, thinning as it rises
+    limb([(0, -0.430), (0.004, -0.300), (0, -0.180), (-0.003, 0.010)], 0.052, 0.030)
+    for sgn in (-1, 1):                                   # limbs, rising
+        limb([(0, -0.085), (sgn * 0.120, -0.030),
+              (sgn * 0.235, 0.020), (sgn * 0.320, 0.115)], 0.030, 0.008)
+    for sgn in (-1, 1):                                   # roots, falling
+        limb([(0, -0.352), (sgn * 0.115, -0.404),
+              (sgn * 0.215, -0.446), (sgn * 0.300, -0.500)], 0.028, 0.007)
+    # leaves, off the limbs and unmatched left to right
+    leaf(-0.372, 0.150, 0.088, 0.038, 0.75)
+    leaf(-0.246, 0.096, 0.076, 0.033, 0.30)
+    leaf(0.360, 0.176, 0.084, 0.036, -0.65)
+
+    m2 = np.asarray(im2) > 127
+    out = m2.copy()
+    w2 = min(AXIS, N - AXIS)
+    out[:, AXIS:AXIS + w2] = m2[:, AXIS - w2:AXIS][:, ::-1]
+    out[:, :AXIS] = m2[:, :AXIS]
+    return out
+
+
 lines_m = draw_group(WOOD + ROOF + CAO_LINES)
 mism_lines = np.logical_xor(lines_m[:, AXIS - 300:AXIS],
                             lines_m[:, AXIS + 1:AXIS + 301][:, ::-1]).sum()
@@ -537,8 +746,9 @@ data = {
     'bbox': [round((xs.min() - AXIS) / em, 4), round((xs.max() - AXIS) / em, 4),
              round((CY - ys.max()) / em, 4), round((CY - ys.min()) / em, 4)],
     'revolve': [round(v, 4) for v in rev[::STEP]],
-    'groups': {k: encode(draw_group(v)) for k, v in
-               (('wood', WOOD), ('roof', ROOF), ('cao', CAO_LINES))},
+    'groups': {**{k: encode(draw_group(v)) for k, v in
+                  (('wood', WOOD), ('roof', ROOF), ('cao', CAO_LINES))},
+               'tree': encode(_oracle_wood())},
     'lines': {
         'size': LR, 'bbox': LBB,
         'x0': round((AXIS - lhalf - AXIS) / em, 4), 'x1': round((AXIS + lhalf - AXIS) / em, 4),

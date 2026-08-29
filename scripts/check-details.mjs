@@ -24,7 +24,13 @@ const SPECS = fs.readdirSync(specDir)
 
 /** Sign changes of the discrete signed curvature of a planar polyline. */
 function turns(pts) {
-  let last = 0, changes = 0
+  // Collect the runs of constant turn direction, then count only the changes
+  // into a run long enough to be a shape. A straight segment has no turn
+  // direction, and a spline through collinear points wobbles across zero — on
+  // 壺字壺's 提梁 the legs threw 4-sample runs at |s| 0.005 against the arch's
+  // own 0.004, so magnitude cannot separate them and persistence can. What this
+  // rule is for is a strap that curls in and kicks back out, and that lasts.
+  const runs = []
   for (let i = 2; i < pts.length; i++) {
     const ax = pts[i - 1].x - pts[i - 2].x, ay = pts[i - 1].y - pts[i - 2].y
     const bx = pts[i].x - pts[i - 1].x, by = pts[i].y - pts[i - 1].y
@@ -34,9 +40,13 @@ function turns(pts) {
     const s = cross / scale
     if (Math.abs(s) < 2e-3) continue                 // straight enough to be noise
     const sign = Math.sign(s)
-    if (last !== 0 && sign !== last) changes++
-    last = sign
+    if (!runs.length || runs[runs.length - 1].sign !== sign) runs.push({ sign, n: 1 })
+    else runs[runs.length - 1].n++
   }
+  const MIN = Math.max(6, Math.round(pts.length * 0.04))
+  const real = runs.filter((r) => r.n >= MIN)
+  let changes = 0
+  for (let i = 1; i < real.length; i++) if (real[i].sign !== real[i - 1].sign) changes++
   return changes
 }
 
@@ -75,6 +85,21 @@ for (const spec of SPECS) {
 
   // 1. every slot that is not `none` must actually produce geometry. A spout
   //    positioned at NaN disappears from the render and fails nothing at all.
+  // A spec key that is not a declared param is copied nowhere: resolveSlot walks
+  // the *definition's* params and takes `given[k]` for each, so a key the
+  // definition does not know about is dropped in silence. The pot then renders as
+  // though the line had never been written — and every probe that builds its
+  // params by spreading the spec, as these scripts naturally do, reports the
+  // setting working exactly as asked. `body` is in this list because that is
+  // where it happened: three keys on 壺字壺's body were dropped for an afternoon.
+  for (const slot of ['body', 'lid', 'knob', 'spout', 'handle', 'base']) {
+    const d = resolveSlot(spec, slot)
+    const declared = new Set([...Object.keys(d.def.params ?? {}), 'type'])
+    const stray = Object.keys(spec[slot] ?? {}).filter((k) => !declared.has(k))
+    checks.push([`${slot} spec keys are all declared params`, stray.length === 0,
+      stray.length ? `dropped silently: ${stray.join(', ')}` : 'ok'])
+  }
+
   for (const slot of ['lid', 'knob', 'spout', 'handle']) {
     const s = resolveSlot(spec, slot)
     if (s.p.type === 'none') continue

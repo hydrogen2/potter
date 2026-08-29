@@ -24,7 +24,9 @@
     "faceHi": 1.0,
     "neck": 0.21,
     "mouth": 0,
-    "roofW": 0.022
+    "roofW": 0.022,
+    "pattern": "wood",
+    "patternBack": "tree"
   },
   "lid": {
     "type": "discSlab",

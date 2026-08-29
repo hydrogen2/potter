@@ -138,10 +138,32 @@ export const BODIES = {
       // 0 = the character's own figure: 艹's verticals' distance from the axis.
       // Anything larger opens the mouth for use and departs from it knowingly.
       mouth: { label: '口径', min: 0, max: 0.75, step: 0.005, default: 0 },
+      // 壺 only: the waist as a fraction of the *mouth*. 1 makes them equal, and
+      // since the lid's lowest disc is its 子口 and the 子口 has to fit the
+      // mouth, that puts the waist, the mouth and the lid's bottom 一 all on one
+      // radius — one line running down through the pot rather than three near
+      // misses. Measured against 亞 instead, the same width is a coincidence
+      // that stops holding the moment the mouth moves.
+      waist: { label: '腰径', min: 0.5, max: 1.6, step: 0.01, default: 1 },
+      // 壺 only: 冖's width. The character says 0.48 against a 0.51 foot, which
+      // leaves a 提梁's legs almost nothing to stand on between the flange's edge
+      // and the lid's brim. Widening it is a departure, and bounded — past the
+      // foot it stops being the character's own top-lighter pot.
+      shoulder: { label: '肩径', min: 0.9, max: 1.30, step: 0.01, default: 1 },
+      // and the foot with it: 壺 draws the foot wider than 冖, so widening the
+      // shoulder alone runs into that and stops. They move together.
+      foot: { label: '足径', min: 0.9, max: 1.30, step: 0.01, default: 1 },
       roofAt: { label: '戗脊位', min: 20, max: 90, step: 1, default: 60 },
       roofW: { label: '戗脊宽', min: 0.006, max: 0.05, step: 0.002, default: 0.016 },
       faceHi: { label: '字顶', min: 0.4, max: 1.0, step: 0.01, default: 0.93 },
       glyph: { label: '字', min: 0, max: 0, step: 1, default: 'cha' },
+      // Declared, because resolveSlot copies *only* declared params out of a
+      // spec — anything else is dropped without a word. These three were not,
+      // so the pot was drawing 亞 on both faces while every probe that spread
+      // the spec directly reported the tree exactly as asked for.
+      pattern: { label: '腹纹', min: 0, max: 0, step: 1, default: 'ya' },
+      patternBack: { label: '背纹', min: 0, max: 0, step: 1, default: '' },
+      tint: { label: '泥色', min: 0, max: 0, step: 1, default: null },
     },
     profile(p) {
       const G = GLYPHS[p.glyph ?? 'cha']
@@ -174,6 +196,39 @@ export const BODIES = {
       // and emptied, though, so the mouth may be opened past what the character
       // says. The cone is cut off lower to do it, and the roof's *slope* is held
       // exactly, since that slope is 𠆢 and is not negotiable.
+      // 壺 draws its own mouth at 0.804 of the pot's half-width — the 子口 is
+      // nearly as wide as the foot. Faithful, and a jar: the lid is pinned to the
+      // mouth (its 子口 has to fit), so at full width the lid comes out half the
+      // body's height with a wide disc on a thin stem. `mouth` closes it toward a
+      // pot, as a fraction of what the character says, and the shoulder's flat
+      // top takes up the difference. The wall, the foot and 士's proportions are
+      // all untouched by it.
+      if (!shaped && G?.reading === 'hu' && half.length >= 2) {
+        if (p.mouth > 0 && p.mouth < 1) {
+          const top1 = half[half.length - 1]
+          half[half.length - 1] = [top1[0] * p.mouth, top1[1]]
+        }
+        for (const [key2, sc] of [['shoulderR', p.shoulder], ['footR', p.foot]]) {
+          if (!(sc > 0) || Math.abs(sc - 1) < 1e-6) continue
+          const ref = G.wall?.[key2] ?? -1
+          for (let i = 0; i < half.length; i++) {
+            if (Math.abs(Math.abs(half[i][0]) - ref) < 2e-4) {
+              half[i] = [Math.sign(half[i][0] || 1) * ref * sc, half[i][1]]
+            }
+          }
+        }
+        // The waist follows the mouth, so it has to be set after it.
+        if (p.waist > 0) {
+          const mouthEm = Math.abs(half[half.length - 1][0])
+          const wR = mouthEm * p.waist
+          const ref = G.wall?.waistR ?? -1
+          for (let i = 0; i < half.length; i++) {
+            if (Math.abs(Math.abs(half[i][0]) - ref) < 2e-4) {
+              half[i] = [Math.sign(half[i][0] || 1) * wR, half[i][1]]
+            }
+          }
+        }
+      }
       if (shaped && half.length >= 4 && p.mouth > 0) {
         const [R0] = half[half.length - 3]
         const eavesQ = half[half.length - 3]
@@ -314,23 +369,45 @@ export const BODIES = {
         // have to be *placed*. 壺 is a pot drawn in elevation: 亞 already lies on
         // the wall, at the height the character draws it, so it is mapped through
         // the same k the house was scaled by and lands where it belongs.
+        // 亞 belongs on the waist and nowhere else. Placed at its true height it
+        // runs up past the waist's top step and onto 冖, because the character
+        // draws it right up against the bar — but on the pot the bar is a flange
+        // standing proud, and a pattern that climbs onto it reads as spilling.
+        // So the whole cross is fitted *into* the waist: the two steps give the
+        // band, and nothing has to be cut off to make it fit.
+        const wLo = key[2] ? key[2].y : H * 0.12
+        const wHi = key[3] ? key[3].y : H * 0.70
+        // Both motifs fill the waist, edge to edge. The flanges above and below
+        // are the frame; a motif floating inside them reads as a badge.
+        const inset = (wHi - wLo) * 0.02
+        // 壺 carries 亞 in its belly and the simplified 壶 carries 业 in the same
+        // slot of the same character, so either is the pot's own pattern rather
+        // than an ornament chosen for it.
+        // The two written faces need not carry the same thing. 壺's belly is
+        // 亞; the simplified 壶 puts 业 in the same slot of the same character,
+        // and drawn as trunks and boughs it is a tree. One of each, so the pot
+        // reads differently from the two sides.
+        const front = GS[p.pattern] ? p.pattern : 'ya'
+        const back = GS[p.patternBack] ? p.patternBack : front
+        const cap0 = p.faceSpan > 0 ? p.faceSpan : 88
         const parts = G?.reading === 'hu'
-          ? (GS.ya
-              ? [['ya', (GS.ya.bbox[2] - yMin) * k, (GS.ya.bbox[3] - yMin) * k,
-                  p.faceSpan > 0 ? p.faceSpan : 88]]
-              : [])
-          : [['wood', lo0, hi0, p.faceSpan > 0 ? p.faceSpan : 70]]
+          ? [[front, wLo + inset, wHi - inset, cap0, 'front'],
+             [back, wLo + inset, wHi - inset, cap0, 'back']].filter((q) => GS[q[0]])
+          : [[GS[p.pattern] ? p.pattern : 'wood', lo0, hi0,
+              p.faceSpan > 0 ? p.faceSpan : 70, 'front'],
+             [GS[p.patternBack] ? p.patternBack : (GS[p.pattern] ? p.pattern : 'wood'),
+              lo0, hi0, p.faceSpan > 0 ? p.faceSpan : 70, 'back']]
         // Each group is held undistorted — its arc width is its own aspect times
         // its band's height — but capped, because a group placed where the pot
         // has narrowed would otherwise wrap past the front face and out of view.
-        for (const [k, lo, hi, capDeg] of parts) {
+        for (const [k, lo, hi, capDeg, side] of parts) {
           const cap = THREE.MathUtils.degToRad(capDeg)
           const o = GS[k]
           if (!o || !(hi > lo)) continue
           const bb = o.bbox
           const aspect = (bb[1] - bb[0]) / Math.max(bb[3] - bb[2], 1e-6)
           const rMid = Math.max(rFn((lo + hi) / 2), 1e-6)
-          bands.push({ lo, hi, bb, span: Math.min(cap, ((hi - lo) * aspect) / rMid),
+          bands.push({ lo, hi, bb, side, span: Math.min(cap, ((hi - lo) * aspect) / rMid),
             sample: sampler(o, decode(o)) })
         }
       }
@@ -402,10 +479,11 @@ export const BODIES = {
       // The character is written on both sides, so every stroke is looked up at
       // both faces and the stronger wins. That also gives the roof four hips
       // rather than two, which is what a 攒尖顶 has.
-      const faceOne = (d, y) => {
+      const faceOne = (d, y, which) => {
         const rv = ridge(d, y)
         if (rv > 0) return rv
         for (const b of bands) {
+          if (b.side && b.side !== 'both' && b.side !== which) continue
           if (y < b.lo || y > b.hi || Math.abs(d) > b.span / 2) continue
           const gx = (d / b.span) * (b.bb[1] - b.bb[0]) + (b.bb[0] + b.bb[1]) / 2
           const gy = ((y - b.lo) / (b.hi - b.lo)) * (b.bb[3] - b.bb[2]) + b.bb[2]
@@ -419,8 +497,8 @@ export const BODIES = {
       // instead of joining it; 艹's crossbar still rings the lid, where it is
       // the lid's own edge and cannot be mistaken for anything else.
       const relief = (theta, y) => Math.max(
-        faceOne(wrap(theta - at), y),
-        faceOne(wrap(theta - at - Math.PI), y),
+        faceOne(wrap(theta - at), y, 'front'),
+        faceOne(wrap(theta - at - Math.PI), y, 'back'),
       )
       // Relief is applied as a radius multiplier, but what the eye reads is the
       // displacement *perpendicular to the surface*. On the cone the outward
@@ -461,7 +539,10 @@ export const BODIES = {
         ? (theta, _t, y) => 1 + (p.face * relief(theta, y))
             / (Math.max(rFn(y), 0.05) * nrAt(y))
         : undefined
-      const LINE_TINT = [0.60, 0.47, 0.34]
+      // 泥绘 — the line is clay of another colour. The spec may name it, since
+      // which clay is a choice about the pot and not about the character.
+      const LINE_TINT = Array.isArray(p.tint) && p.tint.length === 3
+        ? p.tint : [0.60, 0.47, 0.34]
       const colorAt = live
         ? (theta, _t, y) => {
             const v = relief(theta, y)

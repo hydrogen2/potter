@@ -251,8 +251,19 @@ export function bodySurface(prof) {
   // it is ignored; for a 方器 it is the whole point, and the normal then has a
   // sideways component too — a fillet crossing a 棱线 has to lean with it.
   const r = (y, th) => prof.radiusAt(y, th)
+  // radiusAt clamps outside the profile's range, so without bounds the body is
+  // treated as continuing forever above the rim at the mouth's radius — and a
+  // fillet whose attachment sits near the top then blends onto that phantom.
+  // On 壺字壺's 提梁 it produced a skirt standing over the mouth, exactly where
+  // the lid sits, and the fillet's top wandered with no relation to `blend`.
+  // A point above the rim, or below the base, is not inside the pot.
+  const yLo = prof.outer?.[0]?.y ?? -Infinity
+  const yHi = prof.height ?? (prof.outer?.[prof.outer.length - 1]?.y ?? Infinity)
   return {
-    inside: (P) => Math.hypot(P.x, P.z) < r(P.y, Math.atan2(P.z, P.x)),
+    // whether this height is on the pot at all
+    bounded: (P) => P.y >= yLo - 1e-6 && P.y <= yHi + 1e-6,
+    inside: (P) => P.y >= yLo && P.y <= yHi
+      && Math.hypot(P.x, P.z) < r(P.y, Math.atan2(P.z, P.x)),
     project: (P) => {
       const rho = Math.hypot(P.x, P.z) || 1e-6
       const target = r(P.y, Math.atan2(P.z, P.x))
@@ -402,7 +413,16 @@ export function filletBlend(curve, radiusAt, surface, blend, fromStart = true,
     // tangent at A pointing back toward the body
     const tAe = Math.min(1, Math.max(0, tA - dir * 0.004))
     const tanA = surf(tAe, v).sub(A).normalize()
-    const B = onBody(Pc.clone().addScaledVector(w, reach))
+    // B has to land on a part of the body that exists. `project` snaps by
+    // radius at a given height and radiusAt clamps outside the profile, so a B
+    // that walks off the rim is placed on the rim's inner circle instead — a
+    // real point on the pot, and the wrong one. On 壺字壺's 提梁, whose roots sit
+    // on the shoulder's flat top, every such meridian landed at the mouth's
+    // radius and drew a skirt across the seat the lid sits on. Drop them, as the
+    // three guards above drop the other degenerate meridians.
+    const Braw = Pc.clone().addScaledVector(w, reach)
+    if (S.bounded && !S.bounded(Braw)) { rows.push(null); continue }
+    const B = onBody(Braw)
     const tanB = w
 
     // Q: where the two tangent lines meet. Closest approach if they are skew.
