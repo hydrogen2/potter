@@ -5447,3 +5447,6 @@ Traceback (most recent call last):
            ^^^^^^^^^^^^^^^^^^^^^^^
 ConnectionResetError: [Errno 104] Connection reset by peer
 ----------------------------------------
+94.154.43.201 - - [29/Aug/2026 11:49:22] code 404, message File not found
+94.154.43.201 - - [29/Aug/2026 11:49:22] "GET /login HTTP/1.1" 404 -
+182.20.238.40 - - [29/Aug/2026 12:02:31] "GET / HTTP/1.0" 200 -

@@ -24,7 +24,8 @@ const scene = new THREE.Scene()
 scene.background = new THREE.Color('#f2ede3')
 
 const pmrem = new THREE.PMREMGenerator(renderer)
-scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture
+const envTex = pmrem.fromScene(new RoomEnvironment(), 0.04).texture
+scene.environment = envTex
 scene.environmentIntensity = 0.55
 
 const camera = new THREE.PerspectiveCamera(
@@ -576,6 +577,84 @@ window.addEventListener('hashchange', () => {
   window.__potReady = (window.__potReady || 0) + 1
 })
 window.__potReady = 1
+
+// ---- studio: drive the scene for filming ------------------------------------
+// A hashchange rebuilds the whole vessel — near a million vertices on the glyph
+// pots — which is fine once and hopeless thirty times a second. These reach past
+// the hash and move the camera and the clay while the geometry stays put.
+const vcCache = {}
+window.__studio = {
+  cam({ az = 0, elev = 8, dist = 3.9, ty = 0.45, fov } = {}) {
+    if (fov) { camera.fov = fov; camera.updateProjectionMatrix() }
+    const e = THREE.MathUtils.degToRad(elev)
+    const a = THREE.MathUtils.degToRad(az)
+    const r = dist * Math.cos(e)
+    camera.position.set(r * Math.sin(a), ty + dist * Math.sin(e), r * Math.cos(a))
+    controls.target.set(0, ty, 0)
+    controls.update()
+  },
+  mat(k) {
+    if (!MATERIALS[k] || !pot || k === activeMaterialKey) return false
+    activeMaterialKey = k
+    const base = getMaterial(k)
+    // cached per clay: cloning makes a new material instance, and three.js
+    // compiles a fresh shader program for each one — in a software rasteriser
+    // that compile is the whole frame budget
+    if (!vcCache[k]) vcCache[k] = Object.assign(base.clone(), { vertexColors: true })
+    pot.traverse((o) => {
+      if (!o.isMesh) return
+      // the body carries vertex colours for its 泥绘 — a plain swap drops them
+      o.material = o.material?.vertexColors ? vcCache[k] : base
+    })
+    return true
+  },
+  // Filming trades away what a still is for: shadow maps and a high pixel ratio
+  // are most of the raster cost and neither survives being shrunk to video size.
+  film(on = true, env = true) {
+    renderer.shadowMap.enabled = !on
+    renderer.setPixelRatio(on ? 1 : Math.min(window.devicePixelRatio, 2))
+    scene.environment = on && !env ? null : envTex
+    return true
+  },
+  // A frame, encoded by the browser. Playwright's screenshot costs about thirty
+  // seconds each; reading the pixels back by hand and base64-ing them in JS
+  // costs four, and shipping the 900KB costs four more. toDataURL hands the
+  // encode to native code and sends a tenth of the bytes. The render must happen
+  // in this same synchronous block — without preserveDrawingBuffer the canvas
+  // contents are undefined once the frame has been composited.
+  grab(q = 0.95) {
+    renderer.render(scene, camera)
+    return renderer.domElement.toDataURL('image/jpeg', q)
+  },
+  backdrop(kind = 'studio') {
+    if (kind === 'off') {
+      scene.background = new THREE.Color('#f2ede3')
+      ground.material.opacity = 0.14
+      renderer.toneMappingExposure = 1.0
+      return true
+    }
+    // a sweep lit from behind the subject: warm centre falling to a deep
+    // surround, the way a seamless looks with one light on it. Pale clay against
+    // it reads as form rather than as a cut-out on white.
+    const c = document.createElement('canvas')
+    c.width = c.height = 1024
+    const g = c.getContext('2d')
+    const grd = g.createRadialGradient(512, 470, 40, 512, 470, 780)
+    grd.addColorStop(0.00, '#7c7062')
+    grd.addColorStop(0.42, '#544a40')
+    grd.addColorStop(1.00, '#1e1a17')
+    g.fillStyle = grd
+    g.fillRect(0, 0, 1024, 1024)
+    const t = new THREE.CanvasTexture(c)
+    t.colorSpace = THREE.SRGBColorSpace
+    scene.background = t
+    ground.material.opacity = 0.30
+    scene.environmentIntensity = 0.48
+    renderer.toneMappingExposure = 1.12
+    rim.intensity = 1.5                     // it earns its keep against a dark set
+    return true
+  },
+}
 
 // ---- tap canvas to toggle fullscreen view ----------------------------------
 

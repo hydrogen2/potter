@@ -133,7 +133,10 @@ export const BODIES = {
       // rows as it has columns, and the columns come from radialSegments. At
       // 0.006 the band holds 75 rows against 175 columns and any detail finer
       // than that is averaged away before it reaches the clay.
-      detail: { label: '细分', min: 0.002, max: 0.012, step: 0.001, default: 0.006 },
+      detail: { label: '细分', min: 0.002, max: 0.014, step: 0.001, default: 0.006 },
+      // radial segments across the relief. 900 is what a still needs to hold a
+      // 棱线 crisp; filming needs a tenth of the pixels and cannot afford it.
+      seg: { label: '径分', min: 90, max: 1200, step: 10, default: 900 },
       face: { label: '字凸', min: 0, max: 0.10, step: 0.002, default: 0.020 },
       // 0 lets the span be derived so the character keeps its own proportions:
       // wrapped over too wide an arc it smears out sideways and stops reading.
@@ -564,7 +567,7 @@ export const BODIES = {
         radiusAt: (y, theta = 0) => rFn(y),
         crossSection,
         colorAt,
-        glyphFace: live ? 1 : 0,
+        glyphFace: live ? (p.seg ?? 900) : 0,
         // 艹 rides out to the lid on the profile: the body is what knows the
         // glyph, and the lid is what 艹 is.
         glyph: GS ? { groups: GS, at, face: p.face, caoBarY: G.caoBarY ?? 0,
