@@ -128,6 +128,12 @@ export const BODIES = {
     params: {
       height: { label: '身高', min: 0.4, max: 1.6, step: 0.01, default: 0.90 },
       soften: { label: '折圆', min: 0, max: 0.12, step: 0.002, default: 0.03 },
+      // How finely the profile is resampled, which sets how many *rows* the
+      // relief gets. A drawn stroke needs few; a painted figure needs as many
+      // rows as it has columns, and the columns come from radialSegments. At
+      // 0.006 the band holds 75 rows against 175 columns and any detail finer
+      // than that is averaged away before it reaches the clay.
+      detail: { label: '细分', min: 0.002, max: 0.012, step: 0.001, default: 0.006 },
       face: { label: '字凸', min: 0, max: 0.10, step: 0.002, default: 0.020 },
       // 0 lets the span be derived so the character keeps its own proportions:
       // wrapped over too wide an arc it smears out sideways and stops reading.
@@ -306,7 +312,7 @@ export const BODIES = {
       const dense = [pts[0]]
       for (let i = 1; i < pts.length; i++) {
         const a = pts[i - 1], b = pts[i]
-        const n = Math.max(1, Math.ceil(a.distanceTo(b) / 0.006))
+        const n = Math.max(1, Math.ceil(a.distanceTo(b) / (p.detail ?? 0.006)))
         for (let j = 1; j <= n; j++) dense.push(a.clone().lerp(b, j / n))
       }
       const outer = dense

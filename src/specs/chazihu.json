@@ -26,7 +26,8 @@
     "mouth": 0,
     "roofW": 0.022,
     "pattern": "wood",
-    "patternBack": "tree"
+    "patternBack": "grown",
+    "detail": 0.003
   },
   "lid": {
     "type": "discSlab",

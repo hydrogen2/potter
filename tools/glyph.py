@@ -115,7 +115,7 @@ ys, xs = np.where(mask)
 CY0 = (ys.min() + ys.max()) / 2
 em = ys.max() - ys.min()
 
-def encode(mask, size=200):
+def encode(mask, size=200, sigma=0.006):
     """A stroke mask as a base64 height field, softened, with the window centred
     on the glyph's own axis and the strokes' own bounding box alongside it."""
     # A boolean figure is a figure at one height. A float one carries relief
@@ -125,7 +125,10 @@ def encode(mask, size=200):
     m = mask.astype(float)
     if m.max() > 1.0:
         m = m / 255.0
-    soft = ndimage.gaussian_filter(m, sigma=em * 0.006)
+    # sigma is a parameter because a figure of strokes and a figure of texture
+    # want different things from it: 0.006 em softens a drawn line nicely and
+    # erases anything finer than about 0.018, which is most of a painted tree.
+    soft = ndimage.gaussian_filter(m, sigma=em * sigma)
     soft = np.clip(soft / max(soft.max(), 1e-6), 0, 1)
     yy, xx = np.where(m > 0.15)
     hw = max(AXIS - 0, N - AXIS)
@@ -667,6 +670,97 @@ def _oracle_wood():
     return out
 
 
+# A cedar, after the one on Lebanon's flag: tiers of branch spreading wider as
+# they descend, a short bare trunk, a foot. Where the oracle-bone 木 is four
+# strokes, this is a silhouette — so it is built from filled tiers rather than
+# lines, and the tiers are kept apart by more than the 0.018 the blur closes, or
+# they weld into one triangle and the layering is lost.
+def _cedar():
+    im3 = Image.new('L', (N, N), 0)
+    d3 = ImageDraw.Draw(im3)
+
+    def px(x, y):
+        return (AXIS + x * em, CY0 - y * em)
+
+    def tier(y, half, thick, droop):
+        """one layer of branch: a long lens, pointed at the tips, dipping a
+        little at the ends the way a cedar's boughs hang"""
+        n = 26
+        top, bot = [], []
+        for k in range(n + 1):
+            t = -1 + 2 * k / n
+            x = t * half
+            sag = droop * t * t
+            e = (1 - t * t) ** 0.62 * thick / 2
+            top.append((x, y - sag + e))
+            bot.append((x, y - sag - e))
+        d3.polygon([px(*q) for q in top + bot[::-1]], fill=255)
+
+    for y, half, thick, droop in [
+            (0.062, 0.052, 0.030, 0.004),
+            (-0.010, 0.118, 0.036, 0.010),
+            (-0.092, 0.184, 0.040, 0.018),
+            (-0.178, 0.246, 0.043, 0.026),
+            (-0.268, 0.300, 0.045, 0.034)]:
+        tier(y, half, thick, droop)
+    # trunk, and the foot it stands on
+    d3.polygon([px(-0.028, -0.300), px(0.028, -0.300),
+                px(0.042, -0.470), px(-0.042, -0.470)], fill=255)
+    tier(-0.487, 0.108, 0.030, 0.0)
+
+    m3 = np.asarray(im3) > 127
+    out = m3.copy()
+    w3 = min(AXIS, N - AXIS)
+    out[:, AXIS:AXIS + w3] = m3[:, AXIS - w3:AXIS][:, ::-1]
+    out[:, :AXIS] = m3[:, :AXIS]
+    return out
+
+
+# A tree grown rather than drawn: a trunk that splits, and splits again, five
+# generations deep, with needle clusters massed on the outer twigs. Strokes laid
+# out by hand give a diagram of a tree; the detail that makes a painting is in
+# the *count* — some nine hundred segments here, none of them placed by me. Seeded,
+# so the same tree comes out of every run.
+def _grown_tree():
+    R = 4                                   # supersample, then average down
+    M = N * 1
+    im4 = Image.new('L', (M, M), 0)
+    d4 = ImageDraw.Draw(im4)
+    rng = np.random.default_rng(20260829)
+    px = lambda x, y: (AXIS + x * em, CY0 - y * em)
+
+    def bough(x, y, ang, length, width, depth):
+        if depth == 0 or length < 0.012:
+            return
+        n = max(3, int(length / 0.012))
+        cx, cy, ca = x, y, ang
+        for i in range(n):
+            step = length / n
+            ca += float(rng.normal(0, 0.10))          # the wander of real wood
+            nx, ny = cx + step * np.cos(ca), cy + step * np.sin(ca)
+            w = width * (1 - 0.55 * i / n)
+            d4.line([px(cx, cy), px(nx, ny)], fill=255, width=max(1, int(w * em)))
+            cx, cy = nx, ny
+        # needles mass on the outer generations, not on the trunk
+        if depth <= 2:
+            for _ in range(int(26 * length / 0.10)):
+                a = float(rng.uniform(0, 2 * np.pi))
+                r = float(rng.uniform(0, 0.055)) ** 0.6 * 0.055
+                lx, ly = cx + r * np.cos(a), cy + r * np.sin(a) * 0.8
+                s2 = float(rng.uniform(0.004, 0.009))
+                v = int(rng.uniform(150, 235))
+                d4.ellipse([px(lx - s2, ly + s2), px(lx + s2, ly - s2)], fill=v)
+        k = 2 if depth > 3 else int(rng.integers(2, 4))
+        for j in range(k):
+            spread = float(rng.uniform(0.42, 0.78)) * (1 if j % 2 else -1)
+            bough(cx, cy, ca + spread + float(rng.normal(0, 0.12)),
+                  length * float(rng.uniform(0.58, 0.76)),
+                  width * 0.62, depth - 1)
+
+    bough(0.0, -0.470, np.pi / 2, 0.185, 0.052, 6)
+    return np.asarray(im4).astype(float)
+
+
 lines_m = draw_group(WOOD + ROOF + CAO_LINES)
 mism_lines = np.logical_xor(lines_m[:, AXIS - 300:AXIS],
                             lines_m[:, AXIS + 1:AXIS + 301][:, ::-1]).sum()
@@ -748,7 +842,8 @@ data = {
     'revolve': [round(v, 4) for v in rev[::STEP]],
     'groups': {**{k: encode(draw_group(v)) for k, v in
                   (('wood', WOOD), ('roof', ROOF), ('cao', CAO_LINES))},
-               'tree': encode(_oracle_wood())},
+               'tree': encode(_oracle_wood()), 'cedar': encode(_cedar()),
+               'grown': encode(_grown_tree(), size=460, sigma=0.0016)},
     'lines': {
         'size': LR, 'bbox': LBB,
         'x0': round((AXIS - lhalf - AXIS) / em, 4), 'x1': round((AXIS + lhalf - AXIS) / em, 4),
