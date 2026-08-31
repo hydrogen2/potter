@@ -14,11 +14,20 @@ import path from 'node:path'
 import { execFileSync } from 'node:child_process'
 
 const W = parseInt(process.argv[2] || '640', 10)
+// --resume <dir> --from <frame>: a render that dies partway should not cost the
+// frames that were already good. This box has 3.8GB and the renderer loses its
+// GL context after enough rebuilds and 2k environment maps; when that happens
+// every later frame comes out black, so the guard below stops rather than
+// filling the film with them.
+const RESUME = process.argv.includes('--resume')
+  ? process.argv[process.argv.indexOf('--resume') + 1] : null
+const FROM = process.argv.includes('--from')
+  ? parseInt(process.argv[process.argv.indexOf('--from') + 1], 10) : 0
 const H = Math.round((W * 9) / 16)
 const TL = JSON.parse(fs.readFileSync('film/timeline.json', 'utf8'))
 const FPS = TL.fps
 const LOD = 'body.detail=0.011&body.seg=210'
-const DIR = fs.mkdtempSync('/tmp/keynote-')
+const DIR = RESUME || fs.mkdtempSync('/tmp/keynote-')
 const at = (id) => TL.beats.find((b) => b.id === id)
 const ENVS = ['valley_of_desolation', 'blouberg_sunrise_1', 'alps_field',
   'birchwood', 'goegap', 'blue_grotto']
@@ -33,30 +42,34 @@ const CLAYS = ['zini', 'duanni', 'zhuni', 'tenmoku', 'celadon', 'rockingham']
 const shots = []
 const p1 = at('b1').start
 const p1end = at('b3').start + at('b3').dur
-for (let i = 0, t = p1; t < p1end; i++, t += 7 / FPS) {
+const CUT = 11                                    // 0.92s a cut, not 0.58 — the
+for (let i = 0, t = p1; t < p1end; i++, t += CUT / FPS) {   // eye needs to land
   shots.push({
-    n: Math.min(7, Math.round((p1end - t) * FPS)),
+    n: Math.min(CUT, Math.round((p1end - t) * FPS)),
     pot: FORMS[i % FORMS.length], mat: CLAYS[i % CLAYS.length],
-    env: ENVS[i % ENVS.length], every: 999,          // one render, held
-    cam: { az: -28 + (i * 23) % 90, elev: 6 + (i % 3) * 4, dist: 3.5, ty: 0.42, fov: 26 },
+    env: ENVS[i % ENVS.length], every: 999,        // one render, held
+    // framed from the pot's own box: a distance that suits 西施 crops 掇球
+    fit: { az: -26 + (i * 29) % 96, elev: 6 + (i % 3) * 4, margin: 1.45 },
   })
 }
 const span = (id) => Math.round(at(id).dur * FPS)
+// Part two holds one quiet ground and lets the pots move. `z` is a zoom factor
+// on the fitted distance, so a push never crops what the fit just framed.
 const seq = [
-  { id: 'b4', pair: 1, env: 'alps_field', every: 1,
-    a: { az: -24, elev: 8, dist: 6.4, ty: 0.55 }, b: { az: 6, elev: 8, dist: 6.0, ty: 0.55 } },
-  { id: 'b5', pair: 1, env: 'alps_field', every: 2,
-    a: { az: 6, elev: 8, dist: 6.0, ty: 0.55 }, b: { az: 16, elev: 11, dist: 5.2, ty: 0.55 } },
-  { id: 'b6', pot: 'chazihu', mat: 'duanni', env: 'valley_of_desolation', every: 1,
-    a: { az: -40, elev: 14, dist: 3.6, ty: 0.55 }, b: { az: 18, elev: 5, dist: 3.3, ty: 0.52 } },
-  { id: 'b7', pot: 'huzihu', mat: 'zini', env: 'blouberg_sunrise_1', every: 1,
-    a: { az: -34, elev: 13, dist: 3.9, ty: 0.62 }, b: { az: 20, elev: 5, dist: 3.6, ty: 0.60 } },
-  { id: 'b8', pot: 'chazihu', mat: 'duanni', env: 'birchwood', every: 1,
-    a: { az: 0, elev: 6, dist: 3.4, ty: 0.54 }, b: { az: 200, elev: 6, dist: 3.4, ty: 0.54 } },
-  { id: 'b9', pot: 'huzihu', mat: 'zini', env: 'goegap', every: 1,
-    a: { az: 0, elev: 6, dist: 3.7, ty: 0.60 }, b: { az: 200, elev: 6, dist: 3.7, ty: 0.60 } },
-  { id: 'b10', pair: 1, env: 'alps_field', every: 2,
-    a: { az: 14, elev: 10, dist: 5.4, ty: 0.55 }, b: { az: -6, elev: 8, dist: 6.6, ty: 0.55 } },
+  { id: 'b4', pair: 1, plain: 1, every: 1, fit: { margin: 1.22 },
+    a: { az: -3, elev: 7, z: 1.02 }, b: { az: 7, elev: 8, z: 0.99 } },
+  { id: 'b5', pair: 1, plain: 1, every: 2, fit: { margin: 1.22 },
+    a: { az: 7, elev: 8, z: 0.99 }, b: { az: 16, elev: 12, z: 0.88 } },
+  { id: 'b6', pot: 'chazihu', mat: 'duanni', plain: 1, every: 1, fit: { margin: 1.34 },
+    a: { az: -40, elev: 14, z: 1.04 }, b: { az: 16, elev: 5, z: 0.94 } },
+  { id: 'b7', pot: 'huzihu', mat: 'zini', plain: 1, every: 1, fit: { margin: 1.34 },
+    a: { az: -34, elev: 13, z: 1.04 }, b: { az: 18, elev: 5, z: 0.94 } },
+  { id: 'b8', pot: 'chazihu', mat: 'duanni', plain: 1, every: 1, fit: { margin: 1.30 },
+    a: { az: 0, elev: 6, z: 1.0 }, b: { az: 200, elev: 6, z: 1.0 } },
+  { id: 'b9', pot: 'huzihu', mat: 'zini', plain: 1, every: 1, fit: { margin: 1.30 },
+    a: { az: 0, elev: 6, z: 1.0 }, b: { az: 200, elev: 6, z: 1.0 } },
+  { id: 'b10', pair: 1, plain: 1, every: 2, fit: { margin: 1.22 },
+    a: { az: 14, elev: 10, z: 0.90 }, b: { az: -4, elev: 8, z: 1.06 } },
 ]
 for (const s of seq) shots.push({ ...s, n: span(s.id) })
 
@@ -68,37 +81,72 @@ const browser = await chromium.launch({
     '/home/supper-user/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell',
   args: ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--no-sandbox'],
 })
-const page = await browser.newPage({ viewport: { width: W, height: H } })
+let page = await browser.newPage({ viewport: { width: W, height: H } })
 page.on('pageerror', (e) => console.log('[page]', e.message))
 await page.goto(`http://localhost:5214/#id=${FORMS[0]}&ui=hide&${LOD}`, { waitUntil: 'networkidle' })
 await page.waitForTimeout(2500)
 await page.evaluate(() => window.__studio.film(true, true))
 
-let frame = 0, renders = 0, cur = { pot: null, pair: null, env: null, mat: null }
+let frame = 0, renders = 0, cur = { pot: null, pair: null, env: null, mat: null, plain: 0 }
+// A fresh page for every change of pot. Textures and geometry from twenty
+// rebuilds and six 2k maps are what exhausted the context last time; starting
+// clean costs about eight seconds and buys the rest of the render.
+async function freshPage(startId) {
+  if (page && !page.isClosed()) await page.close()
+  page = await browser.newPage({ viewport: { width: W, height: H } })
+  page.on('pageerror', (e) => console.log('[page]', e.message))
+  await page.goto(`http://localhost:5214/#id=${startId}&ui=hide&${LOD}`, { waitUntil: 'networkidle' })
+  await page.waitForTimeout(2200)
+  await page.evaluate(() => window.__studio.film(true, true))
+  cur = { pot: startId, pair: null, env: null, mat: null, plain: 0 }
+}
 const started = Date.now()
 const totalFrames = shots.reduce((a, s) => a + s.n, 0)
+let cursor = 0
 for (const s of shots) {
+  if (cursor + s.n <= FROM) { cursor += s.n; frame += s.n; continue }
+  cursor += s.n
   if (s.pair && cur.pair !== 1) {
-    await page.evaluate(() => window.__studio.pair())
-    cur = { pot: null, pair: 1, env: cur.env, mat: null }
+    await freshPage('chazihu')
+    await page.evaluate((l) => window.__studio.pair('chazihu', 'huzihu', 'duanni', 'zini',
+      0.30, 0, Math.PI, l), { detail: 0.011, seg: 210 })
+    cur = { ...cur, pot: null, pair: 1, mat: null, plain: 0 }
   } else if (s.pot && cur.pot !== s.pot) {
-    await page.evaluate(([id, lod]) => window.__studio.pot(id, '&' + lod), [s.pot, LOD])
-    await page.waitForTimeout(700)
-    cur = { pot: s.pot, pair: null, env: cur.env, mat: null }
+    await freshPage(s.pot)
   }
   if (s.mat && cur.mat !== s.mat) { await page.evaluate((m) => window.__studio.mat(m), s.mat); cur.mat = s.mat }
-  if (s.env !== cur.env) { await page.evaluate((e) => window.__studio.env(e), s.env); cur.env = s.env }
+  if (s.env && s.env !== cur.env) { await page.evaluate((e) => window.__studio.env(e), s.env); cur.env = s.env; cur.plain = 0 }
+  // rebuild() runs applyFitMode(), which puts scene.background back to the page's
+  // cream — so this has to be re-applied after every pot change, not just once
+  if (s.plain && !cur.plain) {
+    // one calm HDRI for the light, a plain ground behind: part two is about
+    // reading the pots, and a cliff behind them is competition, not setting
+    if (cur.env !== 'alps_field') { await page.evaluate(() => window.__studio.env('alps_field')); cur.env = 'alps_field' }
+    await page.evaluate(() => window.__studio.bg('#2b2723'))
+    cur.plain = 1
+  }
+  let base = null
+  if (s.fit) {
+    base = await page.evaluate((f) => window.__studio.frame(f),
+      { az: s.a ? s.a.az : s.fit.az, elev: s.a ? s.a.elev : s.fit.elev, margin: s.fit.margin })
+  }
   let last = null
   for (let i = 0; i < s.n; i++) {
     const u = s.n > 1 ? i / (s.n - 1) : 0
     if (i % s.every === 0 || last === null) {
-      const c = s.cam ? s.cam : {
-        az: s.a.az + (s.b.az - s.a.az) * u, elev: s.a.elev + (s.b.elev - s.a.elev) * u,
-        dist: s.a.dist + (s.b.dist - s.a.dist) * u, ty: s.a.ty + (s.b.ty - s.a.ty) * u, fov: 26,
+      if (s.a) {
+        await page.evaluate((cc) => window.__studio.cam(cc), {
+          az: s.a.az + (s.b.az - s.a.az) * u, elev: s.a.elev + (s.b.elev - s.a.elev) * u,
+          dist: base.dist * (s.a.z + (s.b.z - s.a.z) * u), ty: base.ty, fov: 26,
+        })
       }
-      await page.evaluate((cc) => window.__studio.cam(cc), c)
       const url = await page.evaluate(() => window.__studio.grab(0.93))
       last = Buffer.from(url.slice(url.indexOf(',') + 1), 'base64')
+      // a lost context still returns a JPEG — an all-black one, about 1.6KB
+      if (last.length < 3500) {
+        throw new Error(`frame ${frame} came back black (${last.length} bytes) — ` +
+          `the GL context is gone. Resume with: --resume ${DIR} --from ${frame}`)
+      }
       renders++
     }
     fs.writeFileSync(path.join(DIR, `f${String(frame++).padStart(5, '0')}.jpg`), last)

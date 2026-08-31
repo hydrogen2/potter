@@ -627,6 +627,30 @@ window.__studio = {
     renderer.render(scene, camera)
     return renderer.domElement.toDataURL('image/jpeg', q)
   },
+  // Fit whatever is on the turntable into the frame. A distance that suits one
+  // pot crops the next — 掇球 is half again the size of 西施 — so it is measured
+  // from the actual bounding box each time rather than set per shot.
+  frame({ az = 0, elev = 8, fov = 26, margin = 1.42, ty } = {}) {
+    if (!pot) return null
+    const box = new THREE.Box3().setFromObject(pot)
+    const size = box.getSize(new THREE.Vector3())
+    const c = box.getCenter(new THREE.Vector3())
+    const half = Math.tan(THREE.MathUtils.degToRad(fov) / 2)
+    const dV = (size.y * margin) / 2 / half
+    const dH = (Math.max(size.x, size.z) * margin) / 2 / (half * camera.aspect)
+    const dist = Math.max(dV, dH)
+    this.cam({ az, elev, dist, ty: ty ?? c.y, fov })
+    return { dist, ty: ty ?? c.y }
+  },
+  // A plain ground for the backdrop while the HDRI keeps lighting. Sampling a
+  // 2k float equirect behind a pot that is meant to be *read* is noise; the
+  // light is what the environment was for.
+  bg(hex = '#2a2622') {
+    scene.background = new THREE.Color(hex)
+    scene.backgroundBlurriness = 0
+    ground.material.opacity = 0.26
+    return true
+  },
   // Switch pot. This one does rebuild — it is the only thing here that has to.
   pot(id, extra = '') {
     location.hash = `id=${id}&ui=hide${extra}`
@@ -666,22 +690,40 @@ window.__studio = {
   // Two pots at once, so the pair can be read as one word. buildVessel makes one
   // vessel and everything downstream assumes one, so they are grouped and the
   // group takes pot's place — mat() and grab() then need no special case.
-  pair(a = 'chazihu', b = 'huzihu', matA = 'duanni', matB = 'zini', gap = 1.5) {
+  // Two pots as one word. Each is turned to put its *written* face to the camera
+  // — 茶's 木 and 壺's 亞 are on opposite sides of their pots, so one of them has
+  // to be spun half a turn or the pair does not read. Spacing is then measured
+  // from the boxes as they actually stand, after that rotation: a fixed gap
+  // overlapped them, because 茶字壶 is 2.08 wide with its spout out and 壺字壺
+  // only 1.31, and turning one of them moves where its spout points.
+  // `lod` matters more than it looks: pair() builds from the archive spec and so
+  // never sees the detail/seg overrides that ride in the hash. Left off, the two
+  // pots render at seg 900 while every single-pot shot beside them runs at 210,
+  // and the pair frames cost five times as much for detail no one can see at
+  // video size.
+  pair(a = 'chazihu', b = 'huzihu', matA = 'duanni', matB = 'zini',
+       clearance = 0.30, yawA = 0, yawB = Math.PI, lod = null) {
     if (pot) { disposePot(pot); scene.remove(pot) }
     const g = new THREE.Group()
-    const mk = (id, mk2, x) => {
-      const v = buildVessel(cloneSpec(SPEC_BY_ID[id]), getMaterial(mk2))
-      const box = new THREE.Box3().setFromObject(v)
-      v.position.x = x - (box.max.x + box.min.x) / 2
-      g.add(v)
-      return box
+    const mk = (id, m, yaw) => {
+      const sp = cloneSpec(SPEC_BY_ID[id])
+      if (lod) Object.assign(sp.body, lod)
+      const v = buildVessel(sp, getMaterial(m))
+      v.rotation.y = yaw
+      v.updateMatrixWorld(true)
+      return { v, box: new THREE.Box3().setFromObject(v) }
     }
-    const bA = mk(a, matA, -gap / 2)
-    const bB = mk(b, matB, gap / 2)
+    const A = mk(a, matA, yawA)
+    const B = mk(b, matB, yawB)
+    A.v.position.x = -clearance / 2 - A.box.max.x
+    B.v.position.x = clearance / 2 - B.box.min.x
+    g.add(A.v); g.add(B.v)
     pot = g
     scene.add(pot)
-    window.__potTop = Math.max(bA.max.y, bB.max.y)
-    return { top: window.__potTop, wide: gap + (bA.max.x - bA.min.x) / 2 + (bB.max.x - bB.min.x) / 2 }
+    g.updateMatrixWorld(true)
+    const box = new THREE.Box3().setFromObject(g)
+    window.__potTop = box.max.y
+    return { top: box.max.y, width: box.max.x - box.min.x, gap: clearance }
   },
   backdrop(kind = 'studio') {
     if (kind === 'off') {
