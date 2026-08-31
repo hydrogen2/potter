@@ -583,6 +583,7 @@ window.__potReady = 1
 // pots — which is fine once and hopeless thirty times a second. These reach past
 // the hash and move the camera and the clay while the geometry stays put.
 const vcCache = {}
+const envCache = {}
 window.__studio = {
   cam({ az = 0, elev = 8, dist = 3.9, ty = 0.45, fov } = {}) {
     if (fov) { camera.fov = fov; camera.updateProjectionMatrix() }
@@ -625,6 +626,62 @@ window.__studio = {
   grab(q = 0.95) {
     renderer.render(scene, camera)
     return renderer.domElement.toDataURL('image/jpeg', q)
+  },
+  // Switch pot. This one does rebuild — it is the only thing here that has to.
+  pot(id, extra = '') {
+    location.hash = `id=${id}&ui=hide${extra}`
+    return true
+  },
+  // An HDRI used as light *and* as backdrop. The scenes/ system solves a camera
+  // from a real photograph so a pot can be composited into it — thorough, and far
+  // too much calibration for a film that changes location every second. This just
+  // wraps the pot in the place: the environment lights it and the same map is the
+  // background, blurred so it does not compete with the silhouette.
+  // blur defaults to 0, and not only for looks: a non-zero backgroundBlurriness
+  // makes three.js build and sample a blurred mip chain of the background every
+  // frame — measured at 15.7s against 6.4s with it off. Sharper and 2.5x faster.
+  async env(name, blur = 0) {
+    if (!name) {
+      scene.backgroundBlurriness = 0
+      return this.backdrop('studio')
+    }
+    if (!envCache[name]) {
+      const hdr = await new RGBELoader().loadAsync(`scenes/_env/${name}.hdr`)
+      hdr.mapping = THREE.EquirectangularReflectionMapping
+      // two textures from one map, and they are not interchangeable: PMREM is a
+      // blurred mip pyramid built for lighting, and using it as the backdrop
+      // turns a cliff into a grey gradient. The raw equirect stays for the
+      // background so the place is recognisable.
+      envCache[name] = { raw: hdr, pm: pmrem.fromEquirectangular(hdr).texture }
+    }
+    scene.environment = envCache[name].pm
+    scene.background = envCache[name].raw
+    scene.backgroundBlurriness = blur
+    scene.environmentIntensity = 1.0
+    ground.material.opacity = 0.22
+    renderer.toneMappingExposure = 1.0
+    for (const l of [key, fill, rim]) l.visible = true
+    return true
+  },
+  // Two pots at once, so the pair can be read as one word. buildVessel makes one
+  // vessel and everything downstream assumes one, so they are grouped and the
+  // group takes pot's place — mat() and grab() then need no special case.
+  pair(a = 'chazihu', b = 'huzihu', matA = 'duanni', matB = 'zini', gap = 1.5) {
+    if (pot) { disposePot(pot); scene.remove(pot) }
+    const g = new THREE.Group()
+    const mk = (id, mk2, x) => {
+      const v = buildVessel(cloneSpec(SPEC_BY_ID[id]), getMaterial(mk2))
+      const box = new THREE.Box3().setFromObject(v)
+      v.position.x = x - (box.max.x + box.min.x) / 2
+      g.add(v)
+      return box
+    }
+    const bA = mk(a, matA, -gap / 2)
+    const bB = mk(b, matB, gap / 2)
+    pot = g
+    scene.add(pot)
+    window.__potTop = Math.max(bA.max.y, bB.max.y)
+    return { top: window.__potTop, wide: gap + (bA.max.x - bA.min.x) / 2 + (bB.max.x - bB.min.x) / 2 }
   },
   backdrop(kind = 'studio') {
     if (kind === 'off') {
