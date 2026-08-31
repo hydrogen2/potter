@@ -1,0 +1,25 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1280
+PlayResY: 720
+WrapStyle: 0
+ScaledBorderAndShadow: yes
+YCbCr Matrix: TV.709
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Cap,Noto Sans CJK SC,38,&H00FFFFFF,&H000000FF,&HC0100804,&H00000000,0,0,0,0,100,100,0,0,1,2.6,1.2,2,120,120,48,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+
+Dialogue: 0,0:00:00.60,0:00:05.58,Cap,,0,0,0,,这些都是紫砂壶。它们都在一间数字陶艺工作室里设计。
+Dialogue: 0,0:00:05.88,0:00:10.63,Cap,,0,0,0,,器形、泥料、场景——几个数字，转瞬即改。
+Dialogue: 0,0:00:10.93,0:00:14.58,Cap,,0,0,0,,这门手艺已有六百年，工具却不必如此。
+Dialogue: 0,0:00:14.88,0:00:18.30,Cap,,0,0,0,,工作室也能创造。这两把壶是新的。
+Dialogue: 0,0:00:18.60,0:00:23.68,Cap,,0,0,0,,它们的形，来自命名它们的两个字：茶，与壶。
+Dialogue: 0,0:00:23.98,0:00:30.36,Cap,,0,0,0,,茶字的人字头，正是壶肩；上面的草字头，成了盖与口。
+Dialogue: 0,0:00:30.66,0:00:37.58,Cap,,0,0,0,,壶字本就是一把壶的象形：士为盖，冖为肩，末横为足，腰身作工字。
+Dialogue: 0,0:00:37.88,0:00:45.60,Cap,,0,0,0,,每把壶，两面各书其字。茶字壶有两个木：一个是笔画，一个长成了树。
+Dialogue: 0,0:00:45.90,0:00:51.02,Cap,,0,0,0,,壶字壶一面是亚，另一面是业，画作梅树。
+Dialogue: 0,0:00:51.32,0:00:56.60,Cap,,0,0,0,,设计、丈量、验证，皆成于此。陶，器。

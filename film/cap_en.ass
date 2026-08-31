@@ -1,0 +1,25 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1280
+PlayResY: 720
+WrapStyle: 0
+ScaledBorderAndShadow: yes
+YCbCr Matrix: TV.709
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Cap,Noto Sans CJK SC,35,&H00FFFFFF,&H000000FF,&HC0100804,&H00000000,0,0,0,0,100,100,0,0,1,2.6,1.2,2,120,120,48,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+
+Dialogue: 0,0:00:00.60,0:00:05.58,Cap,,0,0,0,,These are teapots. All of them were designed in a digital pottery studio.
+Dialogue: 0,0:00:05.88,0:00:10.63,Cap,,0,0,0,,Every form, every clay, every setting — a few numbers, changed in a moment.
+Dialogue: 0,0:00:10.93,0:00:14.58,Cap,,0,0,0,,The craft is six hundred years old. The tools need not be.
+Dialogue: 0,0:00:14.88,0:00:18.30,Cap,,0,0,0,,The studio can also invent. These two pots are new.
+Dialogue: 0,0:00:18.60,0:00:23.68,Cap,,0,0,0,,Their shapes come from the characters that name them: cha, for tea, and hu, for pot.
+Dialogue: 0,0:00:23.98,0:00:30.36,Cap,,0,0,0,,In cha, the roof of the character is the pot's shoulder, and the grass above it becomes the lid and the mouth.
+Dialogue: 0,0:00:30.66,0:00:37.58,Cap,,0,0,0,,Hu is already a picture of a pot: a lid, a shoulder, a foot. Its waist is the character gong.
+Dialogue: 0,0:00:37.88,0:00:45.60,Cap,,0,0,0,,Each pot is written on both faces. Cha carries the tree radical twice — once as strokes, and once grown into a tree.
+Dialogue: 0,0:00:45.90,0:00:51.02,Cap,,0,0,0,,Hu carries ya on one face, and on the other, ye, drawn as plum trees in blossom.
+Dialogue: 0,0:00:51.32,0:00:56.60,Cap,,0,0,0,,Designed, measured, and checked — every one of them, in the studio.

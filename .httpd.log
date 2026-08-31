@@ -6752,3 +6752,130 @@ Traceback (most recent call last):
     self._sock.sendall(b)
 BrokenPipeError: [Errno 32] Broken pipe
 ----------------------------------------
+127.0.0.1 - - [31/Aug/2026 11:41:11] "GET /refs/ HTTP/1.1" 200 -
+82.152.117.27 - - [31/Aug/2026 11:53:17] "GET / HTTP/1.1" 200 -
+82.152.117.27 - - [31/Aug/2026 11:53:19] "GET / HTTP/1.1" 200 -
+65.49.1.172 - - [31/Aug/2026 11:58:13] "GET / HTTP/1.1" 200 -
+65.49.1.173 - - [31/Aug/2026 11:59:51] code 404, message File not found
+65.49.1.173 - - [31/Aug/2026 11:59:51] "GET /favicon.ico HTTP/1.1" 404 -
+65.49.1.174 - - [31/Aug/2026 12:01:21] code 404, message File not found
+65.49.1.174 - - [31/Aug/2026 12:01:21] "GET http://api.ipify.org/?format=json HTTP/1.1" 404 -
+65.49.1.177 - - [31/Aug/2026 12:01:37] code 501, message Unsupported method ('CONNECT')
+65.49.1.177 - - [31/Aug/2026 12:01:37] "CONNECT www.shadowserver.org:443 HTTP/1.1" 501 -
+65.49.1.172 - - [31/Aug/2026 12:01:55] code 404, message File not found
+65.49.1.172 - - [31/Aug/2026 12:01:55] "GET /geoserver/web/ HTTP/1.1" 404 -
+119.56.75.8 - - [31/Aug/2026 12:37:49] "GET /refs/studio_en.mp4 HTTP/1.1" 200 -
+119.56.75.8 - - [31/Aug/2026 12:37:49] "GET /refs/pair.mp4 HTTP/1.1" 200 -
+119.56.75.8 - - [31/Aug/2026 12:37:49] "GET /refs/studio_zh.mp4 HTTP/1.1" 200 -
+----------------------------------------
+Exception occurred during processing of request from ('119.56.75.8', 9705)
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/socketserver.py", line 692, in process_request_thread
+    self.finish_request(request, client_address)
+  File "/usr/lib/python3.12/http/server.py", line 1311, in finish_request
+    self.RequestHandlerClass(request, client_address, self,
+  File "/usr/lib/python3.12/http/server.py", line 672, in __init__
+    super().__init__(*args, **kwargs)
+  File "/usr/lib/python3.12/socketserver.py", line 761, in __init__
+    self.handle()
+  File "/usr/lib/python3.12/http/server.py", line 436, in handle
+    self.handle_one_request()
+  File "/usr/lib/python3.12/http/server.py", line 424, in handle_one_request
+    method()
+  File "/usr/lib/python3.12/http/server.py", line 679, in do_GET
+    self.copyfile(f, self.wfile)
+  File "/usr/lib/python3.12/http/server.py", line 878, in copyfile
+    shutil.copyfileobj(source, outputfile)
+  File "/usr/lib/python3.12/shutil.py", line 204, in copyfileobj
+    fdst_write(buf)
+  File "/usr/lib/python3.12/socketserver.py", line 840, in write
+    self._sock.sendall(b)
+ConnectionResetError: [Errno 104] Connection reset by peer
+----------------------------------------
+119.56.75.8 - - [31/Aug/2026 12:37:52] "GET /refs/studio_zh.mp4 HTTP/1.1" 200 -
+119.56.75.8 - - [31/Aug/2026 12:37:52] "GET /refs/ HTTP/1.1" 200 -
+----------------------------------------
+Exception occurred during processing of request from ('119.56.75.8', 11453)
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/socketserver.py", line 692, in process_request_thread
+    self.finish_request(request, client_address)
+  File "/usr/lib/python3.12/http/server.py", line 1311, in finish_request
+    self.RequestHandlerClass(request, client_address, self,
+  File "/usr/lib/python3.12/http/server.py", line 672, in __init__
+    super().__init__(*args, **kwargs)
+  File "/usr/lib/python3.12/socketserver.py", line 761, in __init__
+    self.handle()
+  File "/usr/lib/python3.12/http/server.py", line 436, in handle
+    self.handle_one_request()
+  File "/usr/lib/python3.12/http/server.py", line 424, in handle_one_request
+    method()
+  File "/usr/lib/python3.12/http/server.py", line 679, in do_GET
+    self.copyfile(f, self.wfile)
+  File "/usr/lib/python3.12/http/server.py", line 878, in copyfile
+    shutil.copyfileobj(source, outputfile)
+  File "/usr/lib/python3.12/shutil.py", line 204, in copyfileobj
+    fdst_write(buf)
+  File "/usr/lib/python3.12/socketserver.py", line 840, in write
+    self._sock.sendall(b)
+BrokenPipeError: [Errno 32] Broken pipe
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('119.56.75.8', 45826)
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/socketserver.py", line 692, in process_request_thread
+    self.finish_request(request, client_address)
+  File "/usr/lib/python3.12/http/server.py", line 1311, in finish_request
+    self.RequestHandlerClass(request, client_address, self,
+  File "/usr/lib/python3.12/http/server.py", line 672, in __init__
+    super().__init__(*args, **kwargs)
+  File "/usr/lib/python3.12/socketserver.py", line 761, in __init__
+    self.handle()
+  File "/usr/lib/python3.12/http/server.py", line 436, in handle
+    self.handle_one_request()
+  File "/usr/lib/python3.12/http/server.py", line 424, in handle_one_request
+    method()
+  File "/usr/lib/python3.12/http/server.py", line 679, in do_GET
+    self.copyfile(f, self.wfile)
+  File "/usr/lib/python3.12/http/server.py", line 878, in copyfile
+    shutil.copyfileobj(source, outputfile)
+  File "/usr/lib/python3.12/shutil.py", line 204, in copyfileobj
+    fdst_write(buf)
+  File "/usr/lib/python3.12/socketserver.py", line 840, in write
+    self._sock.sendall(b)
+BrokenPipeError: [Errno 32] Broken pipe
+----------------------------------------
+119.56.75.8 - - [31/Aug/2026 12:37:53] "GET /refs/chazihu-lid.png HTTP/1.1" 200 -
+119.56.75.8 - - [31/Aug/2026 12:37:53] "GET /refs/cha_plan.png HTTP/1.1" 200 -
+119.56.75.8 - - [31/Aug/2026 12:37:53] "GET /refs/chazihu.png HTTP/1.1" 200 -
+119.56.75.8 - - [31/Aug/2026 12:37:53] "GET /refs/shipiao_two.png HTTP/1.1" 200 -
+119.56.75.8 - - [31/Aug/2026 12:37:53] "GET /refs/cha_sym.png HTTP/1.1" 200 -
+119.56.75.8 - - [31/Aug/2026 12:37:53] "GET /refs/cha_revolve.png HTTP/1.1" 200 -
+119.56.75.8 - - [31/Aug/2026 12:37:53] "GET /refs/ziye_cmp.png HTTP/1.1" 200 -
+119.56.75.8 - - [31/Aug/2026 12:37:54] "GET /refs/liufang.png HTTP/1.1" 200 -
+119.56.75.8 - - [31/Aug/2026 12:37:54] "GET /refs/ziye_qc.png HTTP/1.1" 200 -
+119.56.75.8 - - [31/Aug/2026 12:37:54] "GET /refs/jubian_sheet.png HTTP/1.1" 200 -
+119.56.75.8 - - [31/Aug/2026 12:37:54] "GET /refs/liufang_cmp.png HTTP/1.1" 200 -
+119.56.75.8 - - [31/Aug/2026 12:37:55] "GET /refs/liufang_qc.png HTTP/1.1" 200 -
+119.56.75.8 - - [31/Aug/2026 12:37:55] "GET /refs/refs_measured.png HTTP/1.1" 200 -
+119.56.75.8 - - [31/Aug/2026 12:37:55] "GET /refs/refs_all.png HTTP/1.1" 200 -
+119.56.75.8 - - [31/Aug/2026 12:37:55] "GET /refs/dq11.png HTTP/1.1" 200 -
+119.56.75.8 - - [31/Aug/2026 12:37:56] "GET /refs/dq_compare6.png HTTP/1.1" 200 -
+119.56.75.8 - - [31/Aug/2026 12:37:56] "GET /refs/part_compare.png HTTP/1.1" 200 -
+119.56.75.8 - - [31/Aug/2026 12:37:56] "GET /refs/td_sweep.png HTTP/1.1" 200 -
+119.56.75.8 - - [31/Aug/2026 12:37:56] "GET /refs/qc_detail.png HTTP/1.1" 200 -
+119.56.75.8 - - [31/Aug/2026 12:37:56] "GET /refs/spout_zoom.png HTTP/1.1" 200 -
+119.56.75.8 - - [31/Aug/2026 12:37:57] "GET /refs/lip.png HTTP/1.1" 200 -
+119.56.75.8 - - [31/Aug/2026 12:37:58] "GET /refs/lid_sweep.png HTTP/1.1" 200 -
+119.56.75.8 - - [31/Aug/2026 12:37:58] "GET /refs/bead.png HTTP/1.1" 200 -
+119.56.75.8 - - [31/Aug/2026 12:37:58] "GET /refs/fillet.png HTTP/1.1" 200 -
+119.56.75.8 - - [31/Aug/2026 12:37:58] "GET /refs/knob.png HTTP/1.1" 200 -
+119.56.75.8 - - [31/Aug/2026 12:37:58] "GET /refs/neck_after.png HTTP/1.1" 200 -
+119.56.75.8 - - [31/Aug/2026 12:37:59] "GET /refs/qc_duoqiu2.png HTTP/1.1" 200 -
+119.56.75.8 - - [31/Aug/2026 12:37:59] "GET /refs/jingzhou.png HTTP/1.1" 200 -
+119.56.75.8 - - [31/Aug/2026 12:37:59] "GET /refs/xs_regress.png HTTP/1.1" 200 -
+119.56.75.8 - - [31/Aug/2026 12:37:59] "GET /refs/gp_regress.png HTTP/1.1" 200 -
+119.56.75.8 - - [31/Aug/2026 12:37:59] "GET /refs/studio_en.mp4 HTTP/1.1" 200 -
+119.56.75.8 - - [31/Aug/2026 12:38:00] "GET /refs/studio_zh.mp4 HTTP/1.1" 200 -
+119.56.75.8 - - [31/Aug/2026 12:38:00] "GET /refs/pair.mp4 HTTP/1.1" 200 -
+143.198.91.40 - - [31/Aug/2026 12:44:09] code 501, message Unsupported method ('CONNECT')
+143.198.91.40 - - [31/Aug/2026 12:44:09] "CONNECT google.com:443 HTTP/1.1" 501 -
