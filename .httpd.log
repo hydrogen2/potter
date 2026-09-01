@@ -6879,3 +6879,1619 @@ BrokenPipeError: [Errno 32] Broken pipe
 119.56.75.8 - - [31/Aug/2026 12:38:00] "GET /refs/pair.mp4 HTTP/1.1" 200 -
 143.198.91.40 - - [31/Aug/2026 12:44:09] code 501, message Unsupported method ('CONNECT')
 143.198.91.40 - - [31/Aug/2026 12:44:09] "CONNECT google.com:443 HTTP/1.1" 501 -
+164.52.193.125 - - [31/Aug/2026 12:45:18] "GET / HTTP/1.0" 200 -
+119.56.75.8 - - [31/Aug/2026 12:46:23] "GET /refs/ HTTP/1.1" 200 -
+119.56.75.8 - - [31/Aug/2026 12:46:23] "GET /refs/chazihu.png HTTP/1.1" 200 -
+119.56.75.8 - - [31/Aug/2026 12:46:23] "GET /refs/chazihu-lid.png HTTP/1.1" 200 -
+119.56.75.8 - - [31/Aug/2026 12:46:23] "GET /refs/cha_plan.png HTTP/1.1" 200 -
+119.56.75.8 - - [31/Aug/2026 12:46:23] "GET /refs/cha_revolve.png HTTP/1.1" 200 -
+119.56.75.8 - - [31/Aug/2026 12:46:23] "GET /refs/cha_sym.png HTTP/1.1" 200 -
+119.56.75.8 - - [31/Aug/2026 12:46:23] "GET /refs/shipiao_two.png HTTP/1.1" 200 -
+119.56.75.8 - - [31/Aug/2026 12:46:24] "GET /refs/ziye_qc.png HTTP/1.1" 200 -
+119.56.75.8 - - [31/Aug/2026 12:46:24] "GET /refs/ziye_cmp.png HTTP/1.1" 200 -
+119.56.75.8 - - [31/Aug/2026 12:46:24] "GET /refs/jubian_sheet.png HTTP/1.1" 200 -
+119.56.75.8 - - [31/Aug/2026 12:46:24] "GET /refs/liufang.png HTTP/1.1" 200 -
+119.56.75.8 - - [31/Aug/2026 12:46:24] "GET /refs/liufang_cmp.png HTTP/1.1" 200 -
+119.56.75.8 - - [31/Aug/2026 12:46:25] "GET /refs/liufang_qc.png HTTP/1.1" 200 -
+119.56.75.8 - - [31/Aug/2026 12:46:25] "GET /refs/refs_measured.png HTTP/1.1" 200 -
+119.56.75.8 - - [31/Aug/2026 12:46:25] "GET /refs/refs_all.png HTTP/1.1" 200 -
+119.56.75.8 - - [31/Aug/2026 12:46:25] "GET /refs/dq11.png HTTP/1.1" 200 -
+119.56.75.8 - - [31/Aug/2026 12:46:25] "GET /refs/dq_compare6.png HTTP/1.1" 200 -
+119.56.75.8 - - [31/Aug/2026 12:46:26] "GET /refs/part_compare.png HTTP/1.1" 200 -
+119.56.75.8 - - [31/Aug/2026 12:46:26] "GET /refs/td_sweep.png HTTP/1.1" 200 -
+119.56.75.8 - - [31/Aug/2026 12:46:26] "GET /refs/qc_detail.png HTTP/1.1" 200 -
+119.56.75.8 - - [31/Aug/2026 12:46:27] "GET /refs/spout_zoom.png HTTP/1.1" 200 -
+119.56.75.8 - - [31/Aug/2026 12:46:27] "GET /refs/lip.png HTTP/1.1" 200 -
+119.56.75.8 - - [31/Aug/2026 12:46:27] "GET /refs/lid_sweep.png HTTP/1.1" 200 -
+119.56.75.8 - - [31/Aug/2026 12:46:27] "GET /refs/bead.png HTTP/1.1" 200 -
+119.56.75.8 - - [31/Aug/2026 12:46:27] "GET /refs/fillet.png HTTP/1.1" 200 -
+119.56.75.8 - - [31/Aug/2026 12:46:28] "GET /refs/knob.png HTTP/1.1" 200 -
+119.56.75.8 - - [31/Aug/2026 12:46:28] "GET /refs/neck_after.png HTTP/1.1" 200 -
+119.56.75.8 - - [31/Aug/2026 12:46:28] "GET /refs/qc_duoqiu2.png HTTP/1.1" 200 -
+119.56.75.8 - - [31/Aug/2026 12:46:28] "GET /refs/jingzhou.png HTTP/1.1" 200 -
+119.56.75.8 - - [31/Aug/2026 12:46:29] "GET /refs/xs_regress.png HTTP/1.1" 200 -
+119.56.75.8 - - [31/Aug/2026 12:46:29] "GET /refs/gp_regress.png HTTP/1.1" 200 -
+119.56.75.8 - - [31/Aug/2026 12:46:29] "GET /refs/studio_en.mp4 HTTP/1.1" 200 -
+119.56.75.8 - - [31/Aug/2026 12:46:29] "GET /refs/studio_zh.mp4 HTTP/1.1" 200 -
+119.56.75.8 - - [31/Aug/2026 12:46:29] "GET /refs/pair.mp4 HTTP/1.1" 200 -
+216.126.239.150 - - [31/Aug/2026 12:46:48] code 400, message Bad HTTP/0.9 request type ('\\x16\\x03\\x01\\x05ø\\x01\\x00\\x05ô\\x03\\x03y')
+216.126.239.150 - - [31/Aug/2026 12:46:48] "\x16\x03\x01\x05ø\x01\x00\x05ô\x03\x03y\x1f _Ä\x8c[(" 400 -
+216.126.239.150 - - [31/Aug/2026 12:46:48] "GET / HTTP/1.0" 200 -
+119.56.75.8 - - [31/Aug/2026 12:46:56] "GET /refs/studio_en.mp4 HTTP/1.1" 200 -
+119.56.75.8 - - [31/Aug/2026 12:47:20] "GET /refs/studio_zh.mp4 HTTP/1.1" 200 -
+----------------------------------------
+Exception occurred during processing of request from ('119.56.75.8', 9592)
+----------------------------------------
+Exception occurred during processing of request from ('119.56.75.8', 40775)
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/socketserver.py", line 692, in process_request_thread
+    self.finish_request(request, client_address)
+  File "/usr/lib/python3.12/http/server.py", line 1311, in finish_request
+    self.RequestHandlerClass(request, client_address, self,
+  File "/usr/lib/python3.12/http/server.py", line 672, in __init__
+    super().__init__(*args, **kwargs)
+  File "/usr/lib/python3.12/socketserver.py", line 761, in __init__
+    self.handle()
+  File "/usr/lib/python3.12/http/server.py", line 436, in handle
+    self.handle_one_request()
+  File "/usr/lib/python3.12/http/server.py", line 404, in handle_one_request
+    self.raw_requestline = self.rfile.readline(65537)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/socket.py", line 707, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/socketserver.py", line 692, in process_request_thread
+    self.finish_request(request, client_address)
+ConnectionResetError: [Errno 104] Connection reset by peer
+  File "/usr/lib/python3.12/http/server.py", line 1311, in finish_request
+    self.RequestHandlerClass(request, client_address, self,
+  File "/usr/lib/python3.12/http/server.py", line 672, in __init__
+    super().__init__(*args, **kwargs)
+----------------------------------------
+  File "/usr/lib/python3.12/socketserver.py", line 761, in __init__
+    self.handle()
+  File "/usr/lib/python3.12/http/server.py", line 436, in handle
+    self.handle_one_request()
+  File "/usr/lib/python3.12/http/server.py", line 404, in handle_one_request
+    self.raw_requestline = self.rfile.readline(65537)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/socket.py", line 707, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+ConnectionResetError: [Errno 104] Connection reset by peer
+----------------------------------------
+165.22.100.15 - - [31/Aug/2026 12:57:39] code 501, message Unsupported method ('CONNECT')
+165.22.100.15 - - [31/Aug/2026 12:57:39] "CONNECT google.com:443 HTTP/1.1" 501 -
+4.148.9.28 - - [31/Aug/2026 13:18:52] code 400, message Bad request syntax ('MGLNDD_178.104.53.233_8080')
+4.148.9.28 - - [31/Aug/2026 13:18:52] "MGLNDD_178.104.53.233_8080" 400 -
+94.154.43.140 - - [31/Aug/2026 13:52:09] code 404, message File not found
+94.154.43.140 - - [31/Aug/2026 13:52:09] "GET /login HTTP/1.1" 404 -
+216.180.246.166 - - [31/Aug/2026 13:57:52] "GET / HTTP/1.0" 200 -
+216.180.246.166 - - [31/Aug/2026 13:58:46] "GET / HTTP/1.0" 200 -
+216.180.246.166 - - [31/Aug/2026 14:00:33] "GET / HTTP/1.0" 200 -
+216.180.246.166 - - [31/Aug/2026 14:01:14] "GET / HTTP/1.0" 200 -
+216.180.246.166 - - [31/Aug/2026 14:01:21] code 400, message Bad request version ('À\\x14À')
+216.180.246.166 - - [31/Aug/2026 14:01:21] "\x16\x03\x01\x00ý\x01\x00\x00ù\x03\x03ârS²8m7+³¨\x91yÏgOÁ:o·¹vÝ\x81sÏðýÇkj\x8a\x02 ?y¢\x95Ö\x1fð¯\x8f»\x1fªÌÆí#vê©:ggX7ìÄ¹úºO\x99è\x00&Ì¨Ì©À/À0À+À,À\x13À\x09À\x14À" 400 -
+216.180.246.166 - - [31/Aug/2026 14:01:26] "GET / HTTP/1.1" 200 -
+216.180.246.166 - - [31/Aug/2026 14:01:27] code 404, message File not found
+216.180.246.166 - - [31/Aug/2026 14:01:27] "GET /manage/account/login HTTP/1.1" 404 -
+216.180.246.166 - - [31/Aug/2026 14:01:28] code 404, message File not found
+216.180.246.166 - - [31/Aug/2026 14:01:28] "GET /admin/index.html HTTP/1.1" 404 -
+216.180.246.166 - - [31/Aug/2026 14:01:28] "GET /index.html HTTP/1.1" 200 -
+216.180.246.166 - - [31/Aug/2026 14:01:29] code 404, message File not found
+216.180.246.166 - - [31/Aug/2026 14:01:29] "GET /+CSCOE+/logon.html HTTP/1.1" 404 -
+216.180.246.166 - - [31/Aug/2026 14:01:30] code 404, message File not found
+216.180.246.166 - - [31/Aug/2026 14:01:30] "GET /cgi-bin/login.cgi HTTP/1.1" 404 -
+216.180.246.166 - - [31/Aug/2026 14:01:31] code 404, message File not found
+216.180.246.166 - - [31/Aug/2026 14:01:31] "GET /login.htm HTTP/1.1" 404 -
+216.180.246.166 - - [31/Aug/2026 14:01:33] code 404, message File not found
+216.180.246.166 - - [31/Aug/2026 14:01:33] "GET /login.html HTTP/1.1" 404 -
+216.180.246.166 - - [31/Aug/2026 14:01:35] code 404, message File not found
+216.180.246.166 - - [31/Aug/2026 14:01:35] "GET /login.jsp HTTP/1.1" 404 -
+216.180.246.166 - - [31/Aug/2026 14:01:36] code 404, message File not found
+216.180.246.166 - - [31/Aug/2026 14:01:36] "GET /login HTTP/1.1" 404 -
+216.180.246.166 - - [31/Aug/2026 14:01:37] code 404, message File not found
+216.180.246.166 - - [31/Aug/2026 14:01:37] "GET /doc/index.html HTTP/1.1" 404 -
+216.180.246.166 - - [31/Aug/2026 14:01:38] code 404, message File not found
+216.180.246.166 - - [31/Aug/2026 14:01:38] "GET /remote/login HTTP/1.1" 404 -
+216.180.246.166 - - [31/Aug/2026 14:01:38] code 404, message File not found
+216.180.246.166 - - [31/Aug/2026 14:01:38] "GET /admin/login.asp HTTP/1.1" 404 -
+216.180.246.166 - - [31/Aug/2026 14:01:39] code 404, message File not found
+216.180.246.166 - - [31/Aug/2026 14:01:39] "GET /web/ HTTP/1.1" 404 -
+216.180.246.166 - - [31/Aug/2026 14:01:40] code 404, message File not found
+216.180.246.166 - - [31/Aug/2026 14:01:40] "GET /webpages/login.html HTTP/1.1" 404 -
+216.180.246.166 - - [31/Aug/2026 14:01:40] code 404, message File not found
+216.180.246.166 - - [31/Aug/2026 14:01:40] "GET /favicon.ico HTTP/1.1" 404 -
+195.182.16.23 - - [31/Aug/2026 14:30:48] code 404, message File not found
+195.182.16.23 - - [31/Aug/2026 14:30:48] "GET /SDK/webLanguage HTTP/1.1" 404 -
+94.154.43.254 - - [31/Aug/2026 14:32:59] code 404, message File not found
+94.154.43.254 - - [31/Aug/2026 14:32:59] "GET /login HTTP/1.1" 404 -
+91.92.40.188 - - [31/Aug/2026 14:45:40] code 404, message File not found
+91.92.40.188 - - [31/Aug/2026 14:45:40] "GET /login HTTP/1.1" 404 -
+185.226.93.242 - - [31/Aug/2026 14:50:28] code 404, message File not found
+185.226.93.242 - - [31/Aug/2026 14:50:28] "GET /login HTTP/1.1" 404 -
+103.82.121.44 - - [31/Aug/2026 14:58:01] code 404, message File not found
+103.82.121.44 - - [31/Aug/2026 14:58:01] "GET /boaform/admin/formLogin?username=ec8&psd=ec8 HTTP/1.0" 404 -
+152.243.213.247 - - [31/Aug/2026 15:12:21] code 404, message File not found
+152.243.213.247 - - [31/Aug/2026 15:12:21] "GET http://a7x.overflow.biz/hachk.php HTTP/1.1" 404 -
+94.154.43.254 - - [31/Aug/2026 15:18:18] code 404, message File not found
+94.154.43.254 - - [31/Aug/2026 15:18:18] "GET /login HTTP/1.1" 404 -
+193.8.186.31 - - [31/Aug/2026 15:39:43] code 400, message Bad request version ("ýÓt^®´úß\\x90©ù\\x0eMnÍ·W:ÐI/?\\x0eâH\\x93÷bxPù\\x9d\\x00\\\\\\x13\\x02\\x13\\x03\\x13\\x01À,À0Ì©Ì¨À¯À\\xadÀ]ÀaÀ+À/À®À¬À\\\\À`À$À(ÀsÀwÀ#À'ÀrÀvÀ")
+193.8.186.31 - - [31/Aug/2026 15:39:43] "\x16\x03\x01\x02\x00\x01\x00\x01ü\x03\x03yñ|/£}\x87Ý£\x9fbív©©\x8fô¨\x03\x9fðþö¨\x85>7ä\x99ñA\x89 ýÓt^®´úß\x90©ù\x0eMnÍ·W:ÐI/?\x0eâH\x93÷bxPù\x9d\x00\\\x13\x02\x13\x03\x13\x01À,À0Ì©Ì¨À¯À­À]ÀaÀ+À/À®À¬À\\À`À$À(ÀsÀwÀ#À'ÀrÀvÀ" 400 -
+193.8.186.31 - - [31/Aug/2026 15:39:43] "GET / HTTP/1.1" 200 -
+94.154.43.140 - - [31/Aug/2026 15:47:31] code 404, message File not found
+94.154.43.140 - - [31/Aug/2026 15:47:31] "GET /login HTTP/1.1" 404 -
+66.132.186.171 - - [31/Aug/2026 15:51:42] code 400, message Bad request syntax ('\\x16\\x03\\x01\\x00î\\x01\\x00\\x00ê\\x03\\x03\\x91\\x93Ëo\\x82°*\\x1aBì«q\\x12\\x92Þýq\\x99}»')
+66.132.186.171 - - [31/Aug/2026 15:51:42] "\x16\x03\x01\x00î\x01\x00\x00ê\x03\x03\x91\x93Ëo\x82°*\x1aBì«q\x12\x92Þýq\x99}»" 400 -
+66.132.186.171 - - [31/Aug/2026 15:51:44] "GET / HTTP/1.1" 200 -
+66.132.186.171 - - [31/Aug/2026 15:51:45] code 505, message Invalid HTTP version (2.0)
+66.132.186.171 - - [31/Aug/2026 15:51:45] "PRI * HTTP/2.0" 505 -
+66.132.186.171 - - [31/Aug/2026 15:51:49] code 404, message File not found
+66.132.186.171 - - [31/Aug/2026 15:51:49] "GET /favicon.ico HTTP/1.1" 404 -
+66.132.186.171 - - [31/Aug/2026 15:53:00] code 400, message Bad request version ('À\\x14À')
+66.132.186.171 - - [31/Aug/2026 15:53:00] "\x16\x03\x01\x00î\x01\x00\x00ê\x03\x03#á½\x8dyp¾\x05|ÛaèFiæ\x85\x96#¤\x8ck=HÔòÌ·´\x06÷\x13/ ¨Í bõTÇ\x1cnLKìÝF¹°\\[îØ§í§Ã-£c\x91Ú*Ì5\x00&Ì¨Ì©À/À0À+À,À\x13À\x09À\x14À" 400 -
+66.132.186.171 - - [31/Aug/2026 15:53:17] code 404, message File not found
+66.132.186.171 - - [31/Aug/2026 15:53:17] "GET /login HTTP/1.1" 404 -
+91.92.40.188 - - [31/Aug/2026 15:56:14] code 404, message File not found
+91.92.40.188 - - [31/Aug/2026 15:56:14] "GET /login HTTP/1.1" 404 -
+----------------------------------------
+Exception occurred during processing of request from ('66.132.224.228', 38126)
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/socketserver.py", line 692, in process_request_thread
+    self.finish_request(request, client_address)
+  File "/usr/lib/python3.12/http/server.py", line 1311, in finish_request
+    self.RequestHandlerClass(request, client_address, self,
+  File "/usr/lib/python3.12/http/server.py", line 672, in __init__
+    super().__init__(*args, **kwargs)
+  File "/usr/lib/python3.12/socketserver.py", line 761, in __init__
+    self.handle()
+  File "/usr/lib/python3.12/http/server.py", line 436, in handle
+    self.handle_one_request()
+  File "/usr/lib/python3.12/http/server.py", line 404, in handle_one_request
+    self.raw_requestline = self.rfile.readline(65537)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/socket.py", line 707, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+ConnectionResetError: [Errno 104] Connection reset by peer
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('66.132.224.228', 3754)
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/socketserver.py", line 692, in process_request_thread
+    self.finish_request(request, client_address)
+  File "/usr/lib/python3.12/http/server.py", line 1311, in finish_request
+    self.RequestHandlerClass(request, client_address, self,
+  File "/usr/lib/python3.12/http/server.py", line 672, in __init__
+    super().__init__(*args, **kwargs)
+  File "/usr/lib/python3.12/socketserver.py", line 761, in __init__
+    self.handle()
+  File "/usr/lib/python3.12/http/server.py", line 436, in handle
+    self.handle_one_request()
+  File "/usr/lib/python3.12/http/server.py", line 404, in handle_one_request
+    self.raw_requestline = self.rfile.readline(65537)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/socket.py", line 707, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+ConnectionResetError: [Errno 104] Connection reset by peer
+----------------------------------------
+94.154.43.201 - - [31/Aug/2026 17:16:15] code 404, message File not found
+94.154.43.201 - - [31/Aug/2026 17:16:15] "GET /login HTTP/1.1" 404 -
+172.105.199.92 - - [31/Aug/2026 18:25:27] code 501, message Unsupported method ('CONNECT')
+172.105.199.92 - - [31/Aug/2026 18:25:27] "CONNECT httpbin.org:443 HTTP/1.1" 501 -
+172.105.199.92 - - [31/Aug/2026 18:25:27] code 501, message Unsupported method ('CONNECT')
+172.105.199.92 - - [31/Aug/2026 18:25:27] "CONNECT api.myip.la:443 HTTP/1.1" 501 -
+66.45.236.206 - - [31/Aug/2026 18:26:58] code 404, message File not found
+66.45.236.206 - - [31/Aug/2026 18:26:58] "GET /..%2F..%2F..%2F..%2F..%2F..%2Fetc%2Fpasswd HTTP/1.1" 404 -
+204.76.203.49 - - [31/Aug/2026 19:00:53] code 501, message Unsupported method ('CONNECT')
+204.76.203.49 - - [31/Aug/2026 19:00:53] "CONNECT api.i.pn:443 HTTP/1.1" 501 -
+204.76.203.49 - - [31/Aug/2026 19:00:58] code 400, message Bad request syntax ('\\x05\\x01\\x00')
+204.76.203.49 - - [31/Aug/2026 19:00:58] "\x05\x01\x00" 400 -
+94.154.43.254 - - [31/Aug/2026 19:05:30] code 404, message File not found
+94.154.43.254 - - [31/Aug/2026 19:05:30] "GET /login HTTP/1.1" 404 -
+152.243.213.247 - - [31/Aug/2026 19:12:45] code 404, message File not found
+152.243.213.247 - - [31/Aug/2026 19:12:45] "GET http://a7x.overflow.biz/hachk.php HTTP/1.1" 404 -
+62.171.146.116 - - [31/Aug/2026 19:48:07] code 400, message Bad request version ('À\\x14À')
+62.171.146.116 - - [31/Aug/2026 19:48:07] "\x16\x03\x01\x00î\x01\x00\x00ê\x03\x03VÂ\x9e½¢´fÑ\x1cDQ\x8eÑ\x1d\x94Ü\x06üÂ\x8e°B¡\x03ò\x99z\x9aú\x8b\x06ò 8¿\x86w\x1c÷Y{[Za­ä\x02ë\x97HÛg¥a\x1c÷¹\x95 \x8a\\kìlc\x00&Ì¨Ì©À/À0À+À,À\x13À\x09À\x14À" 400 -
+156.232.100.95 - - [31/Aug/2026 19:55:20] code 400, message Bad request version ('\\x00\\x9eÌ¨Ìª\\x003\\x00=\\x00\\x16À')
+156.232.100.95 - - [31/Aug/2026 19:55:20] "\x16\x03\x01\x00ü\x01\x00\x00ø\x03\x03K¢\x84my_ºÎ¥0®~\x90ÄyÇ\x07¥tr§ly©\x12÷þ5l\x99\x87\x17 J¾éuû\x07NGê\x8eÐ­à\x0f\x89\x7fä\x10\x15¾xí\x96\x990\x02GÃXHF\x1d\x004Ì¨Ì©À/À0À+À,À\x09\x00\x9eÌ¨Ìª\x003\x00=\x00\x16À" 400 -
+156.232.100.95 - - [31/Aug/2026 19:55:31] "GET / HTTP/1.1" 200 -
+156.232.100.95 - - [31/Aug/2026 19:55:31] code 404, message File not found
+156.232.100.95 - - [31/Aug/2026 19:55:31] "GET /favicon.ico HTTP/1.1" 404 -
+156.232.100.95 - - [31/Aug/2026 19:55:31] code 404, message File not found
+156.232.100.95 - - [31/Aug/2026 19:55:31] "GET /robots.txt HTTP/1.1" 404 -
+156.232.100.95 - - [31/Aug/2026 19:55:32] code 404, message File not found
+156.232.100.95 - - [31/Aug/2026 19:55:32] "GET /sitemap.xml HTTP/1.1" 404 -
+156.232.100.95 - - [31/Aug/2026 19:55:32] "GET /assets/index-Chmr6agL.js HTTP/1.1" 200 -
+156.232.100.95 - - [31/Aug/2026 19:55:33] code 404, message File not found
+156.232.100.95 - - [31/Aug/2026 19:55:33] "GET /config.json HTTP/1.1" 404 -
+45.205.1.241 - - [31/Aug/2026 20:19:35] "GET / HTTP/1.1" 200 -
+45.205.1.241 - - [31/Aug/2026 20:19:35] code 400, message Bad request syntax ('\\x16\\x03\\x01\\x00u\\x01\\x00\\x00q\\x03\\x03\\x00\\x01\\x02\\x03\\x04\\x05\\x06\\x07\\x08\\t')
+45.205.1.241 - - [31/Aug/2026 20:19:35] "\x16\x03\x01\x00u\x01\x00\x00q\x03\x03\x00\x01\x02\x03\x04\x05\x06\x07\x08\x09" 400 -
+182.111.85.233 - - [31/Aug/2026 20:32:24] "GET / HTTP/1.0" 200 -
+45.79.207.111 - - [31/Aug/2026 20:39:48] "GET / HTTP/1.1" 200 -
+205.210.31.65 - - [31/Aug/2026 20:47:44] "GET / HTTP/1.0" 200 -
+45.79.181.94 - - [31/Aug/2026 20:57:16] "GET / HTTP/1.1" 200 -
+103.82.255.178 - - [31/Aug/2026 21:02:27] code 404, message File not found
+103.82.255.178 - - [31/Aug/2026 21:02:27] "GET /boaform/admin/formLogin?username=user&psd=user HTTP/1.0" 404 -
+94.154.43.140 - - [31/Aug/2026 21:02:53] code 404, message File not found
+94.154.43.140 - - [31/Aug/2026 21:02:53] "GET /login HTTP/1.1" 404 -
+18.218.118.203 - - [31/Aug/2026 21:05:59] "GET / HTTP/1.1" 200 -
+18.218.118.203 - - [31/Aug/2026 21:08:05] "GET / HTTP/1.1" 200 -
+91.92.40.188 - - [31/Aug/2026 21:24:29] code 404, message File not found
+91.92.40.188 - - [31/Aug/2026 21:24:29] "GET /login HTTP/1.1" 404 -
+175.103.9.22 - - [31/Aug/2026 21:33:43] code 400, message Bad request version ('4u\\x98î\\x90<ûÃ³7\\x8aWò½\\x19á¶èsZ&\\x00\\x01\\x14Ì¨Ì©ÌªÀ,À0\\x00\\x9fÀ\\xadÀ\\x9fÀ$À(\\x00kÀ')
+175.103.9.22 - - [31/Aug/2026 21:33:43] "\x16\x03\x01\x01\x89\x01\x00\x01\x85\x03\x03j\x96q¿qéT,>\x8b 4u\x98î\x90<ûÃ³7\x8aWò½\x19á¶èsZ&\x00\x01\x14Ì¨Ì©ÌªÀ,À0\x00\x9fÀ­À\x9fÀ$À(\x00kÀ" 400 -
+----------------------------------------
+Exception occurred during processing of request from ('45.33.14.197', 57841)
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/socketserver.py", line 692, in process_request_thread
+    self.finish_request(request, client_address)
+  File "/usr/lib/python3.12/http/server.py", line 1311, in finish_request
+    self.RequestHandlerClass(request, client_address, self,
+  File "/usr/lib/python3.12/http/server.py", line 672, in __init__
+    super().__init__(*args, **kwargs)
+  File "/usr/lib/python3.12/socketserver.py", line 761, in __init__
+    self.handle()
+  File "/usr/lib/python3.12/http/server.py", line 436, in handle
+    self.handle_one_request()
+  File "/usr/lib/python3.12/http/server.py", line 404, in handle_one_request
+    self.raw_requestline = self.rfile.readline(65537)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/socket.py", line 707, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+ConnectionResetError: [Errno 104] Connection reset by peer
+----------------------------------------
+45.33.14.197 - - [31/Aug/2026 21:39:24] "GET / HTTP/1.1" 200 -
+172.212.203.72 - - [31/Aug/2026 21:41:48] "GET / HTTP/1.1" 200 -
+172.212.203.72 - - [31/Aug/2026 21:41:48] code 400, message Bad request syntax ('MGLNDD_178.104.53.233_8080')
+172.212.203.72 - - [31/Aug/2026 21:41:48] "MGLNDD_178.104.53.233_8080" 400 -
+94.154.43.140 - - [31/Aug/2026 21:44:42] code 404, message File not found
+94.154.43.140 - - [31/Aug/2026 21:44:42] "GET /login HTTP/1.1" 404 -
+172.236.228.218 - - [31/Aug/2026 21:45:04] "GET / HTTP/1.1" 200 -
+107.150.104.197 - - [31/Aug/2026 21:57:14] "GET / HTTP/1.1" 200 -
+107.150.104.197 - - [31/Aug/2026 21:57:15] code 404, message File not found
+107.150.104.197 - - [31/Aug/2026 21:57:15] "GET /favicon.ico HTTP/1.1" 404 -
+107.150.104.197 - - [31/Aug/2026 21:57:48] code 404, message File not found
+107.150.104.197 - - [31/Aug/2026 21:57:48] "GET /favicon.ico HTTP/1.1" 404 -
+205.210.31.108 - - [31/Aug/2026 22:03:16] code 400, message Bad request version ('À\\x13À')
+205.210.31.108 - - [31/Aug/2026 22:03:16] "\x16\x03\x01\x00î\x01\x00\x00ê\x03\x03\x14\x87\x88ÅÄP\x08ö£5\x9d\x98dOÜ;ØE\x80\x9dy­\x19Bê\x83²U)\x06s$ ¸]Z\x9f§\x18öm+\x10Ïf®¸u\x9d¸\x9býÓÍæ\x1c¤Så7ó\x1fî\x0c;\x00&À+À/À,À0Ì©Ì¨À\x09À\x13À" 400 -
+205.210.31.108 - - [31/Aug/2026 22:03:16] code 400, message Bad request version ('À(À$À\\x14À')
+205.210.31.108 - - [31/Aug/2026 22:03:16] "\x16\x03\x01\x00Ê\x01\x00\x00Æ\x03\x03ö\x1eàÂjÎI'%\x9e¬ëµ\x17\x9b?Ýl\x91j·V\x98yô,o¼ 4×Ç\x00\x00hÌ\x14Ì\x13À/À+À0À,À\x11À\x07À'À#À\x13À\x09À(À$À\x14À" 400 -
+94.154.43.254 - - [31/Aug/2026 22:05:57] code 404, message File not found
+94.154.43.254 - - [31/Aug/2026 22:05:57] "GET /login HTTP/1.1" 404 -
+94.154.43.140 - - [31/Aug/2026 22:10:52] code 404, message File not found
+94.154.43.140 - - [31/Aug/2026 22:10:52] "GET /login HTTP/1.1" 404 -
+3.131.220.121 - - [31/Aug/2026 22:24:38] "GET / HTTP/1.1" 200 -
+3.131.220.121 - - [31/Aug/2026 22:24:50] "GET / HTTP/1.1" 200 -
+3.131.220.121 - - [31/Aug/2026 22:25:47] code 400, message Bad request version ('À\\x14À')
+3.131.220.121 - - [31/Aug/2026 22:25:47] "\x16\x03\x01\x01\x00\x01\x00\x00ü\x03\x03\x9aw\x94z\x9c¥ð\x18Oñà\x0c\x88­\x15\x1c­zsW`XnÙ\x0deÃ\x81[\x88\x92> cÉ\x7f5;æ¬©\x06Él¬µn6ßfJu]Ñ-È\x9c\x97Óe\x7f£­ÝØ\x00&Ì¨Ì©À/À0À+À,À\x13À\x09À\x14À" 400 -
+3.131.220.121 - - [31/Aug/2026 22:26:22] code 400, message Bad HTTP/0.9 request type ("\\x16\\x03\\x01\\x00î\\x01\\x00\\x00ê\\x03\\x03='úÿ¤À)sqñ\\x8dä\\x92\\x86¾\\x10ÃîUÿ\\x92ßMÜ\\x83[>Ú³zÖJ")
+3.131.220.121 - - [31/Aug/2026 22:26:22] "\x16\x03\x01\x00î\x01\x00\x00ê\x03\x03='úÿ¤À)sqñ\x8dä\x92\x86¾\x10ÃîUÿ\x92ßMÜ\x83[>Ú³zÖJ \x8dgL" 400 -
+172.236.165.135 - - [31/Aug/2026 22:30:59] code 400, message Bad request syntax ('\\x16\\x03\\x01\\x00{\\x01\\x00\\x00w\\x03\\x03ÌF7>³6\\x8e\\x13')
+172.236.165.135 - - [31/Aug/2026 22:30:59] "\x16\x03\x01\x00{\x01\x00\x00w\x03\x03ÌF7>³6\x8e\x13" 400 -
+172.236.165.135 - - [31/Aug/2026 22:30:59] code 400, message Bad request version ('À\\x14À')
+172.236.165.135 - - [31/Aug/2026 22:30:59] "\x16\x03\x01\x00{\x01\x00\x00w\x03\x03SgÆvÜ¡Yü·\x084)%+\x1f5\x81\x17Òc\x1bù\x00\x10zKvÙæ|»n\x00\x00\x1aÀ/À+À\x11À\x07À\x13À\x09À\x14À" 400 -
+172.236.165.135 - - [31/Aug/2026 22:30:59] "GET / HTTP/1.1" 200 -
+172.236.165.135 - - [31/Aug/2026 22:31:00] code 404, message File not found
+172.236.165.135 - - [31/Aug/2026 22:31:00] "GET /download/powershell/ HTTP/1.1" 404 -
+172.236.165.135 - - [31/Aug/2026 22:31:00] code 404, message File not found
+172.236.165.135 - - [31/Aug/2026 22:31:00] "GET /get.php HTTP/1.1" 404 -
+107.150.110.199 - - [31/Aug/2026 22:32:46] "GET / HTTP/1.1" 200 -
+107.150.110.199 - - [31/Aug/2026 22:32:48] code 404, message File not found
+107.150.110.199 - - [31/Aug/2026 22:32:48] "GET /favicon.ico HTTP/1.1" 404 -
+107.150.110.199 - - [31/Aug/2026 22:34:16] code 404, message File not found
+107.150.110.199 - - [31/Aug/2026 22:34:16] "GET /favicon.ico HTTP/1.1" 404 -
+69.164.217.245 - - [31/Aug/2026 22:35:30] "GET / HTTP/1.1" 200 -
+118.193.77.213 - - [31/Aug/2026 22:40:21] "GET / HTTP/1.1" 200 -
+118.193.77.213 - - [31/Aug/2026 22:40:22] code 404, message File not found
+118.193.77.213 - - [31/Aug/2026 22:40:22] "GET /favicon.ico HTTP/1.1" 404 -
+118.193.77.213 - - [31/Aug/2026 22:41:41] code 404, message File not found
+118.193.77.213 - - [31/Aug/2026 22:41:41] "GET /favicon.ico HTTP/1.1" 404 -
+66.175.213.4 - - [31/Aug/2026 22:44:12] "GET / HTTP/1.1" 200 -
+107.150.96.184 - - [31/Aug/2026 22:46:59] "GET / HTTP/1.1" 200 -
+107.150.96.184 - - [31/Aug/2026 22:46:59] code 404, message File not found
+107.150.96.184 - - [31/Aug/2026 22:46:59] "GET /favicon.ico HTTP/1.1" 404 -
+107.150.96.184 - - [31/Aug/2026 22:48:22] code 404, message File not found
+107.150.96.184 - - [31/Aug/2026 22:48:22] "GET /favicon.ico HTTP/1.1" 404 -
+165.154.172.61 - - [31/Aug/2026 22:55:25] "GET / HTTP/1.1" 200 -
+165.154.172.61 - - [31/Aug/2026 22:55:27] code 404, message File not found
+165.154.172.61 - - [31/Aug/2026 22:55:27] "GET /favicon.ico HTTP/1.1" 404 -
+165.154.172.61 - - [31/Aug/2026 22:56:35] code 404, message File not found
+165.154.172.61 - - [31/Aug/2026 22:56:35] "GET /favicon.ico HTTP/1.1" 404 -
+165.154.162.96 - - [31/Aug/2026 23:03:29] "GET / HTTP/1.1" 200 -
+165.154.162.96 - - [31/Aug/2026 23:03:29] code 404, message File not found
+165.154.162.96 - - [31/Aug/2026 23:03:29] "GET /favicon.ico HTTP/1.1" 404 -
+165.154.162.96 - - [31/Aug/2026 23:04:40] code 404, message File not found
+165.154.162.96 - - [31/Aug/2026 23:04:40] "GET /favicon.ico HTTP/1.1" 404 -
+107.150.103.173 - - [31/Aug/2026 23:12:45] "GET / HTTP/1.1" 200 -
+107.150.103.173 - - [31/Aug/2026 23:12:46] code 404, message File not found
+107.150.103.173 - - [31/Aug/2026 23:12:46] "GET /favicon.ico HTTP/1.1" 404 -
+107.150.103.173 - - [31/Aug/2026 23:13:45] code 404, message File not found
+107.150.103.173 - - [31/Aug/2026 23:13:45] "GET /favicon.ico HTTP/1.1" 404 -
+36.255.33.139 - - [31/Aug/2026 23:27:58] code 404, message File not found
+36.255.33.139 - - [31/Aug/2026 23:27:58] "GET /boaform/admin/formLogin?username=ec8&psd=ec8 HTTP/1.0" 404 -
+165.154.135.185 - - [31/Aug/2026 23:33:30] "GET / HTTP/1.1" 200 -
+165.154.135.185 - - [31/Aug/2026 23:33:31] code 404, message File not found
+165.154.135.185 - - [31/Aug/2026 23:33:31] "GET /favicon.ico HTTP/1.1" 404 -
+165.154.135.185 - - [31/Aug/2026 23:35:14] code 404, message File not found
+165.154.135.185 - - [31/Aug/2026 23:35:14] "GET /favicon.ico HTTP/1.1" 404 -
+107.150.101.5 - - [31/Aug/2026 23:35:25] "GET / HTTP/1.1" 200 -
+107.150.101.5 - - [31/Aug/2026 23:35:26] code 404, message File not found
+107.150.101.5 - - [31/Aug/2026 23:35:26] "GET /favicon.ico HTTP/1.1" 404 -
+107.150.101.5 - - [31/Aug/2026 23:37:07] code 404, message File not found
+107.150.101.5 - - [31/Aug/2026 23:37:07] "GET /favicon.ico HTTP/1.1" 404 -
+107.150.103.199 - - [31/Aug/2026 23:43:31] "GET / HTTP/1.1" 200 -
+107.150.103.199 - - [31/Aug/2026 23:43:32] code 404, message File not found
+107.150.103.199 - - [31/Aug/2026 23:43:32] "GET /favicon.ico HTTP/1.1" 404 -
+107.150.103.199 - - [31/Aug/2026 23:45:05] code 404, message File not found
+107.150.103.199 - - [31/Aug/2026 23:45:05] "GET /favicon.ico HTTP/1.1" 404 -
+193.46.255.151 - - [31/Aug/2026 23:48:28] "GET / HTTP/1.1" 200 -
+193.46.255.151 - - [31/Aug/2026 23:48:32] code 404, message File not found
+193.46.255.151 - - [31/Aug/2026 23:48:32] "GET /favicon.ico HTTP/1.1" 404 -
+165.154.135.208 - - [31/Aug/2026 23:53:48] "GET / HTTP/1.1" 200 -
+165.154.135.208 - - [31/Aug/2026 23:53:49] code 404, message File not found
+165.154.135.208 - - [31/Aug/2026 23:53:49] "GET /favicon.ico HTTP/1.1" 404 -
+165.154.135.208 - - [31/Aug/2026 23:55:02] code 404, message File not found
+165.154.135.208 - - [31/Aug/2026 23:55:02] "GET /favicon.ico HTTP/1.1" 404 -
+152.32.233.183 - - [01/Sep/2026 00:02:40] "GET / HTTP/1.1" 200 -
+152.32.233.183 - - [01/Sep/2026 00:02:41] code 404, message File not found
+152.32.233.183 - - [01/Sep/2026 00:02:41] "GET /favicon.ico HTTP/1.1" 404 -
+152.32.233.183 - - [01/Sep/2026 00:04:26] code 404, message File not found
+152.32.233.183 - - [01/Sep/2026 00:04:26] "GET /favicon.ico HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:53] "GET / HTTP/1.1" 200 -
+34.178.234.66 - - [01/Sep/2026 00:24:54] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:54] "GET /__aws_leak_probe_cf6d6249__ HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:54] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:54] "GET /@fs/etc/passwd?import&raw?? HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:54] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:54] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:54] "GET /config.js HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:54] "GET /.env HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /@fs/home/ec2-user/.aws/credentials?raw?? HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /.azure/credentials HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /.mcp.json HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /@fs/proc/1/environ?raw?? HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /static../.env HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /static../.azure/credentials HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /files../etc/passwd HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /static../etc/passwd HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /@fs/../.env?raw?? HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /@fs/root/.aws/credentials?raw?? HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /@fs/proc/self/environ?raw?? HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /@fs/proc/self/environ HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /media../.env HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /media../etc/passwd HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /read?url=file:///proc/self/environ HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /aws/credentials HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /?file=../../../../etc/passwd HTTP/1.1" 200 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /proc/self/environ HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /.env.local HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /download?file=../../../../etc/passwd HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /actuator/env HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /api/config HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /static../.aws/credentials HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /app/.env HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /.git-credentials HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /@vite/env HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /.aws/credentials HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /assets../../../etc/passwd HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /.git/HEAD HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /@fs/etc/passwd?raw?? HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /public/.env HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /assets../../../.env HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /_next/../.env HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /backend/.env HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /_nuxt/../.env HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /web/.env HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /home/node/.aws/credentials HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /root/.aws/credentials HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /home/ec2-user/.aws/credentials HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /.aws/credentials.bak HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /_next/../.aws/credentials HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /@fs/proc/self/cwd/.env?raw?? HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /home/ubuntu/.aws/credentials HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /.aws/credentials.old HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /apps/api/.env HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /backend/.aws/credentials HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /_next/static/../.env HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /app/.aws/credentials HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /api/.env HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /files../.env HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /api/.aws/credentials HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /aws/credentials.json HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /.env.save HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /admin/.env HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /.env.aws HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /back/.env HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /server/.env HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /.aws_credentials HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /.aws/config HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /.env.backup HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /.env.azure HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /config/.env HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /.env.old HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /src/.env HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /.env.production HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /.env.gcp HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /.docker.env HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /.env.docker HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /.env.development HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /.env.bak HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /gradio_api/config HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /.env.swp HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /.env.staging HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /.env.prod HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /accessKeys.csv HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET / HTTP/1.1" 200 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /aws-credentials.json HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /core/.env HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 501, message Unsupported method ('POST')
+34.178.234.66 - - [01/Sep/2026 00:24:55] "POST /api/preview HTTP/1.1" 501 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /@fs/proc/self/cwd/.aws/credentials?raw?? HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 501, message Unsupported method ('POST')
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] "POST /graphql HTTP/1.1" 501 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /fetch?url=http%3A%2F%2F169.254.169.254%2Flatest%2Fmeta-data%2Fiam%2Fsecurity-credentials%2F HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 501, message Unsupported method ('POST')
+34.178.234.66 - - [01/Sep/2026 00:24:55] "POST /proxy HTTP/1.1" 501 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 501, message Unsupported method ('POST')
+34.178.234.66 - - [01/Sep/2026 00:24:55] "POST /api/fetch HTTP/1.1" 501 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 501, message Unsupported method ('POST')
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 501, message Unsupported method ('POST')
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /fetch?uri=http%3A%2F%2F169.254.169.254%2Flatest%2Fmeta-data%2Fiam%2Finfo HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 501, message Unsupported method ('POST')
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 501, message Unsupported method ('POST')
+34.178.234.66 - - [01/Sep/2026 00:24:55] "POST /fetch HTTP/1.1" 501 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /static../proc/self/environ HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /fetch?url=http%3A%2F%2F169.254.169.254%2Flatest%2Fmeta-data%2Fiam%2Finfo HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] "POST /api/graphql HTTP/1.1" 501 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] "POST /graphql/console HTTP/1.1" 501 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] "POST /v1/graphql HTTP/1.1" 501 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /fetch?uri=http%3A%2F%2F169.254.169.254%2Flatest%2Fmeta-data%2F HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /fetch?uri=http%3A%2F%2F169.254.169.254%2Flatest%2Fmeta-data%2Fiam%2Fsecurity-credentials%2F HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /fetch?url=http%3A%2F%2F169.254.169.254%2Flatest%2Fmeta-data%2F HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /actuator HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /./assets/index-Chmr6agL.js HTTP/1.1" 200 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /config HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /fetch?dest=http%3A%2F%2F169.254.169.254%2Flatest%2Fmeta-data%2Fiam%2Finfo HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /@fs/root/.aws/credentials?import&raw?? HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /fetch?dest=http%3A%2F%2F169.254.169.254%2Flatest%2Fmeta-data%2Fiam%2Fsecurity-credentials%2F HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 501, message Unsupported method ('POST')
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /fetch?dest=http%3A%2F%2F169.254.169.254%2Flatest%2Fmeta-data%2F HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] "POST /proxy HTTP/1.1" 501 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /fetch?path=http%3A%2F%2F169.254.169.254%2Flatest%2Fmeta-data%2Fiam%2Finfo HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /fetch?path=http%3A%2F%2F169.254.169.254%2Flatest%2Fmeta-data%2F HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /management HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /.env.js HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /.git/index HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /claude_desktop_config.json HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /env.js HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /.github/workflows/ci.yml HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /.gitlab-ci.yml HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /@fs/app/.env?raw?? HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /static../.azure/accessTokens.json HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /@fs/proc/1/environ?import&raw?? HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /.azure/config HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /.github/.env HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /fetch?path=http%3A%2F%2F169.254.169.254%2Flatest%2Fmeta-data%2Fiam%2Fsecurity-credentials%2F HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /.azure/accessTokens.json HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /@fs/root/.azure/accessTokens.json?raw?? HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /@fs/home/ubuntu/.azure/credentials?raw?? HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /@fs/root/.azure/credentials?raw?? HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 501, message Unsupported method ('POST')
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 501, message Unsupported method ('POST')
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /@fs/proc/self/environ?import&raw?? HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /.cursor/mcp.json HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] "POST /fetch HTTP/1.1" 501 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /@fs/root/.aws/config?raw?? HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /_next/../.azure/credentials HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] "POST /fetch HTTP/1.1" 501 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 501, message Unsupported method ('POST')
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /@fs/home/azureuser/.azure/credentials?raw?? HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /@fs/root/.env?raw?? HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /home/azureuser/.azure/credentials HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /assets/env.js HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] "POST /fetch HTTP/1.1" 501 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /@fs/.env?raw?? HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /azure-credentials.json HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /.vercel/.env HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /.git/config HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /@fs/proc/self/cwd/.azure/credentials?raw?? HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /@fs/app/.aws/credentials?raw?? HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:55] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:55] "GET /@fs/home/node/.aws/credentials?raw?? HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /@fs/home/ubuntu/.aws/credentials?raw?? HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /@fs/home/ec2-user/.aws/credentials?import&raw?? HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /debug/pprof/cmdline HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /__env.js HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /firebase-config.json HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /.vite/manifest.json HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /runtime-config.js HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /google-services.json HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /aws-exports.js HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /debug/default/view?panel=config HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /home/ubuntu/.azure/credentials HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /azure.json HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /fetch?target=http%3A%2F%2F169.254.169.254%2Flatest%2Fmeta-data%2Fiam%2Finfo HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /fetch?file=http%3A%2F%2F169.254.169.254%2Flatest%2Fmeta-data%2Fiam%2Fsecurity-credentials%2F HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /fetch?target=http%3A%2F%2F169.254.169.254%2Flatest%2Fmeta-data%2F HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /fetch?target=http%3A%2F%2F169.254.169.254%2Flatest%2Fmeta-data%2Fiam%2Fsecurity-credentials%2F HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /download?file=../../.aws/credentials HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /download?file=../../.env HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /storage/logs/laravel.log HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /actuator/logfile HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /_profiler/phpinfo HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /fetch?file=http%3A%2F%2F169.254.169.254%2Flatest%2Fmeta-data%2F HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /fetch?file=http%3A%2F%2F169.254.169.254%2Flatest%2Fmeta-data%2Fiam%2Finfo HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /fetch?src=http%3A%2F%2F169.254.169.254%2Flatest%2Fmeta-data%2Fiam%2Fsecurity-credentials%2F HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /fetch?src=http%3A%2F%2F169.254.169.254%2Flatest%2Fmeta-data%2Fiam%2Finfo HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /fetch?src=http%3A%2F%2F169.254.169.254%2Flatest%2Fmeta-data%2F HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /read?url=file:///proc/1/environ HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /read?file=../../.env HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /redirect?url=http%3A%2F%2F169.254.169.254%2Flatest%2Fmeta-data%2Fiam%2Fsecurity-credentials%2F HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /api/file?path=../../.env HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /?file=../../.env HTTP/1.1" 200 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /proxy?url=http%3A%2F%2F169.254.169.254%2Flatest%2Fmeta-data%2Fiam%2Fsecurity-credentials%2F HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /proxy?url=http%3A%2F%2F169.254.169.254%2Flatest%2Fmeta-data%2F HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /api/fetch?url=http%3A%2F%2F169.254.169.254%2Flatest%2Fmeta-data%2Fiam%2Fsecurity-credentials%2F HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /api/fetch?url=http%3A%2F%2F169.254.169.254%2Flatest%2Fmeta-data%2F HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /redirect?url=http%3A%2F%2F169.254.169.254%2Flatest%2Fmeta-data%2F HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /api/proxy?url=http%3A%2F%2F169.254.169.254%2Flatest%2Fmeta-data%2Fiam%2Fsecurity-credentials%2F HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /api/proxy?url=http%3A%2F%2F169.254.169.254%2Flatest%2Fmeta-data%2F HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /api/v1/fetch?url=http%3A%2F%2F169.254.169.254%2Flatest%2Fmeta-data%2Fiam%2Fsecurity-credentials%2F HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /bitbucket-pipelines.yml HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /.env.ci HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /.github/workflows/main.yml HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /home/gitlab-runner/.aws/credentials HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /cloudbuild.yaml HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /.github/workflows/publish.yml HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /home/runner/.aws/credentials HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /.circleci/config.yml HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /.github/workflows/docker.yml HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /azure-pipelines.yml HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /home/circleci/.aws/credentials HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /.github/workflows/test.yml HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /.jenkins/config.xml HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /jenkins/Jenkinsfile HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /jenkins/credentials.xml HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /jenkins/config.xml.bak HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /.github/workflows/build.yml HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /api/v1/fetch?url=http%3A%2F%2F169.254.169.254%2Flatest%2Fmeta-data%2F HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /Jenkinsfile HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /.github/workflows/deploy.yml HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /.drone.yml HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /.github/workflows/release.yml HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /.travis.yml HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /.env.yml HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /.env.yaml HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /config/env.js HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /.env.production.local HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /.env.production.bak HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /home/ubuntu/.azure/accessTokens.json HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /.env.example HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /.env.json HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /config/jenkins.xml HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /.env.anthropic HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /environment.js HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /.env.php HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /.github/secrets.env HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /var/www/.env HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /jenkins/secrets/master.key HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /webhook?url=http%3A%2F%2F169.254.169.254%2Flatest%2Fmeta-data%2Fiam%2Fsecurity-credentials%2F HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /webhook?url=http%3A%2F%2F169.254.169.254%2Flatest%2Fmeta-data%2F HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /api/download?url=http%3A%2F%2F169.254.169.254%2Flatest%2Fmeta-data%2Fiam%2Fsecurity-credentials%2F HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /api/webhook?url=http%3A%2F%2F169.254.169.254%2Flatest%2Fmeta-data%2F HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /api/webhook?url=http%3A%2F%2F169.254.169.254%2Flatest%2Fmeta-data%2Fiam%2Fsecurity-credentials%2F HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /.supabase/.env HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /..;/..;/.azure/credentials HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /api/download?url=http%3A%2F%2F169.254.169.254%2Flatest%2Fmeta-data%2F HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /%2eazure/credentials HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /%2eenv HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /client/.env HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /preview?url=http%3A%2F%2F169.254.169.254%2Flatest%2Fmeta-data%2F HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /preview?url=http%3A%2F%2F169.254.169.254%2Flatest%2Fmeta-data%2Fiam%2Fsecurity-credentials%2F HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /screenshot?url=http%3A%2F%2F169.254.169.254%2Flatest%2Fmeta-data%2Fiam%2Fsecurity-credentials%2F HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /image?url=http%3A%2F%2F169.254.169.254%2Flatest%2Fmeta-data%2Fiam%2Fsecurity-credentials%2F HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /screenshot?url=http%3A%2F%2F169.254.169.254%2Flatest%2Fmeta-data%2F HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /image?url=http%3A%2F%2F169.254.169.254%2Flatest%2Fmeta-data%2F HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /api/image?url=http%3A%2F%2F169.254.169.254%2Flatest%2Fmeta-data%2Fiam%2Fsecurity-credentials%2F HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /api/image?url=http%3A%2F%2F169.254.169.254%2Flatest%2Fmeta-data%2F HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /fetch?url=http%3A%2F%2Fmetadata.google.internal%2FcomputeMetadata%2Fv1%2Finstance%2Fservice-accounts%2Fdefault%2Ftoken HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /api/preview?url=http%3A%2F%2F169.254.169.254%2Flatest%2Fmeta-data%2F HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /api/preview?url=http%3A%2F%2F169.254.169.254%2Flatest%2Fmeta-data%2Fiam%2Fsecurity-credentials%2F HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /proxy?url=http%3A%2F%2Fmetadata.google.internal%2FcomputeMetadata%2Fv1%2Finstance%2Fservice-accounts%2Fdefault%2Ftoken HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /fetch?url=http%3A%2F%2F169.254.169.254%2Fmetadata%2Fidentity%2Foauth2%2Ftoken%3Fapi-version%3D2018-02-01%26resource%3Dhttps%3A%2F%2Fmanagement.azure.com%2F HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /fetch?url=http%3A%2F%2F169.254.169.254%2Fmetadata%2Fidentity%2Foauth2%2Ftoken%3Fapi-version%3D2018-02-01%26resource%3Dhttps%3A%2F%2Fcognitiveservices.azure.com%2F HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /proxy?url=http%3A%2F%2F169.254.169.254%2Fmetadata%2Fidentity%2Foauth2%2Ftoken%3Fapi-version%3D2018-02-01%26resource%3Dhttps%3A%2F%2Fmanagement.azure.com%2F HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /proxy?url=http%3A%2F%2F169.254.169.254%2Fmetadata%2Fidentity%2Foauth2%2Ftoken%3Fapi-version%3D2018-02-01%26resource%3Dhttps%3A%2F%2Fcognitiveservices.azure.com%2F HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /fetch?url=file%3A%2F%2F%2Fproc%2Fself%2Fenviron HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /proxy?url=file%3A%2F%2F%2Fproc%2Fself%2Fenviron HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /fetch?url=file%3A%2F%2F%2Froot%2F.aws%2Fcredentials HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /fetch?url=file%3A%2F%2F%2Froot%2F.azure%2Fcredentials HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /fetch?url=file%3A%2F%2F%2Froot%2F.azure%2FaccessTokens.json HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /proxy?url=file%3A%2F%2F%2Froot%2F.aws%2Fcredentials HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /proxy?url=file%3A%2F%2F%2Froot%2F.azure%2Fcredentials HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /proxy?url=file%3A%2F%2F%2Froot%2F.azure%2FaccessTokens.json HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /fetch?url=file%3A%2F%2F%2Fhome%2Fubuntu%2F.azure%2FaccessTokens.json HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /proxy?url=file%3A%2F%2F%2Fhome%2Fubuntu%2F.azure%2FaccessTokens.json HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /proxy?url=file%3A%2F%2F%2Fapp%2F.env HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /fetch?url=file%3A%2F%2F%2Froot%2F.env HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /fetch?url=file%3A%2F%2F%2Fapp%2F.env HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /proxy?url=file%3A%2F%2F%2Froot%2F.env HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /fetch?url=http%3A%2F%2F169.254.170.2%2Fv2%2Fcredentials%2F HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /proxy?url=http%3A%2F%2F169.254.170.2%2Fv2%2Fcredentials%2F HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /fetch?url=http%3A%2F%2F169.254.170.2%2Fv2%2Fmetadata HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:56] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:56] "GET /proxy?url=http%3A%2F%2F169.254.170.2%2Fv2%2Fmetadata HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:57] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:57] "GET /jenkins/config.xml HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:57] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:57] "GET /config/azure.json HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:57] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:57] "GET /config/jenkins.conf HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:57] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:57] "GET /.env.openai HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:57] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:57] "GET /.env.prod.bak HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:57] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:57] "GET /public/env.js HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:57] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:57] "GET /terraform.tfvars HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:57] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:57] "GET /.env.sample HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:57] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:57] "GET /prod/.env HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:57] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:57] "GET /app/.env.local HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:57] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:57] "GET /config/.env.local HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:57] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:57] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:57] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:57] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:57] "GET /app/api/.env HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:57] "GET /.env~ HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:57] "GET /v2/.env HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:57] "GET /.env.orig HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:57] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:57] "GET /twilio/.env.php HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:57] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:57] "GET /old/.env HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:57] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:57] "GET /sendgrid/.env.php HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:57] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:57] "GET /config.env HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:57] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:57] "GET /app/.env.production HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:57] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:57] "GET /dev/.env HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:57] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:57] "GET /.terraform/terraform.tfstate HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:57] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:57] "GET /apps/.env HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:57] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:57] "GET /api/env HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:57] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:57] "GET /env.json HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:57] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:57] "GET /secrets.env HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:57] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:57] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:57] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:57] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:57] "GET /crm/.env HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:57] "GET /docker/.env HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:57] "GET /backup/.env HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:57] "GET /internal/.env.production HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:57] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:57] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:57] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:57] "GET /phpinfo.php HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:57] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:57] "GET /private/.env.production HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:57] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:57] "GET /app_dev.php/_profiler/.env HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:57] "GET /wp-content/debug.log HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:57] "GET /v1/.env HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:57] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:57] "GET /.docker/.env HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:57] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:57] "GET /terraform.tfstate.backup HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:57] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:57] "GET /laravel/.env HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:57] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:57] "GET /services/.env HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:58] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:58] "GET /development/.env HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:58] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:58] "GET /backend/.env.local HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:58] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:58] "GET /internal/.env HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:58] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:58] "GET /html/.env HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:58] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:58] "GET /application.env HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:58] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:58] "GET /debug.log HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:58] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:58] "GET /frontend/.env HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:24:58] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:24:58] "GET /staging/.env HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:00] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:00] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:00] "GET /terraform.tfstate HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:00] "GET /terraform.tfvars.json HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:00] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:00] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:00] "GET /backend/.env.production HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:00] "GET /application/.env HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:00] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:00] "GET /production/.env HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:00] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:00] "GET /api/v1/env HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:03] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:03] "GET /env HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:04] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:04] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:04] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:04] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:04] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:04] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:04] "GET /config/aws.json HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:04] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:04] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:04] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:04] "GET /rootkey.csv HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:04] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:04] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:04] "GET /.well-known/credentials.json HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:04] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:04] "GET /secrets/aws.json HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:04] "GET /backend/aws.json HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:04] "GET /internal-api/aws/credentials HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:04] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:04] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:04] "GET /public/.aws/credentials HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:04] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:04] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:04] "GET /aws/.env.production HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:04] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:04] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:04] "GET /..;/..;/.aws/credentials HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:04] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:04] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:04] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:04] "GET /terraform/terraform.tfstate HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:04] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:04] "GET /s3-credentials.json HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:04] "GET /vendor/.aws/credentials HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:04] "GET /aws/.env HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:04] "GET /aws/s3/credentials.json HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:04] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:04] "GET /vendor/aws/credentials HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:04] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:04] "GET /api/v1/credentials HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:04] "GET /credentials.json HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:04] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:04] "GET /%2eaws/credentials HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:04] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:04] "GET /credentials HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:04] "GET /tmp/.aws/credentials HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:04] "GET /aws_creds.js HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:04] "GET /aws.json HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:04] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:04] "GET /secrets.tfvars HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:04] "GET /admin/config?cmd=cat+/root/.aws/credentials HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:04] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:04] "GET /s3/.aws/credentials HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:04] "GET /aws-config.js HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:04] "GET /aws-access-keys.csv HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:04] "GET /internal-api/iam/credentials HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:04] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:04] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:04] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:04] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:04] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:04] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:04] "GET /management/env HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:04] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:04] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:04] "GET /_profiler/phpinfo.php HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:04] "GET /cdk.json HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:04] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:04] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:04] "GET /.openclaw/.env HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:04] "GET /secrets.auto.tfvars HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:04] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:04] "GET /aws_credentials.txt HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:04] "GET /serverless.yaml HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:04] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:04] "GET /.env.test HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:04] "GET /serverless.yml HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:04] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:04] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:04] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:04] "GET /production.tfvars HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:04] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:04] "GET /infra/terraform.tfstate HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:04] "GET /.env.dev HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:04] "GET /.aws/ecs-task-credentials HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:04] "GET /cdk.context.json HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:04] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:04] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:04] "GET /infrastructure/terraform.tfstate HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:04] "GET /aws/iam/temporary-credentials HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:04] "GET /.hermes/.env HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:04] "GET /samconfig.toml HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:04] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:04] "GET /app_dev.php/_profiler/phpinfo HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:04] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:04] "GET /config/.env.php HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:05] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:05] "GET /app_dev.php HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:05] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:05] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:05] "GET /_profiler/open HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:05] "GET /__debug__/ HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:05] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:05] "GET /app_dev.php/_profiler HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:05] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:05] "GET /admin HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:05] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:05] "GET /build/manifest.json HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:05] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:05] "GET /firebase-credentials.json HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:05] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:05] "GET /.config/anthropic/credentials/default.json HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:05] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:05] "GET /serviceAccountKey.json HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:05] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:05] "GET /google-credentials.json HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:05] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:05] "GET /k8s/eks/credentials HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:05] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:05] "GET /.openai/config.json HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:05] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:05] "GET /app-config.json HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:05] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:05] "GET /secrets.json HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:05] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:05] "GET /configuration.js HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:05] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:05] "GET /pi.php HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:05] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:05] "GET /.gcloud/credentials.json HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:05] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:05] "GET /config.json.js HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:05] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:05] "GET /config/gcp-credentials.json HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:05] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:05] "GET /Dockerfile HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:05] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:05] "GET /.gcloud/credentials HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:05] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:05] "GET /credentials.js HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:05] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:05] "GET /config/credentials.json HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:05] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:05] "GET /config/openai.json HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:05] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:05] "GET /gcp-service-account.json HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:05] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:05] "GET /service-account.json HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:05] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:05] "GET /_profiler/latest HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:05] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:05] "GET /google-service-account.json HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:05] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:05] "GET /.claude/settings.json HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:05] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:05] "GET /login HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:05] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:05] "GET /env-config.js HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:05] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:05] "GET /push_config.json HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:05] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:05] "GET /dist/manifest.json HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:05] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:05] "GET /dist/.vite/manifest.json HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:05] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:05] "GET /.continue/config.json HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:05] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:05] "GET /openai.json HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:05] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:05] "GET /runtime.js HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:05] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:05] "GET /settings.js HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:05] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:05] "GET /secrets/gcp.json HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:05] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:05] "GET /application_default_credentials.json HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:05] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:05] "GET /gcp-credentials.json HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:05] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:05] "GET /anthropic.json HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:05] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:05] "GET /.anthropic/config.json HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:05] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:05] "GET /.codex/config.toml HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:05] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:05] "GET /config/anthropic.json HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:05] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:05] "GET /.claude.json HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:05] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:05] "GET /firebase-service-account.json HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:05] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:05] "GET /firebase-adminsdk.json HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:06] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:06] "GET /ssl/server.key HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:06] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:06] "GET /api/settings HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:06] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:06] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:06] "GET /.ssh/config HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:06] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:06] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:06] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:06] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:06] "GET /.svn/entries HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:06] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:06] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:06] "GET /.s3cfg HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:06] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:06] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:06] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:06] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:06] "GET /.boto HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:06] "GET /api/v2/config HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:06] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:06] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:06] "GET /.vscode/launch.json HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:06] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:06] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:06] "GET /api HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:06] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:06] "GET /gc-service.json HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:06] "GET /.bashrc HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:06] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:06] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:06] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:06] "GET /bootstrap.properties HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:06] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:06] "GET /server.key HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:06] "GET /.kube/config HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:06] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:06] "GET /ssl/localhost.key HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:06] "GET /nginx_status HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:06] "GET /id_ecdsa HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:06] "GET /localhost.key HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:06] "GET /id_rsa HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:06] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:06] "GET /rclone.conf HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:06] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:06] "GET /service_account.json HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:06] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:06] "GET /api/openapi.json HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:06] "GET /manifest.webmanifest HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:06] "GET /key.pem HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:06] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:06] "GET /openapi.json HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:06] "GET /sa.json HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:06] "GET /private-key HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:06] "GET /host.key HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:06] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:06] "GET /__/firebase/init.json HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:06] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:06] "GET /privatekey.key HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:06] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:06] "GET /.ssh/id_dsa HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:06] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:06] "GET /.ssh/id_ecdsa HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:06] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:06] "GET /.bash_profile HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:06] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:06] "GET /id_ed25519 HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:06] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:06] "GET /wp-json HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:06] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:06] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:06] "GET /.ssh/known_hosts HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:06] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:06] "GET /.vscode/sftp.json HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:06] "GET /gcp-key.json HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:06] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:06] "GET /actuator HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:06] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:06] "GET /api/v2/settings HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:06] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:06] "GET /values.yaml HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:06] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:06] "GET /gcp-service.json HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:06] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:06] "GET /key.json HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:06] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:06] "GET /api/account HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:06] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:06] "GET /test.php HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:07] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:07] "GET /id_dsa HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:07] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:07] "GET /.zshrc HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:07] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:07] "GET /.profile HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:07] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:07] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:07] "GET /application-prod.yml HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:07] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:07] "GET /api/config.json HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:07] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:07] "GET /access_keys.csv HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:07] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:07] "GET /wp-config.php.old HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:07] "GET /home/ubuntu/.config/gcloud/application_default_credentials.json HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:07] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:07] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:07] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:07] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:07] "GET /config/application.yml HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:07] "GET /application.properties HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:07] "GET /config/application.properties HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:07] "GET /dump.sql HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:07] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:07] "GET /database.sql HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:07] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:07] "GET /docker-compose.yml HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:07] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:07] "GET /settings.py HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:07] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:07] "GET /.docker/config.json HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:07] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:07] "GET /config/database.yml HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:07] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:07] "GET /api/v1/settings HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:07] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:07] "GET /root/.config/gcloud/application_default_credentials.json HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:07] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:07] "GET /wp-config.php.bak HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:07] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:07] "GET /backup.sql HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:07] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:07] "GET /database.yml HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:07] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:07] "GET /appsettings.json HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:07] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:07] "GET /web.config HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:07] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:07] "GET /api/v1/config HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:07] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:07] "GET /amplifyconfiguration.json HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:07] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:07] "GET /db.sql HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:07] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:07] "GET /.netrc HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:07] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:07] "GET /deploy/service-account.json HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:07] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:07] "GET /telescope/requests HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:07] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:07] "GET /wp-config.php.swp HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:07] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:07] "GET /config.json HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:07] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:07] "GET /application.yml HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:07] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:07] "GET /backend/service-account.json HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:07] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:07] "GET /_debugbar/open HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:07] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:07] "GET /actuator/heapdump HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:08] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:08] "GET /settings.local.py HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:08] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:08] "GET /config/gcp.json HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:08] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:08] "GET /horizon/dashboard HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:08] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:08] "GET /docker-compose.yaml HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:08] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:08] "GET /application-prod.properties HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:08] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:08] "GET /config.php.bak HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:08] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:08] "GET /wp-config.php~ HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:08] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:08] "GET /firebase-admin.json HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:08] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:08] "GET /docker-compose.prod.yml HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:08] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:08] "GET /settings.json HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:10] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:10] "GET /rails/info/properties HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:10] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:10] "GET /appsettings.Production.json HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:10] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:10] "GET /actuator/configprops HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:10] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:10] "GET /log-viewer HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:10] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:10] "GET /local.settings.json HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:10] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:10] "GET /k8s/secrets.yaml HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:10] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:10] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:10] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:10] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:10] "GET /log/production.log HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:10] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:10] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:10] "GET /api/v1/status/config HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:10] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:10] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:10] "GET /buildspec.yml HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:10] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:10] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:10] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:10] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:10] "GET /compose.yml HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:10] "GET /debug/default/view?panel=log HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:10] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:10] "GET /storage/logs/lumen.log HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:10] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:10] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:10] "GET /debug/default/view?panel=request HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:10] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:10] "GET /.aider.conf.yml HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:10] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:10] "GET /.hermes/auth.json HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:10] "GET /elmah.axd HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:10] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:10] "GET /api/v1/status/flags HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:10] "GET /config/master.key HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:10] "GET /ecosystem.config.js HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:10] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:10] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:10] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:10] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:10] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:10] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:10] "GET /.streamlit/secrets.toml HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:10] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:10] "GET /compose.yaml HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:10] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:10] "GET /.bash_history HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:10] "GET /elmah HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:10] "GET /appspec.yml HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:10] "GET /error_log HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:10] "GET /.ssh/id_ed25519 HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:10] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:10] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:10] "GET /vault.yml HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:10] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:10] "GET /server-info HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:10] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:10] "GET /ecosystem.config.cjs HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:10] "GET /appspec.yaml HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:10] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:10] "GET /sftp-config.json HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:10] "GET /.hermes/config.yaml HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:10] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:10] "GET /logs/app.log HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:10] "GET /trace.axd HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:10] "GET /info.php HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:10] "GET /config/credentials.yml.enc HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:10] "GET /appsettings.Development.json HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:10] "GET /.local/share/opencode/auth.json HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:10] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:10] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:10] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:10] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:10] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:10] "GET /app.log HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:10] "GET /secrets.yml HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:10] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:10] "GET /error.log HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:10] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:10] "GET /.sentryclirc HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:10] "GET /__clockwork HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:10] "GET /server-status HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:10] "GET /gradle.properties HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:10] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:10] "GET /logs/error.log HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:10] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:10] "GET /debug/pprof/ HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:10] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:10] "GET /debug/vars HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:10] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:10] "GET /.ssh/id_rsa HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:10] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:10] "GET /kubernetes.yml HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:10] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:10] "GET /actuator/httptrace HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:10] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:10] "GET /actuator/mappings HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:11] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:11] "GET /_ignition/health-check HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:11] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:11] "GET /docker-compose.yml.bak HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:11] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:11] "GET /docker-compose.yml.orig HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:11] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:11] "GET /docker-compose.yml.swp HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:11] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:11] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:11] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:11] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:11] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:11] "GET /application.yml.backup HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:11] "GET /application.yml.old HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:11] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:11] "GET /config.json.copy HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:11] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:11] "GET /config.json.save HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:11] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:11] "GET /.aws/credentials.swp HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:11] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:11] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:11] "GET /terraform.tfstate.save HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:11] "GET /docker-compose.yml.old HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:11] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:11] "GET /application.yml.swp HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:11] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:11] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:11] "GET /terraform.tfstate.orig HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:11] "GET /docker-compose.yml~ HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:11] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:11] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:11] "GET /config.json.backup HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:11] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:11] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:11] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:11] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:11] "GET /docker-compose.yml.copy HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:11] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:11] "GET /terraform.tfstate.1 HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:11] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:11] "GET /terraform.tfstate.tmp HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:11] "GET /.aws/credentials.orig HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:11] "GET /application.yml.1 HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:11] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:11] "GET /.env.1 HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:11] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:11] "GET /terraform.tfstate.bak HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:11] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:11] "GET /.aws/credentials~ HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:11] "GET /config.json.old HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:11] "GET /.env.tmp HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:11] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:11] "GET /.aws/credentials.save HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:11] "GET /config.json.bak HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:11] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:11] "GET /docker-compose.yml.backup HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:11] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:11] "GET /.aws/credentials.1 HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:11] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:11] "GET /.aws/credentials.backup HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:11] "GET /application.yml.tmp HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:11] "GET /.env.copy HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:11] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:11] "GET /docker-compose.yml.save HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:11] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:11] "GET /application.yml.copy HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:11] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:11] "GET /application.yml.save HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:11] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:11] "GET /terraform.tfstate.copy HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:11] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:11] "GET /config.json.swp HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:11] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:11] "GET /application.yml~ HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:11] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:11] "GET /application.yml.orig HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:11] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:11] "GET /terraform.tfstate.old HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:11] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:11] "GET /application.yml.bak HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:11] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:11] "GET /.aws/credentials.copy HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:11] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:11] "GET /config.json.tmp HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:11] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:11] "GET /config.json~ HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:11] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:11] "GET /config.json.1 HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:11] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:11] "GET /terraform.tfstate~ HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:11] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:11] "GET /terraform.tfstate.swp HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:11] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:11] "GET /config.json.orig HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:11] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:11] "GET /.aws/credentials.tmp HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:12] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:12] "GET /serverless.yml~ HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:12] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:12] "GET /serverless.yml.orig HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:12] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:12] "GET /docker-compose.yml.tmp HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:12] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:12] "GET /serverless.yml.swp HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:12] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:12] "GET /serverless.yml.old HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:12] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:12] "GET /serverless.yml.save HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:12] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:12] "GET /serverless.yml.bak HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:12] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:12] "GET /serverless.yml.tmp HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:12] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:12] "GET /serverless.yml.backup HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:12] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:12] "GET /serverless.yml.1 HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:12] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:12] "GET /docker-compose.yml.1 HTTP/1.1" 404 -
+34.178.234.66 - - [01/Sep/2026 00:25:12] code 404, message File not found
+34.178.234.66 - - [01/Sep/2026 00:25:12] "GET /serverless.yml.copy HTTP/1.1" 404 -
+107.150.97.149 - - [01/Sep/2026 00:28:59] "GET / HTTP/1.1" 200 -
+107.150.97.149 - - [01/Sep/2026 00:29:01] code 404, message File not found
+107.150.97.149 - - [01/Sep/2026 00:29:01] "GET /favicon.ico HTTP/1.1" 404 -
+107.150.97.149 - - [01/Sep/2026 00:31:05] code 404, message File not found
+107.150.97.149 - - [01/Sep/2026 00:31:05] "GET /favicon.ico HTTP/1.1" 404 -
+165.154.162.203 - - [01/Sep/2026 00:38:39] "GET / HTTP/1.1" 200 -
+165.154.162.203 - - [01/Sep/2026 00:38:39] code 404, message File not found
+165.154.162.203 - - [01/Sep/2026 00:38:39] "GET /favicon.ico HTTP/1.1" 404 -
+165.154.162.203 - - [01/Sep/2026 00:39:51] code 404, message File not found
+165.154.162.203 - - [01/Sep/2026 00:39:51] "GET /favicon.ico HTTP/1.1" 404 -
+165.154.162.82 - - [01/Sep/2026 01:10:48] "GET / HTTP/1.1" 200 -
+165.154.162.82 - - [01/Sep/2026 01:10:49] code 404, message File not found
+165.154.162.82 - - [01/Sep/2026 01:10:49] "GET /favicon.ico HTTP/1.1" 404 -
+165.154.162.82 - - [01/Sep/2026 01:12:10] code 404, message File not found
+165.154.162.82 - - [01/Sep/2026 01:12:10] "GET /favicon.ico HTTP/1.1" 404 -
+107.150.97.149 - - [01/Sep/2026 01:16:44] "GET / HTTP/1.1" 200 -
+107.150.97.149 - - [01/Sep/2026 01:16:45] code 404, message File not found
+107.150.97.149 - - [01/Sep/2026 01:16:45] "GET /favicon.ico HTTP/1.1" 404 -

@@ -26,6 +26,39 @@ SPEED = {"en": 0.95, "zh": 1.0}
 ZH_SENT, ZH_CLAUSE = set("。！？；.!?;"), set("，、：,:")
 PAUSE = {"s": 0.26, "c": 0.13}
 
+TONES = "↓↗→↘"
+_PUNCT = set(",.;:!?，。；：！？")
+
+
+def third_tone_sandhi(ipa: str) -> str:
+    """A third tone before another third tone is said as a rising tone.
+
+    misaki's default frontend does not do this — 你好 comes out ni↓xau↓ when
+    every speaker says ni↗xau↓ — and pypinyin's own tone_sandhi only catches
+    dictionary words, so 很好, 水果 and 每把 all come through unchanged. It is
+    the single most audible thing wrong with the Mandarin: a native ear hears a
+    stack of full third tones immediately, and the script here has 每把, 有两,
+    已有 and 与口 in it.
+
+    Applied pairwise over consecutive tone marks, so a run of n becomes
+    rising-rising-...-third. Two guards: never across punctuation, because
+    sandhi does not cross a pause; and never across an intervening toneless
+    syllable, which is what the gap limits are for — 'wo↓ tɤ xau↓' (我的好) must
+    be left alone while 'xə↓n xau↓' (很好) must not.
+    """
+    out = list(ipa)
+    marks = [i for i, c in enumerate(out) if c in TONES]
+    for a, b in zip(marks, marks[1:]):
+        if out[a] != "↓" or out[b] != "↓":
+            continue
+        gap = ipa[a + 1:b]
+        if any(c in _PUNCT for c in gap):
+            continue
+        if gap.count(" ") > 1 or len(gap) > 5:
+            continue                       # a whole syllable sits between them
+        out[a] = "↗"
+    return "".join(out)
+
 _eng = _g2p = None
 
 
@@ -67,6 +100,7 @@ def synth(text, lang):
         parts, sr = [], 24000
         for n, (seg, kind) in enumerate(segs):
             ph, _ = g2p(seg)
+            ph = third_tone_sandhi(ph)
             s, sr = eng.create(ph, voice=VOICE["zh"], speed=SPEED["zh"], is_phonemes=True)
             parts.append(s)
             if n < len(segs) - 1:                 # gaps between, never trailing

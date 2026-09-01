@@ -18,15 +18,30 @@ GAP = 0.45                      # breath between beats
 LEAD = 0.6                      # a moment before the first word
 SR = 24000
 
-ids = [r["id"] for r in man["en"]]
-beats = []
-t = LEAD
-for i, bid in enumerate(ids):
-    d = max(next(r for r in man[l] if r["id"] == bid)["dur"] for l in ("en", "zh"))
-    beats.append({"id": bid, "start": round(t, 3), "dur": round(d + GAP, 3),
-                  "part": next(r for r in man["en"] if r["id"] == bid)["part"]})
-    t += d + GAP
-total = round(t + 0.7, 3)       # a beat of silence to end on
+# --keep reuses the timeline that is already there. Re-voicing one language must
+# not move the pictures: the frames were rendered to these beats, and a beat that
+# shifts by a tenth of a second would need the whole film again for nothing.
+KEEP = "--keep" in sys.argv and (vo.parent / "timeline.json").exists()
+if KEEP:
+    old = json.loads((vo.parent / "timeline.json").read_text())
+    beats, total = old["beats"], old["total"]
+    for b in beats:
+        for lang in ("en", "zh"):
+            d = next(r for r in man[lang] if r["id"] == b["id"])["dur"]
+            if d > b["dur"]:
+                raise SystemExit(f"{b['id']} {lang} is now {d:.2f}s, longer than "
+                                 f"its {b['dur']:.2f}s beat — the timeline must be rebuilt")
+    print(f"  keeping the existing timeline: {len(beats)} beats, {total:.2f}s")
+else:
+    ids = [r["id"] for r in man["en"]]
+    beats = []
+    t = LEAD
+    for i, bid in enumerate(ids):
+        d = max(next(r for r in man[l] if r["id"] == bid)["dur"] for l in ("en", "zh"))
+        beats.append({"id": bid, "start": round(t, 3), "dur": round(d + GAP, 3),
+                      "part": next(r for r in man["en"] if r["id"] == bid)["part"]})
+        t += d + GAP
+    total = round(t + 0.7, 3)       # a beat of silence to end on
 
 for lang in ("en", "zh"):
     track = np.zeros(int(total * SR), dtype=np.float32)
@@ -43,8 +58,9 @@ for lang in ("en", "zh"):
     sf.write(str(vo.parent / f"vo_{lang}.wav"), track * (0.89 / peak), SR)
     print(f"  vo_{lang}.wav  {total:.2f}s")
 
-(vo.parent / "timeline.json").write_text(json.dumps(
-    {"total": total, "fps": 12, "beats": beats}, indent=2))
+if not KEEP:
+    (vo.parent / "timeline.json").write_text(json.dumps(
+        {"total": total, "fps": 12, "beats": beats}, indent=2))
 print(f"  timeline: {len(beats)} beats, {total:.1f}s, {int(total*12)} frames at 12fps")
 for b in beats:
     print(f"    {b['id']:4} part{b['part']}  {b['start']:6.2f} +{b['dur']:5.2f}")
