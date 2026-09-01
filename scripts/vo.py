@@ -30,8 +30,17 @@ SPEED = {"en": 0.95, "zh": 1.0}
 # the phoneme string by itself — measured, a comma and a colon each produce their
 # own pause — so the clause breaks were never needed for phrasing, only the
 # sentence gaps are ours to insert.
-ZH_SENT, ZH_CLAUSE = set("。！？；.!?;"), set()
+# A semicolon is NOT a sentence end in Chinese, it is a heavy comma joining two
+# halves of one thought. Splitting there made 壶肩 utterance-final, and a level
+# first tone at the end of an utterance takes the terminal fall with it, so 肩
+# was heard as a fourth.
+ZH_SENT, ZH_CLAUSE = set("。！？.!?"), set()
 PAUSE = {"s": 0.26, "c": 0.13}
+# Below this many characters a chunk is a fragment, not a sentence, and gets
+# merged into its neighbour. "陶，器。" is a sentence by punctuation and a
+# two-syllable fragment by ear; voiced alone it lost 陶's rising tone the same
+# way "茶，" did.
+MIN_CHARS = 4
 
 TONES = "↓↗→↘"
 _PUNCT = set(",.;:!?，。；：！？")
@@ -95,7 +104,38 @@ def chunks(text):
             out.append((cur, "c")); cur = ""
     if cur.strip():
         out.append((cur, "s"))
-    return out
+    n = lambda t: len(re.findall(r"[\u4e00-\u9fff]", t))
+    merged = []
+    for seg, kind in out:
+        if merged and n(seg) < MIN_CHARS:
+            merged[-1] = (merged[-1][0] + seg, kind)
+        else:
+            merged.append((seg, kind))
+    if len(merged) > 1 and n(merged[0][0]) < MIN_CHARS:   # a short opener merges forward
+        merged[1] = (merged[0][0] + merged[1][0], merged[1][1])
+        merged.pop(0)
+    return merged
+
+
+def unglue(text):
+    """Force a word boundary wherever jieba's HMM has invented a word.
+
+    jieba cuts 另一面/是业 — 是业 is not a word, it is the copula stuck onto the
+    noun behind it, and misaki then emits ʂɨ↘je↘ as a single word, which Kokoro
+    voices as a trochee: second syllable unstressed, its fourth tone flattened.
+    The same line's 是亚 is cut 是/亚 and comes out right, which is why only one
+    of the pair sounded wrong.
+
+    A token absent from jieba's dictionary was assembled by its new-word HMM
+    rather than looked up, and that is precisely the class to distrust. Real
+    entries are left alone: 不必, 就是 and 作工 all appear in this script and all
+    have dictionary frequencies.
+    """
+    import jieba
+    jieba.initialize()
+    for tok in jieba.cut(text):
+        if len(tok) > 1 and not jieba.dt.FREQ.get(tok):
+            jieba.suggest_freq(tuple(tok), True)
 
 
 def synth(text, lang):
@@ -119,6 +159,8 @@ def synth(text, lang):
 def main():
     script = json.loads(Path(sys.argv[1]).read_text())
     out = Path(sys.argv[2]); out.mkdir(parents=True, exist_ok=True)
+    for b in script["beats"]:            # tune jieba before the G2P is built
+        unglue(b["zh"])
     manifest = {}
     for lang in ("en", "zh"):
         rows = []

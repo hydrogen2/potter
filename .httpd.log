@@ -8539,3 +8539,95 @@ ConnectionResetError: [Errno 104] Connection reset by peer
 119.56.75.8 - - [01/Sep/2026 01:22:05] "GET /refs/studio_zh.mp4 HTTP/1.1" 304 -
 94.154.43.140 - - [01/Sep/2026 01:22:23] code 404, message File not found
 94.154.43.140 - - [01/Sep/2026 01:22:23] "GET /login HTTP/1.1" 404 -
+64.62.156.122 - - [01/Sep/2026 01:36:46] code 400, message Bad request syntax ("\\x16\\x03\\x01\\x00{\\x01\\x00\\x00w\\x03\\x03ûß¥\\x8aD\\x15\\x97tÓeâôî\\x81]\\x91óÆ§\\x81.\\x8cst'\\x07R\\x19\\x8dj")
+64.62.156.122 - - [01/Sep/2026 01:36:46] "\x16\x03\x01\x00{\x01\x00\x00w\x03\x03ûß¥\x8aD\x15\x97tÓeâôî\x81]\x91óÆ§\x81.\x8cst'\x07R\x19\x8dj" 400 -
+118.193.77.113 - - [01/Sep/2026 01:39:31] "GET / HTTP/1.1" 200 -
+118.193.77.113 - - [01/Sep/2026 01:39:33] code 404, message File not found
+118.193.77.113 - - [01/Sep/2026 01:39:33] "GET /favicon.ico HTTP/1.1" 404 -
+118.193.77.113 - - [01/Sep/2026 01:40:49] code 404, message File not found
+118.193.77.113 - - [01/Sep/2026 01:40:49] "GET /favicon.ico HTTP/1.1" 404 -
+45.194.67.46 - - [01/Sep/2026 01:50:46] code 400, message Bad request syntax ('\\x16\\x03\\x01\\x00u\\x01\\x00\\x00q\\x03\\x03\\x00\\x01\\x02\\x03\\x04\\x05\\x06\\x07\\x08\\t')
+45.194.67.46 - - [01/Sep/2026 01:50:46] "GET / HTTP/1.1" 200 -
+45.194.67.46 - - [01/Sep/2026 01:50:46] "\x16\x03\x01\x00u\x01\x00\x00q\x03\x03\x00\x01\x02\x03\x04\x05\x06\x07\x08\x09" 400 -
+107.150.105.224 - - [01/Sep/2026 02:00:44] "GET / HTTP/1.1" 200 -
+107.150.105.224 - - [01/Sep/2026 02:00:46] code 404, message File not found
+107.150.105.224 - - [01/Sep/2026 02:00:46] "GET /favicon.ico HTTP/1.1" 404 -
+107.150.105.224 - - [01/Sep/2026 02:02:52] code 404, message File not found
+107.150.105.224 - - [01/Sep/2026 02:02:52] "GET /favicon.ico HTTP/1.1" 404 -
+119.56.73.200 - - [01/Sep/2026 02:03:15] "GET /refs/ HTTP/1.1" 200 -
+119.56.73.200 - - [01/Sep/2026 02:03:15] "GET /refs/chazihu.png HTTP/1.1" 200 -
+119.56.73.200 - - [01/Sep/2026 02:03:16] "GET /refs/cha_plan.png HTTP/1.1" 200 -
+119.56.73.200 - - [01/Sep/2026 02:03:16] "GET /refs/chazihu-lid.png HTTP/1.1" 200 -
+119.56.73.200 - - [01/Sep/2026 02:03:16] "GET /refs/cha_revolve.png HTTP/1.1" 200 -
+119.56.73.200 - - [01/Sep/2026 02:03:16] "GET /refs/cha_sym.png HTTP/1.1" 200 -
+119.56.73.200 - - [01/Sep/2026 02:03:16] "GET /refs/shipiao_two.png HTTP/1.1" 200 -
+119.56.73.200 - - [01/Sep/2026 02:03:16] "GET /refs/ziye_qc.png HTTP/1.1" 200 -
+119.56.73.200 - - [01/Sep/2026 02:03:16] "GET /refs/ziye_cmp.png HTTP/1.1" 200 -
+119.56.73.200 - - [01/Sep/2026 02:03:17] "GET /refs/jubian_sheet.png HTTP/1.1" 200 -
+119.56.73.200 - - [01/Sep/2026 02:03:17] "GET /refs/liufang.png HTTP/1.1" 200 -
+119.56.73.200 - - [01/Sep/2026 02:03:17] "GET /refs/liufang_cmp.png HTTP/1.1" 200 -
+119.56.73.200 - - [01/Sep/2026 02:03:17] "GET /refs/liufang_qc.png HTTP/1.1" 200 -
+119.56.73.200 - - [01/Sep/2026 02:03:18] "GET /refs/refs_measured.png HTTP/1.1" 200 -
+119.56.73.200 - - [01/Sep/2026 02:03:18] "GET /refs/refs_all.png HTTP/1.1" 200 -
+119.56.73.200 - - [01/Sep/2026 02:03:18] "GET /refs/dq11.png HTTP/1.1" 200 -
+119.56.73.200 - - [01/Sep/2026 02:03:18] "GET /refs/dq_compare6.png HTTP/1.1" 200 -
+119.56.73.200 - - [01/Sep/2026 02:03:18] "GET /refs/part_compare.png HTTP/1.1" 200 -
+119.56.73.200 - - [01/Sep/2026 02:03:19] "GET /refs/td_sweep.png HTTP/1.1" 200 -
+119.56.73.200 - - [01/Sep/2026 02:03:19] "GET /refs/qc_detail.png HTTP/1.1" 200 -
+119.56.73.200 - - [01/Sep/2026 02:03:20] "GET /refs/spout_zoom.png HTTP/1.1" 200 -
+119.56.73.200 - - [01/Sep/2026 02:03:20] "GET /refs/lip.png HTTP/1.1" 200 -
+119.56.73.200 - - [01/Sep/2026 02:03:20] "GET /refs/lid_sweep.png HTTP/1.1" 200 -
+119.56.73.200 - - [01/Sep/2026 02:03:21] "GET /refs/bead.png HTTP/1.1" 200 -
+119.56.73.200 - - [01/Sep/2026 02:03:22] "GET /refs/fillet.png HTTP/1.1" 200 -
+119.56.73.200 - - [01/Sep/2026 02:03:22] "GET /refs/knob.png HTTP/1.1" 200 -
+119.56.73.200 - - [01/Sep/2026 02:03:22] "GET /refs/neck_after.png HTTP/1.1" 200 -
+119.56.73.200 - - [01/Sep/2026 02:03:23] "GET /refs/qc_duoqiu2.png HTTP/1.1" 200 -
+119.56.73.200 - - [01/Sep/2026 02:03:23] "GET /refs/jingzhou.png HTTP/1.1" 200 -
+119.56.73.200 - - [01/Sep/2026 02:03:23] "GET /refs/xs_regress.png HTTP/1.1" 200 -
+119.56.73.200 - - [01/Sep/2026 02:03:24] "GET /refs/gp_regress.png HTTP/1.1" 200 -
+119.56.73.200 - - [01/Sep/2026 02:03:24] "GET /refs/studio_en.mp4 HTTP/1.1" 200 -
+119.56.73.200 - - [01/Sep/2026 02:03:24] "GET /refs/studio_zh.mp4 HTTP/1.1" 200 -
+119.56.73.200 - - [01/Sep/2026 02:03:24] "GET /refs/pair.mp4 HTTP/1.1" 200 -
+----------------------------------------
+Exception occurred during processing of request from ('119.56.73.200', 50824)
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/socketserver.py", line 692, in process_request_thread
+    self.finish_request(request, client_address)
+  File "/usr/lib/python3.12/http/server.py", line 1311, in finish_request
+    self.RequestHandlerClass(request, client_address, self,
+  File "/usr/lib/python3.12/http/server.py", line 672, in __init__
+    super().__init__(*args, **kwargs)
+  File "/usr/lib/python3.12/socketserver.py", line 761, in __init__
+    self.handle()
+  File "/usr/lib/python3.12/http/server.py", line 436, in handle
+    self.handle_one_request()
+  File "/usr/lib/python3.12/http/server.py", line 404, in handle_one_request
+    self.raw_requestline = self.rfile.readline(65537)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/socket.py", line 707, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+ConnectionResetError: [Errno 104] Connection reset by peer
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('119.56.73.200', 38730)
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/socketserver.py", line 692, in process_request_thread
+    self.finish_request(request, client_address)
+  File "/usr/lib/python3.12/http/server.py", line 1311, in finish_request
+    self.RequestHandlerClass(request, client_address, self,
+  File "/usr/lib/python3.12/http/server.py", line 672, in __init__
+    super().__init__(*args, **kwargs)
+  File "/usr/lib/python3.12/socketserver.py", line 761, in __init__
+    self.handle()
+  File "/usr/lib/python3.12/http/server.py", line 436, in handle
+    self.handle_one_request()
+  File "/usr/lib/python3.12/http/server.py", line 404, in handle_one_request
+    self.raw_requestline = self.rfile.readline(65537)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/socket.py", line 707, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+ConnectionResetError: [Errno 104] Connection reset by peer
+----------------------------------------
+119.56.73.200 - - [01/Sep/2026 02:18:59] "GET /refs/studio_zh.mp4 HTTP/1.1" 200 -
