@@ -23,7 +23,14 @@ VOICE = {"en": "af_heart", "zh": "zf_xiaoxiao"}
 # A film is not learning material: hilbert slows English to 0.85 so a
 # non-native listener can follow. Here it can move.
 SPEED = {"en": 0.95, "zh": 1.0}
-ZH_SENT, ZH_CLAUSE = set("。！？；.!?;"), set("，、：,:")
+# Split on SENTENCES only. Splitting on clauses as well hands Kokoro fragments
+# to voice as whole utterances, and a fragment gets a whole utterance's contour:
+# "茶，", one syllable, came out as a 0.60s clip with a terminal fall on it, so a
+# rising 茶 was heard as a fourth tone. Kokoro phrases on the punctuation inside
+# the phoneme string by itself — measured, a comma and a colon each produce their
+# own pause — so the clause breaks were never needed for phrasing, only the
+# sentence gaps are ours to insert.
+ZH_SENT, ZH_CLAUSE = set("。！？；.!?;"), set()
 PAUSE = {"s": 0.26, "c": 0.13}
 
 TONES = "↓↗→↘"
